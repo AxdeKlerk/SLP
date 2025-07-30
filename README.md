@@ -1,12 +1,52 @@
 # Searchlight Promotions (Upgrade)
 
-[Insert snip of logo and name]
+![searchlight promotions logo and text](DOCS/images/Logo.jpg)
 
-Table of contents
+# Table of contents
+
+<details><summary>1 Introduction</summary>
+
+[1.1 The Aim, Purpose and Goal of the Site](#11-the-aim-purpose-and-goal-of-the-site)
+
+[1.2 Target Audience](#12-target-audience)  
+</details>
+
+<details><summary>2 Planning and Development</summary>
+
+[2.1 Project Statement and ERD](#21-project-statement-and-erd)
+
+[2.1.1 Identified Entities (Key Nouns)](#221-identified-entities-key-nouns)
+
+[2.1.2 Key Relationships](#212-key-relationships)
+
+[2.2 Wifreframes](#22-wireframes)
+
+[2.3 User Journeys](#23-user-journeys)
+
+[2.4 User Stories](#24-user-stories)
+
+[2.4 Agile Methodology](#24-agile-methodology)
+
+[2.4.1 User Epic](#241-user-epic)
+
+[2.4.2 Core Epic](#242-core-epic)
+
+[2.4.3 Products Epic](#243-products-epic)
+
+[2.4.3.1 Merch (subset)](#2431-merch-subset)
+
+[2.4.3.2 Events (subset)](#2432-events-subset)
+
+[2.4.4 Basket Epic](#244-basket-epic)
+
+[2.4.4.1 Order Status (subset)](#2441-order-status-subset)
+
+[2.4.4.2 Payment Method (subset)](#2442-payment-method-subset)
+
 
 [Insert images of responsive designs]
 
-## 1. Introduction
+## 1 Introduction
 This project is the natural progression of my first project *'Searchlight Promotions'*. For my first project I asked a fellow metal head, who runs a music promotion company in and for the Norwich rock and metal scene, if I could design him a website for my project, as he did not have one. After completing and submitting the project he asked me to maintain it going forward as he absolutely loved it. This ultimately meant that I had retained my first customer, and for the conclusion of this course, it is timely that the website is upgraded as the business has developed, my skills have progressed and as a true work-experience piece of practical evidence.
 
 Project 1 can be found here in this *Github* repository (as it was submitted for P1): https://github.com/AxdeKlerk/Searchlight-Promotions, and here as the current working website: www.searchlightpromotions.co.uk. 
@@ -15,7 +55,7 @@ What is evident here is that the website has already had various upgrades, notab
 
 ![roxoff logo shown in mobile view navbar](DOCS/images/nav-mobile.jpg)
 
-## 2. The Aim, Purpose and Goal of the Site
+### 1.1 The Aim, Purpose and Goal of the Site
 
 The primary aim of the website has always been to *"create a presence beyond the scope of social media to attract rock and metal fans, as well as emerging [..] rock and metal [artists], to current events happening in Norwich"*(Project 1). 
 
@@ -23,9 +63,11 @@ The website’s purpose is to highlight upcoming events and increase ticket sale
 
 The goal of the upgrade is to bring the project to the same level of development and success that Searchlight Promotions has achieved and advance it further by introducing a dedicated online store for merchandise and establishing a proprietary ticketing system for events, eliminating the need for an external booking and payment system via a 3rd party website.
 
-## 3. Planning
+### 1.2 Target Audience
 
-### 3.1 Project Statement and ERD
+## 2. Planning and Development
+
+### 2.1 Project Statement and ERD
 
 This project involves developing a web application focused on promoting and managing rock and metal music **events** held at a **single fixed venue**. The website allows **users** to either **log in** or browse as **guests**. Logged in users have the the ability to browse upcoming events, **search for merchandise and/or tickets**, add them to a **basket** and **purchase** event tickets and merch.
 
@@ -35,7 +77,7 @@ Users will also be able to view and **track the status of their orders**,
 receive **email confirmations** for purchases, and search for **artists and bands** to discover more music.
     
 
-### 3.1.1 Identified Entities (Key Nouns):
+### 2.1.1 Identified Entities (Key Nouns):
 
 -   **User** (covers both registered and guest users)
 -   **Event**
@@ -48,7 +90,7 @@ receive **email confirmations** for purchases, and search for **artists and band
 -   **Venue** (fixed, but modelled for potential reuse)
     
 
-### **3.1.2 Key Relationships:**
+### 2.1.2 Key Relationships:
 
 -   A **User** can place multiple **Orders**
 -   Each **Order** can include multiple **Products** and **Tickets** 
@@ -60,11 +102,11 @@ receive **email confirmations** for purchases, and search for **artists and band
     
 This structured statement sets a clear foundation for building an ERD and a relational database that supports both **ticketing** and **e-commerce features** within a unified system. 
 
-### 3.1.3 ERD (Entity Relationship Diagram)
+### 2.1.3 ERD (Entity Relationship Diagram)
 
 ![ERD](DOCS/images/ERD.jpg)
 
-### 3.2 Wireframes
+### 2.2 Wireframes
 After completing the first draft of the ERD I draw it out visually as a low fidelity-wireframe for desktops in *Balsamic*, as shown here:
 
 ![low-fidelity desktop wireframe](DOCS/images/wireframe-desktop.jpg)
@@ -83,7 +125,7 @@ I particularly liked Slipknot's merch page and decided that for this project's w
 
 [insert high-fidelity desktop wireframe]
 
-### 3.3 User Journeys
+### 2.3 User Journeys
 
 Once I had completed my wireframes I decided to plot out how I imagined the user would journey through the website. First I plotted the current user journey as it  stands for the current *[Searchlight Promotions](www.searchlightpromotions.co.uk)* website, as shown here:
 
@@ -97,29 +139,27 @@ Below is the new user journey as first imagined. The items in red are still 3rd 
 
 ![imagined new user journey](DOCS/images/proposed-user-journey.jpg)
 
-### 3.4 User Stories
+### 2.4 Agile Methodology
 
-Having plotted the new user journey, user stories were created into separate 'Epics' as show here in the *Kaban* board that follows the *Agile* methodology:
+The *Agile* methodology was born in mind from the begining of the planning and development stage. Having plotted the new user journey, 'Epics' were extracted form the user journey into the categories that follow, as shown below. Each 'Epic' represents an App in the *Django* project design. 
 
-[insert kaban board]
+Under each 'Epic', user stories were created using the "As a **user** I want to **action** so that I can **benefit**" statement. They are are as follows:
 
-Each 'Epic' represents an App in the project design. The Epics and the user stories are as follows:
-
-#### 3.4.1 User Epic
+#### 2.4.1 User Epic
 
 
-#### 3.4.2 Core Epic
+#### 2.4.2 Core Epic
 
 
-#### 3.4.3 Products Epic
+#### 2.4.3 Products Epic
 
-##### 3.4.3.1 Merch
+##### 2.4.3.1 Merch (subset)
 
-##### 3.4.3.2 Events
+##### 2.4.3.2 Events (subset)
 
 
-#### 3.4.4 Basket Epic
+#### 2.4.4 Basket Epic
 
-##### 3.4.4.1 Order Status
+##### 2.4.4.1 Order Status (subset)
 
-##### 3.4.4.2 Payment Method
+##### 2.4.4.2 Payment Method (subset)

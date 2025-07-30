@@ -2,7 +2,7 @@
 
 **Bug:**
 
-Accidentally committed the Django SECRET_KEY to GitHub in the initial commit.
+Accidentally committed the *Django* SECRET_KEY to *GitHub* in the initial commit.
 
 **Fix:**
 
@@ -12,9 +12,9 @@ Stored it safely in a .env file (excluded via .gitignore)
 
 Updated settings.py to load the key using python-decouple
 
-Removed the entire Git history by deleting .git, reinitializing, and creating a fresh, secure initial commit
+Removed the entire *Git* history by deleting .git, reinitializing, and creating a fresh, secure initial commit
 
-Force-pushed the cleaned repo to GitHub
+Force-pushed the cleaned repo to *GitHub*
 
 **Lesson Learned:**
 
