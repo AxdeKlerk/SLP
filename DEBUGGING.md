@@ -1,21 +1,21 @@
-Security Bug
+## Security Bug
+
 **Bug:**
-Accidentally committed the Django SECRET_KEY to *GitHub* in a public repository.
+
+Accidentally committed the Django SECRET_KEY to GitHub in the initial commit.
 
 **Fix:**
 
-Regenerated a new secure key using *Django*’s         get_random_secret_key()
+Regenerated a new secure key using get_random_secret_key()
 
-Created a .env file to store the new SECRET_KEY
+Stored it safely in a .env file (excluded via .gitignore)
 
-Installed python-decouple to read environment variables securely
+Updated settings.py to load the key using python-decouple
 
-Updated settings.py to load the secret key with:
-SECRET_KEY = config('SECRET_KEY')
+Removed the entire Git history by deleting .git, reinitializing, and creating a fresh, secure initial commit
 
-Added .env to .gitignore to prevent future leaks
+Force-pushed the cleaned repo to GitHub
 
 **Lesson Learned:**
 
-Secrets should never be hardcoded in settings.py or committed to version control. Using a .env file and decouple ensures sensitive information stays secure and separate from code.
-Always check for secrets before pushing to *GitHub*, and use .gitignore to protect .env files automatically.
+Even one leaked commit can expose sensitive data permanently. Using environment variables and .gitignore from the start prevents accidental leaks. Rewriting history should be done early if needed, before more commits make it harder.
