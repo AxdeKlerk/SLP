@@ -27,22 +27,34 @@
 
 [2.4 Agile Methodology](#24-agile-methodology)
 
-[2.4.1 User Epic](#241-user-epic)
+[2.4.1 Epics](#241-epics)
 
-[2.4.2 Core Epic](#242-core-epic)
+[2.4.1.1 User Epic](#2411-user-epic)
 
-[2.4.3 Products Epic](#243-products-epic)
+[2.4.1.2 Core Epic](#2412-core-epic)
 
-[2.4.3.1 Merch (subset)](#2431-merch-subset)
+[2.4.1.3 Products Epic](#2413-products-epic)
 
-[2.4.3.2 Events (subset)](#2432-events-subset)
+[2.4.1.3.1 Merch (subset)](#24131-merch-subset)
 
-[2.4.4 Basket Epic](#244-basket-epic)
+[2.4.1.3.2 Events (subset)](#24132-events-subset)
 
-[2.4.4.1 Order Status (subset)](#2441-order-status-subset)
+[2.4.1.4 Basket Epic](#2414-basket-epic)
 
-[2.4.4.2 Payment Method (subset)](#2442-payment-method-subset)
+[2.4.1.4.1 Order Status (subset)](#24141-order-status-subset)
 
+[2.4.1.4.2 Payment Method (subset)](#24142-payment-method-subset)
+
+[2.4.2 Kaban Board](#242-kaban-board)
+</details>
+
+<details><summary>3 Features</summary>
+[3.1 Typography]
+
+[3.2 Colour Pallett]
+</details>
+<details><summary>4 Debugging, Testing, Deployment and Future Developments</summary></details>
+<details><summary>5 Credits and Acknowledgements</summary></details>
 
 [Insert images of responsive designs]
 
@@ -64,6 +76,10 @@ The website’s purpose is to highlight upcoming events and increase ticket sale
 The goal of the upgrade is to bring the project to the same level of development and success that Searchlight Promotions has achieved and advance it further by introducing a dedicated online store for merchandise and establishing a proprietary ticketing system for events, eliminating the need for an external booking and payment system via a 3rd party website.
 
 ### 1.2 Target Audience
+
+The target audience is niche and focuses only on the rock and metal musicians and fans. It is specifically aimed at an aging demographic of rock and metal fans who don’t rely on social media for gig information in Norwich, the new rise in younger rock and metal fans who are looking to support up-and-coming artists locally, emerging (and unsigned) rock and metal artists looking for promotion in Norwich, other music promoters who may want to collaborate, as well as music journalists wanting to cover gigs.
+
+[add merch and ticket sales]
 
 ## 2. Planning and Development
 
@@ -141,25 +157,29 @@ Below is the new user journey as first imagined. The items in red are still 3rd 
 
 ### 2.4 Agile Methodology
 
-The *Agile* methodology was born in mind from the begining of the planning and development stage. Having plotted the new user journey, 'Epics' were extracted form the user journey into the categories that follow, as shown below. Each 'Epic' represents an App in the *Django* project design. 
+This project was developed using Agile methodologies to ensure a user-focused, iterative, and flexible development process. Key Agile principles were applied throughout.
 
-Under each 'Epic', user stories were created using the "As a **user** I want to **action** so that I can **benefit**" statement. They are are as follows:
+Having plotted the new user journey, 'Epics' were extracted form the user journey into the categories that follow, as shown below. Each 'Epic' represents an App in the *Django* project design. Under each 'Epic', user stories were created using the "As a **user** I want to **action** so that I can **benefit**" statement to ensure a user story driven development and that all development decisions were tied directly to user needs. They are are as follows:
 
-#### 2.4.1 User Epic
+#### 2.4.1 Epics
 
-
-#### 2.4.2 Core Epic
-
-
-#### 2.4.3 Products Epic
-
-##### 2.4.3.1 Merch (subset)
-
-##### 2.4.3.2 Events (subset)
+##### 2.4.1.1 User Epic
 
 
-#### 2.4.4 Basket Epic
+##### 2.4.1.2 Core Epic
 
-##### 2.4.4.1 Order Status (subset)
 
-##### 2.4.4.2 Payment Method (subset)
+##### 2.4.1.3 Products Epic
+
+###### 2.4.1.3.1 Merch (subset)
+
+###### 2.4.1.3.2 Events (subset)
+
+
+##### 2.4.1.4 Basket Epic
+
+###### 2.4.1.4.1 Order Status (subset)
+
+###### 2.4.1.4.2 Payment Method (subset)
+
+#### 2.4.2 Kaban Board
