@@ -1,6 +1,6 @@
 # Searchlight Promotions (Upgrade)
 
-![searchlight promotions logo and text](DOCS/images/Logo.jpg)
+![searchlight promotions logo and text](DOCS/images/logo.jpg)
 
 # Table of contents
 
@@ -120,7 +120,7 @@ This structured statement sets a clear foundation for building an ERD and a rela
 
 ### 2.1.3 ERD (Entity Relationship Diagram)
 
-![ERD](DOCS/images/ERD.jpg)
+![ERD](DOCS/images/erd.jpg)
 
 ### 2.2 Wireframes
 After completing the first draft of the ERD I draw it out visually as a low fidelity-wireframe for desktops in *Balsamic*, as shown here:
@@ -133,13 +133,13 @@ After completing the first draft of the ERD I draw it out visually as a low fide
 
 Having completed the above I went on to create a high-fidelity wireframe in *Figma*, focusing only on the desk top as everything would be responsive and feature as the low-fidelity wireframe for mobiles depicts above. All 3 versions focus on the functionality of the navbar. Meaning that all 3 were drawn around the navbar and plotted out as progressions. 
 
-The high-fidelity wireframe show below helped me to fully visualise the various screens and how they would look as a finished project. I decided to use some of the styling from my P3 for the tilting merch to create a more visually appealing view of the merch. This came about after doing some research on other websites (mainly rock and metal bands that I know and two festival sites that I go to each year) as to how they displayed their merch on their dedicated pages. 
+The high-fidelity wireframe show below helps to fully visualise the various screens and how they would look as a finished project. I decided to use some of the styling from my P3 for the tilting merch to create a more visually appealing view of the merch. This came about after doing some research on other websites (mainly rock and metal bands that I know and two festival sites that I go to each year) as to how they displayed their merch on their dedicated pages. 
 
-My findings were mixed, however, most of the websites I looked at seemed to display their merch as an after thought that didn't follow the styling of the rest of their websites. The three stand-out websites, that did follow their overall styling, were *[Blacklakes](https://www.blacklakes.com/merch)*, *[South of Salem](https://www.southofsalem.com/)* and *[Slipknot](https://slipknotmerch.com/)*.
+The findings were mixed, however, most of the websites seemed to display their merch as an after thought that didn't follow the styling of the rest of their websites. The three stand-out websites, that did follow their overall styling, were *[Blacklakes](https://www.blacklakes.com/merch)*, *[South of Salem](https://www.southofsalem.com/)* and *[Slipknot](https://slipknotmerch.com/)*.
 
-I particularly liked Slipknot's merch page and decided that for this project's website that I would follow Slipknot's layout, but make it different to anything else that I could find, by including the tilt styling.
+Slipknot's merch page stood out amoungst the rest and the decidion was made that, this project's website would follow Slipknot's style of layout, but make it different to anything else that could be found, by including the tilt styling.
 
-[insert high-fidelity desktop wireframe]
+![high-fidelity desktop wireframe](DOCS/images/hf-wireframe-desktop.jpg)
 
 ### 2.3 User Journeys
 
