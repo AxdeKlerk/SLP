@@ -29,21 +29,15 @@
 
 [2.4.1 Epics](#241-epics)
 
-[2.4.1.1 User Epic](#2411-user-epic)
+[2.4.1.1 Core ](#2411-core)
 
-[2.4.1.2 Core Epic](#2412-core-epic)
+[2.4.1.2 User](#2412-user)
 
-[2.4.1.3 Products Epic](#2413-products-epic)
+[2.4.1.3 Products](#2413-products)
 
-[2.4.1.3.1 Merch (subset)](#24131-merch-subset)
+[2.4.1.4 Basket](#2414-basket)
 
-[2.4.1.3.2 Events (subset)](#24132-events-subset)
-
-[2.4.1.4 Basket Epic](#2414-basket-epic)
-
-[2.4.1.4.1 Order Status (subset)](#24141-order-status-subset)
-
-[2.4.1.4.2 Payment Method (subset)](#24142-payment-method-subset)
+[2.4.1.5 Dev Ops & Planning](2415-dev-ops-&-planning)
 
 [2.4.2 Kaban Board](#242-kaban-board)
 </details>
@@ -143,15 +137,15 @@ Slipknot's merch page stood out amoungst the rest and the decidion was made that
 
 ### 2.3 User Journeys
 
-Once I had completed my wireframes I decided to plot out how I imagined the user would journey through the website. First I plotted the current user journey as it  stands for the current *[Searchlight Promotions](www.searchlightpromotions.co.uk)* website, as shown here:
+Having completed the wireframes user journeys were plotted out as imagined the user would journey ould be through the website. First, the  current user journey was plotted out, from the *[Searchlight Promotions](www.searchlightpromotions.co.uk)* website, as shown here:
 
 ![current user journey](DOCS/images/current-user-journey.jpg)
 
-What stands out is the 'dead ends' (depicted in red) that navigate the user away from the website with the user having to return to the website by clicking back on the website tab. 
+What stood out were the 'dead ends' (depicted in red) that navigate the user away from the website with the user having to return to the website by clicking back on the website tab. This blocks the user from an easy transition back to the website and considered 'bad' UI/UX.
 
-I pointed this out to the client as a pitfall to the UX and stated that by upgrading the site to manage its own ticket sales we would create a seamless experience for the user, that kept them on the website for further browsing in the hope that it would encourage further sales and interest.
+This was pointed out to the client as a pitfall to the UX and stated that by upgrading the site to manage its own ticket sales we would create a seamless experience for the user, that kept them on the website for further browsing in the hope that it would encourage further sales and interest.
 
-Below is the new user journey as first imagined. The items in red are still 3rd party websites for payment and email confirmations for logging in, however, with the introduction of a 'thank you' page the user would be returned to the website for further browsing after payment, and after the email confirmations the user will be redirected back to the website.
+Below is the new user journey as first imagined. The items in red are still 3rd party websites for payment and email confirmations for logging in, however, with the introduction of a 'thank you' page the user would be returned to the website for further browsing after payment. After the email confirmation, the user will be redirected back to the website automatically.
 
 ![imagined new user journey](DOCS/images/proposed-user-journey.jpg)
 
@@ -159,27 +153,51 @@ Below is the new user journey as first imagined. The items in red are still 3rd 
 
 This project was developed using Agile methodologies to ensure a user-focused, iterative, and flexible development process. Key Agile principles were applied throughout.
 
-Having plotted the new user journey, 'Epics' were extracted form the user journey into the categories that follow, as shown below. Each 'Epic' represents an App in the *Django* project design. Under each 'Epic', user stories were created using the "As a **user** I want to **action** so that I can **benefit**" statement to ensure a user story driven development and that all development decisions were tied directly to user needs. They are are as follows:
+Having plotted the new user journey, 'Epics' were extracted form the user journey into the categories that follow. Each 'Epic' represents an App in the *Django* project design. Under each 'Epic', user stories were created using the "As a **user** I want to **action** so that I can **benefit**" statement to ensure a user story driven development and that all development decisions were tied directly to user needs. From each user story actionable tasks were created representing the acceptance criteria for each user story. 
+
+The project board was created in *[Jira](https://home.atlassian.com/o/b7910e90-088d-44ea-b5d1-d6cc4369218f/?cloudId=dd851124-be59-44e3-b99f-ce4b4531fc65)* as it is more widely used as a project planner than *Github*, and famililarity with the ptogramme was deemed as important for all future work once qulified.
 
 #### 2.4.1 Epics
 
-##### 2.4.1.1 User Epic
+Each epics was added to the Project Board with each detailing a brief description of the purpose of each epic, as follows:
 
+![project board](DOCS/images/project-board-v1.jpg)
 
-##### 2.4.1.2 Core Epic
+From the collapsable Core Epic the below details the first 2 user stories, showing their format:
 
+![site identification](DOCS/images/us-site-identification-v1.jpg)
 
-##### 2.4.1.3 Products Epic
+![navbar](DOCS/images/us-navbar-v1.jpg)
 
-###### 2.4.1.3.1 Merch (subset)
+From the project board a list of tasks were extracted from the user story's acceptance criteria as depicted here under the Core Epic:
 
-###### 2.4.1.3.2 Events (subset)
+![project task board](DOCS/images/project-list-v1.jpg)
 
+#### 2.4.1.1 Core
 
-##### 2.4.1.4 Basket Epic
+![core epic](DOCS/images/core-epic-v1.jpg)
 
-###### 2.4.1.4.1 Order Status (subset)
+#### 2.4.1.2 User
 
-###### 2.4.1.4.2 Payment Method (subset)
+![user epic](DOCS/images/user-epic-v1.jpg)
 
-#### 2.4.2 Kaban Board
+#### 2.4.1.3 Products
+
+This epic contains both the events and merch as subsets.
+
+![products epic](DOCS/images/products-epic-v1.jpg)
+
+#### 2.4.1.4 Basket
+
+This epic contains both the order status and payment method as subsets.
+
+![basket epic](DOCS/images/basket-epic-v1.jpg)
+
+#### 2.4.1.5 Dev Ops & Planning
+
+![dev ops epic](DOCS/images/dev-ops-epic-v1.jpg)
+
+An additional epic was used for planning purposes:
+
+![planning epic](DOCS/images/planning-epic-v1.jpg)
+
