@@ -103,7 +103,7 @@ This structured statement sets a clear foundation for building an ERD and a rela
 
 ### 2.1.3 ERD (Entity Relationship Diagram)
 
-![erd](DOCS/images/erd.jpg)
+![erd](DOCS/images/erd-v2.jpg)
 
 ### 2.2 Wireframes
 After completing the first draft of the ERD I draw it out visually as a low fidelity-wireframe for desktops in *Balsamic*, as shown here:
@@ -170,7 +170,7 @@ In addition to the above two other epics were created, namely the Planning and D
 
 Showing completed tasks in purple and the actionable tasks in green.
 
-Below is the "README Initial write-up" Task list:
+Below is the "README Initial write-up" Task list, and the Dev-Ops Epic:
 
 ![readme-initial-task-list](DOCS/images/readme-task-list-v1.jpg)
 
