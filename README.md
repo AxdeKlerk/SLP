@@ -29,17 +29,6 @@
 
 [2.4.1 Epics](#241-epics)
 
-[2.4.1.1 Core ](#2411-core)
-
-[2.4.1.2 User](#2412-user)
-
-[2.4.1.3 Products](#2413-products)
-
-[2.4.1.4 Basket](#2414-basket)
-
-[2.4.1.5 Dev Ops & Planning](2415-dev-ops-&-planning)
-
-[2.4.2 Kaban Board](#242-kaban-board)
 </details>
 
 <details><summary>3 Features</summary>
