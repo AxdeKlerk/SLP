@@ -155,49 +155,33 @@ This project was developed using Agile methodologies to ensure a user-focused, i
 
 Having plotted the new user journey, 'Epics' were extracted form the user journey into the categories that follow. Each 'Epic' represents an App in the *Django* project design. Under each 'Epic', user stories were created using the "As a **user** I want to **action** so that I can **benefit**" statement to ensure a user story driven development and that all development decisions were tied directly to user needs. From each user story actionable tasks were created representing the acceptance criteria for each user story. 
 
-The project board was created in *[Jira](https://home.atlassian.com/o/b7910e90-088d-44ea-b5d1-d6cc4369218f/?cloudId=dd851124-be59-44e3-b99f-ce4b4531fc65)* as it is more widely used as a project planner than *Github*, and famililarity with the ptogramme was deemed as important for all future work once qulified.
+The project was created in *[Github](https://github.com/users/AxdeKlerk/projects/7)*.
 
 #### 2.4.1 Epics
 
-Each epics was added to the Project Board with each detailing a brief description of the purpose of each epic, as follows:
+Each epic was added to the Project Board using labels as can be seen here:
 
-![project board](DOCS/images/project-board-v1.jpg)
+![project board](DOCS/images/project-board-v2.jpg)
 
-From the collapsable Core Epic the below details the first 2 user stories, showing their format:
+From the collapsable Core Epic, the below details a descrption of the covered features, with the first 3 user stories below, and the tasks listed below the user stories:
 
-![site identification](DOCS/images/us-site-identification-v1.jpg)
+![core epic](DOCS/images/core-epic-v2.jpg)
 
-![navbar](DOCS/images/us-navbar-v1.jpg)
+The below shows the Site Indintification User Story as well as its corresponding Tasks List:
 
-From the project board a list of tasks were extracted from the user story's acceptance criteria as depicted here under the Core Epic:
+![site identification user story](DOCS/images/us-site-identification-v2.jpg)
 
-![project task board](DOCS/images/project-list-v1.jpg)
+![site identification user story tasks list](DOCS/images/us-site-identification-tasks-v1.jpg)
 
-#### 2.4.1.1 Core
+The above is a representation of the Kaban board and all its components. As the project developed more user stories and tasks were created. Throughout the design of the website this project baord was referenced to keep the scope of the project realistic and on track.
 
-![core epic](DOCS/images/core-epic-v1.jpg)
+In addition to the above two other epics were created, namely the Planning and Dev-Ops Epics as show below:
 
-#### 2.4.1.2 User
+![planning epic](DOCS/images/planning-epic-v2.jpg)
 
-![user epic](DOCS/images/user-epic-v1.jpg)
+![dev-ops epic](DOCS/images/dev-ops-epic-v2.jpg)
 
-#### 2.4.1.3 Products
+Below is the "README Initial write-up" Task list:
 
-This epic contains both the events and merch as subsets.
-
-![products epic](DOCS/images/products-epic-v1.jpg)
-
-#### 2.4.1.4 Basket
-
-This epic contains both the order status and payment method as subsets.
-
-![basket epic](DOCS/images/basket-epic-v1.jpg)
-
-#### 2.4.1.5 Dev Ops & Planning
-
-![dev ops epic](DOCS/images/dev-ops-epic-v1.jpg)
-
-An additional epic was used for planning purposes:
-
-![planning epic](DOCS/images/planning-epic-v1.jpg)
+![readme-initial-task-list](DOCS/images/readme-task-list-v1.jpg)
 
