@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core',
 ]
 
 MIDDLEWARE = [
@@ -114,6 +115,13 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+# Custom date/time formats
+USE_L10N = False
+DATE_FORMAT = 'd M Y'        
+DATETIME_FORMAT = 'd M Y H:i' 
+DATE_INPUT_FORMATS = ['%d-%m-%Y']
+DATETIME_INPUT_FORMATS = ['%d-%m-%Y %H:%M']
 
 
 # Static files (CSS, JavaScript, Images)
