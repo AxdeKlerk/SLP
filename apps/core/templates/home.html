@@ -1,11 +1,90 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+
 
 {% block content %}
         <h2 style="color:red;">Hello AX you awesome beast!</h2>
-        <nav>
 
         <h3 style="color:green">This is about to explode into something beautiful!</h3>
         <p>With exciting content</p>
+
+<!-- Carousel-->
+<section class="container-fluid text-center">
+  <div class="row align-self-center mt-3">
+    <!--<div class="col-1 align-self-start">
+      <h1 class="page-title">Welcome</h1>
+    </div>-->
+    <div class="col-md-8 mx-auto">
+      <div id="hero-carousel" class="carousel slide" data-bs-ride="carousel">
+        <!-- Carousel Controls -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+            <button type="button" data-bs-target="#hero-carousel" data-bs-slide-to="5" aria-label="Slide 6"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item c-item active" data-bs-interval="2500">
+            <img src="{% static 'images/carousel-images/black-lakes-nov-24.jpg' %}" class="d-block w-100" alt="black lakes at roxoff festival on 04 may 25">
+            <div class="carousel-caption c-caption d-block">
+              <p class="bg-dark bg-opacity-50"><strong>Searching for & Promoting</strong></p>
+              <p class="text-capitalize bg-dark bg-opacity-50">unsigned rock & metal bands 4 Norwich</p>
+            </div>
+          </div>
+          <div class="carousel-item c-item" data-bs-interval="2000">
+            <img src="{% static 'images/carousel-images/wrex.jpg' %}" class="d-block w-100" alt="event poster for roxoff festival on 04 may 25">
+            <div class="carousel-caption c-caption d-block">
+              <p class="bg-dark bg-opacity-50"><strong>Searching for & Promoting</strong></p>
+              <p class="text-capitalize bg-dark bg-opacity-50">unsigned rock & metal bands 4 Norwich</p>
+            </div>
+          </div>
+          <div class="carousel-item c-item" data-bs-interval="2000">
+            <img src="{% static 'images/carousel-images/dead-reynolds-nov-24.jpg' %}" class="d-block w-100" alt="dead reynolds at roxoff festival may 25">
+            <div class="carousel-caption c-caption d-block">
+              <p class="bg-dark bg-opacity-50"><strong>Searching for & Promoting</strong></p>
+              <p class="text-capitalize bg-dark bg-opacity-50">unsigned rock & metal bands 4 Norwich</p>
+            </div>
+          </div>
+          <div class="carousel-item c-item" data-bs-interval="2000">
+            <img src="{% static 'images/carousel-images/sos.jpg' %}" class="d-block w-100" alt="south of salem">
+            <div class="carousel-caption c-caption d-block">
+              <p class="bg-dark bg-opacity-50"><strong>Searching for & Promoting</strong></p>
+              <p class="text-capitalize bg-dark bg-opacity-50">unsigned rock & metal bands 4 Norwich</p>
+            </div>
+          </div>
+          <div class="carousel-item c-item" data-bs-interval="2000">
+            <img src="{% static 'images/carousel-images/roxoff-crowd.jpg' %}" class="d-block w-100" alt="roxoff festival on 04 may 25">
+            <div class="carousel-caption c-caption d-block">
+              <p class="bg-dark bg-opacity-50"><strong>Searching for & Promoting</strong></p>
+              <p class="text-capitalize bg-dark bg-opacity-50">unsigned rock & metal bands 4 Norwich</p>
+            </div>
+          </div>
+          <div class="carousel-item c-item" data-bs-interval="2000">
+            <img src="{% static 'images/carousel-images/trash-munroe-may-24.jpg' %}" class="d-block w-100 c-img" alt="event poster for roxoff festival on 04 may 25">
+            <div class="carousel-caption c-caption d-block">
+              <p class="bg-dark bg-opacity-50"><strong>Searching for & Promoting</strong></p>
+              <p class="text-capitalize bg-dark bg-opacity-50">unsigned rock & metal bands 4 Norwich</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--Find ticket btn-->
+<div class="container text-center">
+  <div class="row align-items-center">
+    <div class="d-grid col-8 mx-auto">
+      <a class="btn cta-btn" href="" target="_blank" aria-label="find tickets for searchlight promotion gigs at we got tickets.com">Find Tickets HERE! </a>
+    </div>
+  </div>
+</div>
 
 {% endblock %}
 
