@@ -3,7 +3,7 @@
 
 /*global styles*/
 body {
-    background-color: black !important;
+    background-color: black;
     font-family: "Geist Mono", monospace;
     font-size: 14px;
     color:white;
@@ -60,4 +60,9 @@ body {
     border-block-width: 5px;
     margin-top: 1rem;
     margin-bottom: 1rem;
+}
+
+/*footer*/
+footer {
+    color: #11ED73;
 }
