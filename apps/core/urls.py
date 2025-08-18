@@ -8,4 +8,6 @@ urlpatterns = [
     path('', views.home_view, name='home'),
     path('about/', views.about_view, name='about'),
     path('contact/', views.contact_view, name='contact'),
+    path('crash/', views.crash_view, name='crash'), #for testing 500 page
+    path('test404/', views.test_404_template), #for testing 404 page
 ]

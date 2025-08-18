@@ -1,0 +1,74 @@
+/*Google fonts import code*/
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Protest+Revolution&display=swap');
+
+/*global styles*/
+body {
+    background-color: black;
+    font-family: "Geist Mono", monospace;
+    font-size: 14px;
+    color:white;
+    height: 100vh;
+    margin-left: 10px;
+}
+
+/*Header*/
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+#logo {
+    font-family: "Protest Revolution", sans-serif;
+    color: #11ED73;
+    padding-top: 10px;
+    font-size: 30px;
+    text-decoration: none;
+}
+.header-brand {
+    margin-top: 1.5rem;
+}
+.header-img {
+    height: 4rem;
+    width: auto;
+}
+
+/*Carousel*/
+.c-item {
+    max-height: 100%;
+    padding: 0.8rem;
+    background-color: #11ED73;  
+}
+.c-caption {
+    width: 75%;
+    left: 12.5%;
+    text-align: center;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.c-caption p {
+    font-size: 1.5rem;
+}
+.carousel-item img {
+  max-height: 500px;
+  object-fit: cover;
+}
+
+/*Call to action button*/
+.cta-btn {
+    color: #11ED73;
+    border-color: #11ED73;
+    border-block-width: 5px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+/*footer*/
+footer {
+    color: #11ED73;
+}
+
+/*404 & 500 error message*/
+.error-item {
+    color: #11ED73;
+    margin-top: 5rem;
+}

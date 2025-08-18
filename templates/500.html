@@ -1,7 +1,19 @@
-{% extends base.html %}
-{% load statice %}
+{% extends "base.html" %}
+{% load static %}
 
 {% block title %}500 Load Error{% endblock %}
 
 {% block content %}
 <!--Error message-->
+<div class="container-fluid page-item mt-0">
+  <div class="row justify-content-center">
+    <div class="col-12 text-center error-item">
+      <img src="{% static 'images/Searchlight-icon-grn.png' %}" alt="logo">
+      <h1>Ooooops!</h1>
+      <p>My bad!</p>
+      <p>There appears to be bugs in the beer! Please contact us describing the error and we will swat them as soon as possible!</p>
+       <a href="{% url 'core:home' %}" class="btn cta-btn">Return home</a>
+    </div>
+  </div>
+</div>  
+{% endblock %}

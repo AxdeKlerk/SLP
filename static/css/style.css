@@ -61,8 +61,41 @@ body {
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
+/*.cta-btn:hover {
+    color: whitesmoke;
+    border-color: #11ED73;
+    border-block-width: 5px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}*/
+
+a.btn.cta-btn:hover {
+    color: whitesmoke !important;
+    border-color: #11ED73;
+}
+/* All Page Buttons
+.page-btn {
+    border-color: #11ED73;
+    background-color: black;
+    font-size: 1.2rem;
+    border-radius: 7px;
+    margin-top: 20px;
+    text-decoration: none;
+  }
+.page-btn:hover {
+    color: whitesmoke;
+    background-color: black;
+    border-color: #11ED73;
+}*/
+
 
 /*footer*/
 footer {
     color: #11ED73;
+}
+
+/*404 & 500 error message*/
+.error-item {
+    color: #11ED73;
+    margin-top: 5rem;
 }
