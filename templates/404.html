@@ -1,0 +1,21 @@
+{% extends base.html %}
+{% load statice %}
+
+{% block title %}404 Page Not Found{% endblock %}
+
+{% block content %}
+<!--Error message-->
+<div class="container">
+    <div class="row">
+      <div class="col text-center error-item">
+        <a href="{% url 'home' %}"><img src="{%static 'images/Searchlight-icon-grn.png' %}" alt="logo"></a>
+        <h1>Ooooops!</h1>
+        <p>Something seems to have gone wrong, but fear not...</p>
+        <p>...you can click on the logo to back to the website.</p>
+        <p>If the problem persists please send us a message and we will jump on it to fix it.</p>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
+
