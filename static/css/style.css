@@ -14,10 +14,12 @@ body {
 
 /*Header*/
 .header {
-    position: sticky;
+    position: fixed;
+    top: 0;
     margin-top: 1rem;
     z-index: 1000;
     margin-bottom: 10px;
+    background-color:black;
 }
 .header img {
     height: 2.5rem;
@@ -26,6 +28,12 @@ body {
 }
 
 /*Navbar*/
+.navbar{
+    position: fixed;
+    top: 50px;
+    z-index: 1000;
+    background-color: black;
+}
 .navbar-toggler {
     padding: 0.2rem;      /* Shrink the hamburger icon */
     line-height: 1;
@@ -62,7 +70,16 @@ body {
     color: #F5F5F5;
 }
 
+/*Page titles*/
+.page-title {
+    font-size: 1rem;
+    color: #11ED73;
+}
+
 /*Carousel*/
+.carousel {
+    margin-top: 3rem;
+}
 .c-item {
     max-height: 100%;
     padding: 0.6rem;
@@ -84,6 +101,9 @@ body {
 }
 
 /*About page*/
+.about {
+    margin-top: 8rem;
+}
 .a-item {
     height: 100%;
     padding: 0.8rem;
@@ -98,6 +118,9 @@ body {
 }
 
 /*Contact page*/
+.contact {
+    margin-top: 8rem;
+}
 .cp-item {
     color: #11ED73;
 }
