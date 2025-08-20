@@ -27,7 +27,7 @@ body {
 
 /*Navbar*/
 .navbar-toggler {
-    padding: 0.2rem;       /*reduce button padding *//* Shrink the hamburger icon */
+    padding: 0.2rem;      /* Shrink the hamburger icon */
     line-height: 1;
     border-color: #11ED73
 }
@@ -47,19 +47,19 @@ body {
 }
 /* Reduce offcanvas width and padding if desired */
 .offcanvas.offcanvas-end {
-    width: 40vw !important; /* default is 400px */
+    width: 40vw !important;
 }
 
 .offcanvas-body {
-  padding: 1rem;
-  margin-left: auto;  /* pushes it to the far right of the drawer */
+  padding-top: 1rem;
+  margin-left: auto;   /*pushes it to the far right of the drawer */
 }
 
 .offcanvas-body .nav-link {
     text-align: right;
 }
 .offcanvas-body .nav-link:hover {
-    color: white;
+    color: whitesmoke;
 }
 
 
