@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<!--About-->
+<section class="container-fluid text-center" id="about">
+  <div class="row align-items-center">
+    <div class="col-sm-12 col-md-8 justify-content-center mx-auto">
+      <img src="{% static 'images/about/simon-and-terry-3.jpg' %}" class="d-block w-100 a-img" alt="photo of simon and terry">
+        <p>Simon(L) and Terry(R)</p>
+    </div>
+    <div class="row gy-2 align-items-center">
+      <div class="col-md-8 offset-md-2"><p>Simon Powell and Terry Nation, the rock ‘n’ roll, power-house duo behind <b>Searchlight Promotions</b>, boasting a combined 25 years of experience in promoting rock and metal gigs. These guys are like musical treasure hunters, passionately scouring the land for up-and-coming unsigned rock and metal bands for Norwich.</p>
+      </div>
+    </div>
+  </div>
+  <!--About grn bar-->  
+  <div class="row gy-2 align-items-center">
+    <div class="col">
+      <p class=" a-item"><b>...but wait there's more...</b></p>
+    </div>
+  </div>
+</section>
+
+<!--About text-->
+<div class="container-fluid">
+  <div class="row gy-2 align-items-center">
+    <div class="col">
+        <p>Whether they're at other gigs or festivals across the country, Simon and Terry are on a mission to find the next big thing in music. With their eyes peeled and ears wide open, hunting for those hidden gems ready to unleash their sound on the world!
+        <p></p>Simon and Terry, kicked off their own epic journeys in the music scene: Simon with his brainchild - <em>POWer Promotions</em>, and Terry launching the intergalactic vibes of <em>Alien Nation</em>.</p> 
+        <p>But when they decided to join forces, that's when the magic happened!</p> 
+        <p>Enter <b>Searchlight Promotions</b>, dedicated to shining a spotlight on the freshest talent in the biz. Their mission? To champion unsigned musicians and bands spanning everything from classic rock to thumping heavy metal.</p>
+        <p>Riding high on their success with <b>Searchlight Promotions</b>, our dynamic pair birthed <b>ROXOFF</b>, a one-day music festival that kicked off in 2024. This.Is.A.Wild.Indoor bash at <em>The Brickmakers</em> in  Norwich.</p>
+        <p>The dream is to transform <b>ROXOFF</b> into an epic outdoor, two-day festival complete with camping and all the glorious chaos that comes with it; old and new friendships forged over cold beers while headbanging to emerging rock and metal bands in the glorious British weather.</p>
+        <p>Experience the most heart-pounding events in Norwich. <b>SEARCHLIGHT PROMOTIONS</b> are the ultimate heavy metal and rock promotions company that serves it loud with a cold one!</p>
+    </div>
+  </div>
+</div>
+
+<!--Find tickets btn-->
+<div class="container text-center">
+  <div class="row align-items-center">
+    <div class="d-grid col-10 col-md-8 mx-auto">
+      <a class="btn cta-btn" href="https://wegottickets.com/POWerGigs?fbclid=IwY2xjawG4aplleHRuA2FlbQIxMAABHQ1uHDmi1aRSo-dXKsOIMkvY8CprOhXIJBHWkm4RlZ0TnGdneBGVf8m0Og_aem_NXSiqJ8qBWlW2y2SmtahRA" target="_blank" aria-label="find tickets for searchlight promotion gigs at we got tickets.com">Find Tickets HERE! </a>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
