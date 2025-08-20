@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+<!--Contact-->
+<div class="container text-start">
+  <div class="row g-2">
+    <div class="col">
+      <p>Come and find us upfront at everything heavy and rock-tastic. Or just tap, tap, tap (below) and we will be in touch to see what we can do for you.</p>
+      <p>The sonic shenanigans take place mainly at <em>The Brickmakers</em> [496 Sprowston Rd, Norwich NR3 4DY] and <em>B2 Venue</em> [496 Sprowston Rd, Norwich NR3 4DY] in Norwich.</p>
+      <p>If you are looking for tickets to any of our events or want to have a nosey and see what we've got cooking for the future, check us out on our Facebook Page or at WeGotTickets/POWerGigs (below).</p>
+      <p>Stay Loud! Simon and Terry</p>
+    </div>
+  </div>
+</div>
+
+<!--Contact form-->
+<form action="https://formsubmit.co/searchlightpromotion@gmail.com" method="POST" target="_blank">
+  <div class="container text-start">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label for="firstName" class="cp-item">First Name:</label>
+        <input type="text" class="form-control" id="firstName" name="firstName" required>
+      </div>
+      <div class="col-md-6">
+        <label for="lastName" class="cp-item">Last Name:</label>
+        <input type="text" class="form-control" id="lastName" name="lastName" required>
+      </div>
+      <div class="col-md-8">
+        <label for="email" class="cp-item">Email Address:</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+      <div class="col-md-4">
+        <label for="phone" class="cp-item">Phone Number:</label>
+        <input type="text" class="form-control" id="phone" name="phone" placeholder="+44 77123456789">
+      </div>
+      <div class="col-12">
+        <label for="message" class="cp-item">Message:</label>
+        <textarea class="form-control" id="message" name="message" rows="5" placeholder="Please add your message, comments, feedback or questions here..." required></textarea>
+      </div>
+    </div>
+
+<!-- Hidden input field to pass custom parameters -->
+  <input type="hidden" name="_next" value="{% url 'core:thankyou' %}">
+    <div class="row align-items-center justify-content-between">
+      <div class="col-4 align-self-start">
+        <button type="submit" class="btn cta-btn">Send</button>
+      </div>
+      <div class="col-3 col-md-2 me-auto">
+        <a class="btn cta-btn2" href="https://www.facebook.com/SearchlightNorwich" target="_blank">Facebook</a>
+      </div>
+      <div class="col-3 col-md-2 me-5">
+        <a class="btn cta-btn2" href="https://wegottickets.com/POWerGigs" target="_blank">WeGotTickets</a>
+      </div>
+    </div>
+  </div>  
+</form>
+{% endblock content %}
+

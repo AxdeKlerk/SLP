@@ -12,6 +12,9 @@ def about_view(request):
 def contact_view(request):
     return render(request, 'contact.html')
 
+def thankyou_view(request):
+    return render(request, 'thankyou.html')
+
 # Testing 500 page
 def crash_view(request):
     # This will crash on purpose

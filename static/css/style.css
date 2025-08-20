@@ -97,6 +97,19 @@ body {
     background-color:#11ED73;
 }
 
+/*Contact page*/
+.cp-item {
+    color: #11ED73;
+}
+.cta-btn2 {
+    font-size: 0.6rem;
+    border-color: #11ED73;
+    border-block-width: 0.2rem;
+    color: #11ED73;
+}
+
+/*Events page*/
+
 /*Buttons*/
 .cta-btn {
     color: #11ED73;
