@@ -5,14 +5,15 @@
 
 {% block content %}
 <!--Error message-->
-<div class="container-fluid page-item mt-0">
+<div class="container">
   <div class="row justify-content-center">
-    <div class="col-12 text-center error-item">
-      <img src="{% static 'images/Searchlight-icon-grn.png' %}" alt="logo">
+    <div class="col-11 col-md-8 text-center align-items-center error-item">
+      <img src="{% static 'images/Searchlight-icon-grn.png' %}" alt="logo" class="img-fluid mx-auto d-block">
       <h1>Ooooops!</h1>
-      <p>My bad!</p>
-      <p>There appears to be bugs in the beer! Please contact us describing the error and we will swat them as soon as possible!</p>
-       <a href="{% url 'core:home' %}" class="btn cta-btn">Return home</a>
+        <p>My bad!</p>
+        <p>There appears to be bugs in the beer!</p>
+        <p>Please contact us describing the error and we will swat them as soon as possible!</p>
+        <a href="{% url 'core:home' %}" class="btn cta-btn">Return home</a>
     </div>
   </div>
 </div>  

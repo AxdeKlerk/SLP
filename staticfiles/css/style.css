@@ -6,7 +6,7 @@ body {
     background-color: black;
     font-family: "Geist Mono", monospace;
     font-size: 14px;
-    color:white;
+    color:whitesmoke;
     height: 100vh;
     margin-left: 10px;
 }
@@ -14,20 +14,19 @@ body {
 /*Header*/
 .header {
     position: sticky;
-    top: 0;
     z-index: 1000;
 }
 #logo {
     font-family: "Protest Revolution", sans-serif;
     color: #11ED73;
     padding-top: 10px;
-    font-size: 30px;
+    font-size: 1.5rem;
     text-decoration: none;
 }
 .header-brand {
-    margin-top: 1.5rem;
+    /*margin-top: 1.5rem;*/
 }
-.header-img {
+.header img {
     height: 4rem;
     width: auto;
 }
@@ -70,5 +69,4 @@ footer {
 /*404 & 500 error message*/
 .error-item {
     color: #11ED73;
-    margin-top: 5rem;
 }
