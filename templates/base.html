@@ -36,7 +36,7 @@
 
 <nav class="navbar navbar-dark bg-black">
   <!-- Navbar container -->
-  <div class="container-fluid navbar">
+  <div class="container nav-wrapper justify-content-center">
 
     <!-- Mobile ≤768px: Roxoff logo centered + Hamburger on far right -->
     <div class="d-flex d-md-none w-100 align-items-center px-3 mb-2">
@@ -60,33 +60,37 @@
     </div>
 
     <!-- Desktop Nav: Inline Menu (≥768px) -->
-    <div class="d-none d-md-flex justify-content-center align-items-center w-100">
-      <ul class="nav gap-2">
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'core:home' %}">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'core:about' %}">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Events</a>
-        </li>
-        <li class="nav-item text-end">
-          <a class="nav-link" href="#">Merch</a>
-        </li>
-        <li class="nav-item text-end">
-          <a class="nav-link" href="#">Account</a>
-        </li>
-        <li class="nav-item text-end">
-          <a class="nav-link" href="#">Basket</a>
-        </li>
-        <li class="nav-item text-end">
-          <a class="nav-link" href="#">Search</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'core:contact' %}">Contact</a>
-        </li>
-      </ul>
+    <div class="d-none d-md-block align-items-center w-100">
+
+          <!-- Nav items -->
+          <ul class="nav gap-2">
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:home' %}">Home</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:about' %}">About</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Events</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Merch</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Account</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Basket</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">Search</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="{% url 'core:contact' %}">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
 
     <!-- Mobile Nav Drawer: Offcanvas on right -->
