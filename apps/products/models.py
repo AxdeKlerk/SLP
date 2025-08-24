@@ -5,7 +5,7 @@ from cloudinary.models import CloudinaryField
 # Create your models here.
 class Event(models.Model):
     # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="gig_reviews", null=True, blank=True)
-    image = CloudinaryField('image', blank=True, null=True)
+    image = CloudinaryField('image', folder='slp-upgrade', use_filename=True, blank=True, null=True)
     artist = models.ForeignKey("Artist",on_delete=models.CASCADE, related_name="events", null=True, blank=True)
     description = models.TextField(max_length=2000, null=False, blank=False)
     venue = models.ForeignKey("Venue",on_delete=models.CASCADE, related_name="events", null=True, blank=True)
@@ -25,7 +25,7 @@ class Event(models.Model):
         ('18+', '18+ only'),
         ('14+', '14+ must be accompanied by an adult'),
     ]
-    age = models.CharField(max_length=10, choices=AGE_CHOICES, null=True, blank=True)
+    age = models.CharField(choices=AGE_CHOICES, default='14+ must be accompanied by an adult')
     price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     
     class Meta:

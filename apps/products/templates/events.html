@@ -6,82 +6,54 @@
 
 {% block content %}
 
-<!--<div class="col-md-6 col-lg-3">
-      <div class="card e-item">
-        <img src="https://res.cloudinary.com/dqde3a83z/image/upload/v1756024387/03.08.25_erg2s1.jpg" class="card-img-top" alt="to obey a tyrant and beyond extinction poster">
-        <div class="card-body">
-          <div class="card-text-header">
-            <h2 class="card-title">TO OBEY A TYRANT & BEYOND EXTINCTION</h2>
-            <h3>with Writhe and Lich</h3>
-          </div>
-          <div class="card-text-list">
-            <ul class="list-unstyled">
-              <li>NORWICH: THE BRICKMAKERS</li>
-              <li>Sunday the 03rd of Aug, 2025</li>
-              <li>Door time: 6:15pm</li>
-              <li>Start time: 6:20pm</li>
-              <li>14+ (-18s must be accompanied by a +18)</li>
-              <li>Music - Very Heavy</li>
-            </ul>
-          </div>
-          <div class="mt-auto">
-            <a href="https://wegottickets.com/event/656935" class="btn cta-btn" target="_blank" aria-label="get event tickets for to obey a tyrant and beyond extinction">Get Tickets</a>
-          </div>
-        </div>
-      </div>
-    </div>
-</div>-->
-
-
-<div class="container-fluid text-start">
-  <div class="row align-items-start contact">
-    
-    <!-- Title: always left-aligned -->
-    <div class="col-12 col-md-2 text-start mb-3">
-      <h1 class="page-title">Events</h1>
-    </div>
-
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+<div class="container event-container">
+    <div class="row">
       {% for event in events %}
-        <div class="col">
-          <div class="card h-100 events-card">
+        <div class="col-sm-1 col-md-2 col-lg-3 g-4">
+          <div class="card events-card">
             {% if event.image and event.image.url and "placeholder" not in event.image.url %}
             <img src="{{ event.image.url }}" class="card-img-top" alt="Event image">
             {% else %}
-            <img src="https://res.cloudinary.com/dqde3a83z/image/upload/v1756024898/logo_mbpdhs.png" class="card-img-top logo" alt="Default horns image">
+            <img src="https://res.cloudinary.com/dqde3a83z/image/upload/v1756024898/logo_mbpdhs.png" class="card-img-top logo img-fluid" alt="Default horns image">
             {% endif %}
 
-            <div class="card-body text-center">
+            <div class="card-body text-left">
                 <h5 class="card-title">
-                {% if event.artist.logo %}
-                  <a href="{% url 'artist' event.artist.pk %}" style="color:#11ED73">{{ event.artist.name }}</a><br>
+                {% if event.artist %}
+                  <a href="{% url 'products:artist_detail' pk=event.artist.pk %}" style="color:#11ED73">{{ event.artist.name }}</a><br>
                 {% endif %}
               </h5>
 
-              <p class="card-text link">
-                <strong>Description: </strong>
-                  {{ event.description }}                        
-                <strong>Venue: </strong>
-                  <a href="{% url 'venue' event.venue.pk %}" style="color:#11ED73">{{ event.venue.name }}</a><br>
-                <strong>Door Time: </strong>
-                  {{ event.door_time|time }}<br>
-                <strong>Start Time: </strong>
-                  {{ event.start_time|time }}<br>
-                <strong>Age Restriction: </strong>
-                  {{ event.age }}<br>
-                <strong>Gig Date: </strong>
+              <p class="card-text text-left">
+                {% if event.artist %}
+                  <a href="{% url 'products:artist_detail' pk=event.artist.pk %}" style="color:#11ED73">
+                    {{ event.artist.name }}
+                  </a>
+                {% endif %}<br>
+                Description: 
+                  {{ event.description }}<br><br>
+                Venue:                        
+                  {% if event.venue %}
+                    <a href="{% url 'products:venue_detail' pk=event.venue.pk %}" style="color:#11ED73">
+                      {{ event.venue.name }}
+                    </a>
+                  {% endif %}<br>
+                Door Time: 
+                  {{ event.door_time|time:"H:i" }}<br>
+                Start Time: 
+                  {{ event.start_time|time:"H:i" }}<br>
+                Age Restriction: 
+                  {{ event.get_age_display }}<br><br>
+                Gig Date: 
                   {{ event.gig_date|date:"d/m/Y" }}<br>
-                <strong>Genre:</strong> {{ event.get_genre_display }}
+                Genre: {{ event.get_genre_display }}<br>
+                Price: £{{ event.price }}<br>
               </p>
-
               <div class="card-footer text-center">
                 <a href="https://wegottickets.com/event/656935" class="btn cta-btn" target="_blank" aria-label="get event tickets">Get Tickets</a>
               </div>
             </div>
           </div>
-        </div>
-        <div class="mt-auto">
-          <a href="https://wegottickets.com/event/656935" class="btn cta-btn" target="_blank" aria-label="get event tickets for to obey a tyrant and beyond extinction">Get Tickets</a>
         </div>
       {% endfor %}
     </div>

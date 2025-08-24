@@ -56,13 +56,21 @@ body {
     height: 20px;
     background-size: 100% 100%; /* ensure SVG scales cleanly */
 }
-.nav-link:hover {
-    color: #F5F5F5;
-}
 .nav-link {
     color: #11ED73;
     font-size: 0.8rem;
     text-decoration: none;
+     border: 2px solid transparent;
+    padding: 0.5rem 1rem;
+    transition: border 0.3s ease;
+    display: inline-block;
+}
+.nav-link:hover {
+    color: #F5F5F5;
+}
+.nav-link.active {
+  border: 2px solid #11ED73; /* Glow green, baby */
+  border-radius: 5px;
 }
 /* Reduce offcanvas width and padding if desired */
 .offcanvas.offcanvas-end {
@@ -132,36 +140,31 @@ body {
 }
 
 /*Events page*/
-.e-item {
-    background-color: black;
-    color: #11ED73;
+.event-container {
+    margin-top: 8rem;
+    margin-bottom: 4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
-.e-item ul {
-    font-size: 10px;
+.events-card {
+    background-color: black;
     color: #F5F5F5;
+    max-width: 300px;
+    font-size: 0.8rem;
+    border: 1px solid #11ED73;
+    border-radius: 10px;
+    padding-top: 1rem;
+    margin-bottom: 0;
 }
 .card-img-top {
+    width: 90%;
+    aspect-ratio: 16/9;
     object-fit: cover;
-    height: 100px;
-}
-.card.e-item {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-.card-body {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-.card-body ul {
-    margin-top:auto;
-    margin-bottom: 0.5rem;
-}
-.card-text-list {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+    border-radius: 10px;
+    align-self: center;
+    border: none !important;
+    display: block;
+    margin: 0 auto;
 }
 
 /*Contact page*/

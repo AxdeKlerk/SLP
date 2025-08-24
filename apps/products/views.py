@@ -5,7 +5,8 @@ from .models import Event, Artist, Venue
 
 # Create your views here.
 def events_view(request):
-    return render(request, 'events.html')
+    events = Event.objects.all()
+    return render(request, 'events.html', {'events': events})
 
 def merch_view(request):
     return render(request, 'merch.html')
