@@ -21,7 +21,7 @@
 
 <!--Header-->
 <header class="container header">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center w-100">
         <div class="col-12 col-md-7 justify-content-center align-items-start">
             <a href="{% url 'core:home' %}">
             <img src="{% static 'images/logo-v4.png' %}" class="d-inline-block header-img" alt="logo for searchlight promotions"></a>        
@@ -60,10 +60,10 @@
     </div>
 
     <!-- Desktop Nav: Inline Menu (≥768px) -->
-    <div class="d-none d-md-block align-items-center w-100">
+    <div class="d-none d-md-block w-100">
 
           <!-- Nav items -->
-          <ul class="nav gap-2">
+          <ul class="nav justify-content-between w-100 px-3">
             <li class="nav-item">
             <a class="nav-link" href="{% url 'core:home' %}">Home</a>
             </li>
