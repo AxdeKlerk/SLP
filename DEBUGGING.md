@@ -77,3 +77,27 @@ Removed the `data-bs-dismiss="offcanvas"` attribute from each `<a>` tag inside t
 **Lesson Learned:**  
 If links inside a *Bootstrap* offcanvas are meant to load a new page (like *Django* `{% url %}` links), there is no need for `data-bs-dismiss`. The page reload will automatically hide the offcanvas, so adding dismissal attributes can actually break expected link behaviour.  
 
+## Runtime Error
+
+**Bug:**
+
+*Cloudinary* image uploads failed in the *Django* admin panel. The error traceback ended with:
+    `ValueError: Must supply api_key`
+Even though the .env file included separate CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET variables, they were not being read correctly.
+
+**Fix:**
+
+Instead of using the dictionary-style CLOUDINARY_STORAGE = {...} config in settings.py, I used the unified CLOUDINARY_URL format in .env, like so:
+    `CLOUDINARY_URL=cloudinary://<API_KEY>:<API_SECRET>@<CLOUD_NAME>`
+I also made sure to load this into the environment using *python-dotenv*, like this:
+    from dotenv import load_dotenv
+    load_dotenv(BASE_DIR / '.env')
+
+    CLOUDINARY_URL = os.getenv(`CLOUDINARY_URL`)
+    if CLOUDINARY_URL:
+    os.environ[CLOUDINARY_URL] = CLOUDINARY_URL
+I then removed the old cloudinary.config() and CLOUDINARY_STORAGE = { ... } blocks to avoid conflicts with cloudinary_storage.
+
+**Lesson Learned:**
+
+*Cloudinary* prefers the all-in-one CLOUDINARY_URL format, and it must be present in os.environ before *Django* tries to use it. If you’re using *python-decouple*, it won’t export variables to os.environ automatically, which breaks *Cloudinary* unless you handle it manually. *python-dotenv* with *os.getenv()* works better in this case.
