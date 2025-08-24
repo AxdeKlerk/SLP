@@ -1,65 +1,205 @@
 /*Google fonts import code*/
-@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Protest+Revolution&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&display=swap');
 
 /*global styles*/
 body {
     background-color: black;
     font-family: "Geist Mono", monospace;
-    font-size: 14px;
-    color:whitesmoke;
+    font-size: 10px;
+    color:#F5F5F5;
     height: 100vh;
-    margin-left: 10px;
+    max-width: 1440px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /*Header*/
 .header {
-    position: sticky;
+    position: fixed;
+    top: 0;
+    margin-top: 1rem;
     z-index: 1000;
-}
-#logo {
-    font-family: "Protest Revolution", sans-serif;
-    color: #11ED73;
-    padding-top: 10px;
-    font-size: 1.5rem;
-    text-decoration: none;
-}
-.header-brand {
-    /*margin-top: 1.5rem;*/
+    margin-bottom: 10px;
+    background-color:black;
 }
 .header img {
-    height: 4rem;
+    height: 2.5rem;
     width: auto;
+    display: block;
+}
+
+/*Navbar*/
+.nav-wrapper{
+    position: fixed;
+    top: 60px;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+    background-color: black;
+    width: 100%;
+}
+.nav-wrapper ul.nav {
+    /*outline: 2px dashed orange;*/
+    display: flexbox;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+}
+.navbar-toggler {
+    padding: 0.2rem;      /* Shrink the hamburger icon */
+    line-height: 1;
+    border-color: #11ED73
+}
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%2311ED73' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    width: 20px;            /* match Roxoff logo height */
+    height: 20px;
+    background-size: 100% 100%; /* ensure SVG scales cleanly */
+}
+.nav-link:hover {
+    color: #F5F5F5;
+}
+.nav-link {
+    color: #11ED73;
+    font-size: 0.8rem;
+    text-decoration: none;
+}
+/* Reduce offcanvas width and padding if desired */
+.offcanvas.offcanvas-end {
+    width: 40vw !important;
+}
+
+.offcanvas-body {
+  padding-top: 1rem;
+  margin-left: auto;   /*pushes it to the far right of the drawer */
+}
+
+.offcanvas-body .nav-link {
+    text-align: right;
+}
+.offcanvas-body .nav-link:hover {
+    color: #F5F5F5;
+}
+
+/*Page titles*/
+.page-title {
+    font-size: 1rem;
+    color: #11ED73;
 }
 
 /*Carousel*/
-.c-item {
-    max-height: 100%;
-    padding: 0.8rem;
-    background-color: #11ED73;  
-}
-.c-caption {
-    width: 75%;
-    left: 12.5%;
-    text-align: center;
-    margin-bottom: 0;
-    padding-bottom: 0;
-}
-.c-caption p {
-    font-size: 1.5rem;
+.carousel {
+    margin-top: 4rem;
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
 }
 .carousel-item img {
-  max-height: 500px;
-  object-fit: cover;
+    max-height: 400px;
+    width: auto;
+    object-fit: cover;
+    padding: 0.6rem;
+    background-color: #11ED73;
+}
+.c-caption {
+    position: absolute;
+    bottom: 10%;
+    /*top: 10%; for media query for screens @ 320px wide only*/
+    left: 50%;
+    transform: translateX(-50%);
+    width: 75%;
+    text-align: center;
+}
+.c-caption p {
+    font-size: 0.8rem; /*1rem fro screens bigger that 768px*/
 }
 
-/*Call to action button*/
+/*About page*/
+.about {
+    margin-top: 8rem;
+}
+.a-item {
+    height: 100%;
+    padding: 0.8rem;
+    background-color: #11ED73;
+    font-size: 12px;
+    color: black;
+}
+.a-img {
+    border-radius: 50%;
+    padding: 0.6rem;
+    background-color:#11ED73;
+}
+
+/*Events page*/
+.e-item {
+    background-color: black;
+    color: #11ED73;
+}
+.e-item ul {
+    font-size: 10px;
+    color: #F5F5F5;
+}
+.card-img-top {
+    object-fit: cover;
+    height: 100px;
+}
+.card.e-item {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.card-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.card-body ul {
+    margin-top:auto;
+    margin-bottom: 0.5rem;
+}
+.card-text-list {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+/*Contact page*/
+.contact {
+    margin-top: 8rem;
+}
+.cp-item {
+    color: #11ED73;
+}
+.cta-btn2 {
+    font-size: 0.6rem;
+    border-color: #11ED73;
+    border-block-width: 0.2rem;
+    color: #11ED73;
+}
+
+/*Events page*/
+
+/*Buttons*/
 .cta-btn {
     color: #11ED73;
     border-color: #11ED73;
     border-block-width: 5px;
     margin-top: 1rem;
     margin-bottom: 1rem;
+    font-size: 0.8rem;
 }
+.offcanvas .btn-close {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%2311ED73' viewBox='0 0 16 16'%3e%3cpath d='M2.146 2.146a.5.5 0 0 1 .708 0L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  opacity: 1;
+  background-size: 1em;
+  width: 1em;
+  height: 1em;
+}
+
+
+
+
 
 /*footer*/
 footer {
@@ -70,3 +210,5 @@ footer {
 .error-item {
     color: #11ED73;
 }
+
+

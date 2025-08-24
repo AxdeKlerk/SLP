@@ -1,23 +1,26 @@
-from pathlib import Path
-from decouple import config, Csv
-import dj_database_url
 import os
+from pathlib import Path
+from dotenv import load_dotenv
+import dj_database_url
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load environment variables from .env file
+load_dotenv(BASE_DIR / '.env')
+
 # Security
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # Debug mode
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 # Allowed hosts
-ALLOWED_HOSTS = config(
+ALLOWED_HOSTS = os.getenv(
     'ALLOWED_HOSTS',
     default='127.0.0.1,localhost',
-    cast=Csv()
-)
+   ).split(',')
 
 # Application definition
 INSTALLED_APPS = [
@@ -31,7 +34,7 @@ INSTALLED_APPS = [
     'apps.user',
     'cloudinary',
     'cloudinary_storage',
-    'products',
+    'apps.products',
 ]
 
 MIDDLEWARE = [
@@ -69,12 +72,11 @@ ssl_mode = True if os.environ.get('ON_HEROKU') else False
 
 DATABASES = {
     'default': dj_database_url.parse(
-        config('DATABASE_URL'),
+        os.getenv('DATABASE_URL'),
         conn_max_age=600,
         ssl_require=ssl_mode
     )
 }
-
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -116,13 +118,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Cloudinary settings
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': config('CLOUDINARY_API_KEY'),
-    'API_SECRET': config('CLOUDINARY_API_SECRET'),
-}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Media files
 MEDIA_URL = '/media/'
 
+if not os.getenv('CLOUDINARY_URL'):
+    print("⚠️  CLOUDINARY_URL is not set. Cloudinary uploads will fail.")

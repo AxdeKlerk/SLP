@@ -1,0 +1,30 @@
+
+{% extends 'base.html' %}
+{% load static %}
+{% load cloudinary %}
+
+{% block title %}{{ venue.name }}{% endblock %}
+
+{% block content %}
+<div class="container search-item py-4">
+  <div class="row mx-auto justify-content-center">
+    <div class="col-12 text-center">
+      {% if venue.logo %}
+        <img src="{{ venue.logo.url }}" alt="{{ venue.name }}'s logo" class="img-fluid mb-3">
+      {% else %}
+        <img src="https://res.cloudinary.com/dqde3a83z/image/upload/v1748106876/red-horns_meorvq.png" class="card-img-top horns" alt="Default horns image">
+      {% endif %}
+      {% if venue.town %}
+        <p>{{ venue.town }}</p>
+      {% endif %}
+      {% if venue.post_code %}
+        <p>{{ venue.post_code }}</p>
+      {% endif %}
+      {% if venue.website %}
+        <p class="link">Website: <a href="{{ venue.website }}" target="_blank">{{ venue.website }}</a></p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

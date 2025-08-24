@@ -131,6 +131,39 @@ body {
     background-color:#11ED73;
 }
 
+/*Events page*/
+.e-item {
+    background-color: black;
+    color: #11ED73;
+}
+.e-item ul {
+    font-size: 10px;
+    color: #F5F5F5;
+}
+.card-img-top {
+    object-fit: cover;
+    height: 100px;
+}
+.card.e-item {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.card-body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.card-body ul {
+    margin-top:auto;
+    margin-bottom: 0.5rem;
+}
+.card-text-list {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
 /*Contact page*/
 .contact {
     margin-top: 8rem;
