@@ -20,3 +20,4 @@ class VenueDetailView(DetailView):
     model = Venue
     template_name = 'venue.html' 
     context_object_name = 'venue'
+
