@@ -6,6 +6,7 @@ app_name = 'products'
 
 urlpatterns = [
     path('events/', views.events_view, name='events'),
+    path('previous-gigs/', views.previous_events_view, name='previous_events'),
     #path('artist/', views.artist_view, name='artist'),
     #path('venue/', views.venue_view, name='venue'),
     path('merch/', views.merch_view, name='merch'),

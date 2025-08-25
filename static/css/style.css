@@ -156,7 +156,6 @@ body {
     padding-top: 1rem;
     margin-bottom: 0;
     padding-bottom: 0;
- a
 }
 .card-body {
     padding-top: 0;
@@ -165,6 +164,7 @@ body {
 }
 .event-details {
     padding-left: 1rem;
+    padding-right: 1rem;
     margin-top: 0.5rem;
 }
 .card-img-top {
@@ -180,7 +180,6 @@ body {
 .card-title a {
     font-size: 1.5rem;
     color: #11ED73;
-    min-height: 2rem; /* Ensure consistent height for titles */
     text-decoration: none;
 }
 .card-title a:hover {
@@ -203,10 +202,6 @@ body {
 .description {
     font-size: 0.8rem;
     color: #F5F5F5;
-    margin-bottom: 1rem;
-}
-.card-text {
-    margin-bottom: 0;
 }
 .venue a {
     color: #11ED73;
