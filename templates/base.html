@@ -70,8 +70,16 @@
             <li class="nav-item">
             <a class="nav-link" href="{% url 'core:about' %}">About</a>
             </li>
-            <li class="nav-item">
-            <a class="nav-link" href="{% url 'products:events' %}">Events</a>
+            <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
+            <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
+              <li>
+                <a class="dropdown-item" href="{% url 'products:events' %}">Upcoming Gigs</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'products:previous_events' %}">Previous Gigs</a>
+              </li>
+            </ul>
             </li>
             <li class="nav-item">
             <a class="nav-link" href="{% url 'products:merch' %}">Merch</a>
@@ -104,7 +112,18 @@
             <a class="nav-link" href="{% url 'core:about' %}">About</a>
           </li>
           <li class="nav-item text-end">
-            <a class="nav-link" href="{% url 'products:events' %}">Events</a>
+            <a class="nav-link" data-bs-toggle="collapse" href="#offcanvasEvents" role="button" aria-expanded="false" aria-controls="offcanvasEvents">Events</a>
+            <div class="collapse" id="offcanvasEvents">
+              <ul class="navbar-nav ps-3">
+                <li>
+                  <a class="nav-link" href="{% url 'products:events' %}">Upcoming Gigs</a>
+                </li>
+                <li>
+                  <a class="nav-link" href="{% url 'products:previous_events' %}">Previous Gigs</a>
+                </li>
+              </ul>
+            </div>
+          </li>
           </li>
           <li class="nav-item text-end">
             <a class="nav-link" href="{% url 'products:merch' %}">Merch</a>
