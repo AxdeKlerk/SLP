@@ -6,6 +6,7 @@ from cloudinary.models import CloudinaryField
 class Event(models.Model):
     # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="gig_reviews", null=True, blank=True)
     image = CloudinaryField('image', folder='slp-upgrade', use_filename=True, blank=True, null=True)
+    title = models.CharField(max_length=200, null=True, blank=True, help_text="Optional: Add a title for the event (e.g. Tour Name)")
     artist = models.ForeignKey("Artist",on_delete=models.CASCADE, related_name="events", null=True, blank=True)
     supporting_artists = models.ManyToManyField('Artist', related_name='supporting_for', blank=True, help_text='Select supporting artists from the dropdown')
     description = models.TextField(max_length=2000, null=False, blank=True)

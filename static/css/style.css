@@ -239,9 +239,18 @@ body {
     color: #F5F5F5;
     text-decoration: none;
 }
+.artist {
+    font-size: 1.5rem;
+    color: #11ED73;
+    text-decoration: none;
+}
 .description {
     font-size: 0.8rem;
     color: #F5F5F5;
+}
+.event-title {
+    font-size: 1.5rem;
+    color: #11ED73;    
 }
 .venue a {
     color: #11ED73;

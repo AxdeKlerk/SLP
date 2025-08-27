@@ -21,11 +21,14 @@
 
             {# --- Card body --- #}
             <div class="card-body d-flex flex-column text-center">
-              <p class="card-title mb-0">
+              <div class="card-title mb-0">
+                {% if event.title %}
+                  <p class="event-title text-left mb-0">{{ event.title }}</p>
+                {% endif %}
                 {% if event.artist %}
                   <a href="{% url 'products:artist_detail' pk=event.artist.pk %}">{{ event.artist.name }}</a><br>
                 {% endif %}
-              </p>
+              </div>
               {% if event.supporting_artists.all %}
                 <p class="sub-title text-left mb-0"> 
                   {% for artist in event.supporting_artists.all %}
