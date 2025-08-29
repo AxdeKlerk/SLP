@@ -308,8 +308,12 @@ body {
 .contact {
     margin-top: 8rem;
 }
+.cp-text {
+    font-size: 0.8rem;
+}
 .cp-item {
     color: #11ED73;
+    font-size: 0.8rem;
 }
 .cta-btn2 {
     font-size: 0.6rem;
