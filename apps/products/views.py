@@ -7,7 +7,7 @@ from .models import Event, Artist, Venue
 # Create your views here.
 def events_view(request):
     today = timezone.now().date()  # get today's date
-    events = Event.objects.filter(gig_date__gte=today).order_by('gig_date')
+    events = Event.objects.filter(gig_date__gte=today).exclude(event_type='roxoff').order_by('gig_date')
     return render(request, 'events.html', {'events': events})
 
 def previous_events_view(request):

@@ -30,11 +30,16 @@ class Event(models.Model):
     age = models.CharField(choices=AGE_CHOICES, default='14+ must be accompanied by an adult')
     price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     special_event = models.BooleanField(default=False)
-    DAY_CHOICES = [
+    EVENT_TYPE_CHOICES = [
+        ('regular', 'Regular Event'),
+        ('roxoff', 'Roxoff'),
+    ]
+    event_type = models.CharField(max_length=10,choices=EVENT_TYPE_CHOICES, default='regular')
+    ROXOFF_DAY_CHOICES = [
         ('day1', 'Day 1'),
         ('day2', 'Day 2'),
     ]
-    festival_day = models.CharField(max_length=10, choices=DAY_CHOICES, blank=True, null=True)
+    roxoff_day = models.CharField(max_length=10,choices=ROXOFF_DAY_CHOICES, blank=True, null=True,help_text="Only required for Roxoff events")
     
     class Meta:
         ordering = ['-gig_date']
