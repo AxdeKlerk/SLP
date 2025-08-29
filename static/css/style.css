@@ -283,42 +283,16 @@ body {
   object-fit: cover;
   object-position: center center;
 }
-
 .roxoff-description {
   font-size: 1rem;
   margin-top: 1rem;
 }
 
-/* Roxoff horizontal card – independent of .events-card rules 
-.roxoff-card {
-  background-color: #000;
-  color: #F5F5F5;
-  border: 2px solid #11ED73;
-  border-radius: 10px;
-  overflow: hidden;    /* keeps rounded corners on inner image 
-}*/
 .roxoff .card-img-top {
   /* original events .card-img-top is width: 90%; height: 150px; */
   width: 72%;          /* 90% * 0.8 ≈ 20% smaller */
-  height: 120px;       /* 150px * 0.8 */
+  height: auto;       /* 150px * 0.8 */
 }
-
-/* Fixed-height poster box to stop ultra-tall cards */
-.roxoff-poster {
-  height: 280px;       /* tweak to taste */
-  overflow: hidden;
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
-}
-
-.object-fit-cover { object-fit: cover; display: block; }
-
-/* Scale poster height up a touch on bigger screens */
-@media (min-width: 768px) { .roxoff-poster { height: 300px; } }
-@media (min-width: 992px) { .roxoff-poster { height: 320px; } }
-
-
-
 
 /*Contact page*/
 .contact {

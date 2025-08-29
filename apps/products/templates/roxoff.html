@@ -10,7 +10,7 @@
 <section class="container roxoff-container">
   <div class="row justify-content-center align-items-center">
     <div class="col-12 col-lg-10">
-      <img src="https://res.cloudinary.com/dqde3a83z/image/upload/v1756390547/roxoff-double-v2_dysnmu.png" class="roxoff-img d-block mx-auto" alt="Roxoff event poster announcing Roxoff 3">
+      <img src="https://res.cloudinary.com/dqde3a83z/image/upload/v1756390547/roxoff-double-v2_dysnmu.png" class="roxoff-img img-fluid d-block mx-auto" alt="Roxoff event poster announcing Roxoff 3">
       <p class="roxoff-description text-center">
         Join us for the third edition of ROXOFF, a celebration of rock and metal music featuring an incredible lineup of bands.
         Don't miss out on this unforgettable weekend of loud friends, banging music, loads of beer and various shenanigans!
@@ -23,11 +23,11 @@
 <section class="container mb-2">
   <div class="row justify-content-center">
     {% for event in events %}
-      <div class="col-12 col-md-6 col-lg-4 col-xl-3 g-4">
-        <div class="card events-card roxoff h-100 d-flex flex-column">
+      <div class="col-12 col-md-6 col-lg-4 col-xl-3 d-flex">
+        <div class="card events-card roxoff d-flex flex-column mx-auto">
 
           {% if event.image and event.image.url and "placeholder" not in event.image.url %}
-            <img src="{{ event.image.url }}" class="card-img-top img-fluid" alt="Event image">
+            <img src="{{ event.image.url }}" class="roxoff-img-top img-fluid" alt="Event image">
           {% else %}
             <img src="https://res.cloudinary.com/dqde3a83z/image/upload/v1756024898/logo_mbpdhs.png" class="card-img-top logo img-fluid" alt="Default horns image">
           {% endif %}
