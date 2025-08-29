@@ -9,6 +9,7 @@ urlpatterns = [
     path('previous-gigs/', views.previous_events_view, name='previous_events'),
     #path('artist/', views.artist_view, name='artist'),
     #path('venue/', views.venue_view, name='venue'),
+    path('roxoff/', views.roxoff_view, name='roxoff'),
     path('merch/', views.merch_view, name='merch'),
     # Detail views for clicking into one artist or venue
     path('artist/<int:pk>/', views.ArtistDetailView.as_view(), name='artist_detail'),

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% load static %}
+{% load cloudinary %}
+
+{% block title %}ROXOFF{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<section class="container roxoff-container">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-12 col-lg-10">
+      <img src="https://res.cloudinary.com/dqde3a83z/image/upload/v1756390547/roxoff-double-v2_dysnmu.png" class="roxoff-img d-block mx-auto" alt="Roxoff event poster announcing Roxoff 3">
+      <p class="roxoff-description text-center">
+        Join us for the third edition of ROXOFF, a celebration of rock and metal music featuring an incredible lineup of bands.
+        Don't miss out on this unforgettable weekend of loud friends, banging music, loads of beer and various shenanigans!
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Roxoff cards -->
+<section class="container mb-2">
+  <div class="row justify-content-center">
+    {% for event in events %}
+      <div class="col-12 col-md-6 col-lg-4 col-xl-3 g-4">
+        <div class="card events-card roxoff h-100 d-flex flex-column">
+
+          {% if event.image and event.image.url and "placeholder" not in event.image.url %}
+            <img src="{{ event.image.url }}" class="card-img-top img-fluid" alt="Event image">
+          {% else %}
+            <img src="https://res.cloudinary.com/dqde3a83z/image/upload/v1756024898/logo_mbpdhs.png" class="card-img-top logo img-fluid" alt="Default horns image">
+          {% endif %}
+
+          <div class="card-body d-flex flex-column text-center">
+            <div class="card-title mb-0">
+              {% if event.title %}<p class="event-title text-left mb-0">{{ event.title }}</p>{% endif %}
+              {% if event.artist %}<a href="{% url 'products:artist_detail' pk=event.artist.pk %}">{{ event.artist.name }}</a><br>{% endif %}
+            </div>
+
+            {% if event.supporting_artists.all %}
+              <p class="sub-title text-left mb-0">
+                {% for artist in event.supporting_artists.all %}
+                  <a href="{% url 'products:artist_detail' pk=artist.pk %}">{{ artist.name }}</a>{% if not forloop.last %} & {% endif %}
+                {% endfor %}
+              </p>
+            {% endif %}
+
+            {% if event.description %}
+              <p class="description text-left mb-0">{{ event.description|default:" " }}</p>
+            {% endif %}
+          </div>
+
+          <div class="event-details d-flex flex-column text-left">
+            <p class="venue mb-0">Venue:
+              {% if event.venue %}<a href="{% url 'products:venue_detail' pk=event.venue.pk %}">{{ event.venue.name }}</a><br>{% endif %}
+              Door Time: {{ event.door_time|time:"H:i" }}<br>
+              Start Time: {{ event.start_time|time:"H:i" }}<br>
+              Age Restriction: {{ event.get_age_display }}<br><br>
+              Gig Date: {{ event.gig_date|date:"d/m/Y" }}<br>
+              Genre: {{ event.get_genre_display }}<br>
+              Price: £{{ event.price }}
+            </p>
+          </div>
+
+          <div class="card-footer text-center">
+            <a href="{{ event.ticket_link|default:'#' }}" class="btn cta-btn mb-0" target="_blank" aria-label="get event tickets">
+              Get Tickets for {{ event.get_festival_day_display|default:"Day" }}
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+

@@ -18,6 +18,10 @@ def previous_events_view(request):
 def merch_view(request):
     return render(request, 'merch.html')
 
+def roxoff_view(request):
+    roxoff_event = Event.objects.filter(special_event=True).order_by('gig_date')
+    return render(request, 'roxoff.html', {'events': roxoff_event})
+
 class ArtistDetailView(DetailView):
     model = Artist
     template_name = 'artist.html' 

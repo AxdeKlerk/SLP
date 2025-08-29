@@ -29,6 +29,12 @@ class Event(models.Model):
     ]
     age = models.CharField(choices=AGE_CHOICES, default='14+ must be accompanied by an adult')
     price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    special_event = models.BooleanField(default=False)
+    DAY_CHOICES = [
+        ('day1', 'Day 1'),
+        ('day2', 'Day 2'),
+    ]
+    festival_day = models.CharField(max_length=10, choices=DAY_CHOICES, blank=True, null=True)
     
     class Meta:
         ordering = ['-gig_date']
