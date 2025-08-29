@@ -21,17 +21,17 @@
 
 <!--Header-->
 <header class="container header">
-    <div class="row justify-content-center w-100">
-        <div class="col-12 col-md-7 justify-content-center align-items-start">
-            <a href="{% url 'core:home' %}">
-            <img src="{% static 'images/logo-v4.png' %}" class="d-inline-block header-img" alt="logo for searchlight promotions"></a>        
-        </div>
-        <!-- Roxoff logo (desktop only ≥768px) -->
-        <div class="col-md-5 d-none d-md-flex justify-content-end align-items-center">
+  <div class="row justify-content-center w-100">
+    <div class="col-12 col-md-7 justify-content-center align-items-start">
         <a href="{% url 'core:home' %}">
-            <img src="{% static 'images/Roxoff-logo-2026-v3.png' %}" height="50" alt="Roxoff logo" class="header-img"></a>
-        </div>
+        <img src="{% static 'images/logo-v4.png' %}" class="d-inline-block header-img" alt="logo for searchlight promotions"></a>        
     </div>
+    <!-- Roxoff logo (desktop only ≥768px) -->
+    <div class="col-md-5 d-none d-md-flex justify-content-end align-items-center">
+    <a href="{% url 'core:home' %}">
+        <img src="{% static 'images/Roxoff-logo-2026-v3.png' %}" height="50" alt="Roxoff logo" class="header-img"></a>
+    </div>
+  </div>
 </header>
 
 <nav class="navbar navbar-dark bg-black">
@@ -63,54 +63,58 @@
     <div class="d-none d-md-block w-100">
       {% with url_name=request.resolver_match.url_name %}
 
-          <!-- Nav items -->
-          <ul class="nav justify-content-between w-100">
-            <li class="nav-item">
-            <a class="nav-link" href="{% url 'core:home' %}">Home</a>
+      <!-- Nav items -->
+      <ul class="nav justify-content-between w-100">
+        <li class="nav-item">
+        <a class="nav-link" href="{% url 'core:home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="{% url 'core:about' %}">About</a>
+        </li>
+        <!-- Events dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {% if url_name == 'events' or url_name == 'previous_events' %}active{% endif %}" id="eventsDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
+          <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
+            <li>
+              <a class="dropdown-item {% if url_name == 'events' %}active{% endif %}"href="{% url 'products:events' %}">Upcoming Gigs</a>
             </li>
-            <li class="nav-item">
-            <a class="nav-link" href="{% url 'core:about' %}">About</a>
-            </li>
-            <li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle
-            {% if url_name == 'events' or url_name == 'previous_events' %}active{% endif %}"
-     id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Events
-  </a>
-  <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
-    <li>
-      <a class="dropdown-item {% if url_name == 'events' %}active{% endif %}"
-         href="{% url 'products:events' %}">Upcoming Gigs</a>
-    </li>
-    <li>
-      <a class="dropdown-item {% if url_name == 'previous_events' %}active{% endif %}"
-         href="{% url 'products:previous_events' %}">Previous Gigs</a>
-    </li>
-  </ul>
-</li>
-{% endwith %}
-
-            <li class="nav-item">
-            <a class="nav-link" href="{% url 'products:merch' %}">Merch</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="{% url 'products:roxoff' %}">ROXOFF</a>
-            </li>            
-            <li class="nav-item">
-            <a class="nav-link" href="#">Account</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="#">Basket</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="#">Search</a>
-            </li>
-            <li class="nav-item">
-            <a class="nav-link" href="{% url 'core:contact' %}">Contact</a>
+            <li>
+              <a class="dropdown-item {% if url_name == 'previous_events' %}active{% endif %}"href="{% url 'products:previous_events' %}">Previous Gigs</a>
             </li>
           </ul>
-        </div>
-      </div>
+        </li>
+        <!-- Dropdown siblings -->
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'products:merch' %}">Merch</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'products:roxoff' %}">ROXOFF</a>
+        </li>            
+        <li class="nav-item">
+          <a class="nav-link" href="#">Account</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Basket</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {% if url_name in 'artist_search venue_search' %}active{% endif %}" id="searchDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Search</a>
+          <ul class="dropdown-menu" aria-labelledby="searchDropdown">
+            <li class="px-3 py-2">
+              <label for="artist-search" class="form-label mb-1 text-light">Artist</label>
+              <input type="text" id="artist-search" name="artist" class="form-control form-control-sm bg-black text-light border-success">
+            </li>
+            <li class="px-3 py-2">
+              <label for="venue-search" class="form-label mb-1 text-light">Venue</label>
+              <input type="text" id="venue-search" name="venue" class="form-control form-control-sm bg-black text-light border-success">
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'core:contact' %}">Contact</a>
+        </li>
+      </ul>
+      {% endwith %}
     </div>
 
     <!-- Mobile Nav Drawer: Offcanvas on right -->
@@ -173,12 +177,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
-<script>
-    // This script runs when the DOM is fully loaded for testing purposes
-  document.addEventListener('DOMContentLoaded', () => {
-    console.log("🎉 Bootstrap JS is loaded!");
-  });
-</script>
 <script src="{% static 'js/script.js' %}"></script>
 
 </body>
