@@ -71,6 +71,16 @@ body {
   border: 2px solid #11ED73; /* Glow green, baby */
   border-radius: 5px;
 }
+/* Highlight parent toggle when any submenu item is active or the menu is open */
+.navbar .nav-link.active { 
+  border: 2px solid #11ED73; 
+  border-radius: 5px;
+}
+.navbar .dropdown-item.active {
+  color: #11ED73;
+  background: transparent;
+}
+
 /* Border when dropdown is open */
 .navbar .nav-link.dropdown-toggle[aria-expanded="true"] {
   border: 2px solid #11ED73;

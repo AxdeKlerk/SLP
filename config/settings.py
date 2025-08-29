@@ -123,5 +123,4 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 # Media files
 MEDIA_URL = '/media/'
 
-if not os.getenv('CLOUDINARY_URL'):
-    print("⚠️  CLOUDINARY_URL is not set. Cloudinary uploads will fail.")
+

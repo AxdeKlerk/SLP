@@ -61,6 +61,7 @@
 
     <!-- Desktop Nav: Inline Menu (≥768px) -->
     <div class="d-none d-md-block w-100">
+      {% with url_name=request.resolver_match.url_name %}
 
           <!-- Nav items -->
           <ul class="nav justify-content-between w-100 px-3">
@@ -71,16 +72,24 @@
             <a class="nav-link" href="{% url 'core:about' %}">About</a>
             </li>
             <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
-            <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
-              <li>
-                <a class="dropdown-item" href="{% url 'products:events' %}">Upcoming Gigs</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="{% url 'products:previous_events' %}">Previous Gigs</a>
-              </li>
-            </ul>
-            </li>
+  <a class="nav-link dropdown-toggle
+            {% if url_name == 'events' or url_name == 'previous_events' %}active{% endif %}"
+     id="eventsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Events
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
+    <li>
+      <a class="dropdown-item {% if url_name == 'events' %}active{% endif %}"
+         href="{% url 'products:events' %}">Upcoming Gigs</a>
+    </li>
+    <li>
+      <a class="dropdown-item {% if url_name == 'previous_events' %}active{% endif %}"
+         href="{% url 'products:previous_events' %}">Previous Gigs</a>
+    </li>
+  </ul>
+</li>
+{% endwith %}
+
             <li class="nav-item">
             <a class="nav-link" href="{% url 'products:merch' %}">Merch</a>
             </li>
