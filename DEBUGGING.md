@@ -101,3 +101,17 @@ I then removed the old cloudinary.config() and CLOUDINARY_STORAGE = { ... } bloc
 **Lesson Learned:**
 
 *Cloudinary* prefers the all-in-one CLOUDINARY_URL format, and it must be present in os.environ before *Django* tries to use it. If you’re using *python-decouple*, it won’t export variables to os.environ automatically, which breaks *Cloudinary* unless you handle it manually. *python-dotenv* with *os.getenv()* works better in this case.
+
+## Template Logic — Navbar active state (dropdown parent)
+
+**Bug:**
+Initially the `Events` navbar item wasn't staying highlighted once one of the dropdown items were selected. I then hard coded the `Events` navbar item as `active` and realised that the issue was with the relationship between parent and child items.
+
+**Fix:**
+I removed the hard-coded `active` from the parent toggle and marked the parent/children `active`:
+
+`{% if url_name == 'events' or url_name == 'previous_events' %}active{% endif %}` based on the current view name with a request resolver above: `{% with url_name=request.resolver_match.url_name %}` and added the `active` status to my css to increase specifity.
+
+**Lesson Learned:**
+
+Don’t hard-code active on nav items; compute it from the current route. For dropdowns, the parent’s state should reflect child activity (via request.resolver_match.url_name) and keep CSS specific but simple; Bootstrap’s defaults can override you unless your rules target the right elements.
