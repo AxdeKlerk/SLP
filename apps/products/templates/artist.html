@@ -14,10 +14,10 @@
         <img src="https://res.cloudinary.com/dqde3a83z/image/upload/v1748106876/red-horns_meorvq.png" class="card-img-top horns" alt="Default horns image">
       {% endif %}
       {% if artist.bio %}
-        <p>{{ artist.bio }}</p>
+        <p class="bio">{{ artist.bio }}</p>
       {% endif %}
       {% if artist.website %}
-        <p class="link">Website: <a href="{{ artist.website }}" target="_blank">{{ artist.website }}</a></p>
+        <p class="link website">Website: <a class="website-link" href="{{ artist.website }}" target="_blank">{{ artist.website }}</a></p>
       {% endif %}
     </div>
   </div>

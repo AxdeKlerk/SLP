@@ -302,11 +302,28 @@ body {
   font-size: 1rem;
   margin-top: 1rem;
 }
-
 .roxoff .card-img-top {
   /* original events .card-img-top is width: 90%; height: 150px; */
   width: 72%;          /* 90% * 0.8 ≈ 20% smaller */
   height: auto;       /* 150px * 0.8 */
+}
+.bio {
+  font-size: 1rem;
+  color: #F5F5F5;
+  margin-top: 1rem; 
+}
+.website {
+  font-size: 0.9rem;
+  color: #F5F5F5;
+  margin-top: 0.5rem;
+}
+.website-link {
+  color: #11ED73;
+  text-decoration: none;
+}
+.website-link:hover {
+  color: #F5F5F5;
+  text-decoration: none;
 }
 
 /*Contact page*/

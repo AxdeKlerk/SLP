@@ -177,4 +177,36 @@ Below is the "README Initial write-up" Task list, and the Dev-Ops Epic:
 ![dev-ops epic](DOCS/images/dev-ops-epic-v2.jpg)
 
 
+## Credits and Acknowledgements
 
+### Credits
+
+Below are the list of resources that I used to complete this project along with aknowledgements for the people who have supportedme and helped me test my ideas.
+
+- Short Pixel for image compressions
+- The following resources were used to help with the development of the website:
+- [Adobe Express](https://new.express.adobe.com/?xProduct=&xProductLocation=&locale=en-US) for the logo creation
+- [Balsamic](https://balsamiq.com/) for the wireframes
+- [BootStrap](https://simple.wikipedia.org/wiki/Bootstrap_(front-end_framework)) - used for the layout and styling of the website
+- [Bootstrap Docs](https://getbootstrap.com/) for reference to all Bootstrap syntax
+- [Chat-GPT](https://chatgpt.com/) - An AI tool used for understanding where things went wrong, how to fix code and generally used for deeper understanding of software development and the principles and languages used for coding
+- [coolors.co](https://coolors.co/) for the colour palette
+- [CSS](https://en.wikipedia.org/wiki/CSS) - used for main content styling
+- [Django](https://simple.wikipedia.org/wiki/Django_(web_framework)) - used for the backend of the website
+- [draw.io](https://app.diagrams.net/) for the ERD
+- [Google Fonts](https://fonts.google.com/) - for typology
+- [Google Images](https://images.google.co.uk/) - for the band and venue logos
+- [HTML](https://en.wikipedia.org/wiki/HTML) - used to build main site content
+- [JavaScript](https://simple.wikipedia.org/wiki/JavaScript) - used for all interactivity within the website
+- [JSHint](https://jshint.com/) for Javascript validation
+- [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview) - for the performance and accessibility testing
+- [MSWord](https://www.microsoft.com/en-us/microsoft-365/word) - used for grammar and spelling checking
+- [Perplexity](https://www.perplexity.ai/) - An AI tool used for general queries and learning
+- [Python](https://simple.wikipedia.org/wiki/Python_(programming_language)) - used for the backend of the website
+- [Responsive Viewer](https://responsiveviewer.org/)- used for responsive screen testing
+- [Short Pixel](https://shortpixel.com/) - for image compressions
+- [Slack Edit](https://stackedit.io/) - for markdown references
+- [Slack Overflow](https://stackoverflow.com/questions) - for general queries
+- [W3schools](https://www.w3schools.com/) a constant source of reference for all html, CSS, JavaScript, BootStrap and Django explanations
+- [W3C Markup Validation Service](https://validator.w3.org/) for the html validation
+- [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/) for the CSS validation
