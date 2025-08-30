@@ -12,7 +12,7 @@
         <img src="{{ venue.logo.url }}" alt="{{ venue.name }}'s logo" class="img-fluid mb-3 search-item-img">
       {% endif %}
       {% if venue.bio %}
-        <p class="bio">{{ venue.bio }}</p>
+        <div class="bio">{{ venue.bio|linebreaks }}</div>
       {% endif %}
       {% if venue.website %}
         <p class="website">Website: <a class="website-link" href="{{ venue.website }}" target="_blank">{{ venue.website }}</a></p>

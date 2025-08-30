@@ -314,7 +314,7 @@ body {
   text-align: center;
 }
 .search-item-img {
-    width: 400px;
+    width: 500px;
     height: auto;
     object-fit: contain; /* Ensures the entire image is visible */
     object-position: center;
