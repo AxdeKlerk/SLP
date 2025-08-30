@@ -13,6 +13,23 @@ body {
     margin-right: auto;
 }
 
+/* Page Title */
+.page-heading {
+    margin-top: 5rem;
+}
+.page-heading h1 {
+    font-size: 0.9rem;
+    font-weight: 300;
+    margin: 0;
+    padding: 0.4rem 0.4rem;
+    color: #11ED73 !important;
+    background-color: black;
+    border: 1px solid #11ED73; 
+    border-radius: 5px;
+    margin: 0 auto;       /* Center the element */
+    display: inline-block;
+}
+
 /*Header*/
 .header {
     position: fixed;
@@ -80,7 +97,6 @@ body {
   color: #11ED73;
   background: transparent;
 }
-
 /* Border when dropdown is open */
 .navbar .nav-link.dropdown-toggle[aria-expanded="true"] {
   border: 2px solid #11ED73;
@@ -103,7 +119,6 @@ body {
 .navbar .dropdown-menu label {
   font-size: 0.7rem;
 }
-
 /* Hover/focus = neon green text */
 .navbar .dropdown-item:hover,
 .navbar .dropdown-item:focus {
@@ -402,7 +417,12 @@ footer {
 /* Media Queries */
 @media (min-width: 768px) {
   .c-caption p{
-      font-size: 1rem; /*1rem fro screens bigger that 768px*/
+      font-size: 1rem;
+  }
+}
+@media (max-width: 425px) {
+  .carousel {
+      margin-top: 0.3rem;
   }
 }
 @media (min-width: 1024px) {

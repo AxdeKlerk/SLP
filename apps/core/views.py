@@ -4,16 +4,16 @@ from django.views import View
 
 # Create your views here.
 def home_view(request):
-    return render(request, 'home.html')
+    return render(request, 'core/home.html', {'page_title': 'Home'})
 
 def about_view(request):
-    return render(request, 'about.html')
+    return render(request, 'core/about.html', {'page_title': 'About'})
 
 def contact_view(request):
-    return render(request, 'contact.html')
+    return render(request, 'core/contact.html', {'page_title': 'Contact'})
 
 def thankyou_view(request):
-    return render(request, 'thankyou.html')
+    return render(request, 'core/thankyou.html', {'page_title': 'thankyou'})
 
 # Testing 500 page
 def crash_view(request):

@@ -28,7 +28,7 @@
     </div>
     <!-- Roxoff logo (desktop only ≥768px) -->
     <div class="col-md-5 d-none d-md-flex justify-content-end align-items-center">
-    <a href="{% url 'core:home' %}">
+    <a href="{% url 'products:roxoff' %}">
         <img src="{% static 'images/Roxoff-logo-2026-v3.png' %}" height="50" alt="Roxoff logo" class="header-img"></a>
     </div>
   </div>
@@ -46,7 +46,7 @@
 
       <!-- Roxoff Logo (mobile only ≤768px, centered) -->
       <div class="flex-grow-1 text-center">
-          <a href="{% url 'core:home' %}">
+          <a href="{% url 'products:roxoff' %}">
           <img src="{% static 'images/Roxoff-logo-2026-v3.png' %}" height="35" alt="Roxoff logo" class="header-img">
           </a>
       </div>
@@ -172,6 +172,13 @@
   </div>
 </nav>
 
+<div class="container mt-3 d-md-none">
+  {% if page_title %}
+    <div class="page-heading text-center py-3">
+      <h1 class="text-light">{{ page_title }}</h1>
+    </div>
+  {% endif %}
+</div>
 
 {% block content %}{% endblock %}
 
