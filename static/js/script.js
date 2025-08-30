@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => {
               if (data.id) {
-                window.location.href = `/artist/${data.id}/`;
+                window.location.href = `/products/artist/${data.id}/`;
               } else {
                 alert("Artist not found");
               }
@@ -32,9 +32,10 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+});
 
   // Function to fetch venue ID based on search input
-  document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
   const venueSearch = document.getElementById("venue-search");
   if (venueSearch) {
     venueSearch.addEventListener("keydown", function (e) {
@@ -46,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(response => response.json())
             .then(data => {
               if (data.id) {
-                window.location.href = `/venue/${data.id}/`;
+                window.location.href = `/products/venue/${data.id}/`;
               } else {
                 alert("Venue not found");
               }
@@ -56,4 +57,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-
