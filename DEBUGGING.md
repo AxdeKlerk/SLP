@@ -158,4 +158,20 @@ window.location.href = `/products/artist/${data.id}/`;
 **Lesson Learned:**
 When using app-level namespacing `(namespace='products')`, routes must consistently match the URL prefix (/products/...). Having both root-level and prefixed includes causes unpredictable routing. Always verify that JavaScript redirects match your configured URL patterns.
 
+## Navigation Highlight Issue
 
+**Bug:**
+
+The *Search* navbar item did not stay highlighted when navigating to either the artist or venue detail page (`artist_detail`, `venue_detail`). The expected behavior was for the *Search* tab to be marked active when the user was on these pages, just like the *Events* tab behaves when on related event pages.
+
+**Fix:**  
+I identified that the condition checking the *Search* tab for `artist_search` and `venue_search` was incorrect because those were not the actual view names. Instead, the actual view names were `artist_detail` and `venue_detail`. I updated the navbar to use these correct names.
+
+**Lesson Learned:**  
+When using `url_name` for template conditions, it’s essential to ensure I’m checking against the correct view name. I learned to debug this by printing `url_name` in the template using:
+
+<p style="color:red; font-size:12px">
+  url_name = {{ request.resolver_match.url_name }}
+</p>
+
+This helped me verify the actual names *Django* was using for each page. Always ensure the condition matches the exact value of `url_name` for the intended behavior.
