@@ -132,5 +132,30 @@ I realised I needed a way to clearly separate Roxoff events from regular ones. S
 
 It’s better to explicitly separate types of events in the model using a dedicated field like event_type. That way, filtering them in views is more reliable and readable than trying to guess based on other values like roxoff_day. It also makes future development easier, especially if I need more event types later.
 
+## Routing Error
+
+**Bug:**
+The venue search was returning a 404 error after submitting a search term. The artist search worked perfectly, even though the structure for both was identical in urls.py, views.py, and JavaScript. Visiting a URL like /venue/2/ returned a 404, but /artist/5/ did not.
+
+**Fix:**
+The issue was caused by relying on both root-level and namespaced includes for the products app in config/urls.py. At one point, both of these were present:
+
+`path('', include('apps.products.urls')),`
+`path('products/', include('apps.products.urls', namespace='products')),`
+
+This meant some views worked at /artist/5/ (because of the root include), while others like /venue/2/ failed (due to inconsistent includes or redirects).
+Once the root-level include was removed for clarity and consistency, all routes required the /products/ prefix. The fix involved two changes:
+
+Removed the root include:
+
+`path('', include('apps.products.urls')),`  # removed
+
+Updated JS redirects to include the /products/ prefix:
+
+window.location.href = `/products/venue/${data.id}/`;
+window.location.href = `/products/artist/${data.id}/`;
+
+**Lesson Learned:**
+When using app-level namespacing `(namespace='products')`, routes must consistently match the URL prefix (/products/...). Having both root-level and prefixed includes causes unpredictable routing. Always verify that JavaScript redirects match your configured URL patterns.
 
 
