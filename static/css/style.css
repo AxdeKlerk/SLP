@@ -267,9 +267,12 @@ body {
     font-size: 1.5rem;
     color: #11ED73;    
 }
+.venue {
+    font-size: 0.8rem;
+}
 .venue a {
     color: #11ED73;
-    font-size: 0.8rem;
+    font-size: 1rem;
     text-decoration: none;
 }
 .venue a:hover {
@@ -285,33 +288,32 @@ body {
 
 /* Roxoff page */
 .roxoff-container {
-  margin-top: 8rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+    margin-top: 8rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 .roxoff-img {
-  width: 100%;
-  height: auto;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  object-fit: cover;
-  object-position: center center;
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: cover;
+    object-position: center center;
 }
 .roxoff-description {
-  font-size: 1rem;
-  margin-top: 1rem;
+    font-size: 1rem;
+    margin-top: 1rem;
 }
 .roxoff .card-img-top {
-  /* original events .card-img-top is width: 90%; height: 150px; */
-  width: 72%;          /* 90% * 0.8 ≈ 20% smaller */
-  height: auto;       /* 150px * 0.8 */
+    width: 72%;
+    height: auto;
 }
 
 /*Search results page*/
 .search-item {
-  margin-top: 8rem;
-  text-align: center;
+    margin-top: 8rem;
+    text-align: center;
 }
 .search-item-img {
     width: 500px;
@@ -323,25 +325,25 @@ body {
     background-color: black; /* Fills empty space if image doesn’t */
 }
 .bio {
-  font-size: 1rem;
-  color: #F5F5F5;
-  margin-top: 1rem; 
+    font-size: 1rem;
+    color: #F5F5F5;
+    margin-top: 1rem; 
 }
 .website {
-  font-size: 0.9rem;
-  color: #F5F5F5;
-  margin-top: 0.5rem;
-  overflow-wrap: anywhere;    
-  white-space: normal; 
+    font-size: 0.9rem;
+    color: #F5F5F5;
+    margin-top: 0.5rem;
+    overflow-wrap: anywhere;    
+    white-space: normal; 
 }
 .website-link {
-  font-size: 0.9rem;
-  color: #11ED73;
-  text-decoration: none;
+    font-size: 0.9rem;
+    color: #11ED73;
+    text-decoration: none;
 }
 .website-link:hover {
-  color: #F5F5F5;
-  text-decoration: none;
+    color: #F5F5F5;
+    text-decoration: none;
 }
 
 /*Contact page*/
@@ -372,15 +374,17 @@ body {
     color: #11ED73;
 }
 .offcanvas .btn-close {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%2311ED73' viewBox='0 0 16 16'%3e%3cpath d='M2.146 2.146a.5.5 0 0 1 .708 0L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
-  opacity: 1;
-  background-size: 1em;
-  width: 1em;
-  height: 1em;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%2311ED73' viewBox='0 0 16 16'%3e%3cpath d='M2.146 2.146a.5.5 0 0 1 .708 0L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    opacity: 1;
+    background-size: 1em;
+    width: 1em;
+    height: 1em;
 }
 
 /*footer*/
 footer {
+    Font-size: 0.8rem;
+    text-align: center;
     color: #11ED73;
 }
 
