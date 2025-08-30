@@ -83,7 +83,6 @@
             </li>
           </ul>
         </li>
-        <!-- Dropdown siblings -->
         <li class="nav-item">
           <a class="nav-link" href="{% url 'products:merch' %}">Merch</a>
         </li>
@@ -96,19 +95,29 @@
         <li class="nav-item">
           <a class="nav-link" href="#">Basket</a>
         </li>
+        <!-- Search dropdown -->
+        {% with url_name=request.resolver_match.url_name %}
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle {% if url_name in 'artist_search venue_search' %}active{% endif %}" id="searchDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Search</a>
+          <a class="nav-link dropdown-toggle 
+            {% if url_name == 'artist_detail' or url_name == 'venue_detail' %}active{% endif %}"
+            id="searchDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Search
+          </a>
           <ul class="dropdown-menu" aria-labelledby="searchDropdown">
             <li class="px-3 py-2">
               <label for="artist-search" class="form-label mb-1 text-light">Artist</label>
-              <input type="text" id="artist-search" name="artist" class="form-control form-control-sm bg-black text-light border-success">
+              <input type="text" id="artist-search" name="artist"
+                    class="form-control form-control-sm bg-black text-light border-success">
             </li>
             <li class="px-3 py-2">
               <label for="venue-search" class="form-label mb-1 text-light">Venue</label>
-              <input type="text" id="venue-search" name="venue" class="form-control form-control-sm bg-black text-light border-success">
+              <input type="text" id="venue-search" name="venue"
+                    class="form-control form-control-sm bg-black text-light border-success">
             </li>
           </ul>
         </li>
+        {% endwith %}
+
 
         <li class="nav-item">
           <a class="nav-link" href="{% url 'core:contact' %}">Contact</a>
