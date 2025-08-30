@@ -344,7 +344,8 @@ body {
   height: 1em;
 }
 
-.search-items {
+/*Search results page*/
+.search-item {
   margin-top: 4rem;
   max-width: 1140px;
   margin-left: auto;
