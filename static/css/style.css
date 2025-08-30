@@ -181,11 +181,16 @@ body {
 .about {
     margin-top: 8rem;
 }
+.about-text {
+    font-size: 1rem;  
+}
+.about-text-p {
+    font-size: 0.9rem;  
+}
 .a-item {
     height: 100%;
     padding: 0.8rem;
     background-color: #11ED73;
-    font-size: 12px;
     color: black;
 }
 .a-img {
@@ -322,7 +327,7 @@ body {
     object-position: center;
     display: block;
     margin: 0 auto;         /* Centres it horizontally */
-    background-color: black; /* Fills empty space if image doesn’t */
+    background-color: black;
 }
 .bio {
     font-size: 1rem;
@@ -394,3 +399,14 @@ footer {
 }
 
 
+/* Media Queries */
+@media (min-width: 768px) {
+  .c-caption p{
+      font-size: 1rem; /*1rem fro screens bigger that 768px*/
+  }
+}
+@media (min-width: 1024px) {
+  .c-caption-p {
+      font-size: 1.2rem; 
+  }
+}
