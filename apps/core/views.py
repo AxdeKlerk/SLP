@@ -13,7 +13,7 @@ def contact_view(request):
     return render(request, 'core/contact.html', {'page_title': 'Contact'})
 
 def thankyou_view(request):
-    return render(request, 'core/thankyou.html', {'page_title': 'thankyou'})
+    return render(request, 'core/thankyou.html')
 
 # Testing 500 page
 def crash_view(request):

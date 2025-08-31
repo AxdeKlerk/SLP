@@ -12,15 +12,15 @@ from django.urls import reverse_lazy
 def events_view(request):
     today = timezone.now().date()  # get today's date
     events = Event.objects.filter(gig_date__gte=today).exclude(event_type='roxoff').order_by('gig_date')
-    return render(request, 'events.html', {'events': events})
+    return render(request, 'events.html', {'events': events, 'page_title': 'Upcoming Events'})
 
 def previous_events_view(request):
     today = timezone.now().date()
     past_events = Event.objects.filter(gig_date__lt=today).order_by('-gig_date')
-    return render(request, 'previous_events.html', {'events': past_events})
+    return render(request, 'previous_events.html', {'events': past_events, 'page_title': 'Previous Events'})
 
 def merch_view(request):
-    return render(request, 'merch.html')
+    return render(request, 'merch.html', {'page_title': 'Merch'})
 
 def roxoff_view(request):
     roxoff_event = Event.objects.filter(special_event=True).order_by('gig_date')
@@ -31,10 +31,20 @@ class ArtistDetailView(DetailView):
     template_name = 'artist.html' 
     context_object_name = 'artist'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = "Artist"
+        return context
+
 class VenueDetailView(DetailView):
     model = Venue
     template_name = 'venue.html' 
     context_object_name = 'venue'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = "Venue"
+        return context
 
 def get_artist_id(request):
     name = request.GET.get("name", "")
@@ -62,11 +72,21 @@ class MerchListView(ListView):
         if cat:
             qs = qs.filter(product_category=cat)
         return qs
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = "Merch"
+        return context
 
 class MerchDetailView(DetailView):
     model = Merch
     template_name = "products/merch.html"
     context_object_name = "item"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = "Merch"
+        return context
 
 class OwnerRequiredMixin(UserPassesTestMixin):
     def test_func(self): return self.get_object().created_by == self.request.user
@@ -77,6 +97,11 @@ class MerchCreateView(LoginRequiredMixin, CreateView):
     form_class = MerchForm
     template_name = "products/merch.html"
     success_url = reverse_lazy("products:merch_list")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = "Merch"
+        return context
 
 class MerchUpdateView(LoginRequiredMixin, UpdateView):
     model = Merch
@@ -91,6 +116,11 @@ class MerchUpdateView(LoginRequiredMixin, UpdateView):
     def get_queryset(self):
         qs = super().get_queryset()
         return qs.filter(created_by=self.request.user)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = "Merch"
+        return context
 
 class MerchDeleteView(LoginRequiredMixin, DeleteView):
     model = Merch
@@ -100,4 +130,9 @@ class MerchDeleteView(LoginRequiredMixin, DeleteView):
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, "Item deleted.")
         return super().delete(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = "Merch"
+        return context
 

@@ -99,7 +99,7 @@
         {% with url_name=request.resolver_match.url_name %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle 
-            {% if url_name == 'artist_detail' or url_name == 'venue_detail' %}active{% endif %}"
+            {% if url_name == 'artist_detail' or url_name == 'venue_detail' or url_name == 'merch_detail' %}active{% endif %}"
             id="searchDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Search
           </a>
@@ -112,6 +112,11 @@
             <li class="px-3 py-2">
               <label for="venue-search" class="form-label mb-1 text-light">Venue</label>
               <input type="text" id="venue-search" name="venue"
+                    class="form-control form-control-sm bg-black text-light border-success">
+            </li>
+            <li class="px-3 py-2">
+              <label for="merch-search" class="form-label mb-1 text-light">Merch</label>
+              <input type="text" id="merch-search" name="merch"
                     class="form-control form-control-sm bg-black text-light border-success">
             </li>
           </ul>
@@ -174,7 +179,7 @@
 
 <div class="container mt-3 d-md-none">
   {% if page_title %}
-    <div class="page-heading text-center py-3">
+    <div class="page-heading text-left py-3">
       <h1 class="text-light">{{ page_title }}</h1>
     </div>
   {% endif %}

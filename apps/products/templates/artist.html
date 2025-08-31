@@ -5,8 +5,8 @@
 {% block title %}{{ artist.name }}{% endblock %}
 
 {% block content %}
-<div class="container">
-  <div class="row mx-auto justify-content-center search-item">
+<div class="container container-global">
+  <div class="row mx-auto justify-content-center text-center">
     <div class="col-12 text-center">
       {% if artist.logo %}
         <img src="{{ artist.logo.url }}" alt="{{ artist.name }}'s logo" class="img-fluid mb-3 search-item-img">

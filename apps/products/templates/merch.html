@@ -4,7 +4,8 @@
 
 {% block title %}Merch{% endblock %}
 
-<div class="container my-4">
+{% block content %}
+<div class="container container-global">
 
   {# --- Messages (optional if already in base) --- #}
   {% if messages %}
@@ -59,27 +60,6 @@
 
   {# ---------- LIST VIEW ---------- #}
   {% else %}
-    <h1 class="h3">Merch</h1>
-
-    <form class="row g-2 my-3" method="get">
-      <div class="col-md-6">
-        <input class="form-control" type="search" name="q" value="{{ request.GET.q }}" placeholder="Search merch...">
-      </div>
-      <div class="col-md-4">
-        <select class="form-select" name="category">
-          <option value="">All categories</option>
-          {% for val,label in items.model.CATEGORY_CHOICES %}
-            <option value="{{ val }}" {% if request.GET.category == val %}selected{% endif %}>{{ label }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="col-md-2 d-flex gap-2">
-        <button class="btn btn-dark w-100">Filter</button>
-        {% if request.user.is_authenticated %}
-          <a class="btn btn-outline-dark w-100" href="{% url 'products:merch_add' %}">Add</a>
-        {% endif %}
-      </div>
-    </form>
 
     <div class="row g-3">
       {% for m in items %}
@@ -97,8 +77,6 @@
             </div>
           </div>
         </div>
-      {% empty %}
-        <p>No merch yet.</p>
       {% endfor %}
     </div>
 
@@ -117,7 +95,6 @@
         </ul>
       </nav>
     {% endif %}
-
   {% endif %}
 </div>
 {% endblock %}

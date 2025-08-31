@@ -12,7 +12,12 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
-
+.container-global {
+    margin-top: 8rem;
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
 /* Page Title */
 .page-heading {
     margin-top: 5rem;
@@ -24,10 +29,6 @@ body {
     padding: 0.4rem 0.4rem;
     color: #11ED73 !important;
     background-color: black;
-    border: 1px solid #11ED73; 
-    border-radius: 5px;
-    margin: 0 auto;       /* Center the element */
-    display: inline-block;
 }
 
 /*Header*/
@@ -167,7 +168,6 @@ body {
 
 /*Carousel*/
 .carousel {
-    margin-top: 4rem;
     max-width: 1140px;
     margin-left: auto;
     margin-right: auto;
@@ -193,9 +193,6 @@ body {
 }
 
 /*About page*/
-.about {
-    margin-top: 8rem;
-}
 .about-text {
     font-size: 1rem;  
 }
@@ -215,12 +212,6 @@ body {
 }
 
 /*Events page*/
-.event-container {
-    margin-top: 8rem;
-    margin-bottom: 2rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
 .events-card {
     background-color: black;
     color: #F5F5F5;
@@ -307,11 +298,6 @@ body {
 }
 
 /* Roxoff page */
-.roxoff-container {
-    margin-top: 8rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-}
 .roxoff-img {
     width: 100%;
     height: auto;
@@ -331,10 +317,6 @@ body {
 }
 
 /*Search results page*/
-.search-item {
-    margin-top: 8rem;
-    text-align: center;
-}
 .search-item-img {
     width: 500px;
     height: auto;
@@ -366,10 +348,10 @@ body {
     text-decoration: none;
 }
 
+/* Merch page */
+
+
 /*Contact page*/
-.contact {
-    margin-top: 8rem;
-}
 .cp-text {
     font-size: 0.8rem;
 }
@@ -416,17 +398,20 @@ footer {
 
 /* Media Queries */
 @media (min-width: 768px) {
-  .c-caption p{
-      font-size: 1rem;
+    .c-caption p{
+        font-size: 1rem;
   }
 }
 @media (max-width: 425px) {
-  .carousel {
-      margin-top: 0.3rem;
+    .container-global {
+        margin-top: 1rem;
+    }
+    .carousel {
+        margin-top: 0.3rem;
   }
 }
 @media (min-width: 1024px) {
-  .c-caption-p {
-      font-size: 1.2rem; 
+    .c-caption-p {
+        font-size: 1.2rem; 
   }
 }
