@@ -2,9 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 
-# Create your models here.
 class Event(models.Model):
-    # user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="gig_reviews", null=True, blank=True)
     image = CloudinaryField('image', folder='slp-upgrade', use_filename=True, blank=True, null=True)
     title = models.CharField(max_length=200, null=True, blank=True, help_text="Optional: Add a title for the event (e.g. Tour Name)")
     artist = models.ForeignKey("Artist",on_delete=models.CASCADE, related_name="events", null=True, blank=True)
@@ -69,7 +67,6 @@ class Venue(models.Model):
         return f"{self.name}"
 
 class Merch(models.Model):
-    product_id = models.CharField(max_length=100, null=False, blank=False)
     product_name = models.CharField(max_length=120)
     product_description = models.TextField(blank=True)
     image = CloudinaryField("image", blank=True, null=True)

@@ -7,7 +7,7 @@
 {% block content %}
 <div class="container container-global">
 
-  {# --- Messages (optional if already in base) --- #}
+  {# --- Messages --- #}
   {% if messages %}
     <div class="mb-3">
       {% for message in messages %}
@@ -38,7 +38,7 @@
 
   {# ---------- DETAIL VIEW ---------- #}
   {% elif item %}
-    <a class="btn btn-link" href="{% url 'products:merch_list' %}">← Back</a>
+    <a class="btn cta-btn" href="{% url 'products:merch_list' %}">← Back</a>
     <div class="row g-4 mt-2">
       <div class="col-md-5">
         {% if item.image %}<img class="img-fluid" src="{{ item.image.url }}" alt="{{ item.product_name }}">{% endif %}
@@ -51,29 +51,24 @@
         </p>
         <p>{{ item.product_description|linebreaks }}</p>
         <p><strong>Stock:</strong> {{ item.stock }}</p>
-        {% if request.user == item.created_by %}
-          <a class="btn btn-dark" href="{% url 'products:merch_edit' item.pk %}">Edit</a>
-          <a class="btn btn-outline-danger" href="{% url 'products:merch_delete' item.pk %}">Delete</a>
-        {% endif %}
-      </div>
-    </div>
+        <a class="btn cta-btn" href="#">Add to Basket</a>
 
   {# ---------- LIST VIEW ---------- #}
   {% else %}
-
     <div class="row g-3">
       {% for m in items %}
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-          <div class="card h-100">
+
+        <div class="col-12 col-md-4 col-lg-3">
+          <div class="card standard-card h-100 d-flex flex-column">
             {% if m.image %}<img src="{{ m.image.url }}" class="card-img-top" alt="{{ m.product_name }}">{% endif %}
             <div class="card-body">
-              <h2 class="h6 mb-1">{{ m.product_name }}</h2>
+              <h2 class="merch-title text-left mb-0">{{ m.product_name }}</h2>
               <small class="text-muted">
                 {{ m.get_product_category_display }}{% if m.size %} • {{ m.size|upper }}{% endif %}
               </small>
             </div>
-            <div class="card-footer bg-transparent">
-              <a class="btn btn-outline-dark w-100" href="{% url 'products:merch_detail' m.pk %}">View</a>
+            <div class="card-footer bg-transparent justify-content-center mx-auto">
+              <a class="btn cta-btn mb-0" href="{% url 'products:merch_detail' m.pk %}">View</a>
             </div>
           </div>
         </div>

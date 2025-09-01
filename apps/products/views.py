@@ -56,10 +56,9 @@ def get_venue_id(request):
     venue = Venue.objects.filter(name__icontains=name.strip()).first()
     return JsonResponse({"id": venue.pk if venue else None})
 
-# Decorators to check if user is admin 
 class MerchListView(ListView):
     model = Merch
-    template_name = "products/merch.html"
+    template_name = "merch.html"
     context_object_name = "items"
     paginate_by = 12  # easy grid pages
 
@@ -80,7 +79,7 @@ class MerchListView(ListView):
 
 class MerchDetailView(DetailView):
     model = Merch
-    template_name = "products/merch.html"
+    template_name = "merch.html"
     context_object_name = "item"
 
     def get_context_data(self, **kwargs):
@@ -92,10 +91,10 @@ class OwnerRequiredMixin(UserPassesTestMixin):
     def test_func(self): return self.get_object().created_by == self.request.user
 
 # Logged In only (CRUD)
-class MerchCreateView(LoginRequiredMixin, CreateView):
+class MerchCreateView(CreateView):
     model = Merch
     form_class = MerchForm
-    template_name = "products/merch.html"
+    template_name = "merch.html"
     success_url = reverse_lazy("products:merch_list")
 
     def get_context_data(self, **kwargs):
@@ -103,10 +102,10 @@ class MerchCreateView(LoginRequiredMixin, CreateView):
         context['page_title'] = "Merch"
         return context
 
-class MerchUpdateView(LoginRequiredMixin, UpdateView):
+class MerchUpdateView(UpdateView):
     model = Merch
     form_class = MerchForm
-    template_name = "products/merch.html"
+    template_name = "merch.html"
     success_url = reverse_lazy("products:merch_list")
 
     def form_valid(self, form):
@@ -122,9 +121,9 @@ class MerchUpdateView(LoginRequiredMixin, UpdateView):
         context['page_title'] = "Merch"
         return context
 
-class MerchDeleteView(LoginRequiredMixin, DeleteView):
+class MerchDeleteView(DeleteView):
     model = Merch
-    template_name = "products/merch.html"
+    template_name = "merch.html"
     success_url = reverse_lazy("products:merch_list")
 
     def delete(self, request, *args, **kwargs):
