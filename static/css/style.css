@@ -351,10 +351,14 @@ body {
 
 /* Merch page */
 .merch-title {
+    margin-top: 1rem;
     font-size: 1rem;
     color: #11ED73;    
 }
-
+.merch-description {
+    font-size: 0.9rem;
+    color: #F5F5F5;
+}
 /*Contact page*/
 .cp-text {
     font-size: 0.8rem;

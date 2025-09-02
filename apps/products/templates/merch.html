@@ -44,29 +44,49 @@
         {% if item.image %}<img class="img-fluid" src="{{ item.image.url }}" alt="{{ item.product_name }}">{% endif %}
       </div>
       <div class="col-md-7">
-        <h1 class="h3">{{ item.product_name }}</h1>
-        <p class="text-muted">
-          {{ item.get_product_category_display }}
-          {% if item.size %} • Size {{ item.size|upper }}{% endif %}
-        </p>
-        <p>{{ item.product_description|linebreaks }}</p>
-        <p><strong>Stock:</strong> {{ item.stock }}</p>
+        <h1 class="merch-title text-left">{{ item.product_name }}</h1>
+          <div class="merch-description">
+            {% if item.product_description %}
+              {{ item.product_description|linebreaks }}
+            {% endif %}
+            {{ item.get_product_category_display }}
+            <label for="size-select">Size</label>
+              <select id="size-select" class="form-select w-auto d-inline-block">
+                {% for val,label in item.SIZE_CHOICES %}
+                  <option value="{{ val }}" {% if item.size == val %}selected{% endif %}>
+                    {{ label }}
+                  </option>
+                {% endfor %}
+              </select>
+            <label for="quantity-select">Quantity</label>
+              <select id="quantity-select" class="form-select w-auto d-inline-block">
+                {% for q in "123456789"|make_list %}
+                  <option value="{{ q }}">{{ q }}</option>
+                {% endfor %}
+              </select>
+            <p class="description" id="total-price" data-price="{{ item.price }}">Total Price: £{{ item.price }}</p>
+          </div>
         <a class="btn cta-btn" href="#">Add to Basket</a>
+      </div>
+    </div>
 
   {# ---------- LIST VIEW ---------- #}
   {% else %}
     <div class="row g-3">
       {% for m in items %}
-
         <div class="col-12 col-md-4 col-lg-3">
           <div class="card standard-card h-100 d-flex flex-column">
-            {% if m.image %}<img src="{{ m.image.url }}" class="card-img-top" alt="{{ m.product_name }}">{% endif %}
+            {% if m.image %}<img src="{{ m.image.url }}" class="card-img-top img-fluid" alt="{{ m.product_name }}">{% endif %}
             <div class="card-body">
-              <h2 class="merch-title text-left mb-0">{{ m.product_name }}</h2>
-              <small class="text-muted">
-                {{ m.get_product_category_display }}{% if m.size %} • {{ m.size|upper }}{% endif %}
-              </small>
-            </div>
+              <h2 class="merch-title">{{ m.product_name }}</h2>
+                <div class="merch-description">
+                  {% if m.product_description %}
+                    {{ m.product_description|linebreaks }}
+                  {% endif %}
+                  {{ m.get_product_category_display }}
+                  {% if m.size %} • {{ m.size|upper }}{% endif %} 
+                  {% if m.price %} • £{{ m.price }}{% endif %}
+                </div>
             <div class="card-footer bg-transparent justify-content-center mx-auto">
               <a class="btn cta-btn mb-0" href="{% url 'products:merch_detail' m.pk %}">View</a>
             </div>

@@ -67,17 +67,16 @@ class Venue(models.Model):
         return f"{self.name}"
 
 class Merch(models.Model):
-    product_name = models.CharField(max_length=120)
+    product_name = models.CharField(max_length=100)
     product_description = models.TextField(blank=True)
     image = CloudinaryField("image", blank=True, null=True)
-    price = models.DecimalField(max_digits=6, decimal_places=2, null=False, blank=False)
+    price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
     CATEGORY_CHOICES = [
         ("tshirt", "T-Shirt"),
         ("hoodie", "Hoodie"),
         ("flag", "Flag"),
         ("cap", "Cap"),
         ("mug", "Mug"),
-        ("other", "Other"),
     ]
     product_category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     SIZE_CHOICES = [
@@ -89,7 +88,7 @@ class Merch(models.Model):
         ("xxl", "XXL"),
     ]
     size = models.CharField(
-        max_length=10, choices=SIZE_CHOICES, blank=True, null=True,
+        max_length=5, choices=SIZE_CHOICES, blank=True, null=True,
         help_text="Leave blank for items without sizes (flags, mugs, etc.)."
     )
     quantity = models.PositiveIntegerField(
@@ -98,6 +97,9 @@ class Merch(models.Model):
     )
     stock = models.PositiveIntegerField(default=0, help_text="How many you have in stock.")
 
+    class Meta:
+        ordering = ['product_name'] 
     def __str__(self):
-        return f"{self.product_name} ({self.size.upper()})" if self.size else self.product_name
+        return f"{self.product_name} - {self.get_product_category_display()} ({self.size if self.size else 'One Size'})"
+
 

@@ -57,3 +57,20 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+// Function to update price based on quantity selection
+document.addEventListener("DOMContentLoaded", function () {
+  const totalPriceEl = document.getElementById("total-price");
+  const basePrice = parseFloat(totalPriceEl.dataset.price);  // get from data-price
+  const qtySelect = document.getElementById("quantity-select");
+
+  function updatePrice() {
+    const qty = parseInt(qtySelect.value, 10) || 1;
+    const total = (qty * basePrice).toFixed(2);
+    totalPriceEl.textContent = `Total Price: £${total}`;
+  }
+
+  qtySelect.addEventListener("change", updatePrice);
+  updatePrice(); // run on load
+});
+
