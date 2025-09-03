@@ -90,7 +90,18 @@
           <a class="nav-link" href="{% url 'products:roxoff' %}">ROXOFF</a>
         </li>            
         <li class="nav-item">
-          <a class="nav-link" href="#">Account</a>
+          {% if user.is_authenticated %}
+            <span class="nav-link">
+              Hi {{ user.username }}! 
+              <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-link nav-link p-0 text-success">Logout</button>
+              </form>
+            </span>
+          {% else %}
+            <a class="nav-link" href="{% url 'login' %}">Log In</a> /
+            <a class="nav-link" href="{% url 'user:signup' %}">Sign Up</a>
+          {% endif %}
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Basket</a>
@@ -177,6 +188,7 @@
   </div>
 </nav>
 
+<!-- Page title (mobile only ≤768px) -->
 <div class="container mt-3 d-md-none">
   {% if page_title %}
     <div class="page-heading text-left">
@@ -184,6 +196,12 @@
     </div>
   {% endif %}
 </div>
+
+  <!-- User Status (below navbar) -->
+  {% include "user/user_status.html" %}
+
+  <!-- Divider line -->
+  <hr class="text-success my-2">
 
 {% block content %}{% endblock %}
 

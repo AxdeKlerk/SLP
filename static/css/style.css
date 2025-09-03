@@ -165,6 +165,69 @@ body {
   color: #11ED73;           /* neon green only on hover */
   background-color: transparent;
 }
+/* User status */
+.user-status {
+    color: #11ED73;
+    font-size: 1rem;
+}
+/*Sign up / Login pages*/
+.page-item {
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    max-width: 700px;
+    color: #F5F5F5;
+}
+/* Help text */
+.helptext {
+    color: #F5F5F5;
+}
+/* Help text list elements to adjust spacing and remove bullet points */
+.page-item ul,
+.page-item ul li 
+{
+    list-style: none;
+    color: #F5F5F5;
+    margin-top: 0.25rem;
+    margin-bottom: 0.75rem;
+}
+/* Help text elements*/
+.page-item input[type="text"],
+.page-item input[type="email"],
+.page-item input[type="password"],
+.page-item input[type="file"],
+.page-item select,
+.page-item textarea {
+  width: 100%;
+  background-color: black !important;
+  color: #F5F5F5 !important;
+  border: 1px solid #11ED73 !important;
+  font-size: 1.1rem;
+  border-radius: 4px;
+}
+.page-item input[type="date"] {
+  width: 100%;
+  background-color: black;
+  color: #F5F5F5;
+  border: 1px solid #11ED73 !important;
+  font-size: 1.1rem;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+.page-item input[type="file"]::file-selector-button {
+  background-color: #0000;
+  border: 1px solid #11ED73;
+  color: #F5F5F5;
+}
+.page-item input:focus,
+.page-item select:focus,
+.page-item textarea:focus {
+  outline: none;
+  border-color: #11ED73 !important;
+  box-shadow: none;
+  background-color: #111 !important;
+}
 
 /*Carousel*/
 .carousel {
@@ -380,7 +443,6 @@ body {
     font-size: 0.8rem;
     color: #F5F5F5;
 }
-
 /* Quantity dropdown */
 #qtyDropdown {
   font-size: 0.8rem;
@@ -455,7 +517,9 @@ body {
 
 /*Contact page*/
 .cp-text {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 .cp-item {
     color: #11ED73;
@@ -466,6 +530,7 @@ body {
 .cta-btn {
     color: #11ED73;
     border-color: #11ED73;
+    background-color: #0000;
     border-block-width: 5px;
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -474,6 +539,7 @@ body {
 .cta-btn2 {
     font-size: 0.8rem;
     border-color: #11ED73;
+    background-color: #0000;
     border-block-width: 0.2rem;
     color: #11ED73;
 }
@@ -496,7 +562,14 @@ footer {
 .error-item {
     color: #11ED73;
 }
-
+/* Error Messages */
+.custom-error {
+  color: #11ED73;
+  font-weight: bold;
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.25rem;
+}
 
 /* Media Queries */
 @media (min-width: 768px) {

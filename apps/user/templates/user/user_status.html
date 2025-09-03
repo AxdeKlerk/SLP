@@ -1,0 +1,17 @@
+{% if user.is_authenticated %}
+  <div class="text-center justify-contents-center py-2">
+    <p class="mb-0">
+      Hi {{ user.username }}! 
+      <a href="{% url 'logout' %}" class="text-success fw-bold">Logout</a>
+    </p>
+  </div>
+{% else %}
+  <div class=" text-center py-2">
+    <p class="mb-0 text-light">
+      <a href="{% url 'login' %}" class="text-success fw-bold">Login</a> 
+      or 
+      <a href="{% url 'user:profile' %}" class="text-success fw-bold">Sign up</a>
+    </p>
+  </div>
+{% endif %}
+

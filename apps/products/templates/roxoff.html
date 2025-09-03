@@ -24,7 +24,7 @@
   <div class="row justify-content-center">
     {% for event in events %}
       <div class="col-12 col-md-6 col-lg-4 col-xl-3 d-flex">
-        <div class="card events-card roxoff d-flex flex-column mx-auto">
+        <div class="card standard-card roxoff d-flex flex-column mx-auto">
 
           {% if event.image and event.image.url and "placeholder" not in event.image.url %}
             <img src="{{ event.image.url }}" class="roxoff-img-top img-fluid" alt="Event image">

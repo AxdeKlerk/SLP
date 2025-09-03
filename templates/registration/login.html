@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container-fluid page-item">
+  <div class=" row mx-auto justify-content-center align-items-start">
+    <div class="col-12 text-center">
+      <h1 style="color: #11ED73;">Login</h1>
+      <form method="post" class="d-flex flex-column align-items-stretch">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="cta-btn2">Log In</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
