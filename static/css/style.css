@@ -359,6 +359,8 @@ body {
     width: 100%;
     padding-left: 16px;
     padding-right: 16px;
+    margin-left: auto;
+    margin-right: auto;
 }
 .merch-img{
     width: 100%;
@@ -382,7 +384,7 @@ body {
 /* Quantity dropdown */
 #qtyDropdown {
   font-size: 0.8rem;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.5rem;
   border: 2px solid #11ED73 !important;
   border-radius: 5px;
   background-color: black;
@@ -470,7 +472,7 @@ body {
     font-size: 0.8rem;
 }
 .cta-btn2 {
-    font-size: 0.6rem;
+    font-size: 0.8rem;
     border-color: #11ED73;
     border-block-width: 0.2rem;
     color: #11ED73;
