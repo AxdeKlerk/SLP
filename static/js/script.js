@@ -94,9 +94,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Update button text
       sizeDropdown.textContent = `Size: ${this.textContent}`;
-
-      // Debug log (optional)
-      console.log("Selected size =", value);
     });
   });
 });
