@@ -359,6 +359,79 @@ body {
     font-size: 0.9rem;
     color: #F5F5F5;
 }
+
+/* Quantity dropdown */
+#qtyDropdown {
+  font-size: 0.8rem;
+  padding: 0.5rem 1rem;
+  border: 2px solid #11ED73 !important;
+  border-radius: 5px;
+  background-color: black;
+  color: #11ED73;
+}
+/* When dropdown is open, keep it glowing */
+#qtyDropdown[aria-expanded="true"] {
+  border: 2px solid #11ED73;
+  border-radius: 5px;
+  background-color: black;
+  color: #11ED73;
+}
+/* Dropdown menu */
+#qtyDropdown + .dropdown-menu {
+    min-width: 100% !important;   
+    width: 100%;
+    background-color: black;
+    border: 2px solid #11ED73;
+    border-radius: 5px;
+}
+/* Dropdown items default */
+#qtyDropdown + .dropdown-menu .dropdown-item {
+    color: #F5F5F5;
+    font-size: 0.8rem;
+}
+/* On hover: flip to neon green text on white background */
+#qtyDropdown + .dropdown-menu .dropdown-item:hover {
+    background-color: #F5F5F5;
+    color: #11ED73;
+}
+
+/* Size dropdown */
+#sizeDropdown {
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid #11ED73 !important;
+    border-radius: 5px;
+    background-color: black;
+    color: #11ED73;
+}
+/* When dropdown is open, keep it glowing */
+#sizeDropdown[aria-expanded="true"] {
+    border: 2px solid #11ED73;
+    border-radius: 5px;
+    background-color: black;
+    color: #11ED73;
+}
+/* Dropdown menu */
+#sizeDropdown + .dropdown-menu {
+    min-width: 100% !important;   
+    width: 100%;
+    background-color: black;
+    border: 2px solid #11ED73;
+    border-radius: 5px;
+}
+/* Dropdown items default */
+#sizeDropdown + .dropdown-menu .dropdown-item {
+    color: #F5F5F5;
+    font-size: 0.8rem;
+}
+/* On hover: flip to neon green text on white background */
+#sizeDropdown + .dropdown-menu .dropdown-item:hover {
+    background-color: #F5F5F5;
+    color: #11ED73;
+}
+
+/* Price display */
+
 /*Contact page*/
 .cp-text {
     font-size: 0.8rem;

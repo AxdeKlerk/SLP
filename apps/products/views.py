@@ -85,6 +85,7 @@ class MerchDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['page_title'] = "Merch"
+        context['size_choices'] = Merch._meta.get_field("size").choices
         return context
 
 class OwnerRequiredMixin(UserPassesTestMixin):

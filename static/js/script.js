@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-  // Function to fetch venue ID based on search input
+// Function to fetch venue ID based on search input
 document.addEventListener("DOMContentLoaded", function () {
   const venueSearch = document.getElementById("venue-search");
   if (venueSearch) {
@@ -58,19 +58,45 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-// Function to update price based on quantity selection
+// Function to update price based on quantity selection and to handle size dropdowns
 document.addEventListener("DOMContentLoaded", function () {
   const totalPriceEl = document.getElementById("total-price");
-  const basePrice = parseFloat(totalPriceEl.dataset.price);  // get from data-price
-  const qtySelect = document.getElementById("quantity-select");
+  const basePrice = parseFloat(totalPriceEl.dataset.price);
 
-  function updatePrice() {
-    const qty = parseInt(qtySelect.value, 10) || 1;
-    const total = (qty * basePrice).toFixed(2);
-    totalPriceEl.textContent = `Total Price: £${total}`;
-  }
+  // --- Quantity dropdown ---
+  const qtyDropdown = document.getElementById("qtyDropdown");
+  const qtyItems = document.querySelectorAll('[aria-labelledby="qtyDropdown"] .dropdown-item');
 
-  qtySelect.addEventListener("change", updatePrice);
-  updatePrice(); // run on load
+  qtyItems.forEach(item => {
+    item.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      const selectedQty = parseInt(this.dataset.value, 10);
+
+      // Update button text
+      qtyDropdown.textContent = `Quantity: ${selectedQty}`;
+
+      // Update total price
+      const total = (selectedQty * basePrice).toFixed(2);
+      totalPriceEl.textContent = `Total Price: £${total}`;
+    });
+  });
+
+  // --- Size dropdown ---
+  const sizeDropdown = document.getElementById("sizeDropdown");
+  const sizeItems = document.querySelectorAll('[aria-labelledby="sizeDropdown"] .dropdown-item');
+
+  sizeItems.forEach(item => {
+    item.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      const value = this.dataset.value;
+
+      // Update button text
+      sizeDropdown.textContent = `Size: ${this.textContent}`;
+
+      // Debug log (optional)
+      console.log("Selected size =", value);
+    });
+  });
 });
-
