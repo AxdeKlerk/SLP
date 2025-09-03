@@ -39,48 +39,54 @@
   {# ---------- DETAIL VIEW ---------- #}
   {% elif item %}
     <a class="btn cta-btn" href="{% url 'products:merch_list' %}">← Back</a>
-    <div class="row g-4 mt-2">
+    <div class="row g-4 mt-2 align-items-stretch">
       <div class="col-md-5">
         {% if item.image %}<img class="img-fluid" src="{{ item.image.url }}" alt="{{ item.product_name }}">{% endif %}
       </div>
-      <div class="col-md-7">
+      <div class="col-md-7 d-flex flex-column">
         <h1 class="merch-title text-left">{{ item.product_name }}</h1>
-          <div class="merch-description">
-            {% if item.product_description %}
-              {{ item.product_description|linebreaks }}
-            {% endif %}
-            <!-- Quantity dropdown -->
-            <div class="dropdown d-inline-block">
-              <button class="nav-link dropdown-toggle" type="button" id="qtyDropdown"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                Quantity: 1
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="qtyDropdown">
-                {% for q in "123456789"|make_list %}
-                  <li>
-                    <a class="dropdown-item" href="#" data-value="{{ q }}">{{ q }}</a>
-                  </li>
-                {% endfor %}
-              </ul>
-            </div>
-            <!-- Size dropdown -->
-            <div class="dropdown d-inline-block ms-3">
-              <button class="nav-link dropdown-toggle" type="button" id="sizeDropdown"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                Size: {{ item.get_size_display }}
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="sizeDropdown">
-              {% for key, label in size_choices %}
+        <div class="merch-description">
+          {% if item.product_description %}
+            {{ item.product_description|linebreaks }}
+          {% endif %}
+
+          <!-- Quantity dropdown -->
+          <div class="dropdown d-inline-block">
+            <button class="nav-link dropdown-toggle" type="button" id="qtyDropdown"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Quantity: 1
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="qtyDropdown">
+              {% for q in "123456789"|make_list %}
                 <li>
-                  <a class="dropdown-item" href="#" data-value="{{ key }}">{{ label }}</a>
+                  <a class="dropdown-item" href="#" data-value="{{ q }}">{{ q }}</a>
                 </li>
               {% endfor %}
             </ul>
-            </div>
-
-            <p class="merch-description mt-4" id="total-price" data-price="{{ item.price }}">Total Price: £{{ item.price }}</p>
           </div>
-        <a class="btn cta-btn" href="#">Add to Basket</a>
+
+          <!-- Size dropdown -->
+          <div class="dropdown d-inline-block ms-3">
+            <button class="nav-link dropdown-toggle" type="button" id="sizeDropdown"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              Size: {{ item.get_size_display }}
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="sizeDropdown">
+            {% for key, label in size_choices %}
+              <li>
+                <a class="dropdown-item" href="#" data-value="{{ key }}">{{ label }}</a>
+              </li>
+            {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <!-- Price + button at bottom -->
+        <div class="mt-auto">
+          <p class="merch-description mt-4" id="total-price" data-price="{{ item.price }}">
+            Total Price: £{{ item.price }}
+          </p>
+          <a class="btn cta-btn" href="#">Add to Basket</a>
+        </div>
       </div>
     </div>
 
