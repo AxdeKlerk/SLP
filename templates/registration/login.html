@@ -3,14 +3,40 @@
 
 {% block content %}
 <div class="container-fluid page-item">
-  <div class=" row mx-auto justify-content-center align-items-start">
+  <div class="row mx-auto justify-content-center align-items-start">
     <div class="col-12 text-center">
       <h1 style="color: #11ED73;">Login</h1>
-      <form method="post" class="d-flex flex-column align-items-stretch">
+
+      <form method="post" class="needs-validation" novalidate>
         {% csrf_token %}
-        {{ form.as_p }}
+
+        <!-- Username field -->
+        <div class="mb-3">
+          {{ form.username.label_tag }}
+          {{ form.username }}
+          {% for error in form.username.errors %}
+            <p class="custom-error">{{ error }}</p>
+          {% endfor %}
+        </div>
+
+        <!-- Password field -->
+        <div class="mb-4">
+          {{ form.password.label_tag }}
+          {{ form.password }}
+          {% for error in form.password.errors %}
+            <p class="custom-error">{{ error }}</p>
+          {% endfor %}
+        </div>
+
+        <!-- Submit button -->
         <button type="submit" class="cta-btn2">Log In</button>
       </form>
+
+      <!-- Password reset & Sign up links -->
+      <div class="password-reset mt-3">
+        <a href="{% url 'password_reset' %}">Forgot Password?</a><br>
+        <a href="{% url 'user:signup' %}">Forgot Username? (Sign Up Again)</a>
+      </div>
     </div>
   </div>
 </div>

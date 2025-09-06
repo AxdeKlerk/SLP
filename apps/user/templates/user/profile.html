@@ -3,12 +3,15 @@
 
 {% block title %}User Profile{% endblock %}
 
-{% block page_title %}User Profile{% endblock %}
-
 {% block content %}
-<div class="container text-center mt-5">
-  <h2>Welcome, {{ user.username }}!</h2>
-  <p>Email: {{ user.email }}</p>
-  <p>You are logged in successfully.</p>
+<div class="container text-center page-item">
+  <div class=" row mx-auto justify-content-center align-items-start">
+    <div class="col-12 text-center">
+      <h2 style="color: #11ED73;">Welcome back you absolute legend!</h2>
+      <p>You have logged in successfully</p>
+      <h3 style="color: #11ED73;">{{ user.username }}</h3>
+      <p>Email: {{ user.email }}</p>
+    </div>
+  </div>
 </div>
 {% endblock %}

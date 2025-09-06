@@ -184,8 +184,7 @@ body {
 }
 /* Help text list elements to adjust spacing and remove bullet points */
 .page-item ul,
-.page-item ul li 
-{
+.page-item ul li {
     list-style: none;
     color: #F5F5F5;
     margin-top: 0.25rem;
@@ -199,7 +198,7 @@ body {
 .page-item select,
 .page-item textarea {
   width: 100%;
-  background-color: black !important;
+  background-color: #0000 !important;
   color: #F5F5F5 !important;
   border: 1px solid #11ED73 !important;
   font-size: 1.1rem;
@@ -207,7 +206,7 @@ body {
 }
 .page-item input[type="date"] {
   width: 100%;
-  background-color: black;
+  background-color: #0000 !important;
   color: #F5F5F5;
   border: 1px solid #11ED73 !important;
   font-size: 1.1rem;
@@ -514,6 +513,22 @@ body {
 }
 
 /* Price display */
+
+
+/* Password reset */
+.password-reset {
+    font-size: 0.9rem;
+}
+.password-reset a {
+    color: #11ED73;
+    text-decoration: none;
+    cursor: pointer;
+}
+.password-reset a:hover {
+    color: #F5F5F5;
+    text-decoration: none;
+}
+
 
 /*Contact page*/
 .cp-text {
