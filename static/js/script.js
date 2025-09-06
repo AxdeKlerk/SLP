@@ -61,7 +61,9 @@ document.addEventListener("DOMContentLoaded", function () {
 // Function to update price based on quantity selection and to handle size dropdowns
 document.addEventListener("DOMContentLoaded", function () {
   const totalPriceEl = document.getElementById("total-price");
-  const basePrice = parseFloat(totalPriceEl.dataset.price);
+
+  if (totalPriceEl) {
+    const basePrice = parseFloat(totalPriceEl.dataset.price);
 
   // --- Quantity dropdown ---
   const qtyDropdown = document.getElementById("qtyDropdown");
@@ -96,4 +98,5 @@ document.addEventListener("DOMContentLoaded", function () {
       sizeDropdown.textContent = `Size: ${this.textContent}`;
     });
   });
+  }
 });

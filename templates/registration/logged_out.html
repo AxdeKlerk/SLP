@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block title %}Logged Out{% endblock %}
 
 {% block content %}
   <div class="container text-center page-item">
@@ -6,7 +9,7 @@
       <div class="col-12 text-center">
           <img src="https://res.cloudinary.com/dqde3a83z/image/upload/v1748106876/red-horns_meorvq.png" class="card-img-top horns" alt="Default horns image">
         <h1>You have been logged out</h1>
-          <a href="{% url 'login' %}" class="btn cta-btn">Log in again</a>
+          <a href="{% url 'login' %}" class="cta-btn2">Log in again</a>
       </div>
     </div>
   </div>

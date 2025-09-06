@@ -199,7 +199,7 @@ body {
 .page-item textarea {
   width: 100%;
   background-color: #0000 !important;
-  color: #F5F5F5 !important;
+  /*color: #F5F5F5 !important;*/
   border: 1px solid #11ED73 !important;
   font-size: 1.1rem;
   border-radius: 4px;
@@ -207,7 +207,7 @@ body {
 .page-item input[type="date"] {
   width: 100%;
   background-color: #0000 !important;
-  color: #F5F5F5;
+  /*color: #F5F5F5;*/
   border: 1px solid #11ED73 !important;
   font-size: 1.1rem;
   border-radius: 4px;
@@ -217,7 +217,7 @@ body {
 .page-item input[type="file"]::file-selector-button {
   background-color: #0000;
   border: 1px solid #11ED73;
-  color: #F5F5F5;
+  /*color: #F5F5F5;*/
 }
 .page-item input:focus,
 .page-item select:focus,
@@ -225,7 +225,7 @@ body {
   outline: none;
   border-color: #11ED73 !important;
   box-shadow: none;
-  background-color: #111 !important;
+  background-color: #0000 !important;
 }
 
 /*Carousel*/
