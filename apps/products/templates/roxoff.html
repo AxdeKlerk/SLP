@@ -7,7 +7,7 @@
 {% block content %}
 
 <!-- Hero -->
-<section class="container container-global">
+<section class="container-fluid container-global">
   <div class="row justify-content-center align-items-center">
     <div class="col-12 col-lg-10">
       <img src="https://res.cloudinary.com/dqde3a83z/image/upload/v1756390547/roxoff-double-v2_dysnmu.png" class="roxoff-img img-fluid d-block mx-auto" alt="Roxoff event poster announcing Roxoff 3">
@@ -23,7 +23,7 @@
 <section class="container mb-2">
   <div class="row justify-content-center">
     {% for event in events %}
-      <div class="col-12 col-md-6 col-lg-4 col-xl-3 d-flex">
+      <div class="col-10 col-md-6 col-lg-5 col-xl-4 d-flex">
         <div class="card standard-card roxoff d-flex flex-column mx-auto">
 
           {% if event.image and event.image.url and "placeholder" not in event.image.url %}

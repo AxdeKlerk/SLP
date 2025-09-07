@@ -13,7 +13,7 @@ body {
     margin-right: auto;
 }
 .container-global {
-    margin-top: 8rem;
+    margin-top: 6rem;
     margin-bottom: 2rem;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -93,6 +93,10 @@ body {
 .navbar .nav-link.active { 
   border: 2px solid #11ED73; 
   border-radius: 5px;
+}
+.nav-separator {
+  color: #11ED73;
+  margin: 0 0.5rem;
 }
 .navbar .dropdown-item.active {
   color: #11ED73;
@@ -593,11 +597,13 @@ footer {
     }
 }
 
-
-
-@media (max-width: 425px) {
+@media (max-width: 768px) {
     .container-global {
-        margin-top: 1rem;
+        margin-top: 4rem;
+        margin-bottom: 1rem;
+    }
+    .font-size {
+        font-size: 0.5rem;
     }
     .carousel {
         margin-top: 0.3rem;
