@@ -12,6 +12,24 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+.container-global {
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+/* Page Title */
+.page-heading {
+    margin-top: 5rem;
+}
+.page-heading h1 {
+    font-size: 0.9rem;
+    font-weight: 300;
+    margin: 0;
+    padding: 0.4rem 0.4rem;
+    color: #11ED73 !important;
+    background-color: black;
+}
 
 /*Header*/
 .header {
@@ -30,66 +48,192 @@ body {
 
 /*Navbar*/
 .nav-wrapper{
-    position: fixed;
-    top: 60px;
-    right: 0;
-    left: 0;
-    z-index: 1000;
-    background-color: black;
-    width: 100%;
+  position: fixed;
+  top: 60px;
+  right: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: black;
+  width: 100%;
 }
 .nav-wrapper ul.nav {
-    /*outline: 2px dashed orange;*/
-    display: flexbox;
-    justify-content: center;
-    align-items: center;
-    list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
 }
 .navbar-toggler {
-    padding: 0.2rem;      /* Shrink the hamburger icon */
-    line-height: 1;
-    border-color: #11ED73
+  padding: 0.2rem;      /* Shrink the hamburger icon */
+  line-height: 1;
+  border-color: #11ED73;
 }
 .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%2311ED73' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-    width: 20px;            /* match Roxoff logo height */
-    height: 20px;
-    background-size: 100% 100%; /* ensure SVG scales cleanly */
-}
-.nav-link:hover {
-    color: #F5F5F5;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%2311ED73' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  width: 20px;          /* match Roxoff logo height */
+  height: 20px;
+  background-size: 100% 100%; /* ensure SVG scales cleanly */
 }
 .nav-link {
-    color: #11ED73;
-    font-size: 0.8rem;
-    text-decoration: none;
+  color: #11ED73;
+  font-size: 0.8rem;
+  text-decoration: none;
+  border: 2px solid transparent;
+  padding: 0.5rem 0.5rem;
+  transition: border 0.3s ease;
+  display: inline-block;
 }
-/* Reduce offcanvas width and padding if desired */
+.nav-link:hover {
+  color: #F5F5F5;
+}
+.nav-link.active {
+  border: 2px solid #11ED73; /* Glow green, baby */
+  border-radius: 5px;
+}
+/* Highlight parent toggle when any submenu item is active or the menu is open */
+.navbar .nav-link.active { 
+  border: 2px solid #11ED73; 
+  border-radius: 5px;
+}
+.nav-separator {
+  color: #11ED73;
+  margin: 0 0.5rem;
+}
+.navbar .dropdown-item.active {
+  color: #11ED73;
+  background: transparent;
+}
+/* Border when dropdown is open */
+.navbar .nav-link.dropdown-toggle[aria-expanded="true"] {
+  border: 2px solid #11ED73;
+  border-radius: 5px;
+}
+/* Dropdown menu background */
+.dropdown-menu {
+  background-color: black;
+  border: 2px solid #11ED73; 
+  border-radius: 5px;
+  padding: 0;
+}
+/* Dropdown links */
+.navbar .dropdown-item {
+  color: #F5F5F5;
+  font-size: 0.7rem;
+  padding: 0.5rem;
+}
+.navbar .dropdown-menu input,
+.navbar .dropdown-menu label {
+  font-size: 0.7rem;
+}
+/* Hover/focus = neon green text */
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+  color: #11ED73;
+}
+/* Remove Bootstrap blue highlight on open/focus */
+.navbar .nav-link.dropdown-toggle:focus,
+.navbar .nav-link.dropdown-toggle:active,
+.navbar .nav-link.dropdown-toggle[aria-expanded="true"] {
+  background-color: black;
+  color: #F5F5F5;
+  box-shadow: none;
+}
+/* Offcanvas tweaks */
 .offcanvas.offcanvas-end {
-    width: 40vw !important;
+  width: 40vw !important;
 }
-
 .offcanvas-body {
   padding-top: 1rem;
-  margin-left: auto;   /*pushes it to the far right of the drawer */
+  margin-left: auto; /* pushes it to the far right of the drawer */
 }
-
 .offcanvas-body .nav-link {
-    text-align: right;
+  text-align: right;
 }
 .offcanvas-body .nav-link:hover {
+  color: #F5F5F5;
+}
+/* Remove green borders from offcanvas nav links */
+.offcanvas-body .nav-link,
+.offcanvas-body .nav-link.active,
+.offcanvas-body .nav-link[aria-expanded="true"] {
+  border: none !important;
+  background-color: transparent;
+}
+/* Child links under Events in the offcanvas */
+.offcanvas-body .collapse .nav-link {
+  color: #F5F5F5;          
+  font-size: 0.7rem;       
+  border: none;            
+}
+/* Hover effect for child links */
+.offcanvas-body .collapse .nav-link:hover {
+  color: #11ED73;           /* neon green only on hover */
+  background-color: transparent;
+}
+/* User status */
+.user-status {
+    color: #11ED73;
+    font-size: 1rem;
+}
+/*Sign up / Login pages*/
+.page-item {
+    margin-top: 4rem;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    max-width: 700px;
     color: #F5F5F5;
 }
-
-/*Page titles*/
-.page-title {
-    font-size: 1rem;
-    color: #11ED73;
+/* Help text */
+.helptext {
+    color: #F5F5F5;
+}
+/* Help text list elements to adjust spacing and remove bullet points */
+.page-item ul,
+.page-item ul li {
+    list-style: none;
+    color: #F5F5F5;
+    margin-top: 0.25rem;
+    margin-bottom: 0.75rem;
+}
+/* Help text elements*/
+.page-item input[type="text"],
+.page-item input[type="email"],
+.page-item input[type="password"],
+.page-item input[type="file"],
+.page-item select,
+.page-item textarea {
+  width: 100%;
+  background-color: #0000 !important;
+  /*color: #F5F5F5 !important;*/
+  border: 1px solid #11ED73 !important;
+  font-size: 1.1rem;
+  border-radius: 4px;
+}
+.page-item input[type="date"] {
+  width: 100%;
+  background-color: #0000 !important;
+  /*color: #F5F5F5;*/
+  border: 1px solid #11ED73 !important;
+  font-size: 1.1rem;
+  border-radius: 4px;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+}
+.page-item input[type="file"]::file-selector-button {
+  background-color: #0000;
+  border: 1px solid #11ED73;
+  /*color: #F5F5F5;*/
+}
+.page-item input:focus,
+.page-item select:focus,
+.page-item textarea:focus {
+  outline: none;
+  border-color: #11ED73 !important;
+  box-shadow: none;
+  background-color: #0000 !important;
 }
 
 /*Carousel*/
 .carousel {
-    margin-top: 4rem;
     max-width: 1140px;
     margin-left: auto;
     margin-right: auto;
@@ -115,14 +259,16 @@ body {
 }
 
 /*About page*/
-.about {
-    margin-top: 8rem;
+.about-text {
+    font-size: 1rem;  
+}
+.about-text-p {
+    font-size: 0.9rem;  
 }
 .a-item {
     height: 100%;
     padding: 0.8rem;
     background-color: #11ED73;
-    font-size: 12px;
     color: black;
 }
 .a-img {
@@ -132,77 +278,302 @@ body {
 }
 
 /*Events page*/
-.e-item {
+.standard-card {
+    background-color: black;
+    color: #F5F5F5;
+    max-width: 300px;
+    height: 100%;
+    border: 1px solid #11ED73;
+    border-radius: 10px;
+    padding-top: 1rem;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.card-body {
+    padding-top: 0;
+    padding-bottom: 0;
+    flex: 1 1 auto;
+}
+.event-details {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-top: 0.5rem;
+}
+.card-img-top {
+    width: 90%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    align-self: center;
+    border: none !important;
+    display: block;
+    margin: 0;
+}
+.card-title a {
+    font-size: 1.5rem;
+    color: #11ED73;
+    text-decoration: none;
+}
+.card-title a:hover {
+    color: #F5F5F5;
+    text-decoration: none;
+}
+.sub-title {
+    font-size: 1rem;
+    color: #F5F5F5;
+}
+.sub-title a {
+    font-size: 1rem;
+    color: #11ED73;
+    text-decoration: none;
+}
+.sub-title a:hover {
+    color: #F5F5F5;
+    text-decoration: none;
+}
+.artist {
+    font-size: 1.5rem;
+    color: #11ED73;
+    text-decoration: none;
+}
+.description {
+    font-size: 0.8rem;
+    color: #F5F5F5;
+}
+.event-title {
+    font-size: 1.5rem;
+    color: #11ED73;    
+}
+.venue {
+    font-size: 0.8rem;
+}
+.venue a {
+    color: #11ED73;
+    font-size: 1rem;
+    text-decoration: none;
+}
+.venue a:hover {
+    color: #F5F5F5;
+    text-decoration: none;
+}
+.card-footer {
+    margin-top: auto;
+    border-top: 0;
+    padding-top: 0;
+    padding-bottom: 1rem;
+}
+
+/* Roxoff page */
+.roxoff-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    object-fit: cover;
+    object-position: center center;
+}
+.roxoff-description {
+    font-size: 1rem;
+    margin-top: 1rem;
+}
+.roxoff .card-img-top {
+    width: 72%;
+    height: auto;
+}
+
+/*Search results page*/
+.search-item-img {
+    width: 500px;
+    height: auto;
+    max-height: 300px;
+    object-fit: contain; /* Ensures the entire image is visible */
+    object-position: center;
+    display: block;
+    margin: 0 auto;         /* Centres it horizontally */
+    background-color: black;
+}
+.bio {
+    font-size: 1rem;
+    color: #F5F5F5;
+    margin-top: 1rem; 
+}
+.website {
+    font-size: 0.9rem;
+    color: #F5F5F5;
+    margin-top: 0.5rem;
+    overflow-wrap: anywhere;    
+    white-space: normal; 
+}
+.website-link {
+    font-size: 0.9rem;
+    color: #11ED73;
+    text-decoration: none;
+}
+.website-link:hover {
+    color: #F5F5F5;
+    text-decoration: none;
+}
+
+/* Merch page */
+.merch-card {
+    background-color: black;
+    color: #F5F5F5;
+    border: 2px solid #11ED73;
+    border-radius: 10px;
+    max-width: 800px;
+    width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.merch-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    margin: 0;
+    padding: 0;         
+    background-color: black;
+}
+.merch-title {
+    padding-top: 0.9rem;
+    font-size: 1rem;
+    color: #11ED73;    
+}
+.merch-description {
+    font-size: 0.8rem;
+    color: #F5F5F5;
+}
+/* Quantity dropdown */
+#qtyDropdown {
+  font-size: 0.8rem;
+  padding: 0.5rem 0.5rem;
+  border: 2px solid #11ED73 !important;
+  border-radius: 5px;
+  background-color: black;
+  color: #11ED73;
+}
+/* When dropdown is open, keep it glowing */
+#qtyDropdown[aria-expanded="true"] {
+  border: 2px solid #11ED73;
+  border-radius: 5px;
+  background-color: black;
+  color: #11ED73;
+}
+/* Dropdown menu */
+#qtyDropdown + .dropdown-menu {
+    min-width: 100% !important;   
+    width: 100%;
+    background-color: black;
+    border: 2px solid #11ED73;
+    border-radius: 5px;
+}
+/* Dropdown items default */
+#qtyDropdown + .dropdown-menu .dropdown-item {
+    color: #F5F5F5;
+    font-size: 0.8rem;
+}
+/* On hover: flip to neon green text on white background */
+#qtyDropdown + .dropdown-menu .dropdown-item:hover {
+    background-color: #F5F5F5;
+    color: #11ED73;
+}
+
+/* Size dropdown */
+#sizeDropdown {
+    font-size: 0.8rem;
+    padding: 0.5rem 1rem;
+    border: 2px solid #11ED73 !important;
+    border-radius: 5px;
     background-color: black;
     color: #11ED73;
 }
-.e-item ul {
-    font-size: 10px;
+/* When dropdown is open, keep it glowing */
+#sizeDropdown[aria-expanded="true"] {
+    border: 2px solid #11ED73;
+    border-radius: 5px;
+    background-color: black;
+    color: #11ED73;
+}
+/* Dropdown menu */
+#sizeDropdown + .dropdown-menu {
+    min-width: 100% !important;   
+    width: 100%;
+    background-color: black;
+    border: 2px solid #11ED73;
+    border-radius: 5px;
+}
+/* Dropdown items default */
+#sizeDropdown + .dropdown-menu .dropdown-item {
     color: #F5F5F5;
+    font-size: 0.8rem;
 }
-.card-img-top {
-    object-fit: cover;
-    height: 100px;
-}
-.card.e-item {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-.card-body {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-.card-body ul {
-    margin-top:auto;
-    margin-bottom: 0.5rem;
-}
-.card-text-list {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+/* On hover: flip to neon green text on white background */
+#sizeDropdown + .dropdown-menu .dropdown-item:hover {
+    background-color: #F5F5F5;
+    color: #11ED73;
 }
 
+/* Price display */
+
+
+/* Password reset */
+.password-reset {
+    font-size: 0.9rem;
+}
+.password-reset a {
+    color: #11ED73;
+    text-decoration: none;
+    cursor: pointer;
+}
+.password-reset a:hover {
+    color: #F5F5F5;
+    text-decoration: none;
+}
+
+
 /*Contact page*/
-.contact {
-    margin-top: 8rem;
+.cp-text {
+    font-size: 0.9rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 .cp-item {
     color: #11ED73;
+    font-size: 0.8rem;
 }
-.cta-btn2 {
-    font-size: 0.6rem;
-    border-color: #11ED73;
-    border-block-width: 0.2rem;
-    color: #11ED73;
-}
-
-/*Events page*/
 
 /*Buttons*/
 .cta-btn {
     color: #11ED73;
     border-color: #11ED73;
+    background-color: #0000;
     border-block-width: 5px;
     margin-top: 1rem;
     margin-bottom: 1rem;
     font-size: 0.8rem;
 }
-.offcanvas .btn-close {
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%2311ED73' viewBox='0 0 16 16'%3e%3cpath d='M2.146 2.146a.5.5 0 0 1 .708 0L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
-  opacity: 1;
-  background-size: 1em;
-  width: 1em;
-  height: 1em;
+.cta-btn2 {
+    font-size: 0.8rem;
+    border-color: #11ED73;
+    background-color: #0000;
+    border-block-width: 0.2rem;
+    color: #11ED73;
 }
-
-
-
-
+.offcanvas .btn-close {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%2311ED73' viewBox='0 0 16 16'%3e%3cpath d='M2.146 2.146a.5.5 0 0 1 .708 0L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+    opacity: 1;
+    background-size: 1em;
+    width: 1em;
+    height: 1em;
+}
 
 /*footer*/
 footer {
+    Font-size: 0.8rem;
+    text-align: center;
     color: #11ED73;
 }
 
@@ -210,5 +581,36 @@ footer {
 .error-item {
     color: #11ED73;
 }
+/* Error Messages */
+.custom-error {
+  color: #11ED73;
+  font-weight: bold;
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.25rem;
+}
 
+/* Media Queries */
+@media (min-width: 768px) {
+    .c-caption p{
+        font-size: 1rem;
+    }
+}
 
+@media (max-width: 768px) {
+    .container-global {
+        margin-top: 4rem;
+        margin-bottom: 1rem;
+    }
+    .font-size {
+        font-size: 0.5rem;
+    }
+    .carousel {
+        margin-top: 0.3rem;
+  }
+}
+@media (min-width: 1024px) {
+    .c-caption-p {
+        font-size: 1.2rem; 
+  }
+}
