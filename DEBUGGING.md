@@ -190,4 +190,26 @@ I updated my `MerchDetailVie`w to pass size_choices into the context. Then in my
 
 I need to remember that *Django* model field choices always give back `(key, label)` pairs, not a single value. If I try to loop with the wrong variable, the template will silently fail and look like “nothing happened.” Next time, I’ll check what data type a loop is actually returning before writing the template logic, and I’ll keep dropdown JS patterns consistent across all fields.
 
+## Configuration Error
+
+**Bug:**  
+After deploying to **Heroku**, images uploaded through the Django Admin did not display. In the **Heroku** *Python shell*, running `print(e.image.url)` raised:
+
+    *ValueError: Must supply cloud_name in tag or in configuration*
+
+The images had uploaded to **Cloudinary** (the `public_id` existed), but without the `cloud_name` in the configuration, **Django** could not generate valid URLs.
+
+**Fix:**  
+I added the missing `CLOUDINARY_URL` environment variable in **Heroku** using the value from the **Cloudinary** dashboard:
+
+    **heroku** *config:set CLOUDINARY_URL="cloudinary://<api_key>:<api_secret>@<cloud_name>" -a slp-upgrade*
+
+Then I restarted the dynos:
+
+    *heroku ps:restart -a slp-upgrade*
+
+After this, `{{ event.image.url }}` returned a proper **Cloudinary** URL such as `https://res.cloudinary.com/<cloud_name>/...`, and the images displayed correctly.
+
+**Lesson Learned:**  
+**Cloudinary** requires the `CLOUDINARY_URL` environment variable, which contains the `cloud_name`. Without it, images cannot be resolved even if they are uploaded. Always verify critical third-party environment variables are set in Heroku before deploying.
 

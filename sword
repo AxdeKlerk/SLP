@@ -1,0 +1,17 @@
+[33mcommit 5232a4a1ef44e366375ff53cfdaf91e41de06168[m
+Author: GitHub AxdeKlerk <axdeklerk@gmail.com>
+Date:   Sun Aug 17 15:59:24 2025 +0100
+
+    Deployment bug fix added to docs
+
+[33mcommit af72288041b1b406b815206729ecedd522a79efd[m
+Author: GitHub AxdeKlerk <axdeklerk@gmail.com>
+Date:   Wed Jul 30 08:17:42 2025 +0100
+
+    Add security bug fix to DEBUGGING.md
+
+[33mcommit ab40d75bcd0275644d671c57a64dc6775e6de000[m
+Author: GitHub AxdeKlerk <axdeklerk@gmail.com>
+Date:   Wed Jul 30 08:13:59 2025 +0100
+
+    Initial commit - clean and secured
