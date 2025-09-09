@@ -193,6 +193,7 @@ I need to remember that *Django* model field choices always give back `(key, lab
 ## Configuration Error
 
 **Bug:**  
+
 After deploying to **Heroku**, images uploaded through the Django Admin did not display. In the **Heroku** *Python shell*, running `print(e.image.url)` raised:
 
     *ValueError: Must supply cloud_name in tag or in configuration*
@@ -200,6 +201,7 @@ After deploying to **Heroku**, images uploaded through the Django Admin did not 
 The images had uploaded to **Cloudinary** (the `public_id` existed), but without the `cloud_name` in the configuration, **Django** could not generate valid URLs.
 
 **Fix:**  
+
 I added the missing `CLOUDINARY_URL` environment variable in **Heroku** using the value from the **Cloudinary** dashboard:
 
     **heroku** *config:set CLOUDINARY_URL="cloudinary://<api_key>:<api_secret>@<cloud_name>" -a slp-upgrade*
@@ -211,5 +213,103 @@ Then I restarted the dynos:
 After this, `{{ event.image.url }}` returned a proper **Cloudinary** URL such as `https://res.cloudinary.com/<cloud_name>/...`, and the images displayed correctly.
 
 **Lesson Learned:**  
+
 **Cloudinary** requires the `CLOUDINARY_URL` environment variable, which contains the `cloud_name`. Without it, images cannot be resolved even if they are uploaded. Always verify critical third-party environment variables are set in Heroku before deploying.
+
+## Search Integration Bug
+
+**Bug:**  
+
+I added a "Merch" field to the navbar search dropdown, but it didn’t return results. "Artist" and "Venue" already worked by looking up the PK through small API endpoints and redirecting straight to their detail pages. "Merch" needed to search by `product_name` or `product_category` (both key and label) via the central search view, but nothing happened on Enter because the input wasn’t wired to the same flow and the view didn’t robustly handle category labels.
+
+**Fix:**  
+
+I kept Artist/Venue logic exactly as-is (PK lookup + redirect) and added a *minimal, isolated* merch path:
+
+1) Confirmed a namespaced central search route so I can link to it reliably.
+    
+    File: `apps/products/urls.py`
+    
+        from django.urls import path
+        from . import views
+        
+        app_name = "products"
+        
+        urlpatterns = [
+            # ...existing routes...
+            path("search/", views.search_view, name="search"),
+        ]
+
+2) I Added a *Enter-key handler* for the merch input only. This builds `?category=merch&q=...` and sends the browser to the central search page. Artist/Venue handlers remained unchanged.
+
+    File: `static/js/script.js`
+    
+        document.addEventListener("DOMContentLoaded", function () {
+          // --- MERCH: Enter -> central search ---
+          (function () {
+            const merchSearch = document.getElementById("merch-search");
+            if (!merchSearch) return;
+        
+            // Prefer dynamic URL from <body data-search-url="...">; fallback to namespaced path
+            const searchUrl = (document.body && document.body.dataset && document.body.dataset.searchUrl)
+              ? document.body.dataset.searchUrl
+              : "/products/search/";
+        
+            merchSearch.addEventListener("keydown", function (e) {
+              if (e.key !== "Enter") return;
+              e.preventDefault();
+        
+              const q = (this.value || "").trim();
+              if (!q) return;
+        
+              window.location.href = `${searchUrl}?category=merch&q=${encodeURIComponent(q)}`;
+            });
+          })();
+        
+          // (Artist and Venue keydown handlers stayed exactly as they were.)
+        });
+
+3) I Made the central search view’s merch branch match on product name OR category key OR category label to cover queries like “hoodie” or “Hoodie”.
+
+    File: `apps/products/views.py`
+    
+        from django.db.models import Q
+        
+        def search_view(request):
+            category = (request.GET.get("category") or "").strip()
+            q = (request.GET.get("q") or "").strip()
+        
+            ctx = {"category": category, "q": q}
+        
+            if not category or not q:
+                return render(request, "search_results.html", ctx)
+        
+            if category == "artist":
+                ctx["artist_results"] = Artist.objects.filter(
+                    name__icontains=q
+                ).order_by("name")
+        
+            elif category == "venue":
+                ctx["venue_results"] = Venue.objects.filter(
+                    name__icontains=q
+                ).order_by("name")
+        
+            elif category == "merch":
+                choices = Merch._meta.get_field("product_category").choices  # [(key, "Label"), ...]
+                label_keys = [key for key, label in choices if q.lower() in str(label).lower()]
+        
+                ctx["merch_results"] = Merch.objects.filter(
+                    Q(product_name__icontains=q) |
+                    Q(product_category__icontains=q) |    # matches key like "hoodie"
+                    Q(product_category__in=label_keys)     # matches label like "Hoodie"
+                ).order_by("product_name", "product_category", "size")
+        
+            return render(request, "search_results.html", ctx)
+
+**Lesson Learned:**
+
+- Static JS cannot use `{% url %}`; expose **Django** URLs via `data-*` attributes in templates or hardcode a stable path.  
+- Keep IDs unique; duplicate IDs silently break listeners.  
+- Standardize query paramaters (`q` + `category`) so server-side logic stays simple.  
+- When using `choices`, match both the stored key and the human readable label to make searches intuitive (“hoodie” should match, whether user types the key or the label).
 
