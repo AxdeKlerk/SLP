@@ -446,6 +446,28 @@ body {
     font-size: 0.8rem;
     color: #F5F5F5;
 }
+.merch-price {
+    font-size: 1.2rem;
+    color: #11ED73;
+    font-weight: bold;
+}
+.page-link {
+    color: #11ED73 !important;        /* green text */
+    background-color: #000 !important;/* black background */
+    border: 2px solid #11ED73 !important; /* green border */
+    font-size: 0.8rem;
+}
+.page-link:hover {
+    background-color: #11ED73 !important; /* green hover */
+    color: #000 !important;               /* black text on hover */
+}
+.page-item.disabled .page-link {
+    color: #11ED73 !important;  
+    background-color: #000 !important;
+    border: 2px solid #11ED73 !important;
+    opacity: 0.6; /* optional fade */
+}
+
 /* Quantity dropdown */
 #qtyDropdown {
   font-size: 0.8rem;

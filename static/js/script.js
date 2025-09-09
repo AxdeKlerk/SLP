@@ -58,6 +58,35 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+// Function to fetch merch ID(s) based on search input
+document.addEventListener("DOMContentLoaded", function () {
+  const merchSearch = document.getElementById("merch-search");
+
+  if (merchSearch) {
+    merchSearch.addEventListener("keydown", function (e) {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        let query = this.value.trim();
+        if (query) {
+          fetch(`/products/api/merch-id/?name=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+              if (data.count === 1) {
+                // go directly to the merch detail
+                window.location.href = `/products/merch/${data.ids[0]}/`;
+              } else if (data.count > 1) {
+                // go to merch list view, filtered by ?q=
+                window.location.href = `/products/merch/?q=${encodeURIComponent(query)}`;
+              } else {
+                alert("Merch item not found");
+              }
+            });
+        }
+      }
+    });
+  }
+});
+
 // Function to update price based on quantity selection and to handle size dropdowns
 document.addEventListener("DOMContentLoaded", function () {
   const totalPriceEl = document.getElementById("total-price");

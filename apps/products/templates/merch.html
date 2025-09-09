@@ -102,16 +102,17 @@
             {% if m.image %}<img src="{{ m.image.url }}" class="card-img-top img-fluid" alt="{{ m.product_name }}">{% endif %}
             <div class="card-body">
               <h2 class="merch-title">{{ m.product_name }}</h2>
-                <div class="merch-description">
-                  {% if m.product_description %}
-                    {{ m.product_description|linebreaks }}
-                  {% endif %}
-                  {{ m.get_product_category_display }}
-                  {% if m.size %} • {{ m.size|upper }}{% endif %} 
-                  {% if m.price %} • £{{ m.price }}{% endif %}
-                </div>
-            <div class="card-footer bg-transparent justify-content-center mx-auto">
-              <a class="btn cta-btn mb-0" href="{% url 'products:merch_detail' m.pk %}">View</a>
+              <div class="merch-description">
+                {% if m.product_description %}
+                  {{ m.product_description|linebreaks }}
+                {% endif %}
+                {{ m.get_product_category_display }}
+                {% if m.size %} • {{ m.size|upper }}{% endif %} 
+                {% if m.price %} • £{{ m.price }}{% endif %}
+              </div>
+              <div class="card-footer bg-transparent justify-content-center mx-auto">
+                <a class="btn cta-btn mb-0" href="{% url 'products:merch_detail' m.pk %}">View</a>
+              </div>
             </div>
           </div>
         </div>
@@ -120,7 +121,7 @@
 
     {% if is_paginated %}
       <nav class="mt-3">
-        <ul class="pagination">
+        <ul class="pagination justify-content-center">
           {% if page_obj.has_previous %}
             <li class="page-item"><a class="page-link"
               href="?page={{ page_obj.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}">Prev</a></li>

@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from .models import Event, Artist, Venue, Merch
 from .forms import MerchForm
 from django.urls import reverse_lazy
+from django.db.models import Q
 
 def events_view(request):
     today = timezone.now().date()  # get today's date
@@ -56,11 +57,29 @@ def get_venue_id(request):
     venue = Venue.objects.filter(name__icontains=name.strip()).first()
     return JsonResponse({"id": venue.pk if venue else None})
 
+def get_merch_id(request):
+    name = request.GET.get("name", "").strip()
+    if not name:
+        return JsonResponse({"ids": [], "count": 0})
+
+    # Map label -> key for category matches
+    choices = Merch._meta.get_field("product_category").choices
+    label_keys = [key for key, label in choices if name.lower() in str(label).lower()]
+
+    merch_qs = Merch.objects.filter(
+        Q(product_name__icontains=name) |
+        Q(product_category__icontains=name) |
+        Q(product_category__in=label_keys)
+    ).order_by("product_name")
+
+    ids = list(merch_qs.values_list("id", flat=True))
+    return JsonResponse({"ids": ids, "count": len(ids)})
+
 class MerchListView(ListView):
     model = Merch
     template_name = "merch.html"
     context_object_name = "items"
-    paginate_by = 12  # easy grid pages
+    paginate_by = 4
 
     def get_queryset(self):
         qs = super().get_queryset().order_by("product_name")
@@ -136,3 +155,36 @@ class MerchDeleteView(DeleteView):
         context['page_title'] = "Merch"
         return context
 
+from django.db.models import Q
+
+def search_view(request):
+    category = (request.GET.get("category") or "").strip()
+    q = (request.GET.get("q") or "").strip()
+
+    ctx = {"category": category, "q": q}
+
+    if not category or not q:
+        return render(request, "search_results.html", ctx)
+
+    if category == "artist":
+        ctx["artist_results"] = Artist.objects.filter(
+            name__icontains=q
+        ).order_by("name")
+
+    elif category == "venue":
+        ctx["venue_results"] = Venue.objects.filter(
+            name__icontains=q
+        ).order_by("name")
+
+    elif category == "merch":
+        # Map label -> key for category matches
+        choices = Merch._meta.get_field("product_category").choices  # [(key, "Label")]
+        label_keys = [key for key, label in choices if q.lower() in str(label).lower()]
+
+        ctx["merch_results"] = Merch.objects.filter(
+            Q(product_name__icontains=q) |               # name contains
+            Q(product_category__icontains=q) |           # key contains (e.g. "hoodie")
+            Q(product_category__in=label_keys)           # label match (e.g. "Hoodie")
+        ).order_by("product_name", "product_category", "size")
+
+    return render(request, "search_results.html", ctx)
