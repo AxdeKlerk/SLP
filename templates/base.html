@@ -290,8 +290,9 @@
   {% if messages %}
     <div class="container mt-3">
       {% for message in messages %}
-        <div class="alert alert-{{ message.tags|default:'info' }} mb-2">
+        <div class="alert alert-dismissible fade show mb-2">
           {{ message }}
+          <button type="button" class="btn-close btn-close-green" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
       {% endfor %}
     </div>

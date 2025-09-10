@@ -219,7 +219,8 @@ body {
 .page-item select,
 .page-item textarea {
   width: 100%;
-  background-color: #0000 !important;
+  color: #0000;
+  background-color: #F5F5F5 !important;
   border: 1px solid #11ED73 !important;
   font-size: 1.1rem;
   border-radius: 4px;
@@ -235,7 +236,7 @@ body {
 }
 .page-item input[type="file"]::file-selector-button {
   background-color: #0000;
-  border: 1px solid #11ED73;
+  border: 2px solid #11ED73;
 }
 .page-item input:focus,
 .page-item select:focus,
@@ -243,7 +244,7 @@ body {
   outline: none;
   border-color: #11ED73 !important;
   box-shadow: none;
-  background-color: #0000 !important;
+  background-color: #F5F5F5 !important;
 }
 
 /*Carousel*/
@@ -605,6 +606,17 @@ body {
     width: 1em;
     height: 1em;
 }
+/* Alert buttons */
+.btn-close-green {
+  background: none;
+  opacity: 1;
+}
+.btn-close-green::before {
+  content: "×";
+  font-size: 1.2rem;
+  color: #11ED73;
+  font-weight: bold;
+}
 
 /*footer*/
 footer {
@@ -619,8 +631,7 @@ footer {
 }
 /* Error Messages */
 .custom-error {
-  color: #11ED73;
-  font-weight: bold;
+  color: #FF1744;
   list-style: none;
   padding-left: 0;
   margin-top: 0.25rem;
@@ -629,8 +640,8 @@ footer {
 /* Global alert styling */
 .alert {
   background-color: #000;        
-  color: #11ED73;               
-  border: 1px solid #11ED73;     
+  color: #FF1744;               
+  border: 2px solid #11ED73;     
   border-radius: 6px;
   font-size: 0.9rem;
 }
@@ -640,8 +651,8 @@ footer {
 }
 /* Override Bootstrap alert link colors */
 .alert a {
-  color: #11ED73;
-  text-decoration: underline;
+  color: #FF1744;
+  text-decoration: none;
 }
 
 /* Media Queries */
