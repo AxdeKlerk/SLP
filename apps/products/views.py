@@ -1,13 +1,11 @@
 from django.utils import timezone
 from django.shortcuts import render
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
 from django.views import View
-from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import DetailView, ListView
 from django.http import JsonResponse
 from .models import Event, Artist, Venue, Merch
-from .forms import MerchForm
-from django.urls import reverse_lazy
 from django.db.models import Q
 
 def events_view(request):
@@ -30,6 +28,9 @@ def merch_view(request):
 def roxoff_view(request):
     roxoff_event = Event.objects.filter(special_event=True).order_by('gig_date')  
     return render(request, 'roxoff.html', {'events': roxoff_event})
+
+class OwnerRequiredMixin(UserPassesTestMixin):
+    def test_func(self): return self.get_object().created_by == self.request.user
 
 class ArtistDetailView(DetailView):
     model = Artist
@@ -109,54 +110,6 @@ class MerchDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['page_title'] = "Merch"
         context['size_choices'] = Merch._meta.get_field("size").choices
-        return context
-
-class OwnerRequiredMixin(UserPassesTestMixin):
-    def test_func(self): return self.get_object().created_by == self.request.user
-
-# Logged In only (CRUD)
-class MerchCreateView(CreateView):
-    model = Merch
-    form_class = MerchForm
-    template_name = "merch.html"
-    success_url = reverse_lazy("products:merch_list")
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['page_title'] = "Merch"
-        return context
-
-class MerchUpdateView(UpdateView):
-    model = Merch
-    form_class = MerchForm
-    template_name = "merch.html"
-    success_url = reverse_lazy("products:merch_list")
-
-    def form_valid(self, form):
-        messages.success(self.request, "Merch item updated")
-        return super().form_valid(form)
-
-    def get_queryset(self):
-        qs = super().get_queryset()
-        return qs.filter(created_by=self.request.user)
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['page_title'] = "Merch"
-        return context
-
-class MerchDeleteView(DeleteView):
-    model = Merch
-    template_name = "merch.html"
-    success_url = reverse_lazy("products:merch_list")
-
-    def delete(self, request, *args, **kwargs):
-        messages.success(self.request, "Item deleted.")
-        return super().delete(request, *args, **kwargs)
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['page_title'] = "Merch"
         return context
 
 def search_view(request):

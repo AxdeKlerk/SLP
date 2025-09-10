@@ -1,7 +1,7 @@
 # apps/products/urls.py
 from django.urls import path
 from . import views
-from apps.products.views import ArtistDetailView, VenueDetailView, get_artist_id, get_venue_id, MerchListView, MerchDetailView, MerchCreateView, MerchUpdateView, MerchDeleteView
+from apps.products.views import ArtistDetailView, VenueDetailView, get_artist_id, get_venue_id, MerchListView, MerchDetailView
 
 app_name = 'products'
 
@@ -20,7 +20,4 @@ urlpatterns = [
     # Merch CRUD views
     path("merch/", MerchListView.as_view(), name="merch_list"),
     path("merch/<int:pk>/", MerchDetailView.as_view(), name="merch_detail"),
-    path("merch/add/", MerchCreateView.as_view(), name="merch_add"),
-    path("merch/<int:pk>/edit/", MerchUpdateView.as_view(), name="merch_edit"),
-    path("merch/<int:pk>/delete/", MerchDeleteView.as_view(), name="merch_delete"),
 ]
