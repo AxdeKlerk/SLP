@@ -626,6 +626,24 @@ footer {
   margin-top: 0.25rem;
 }
 
+/* Global alert styling */
+.alert {
+  background-color: #000;        
+  color: #11ED73;               
+  border: 1px solid #11ED73;     
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+/* Additional spacing */
+.alert + .alert {
+  margin-top: 0.5rem;
+}
+/* Override Bootstrap alert link colors */
+.alert a {
+  color: #11ED73;
+  text-decoration: underline;
+}
+
 /* Media Queries */
 @media (min-width: 768px) {
     .c-caption p{
