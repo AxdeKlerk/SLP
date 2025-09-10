@@ -5,12 +5,14 @@
 
 {% block content %}
 <div class="container container-global mobile text-center">
-  <div class=" row mx-auto justify-content-center align-items-start">
+  <div class=" row mx-auto justify-content-center align-items-start page-item">
     <div class="col-12 text-center">
       <img src="{% static 'images/Searchlight-icon-grn.png' %}" alt="searchlight logo" class="img-fluid mb-3" style="max-width: 150px;">
       <h1 style="color: #11ED73;">Welcome back<br>you absolute legend!</h1>
-      <p>You have logged in successfully</p>
-      <h3 style="color: #11ED73;">{{ user.username }}</h3>
+      <p>You have logged in successfully as</p>
+      <h3 style="color: #11ED73;">{{ user.username }}</h3><br>
+      <p>Feel free to explore the site and check out our merch!</p>
+      <a href="{% url 'core:home' %}" class="btn cta-btn2">Home</a>
     </div>
   </div>
 </div>

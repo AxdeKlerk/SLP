@@ -59,30 +59,31 @@
         </button>
       </div>
     </div>
-    <div class="row d-md-none w-100 px-3 mobile-fixed">
-    <!-- Row 2: User status + page title -->
-      <div class="row">
-        <div class="col-12 user-status">
-          {% include "user/user_status.html" %}
-        </div>
-        {% if page_title %}
-        <div class="col-12 text-center">
-          <h1>{{ page_title }}</h1>
-        </div>
-        {% endif %}
+    <div class="row w-100 px-3 mobile-fixed">
+      <!-- Row 2: User status + page title -->
+      <div class="col-12 user-status">
+        {% include "user/user_status.html" %}
       </div>
+      {% if page_title %}
+      <div class="col-12 d-md-none text-left">
+        <h1>{{ page_title }}</h1>
+      </div>
+        {% endif %}
     </div>
 
     <!-- Mobile Nav Drawer: Offcanvas on right -->
     <div class="offcanvas offcanvas-end bg-black" tabindex="-1" id="mobileNav">
       <div class="offcanvas-body d-flex flex-column align-items-end">
         <ul class="nav flex-column gap-2 w-100">
+          <!-- Home -->
           <li class="nav-item text-end">
             <a class="nav-link" href="{% url 'core:home' %}">Home</a>
           </li>
+          <!-- About -->
           <li class="nav-item text-end">
             <a class="nav-link" href="{% url 'core:about' %}">About</a>
           </li>
+          <!-- Events -->
           <li class="nav-item text-end">
             <a class="nav-link" data-bs-toggle="collapse" href="#offcanvasEvents" role="button" aria-expanded="false" aria-controls="offcanvasEvents">Events</a>
             <div class="collapse" id="offcanvasEvents">
@@ -99,66 +100,84 @@
           <li class="nav-item text-end">
             <a class="nav-link" href="{% url 'products:merch_list' %}">Merch</a>
           </li>
+          <!-- Account -->
           <li class="nav-item text-end">
-            <a class="nav-link" href="#">Account</a>
+            <a class="nav-link" data-bs-toggle="collapse" href="#offcanvasAccount" role="button"
+              aria-expanded="false" aria-controls="offcanvasAccount">Account</a>
+            <div class="collapse" id="offcanvasAccount">
+              <ul class="navbar-nav ps-3">
+                {% if user.is_authenticated %}
+                  <li><a class="nav-link" href="{% url 'user:profile' %}">Profile</a></li>
+                  <li>
+                    <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-link nav-link p-0 text-success">Logout</button>
+                    </form>
+                  </li>
+                {% else %}
+                  <li><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
+                  <li><a class="nav-link" href="{% url 'user:signup' %}">Sign Up</a></li>
+                  <li><a class="nav-link" href="{% url 'password_reset' %}">Forgot Password?</a></li>
+                {% endif %}
+              </ul>
+            </div>
           </li>
+          <!-- Basket -->
           <li class="nav-item text-end">
             <a class="nav-link" href="#">Basket</a>
           </li>
+          <!-- Search -->
           <li class="nav-item text-end">
-  <a class="nav-link" data-bs-toggle="collapse" href="#offcanvasSearch" 
-     role="button" aria-expanded="false" aria-controls="offcanvasSearch">
-    Search
-  </a>
-  <div class="collapse" id="offcanvasSearch">
-    <ul class="navbar-nav ps-3" id="searchAccordion">
-
-      <!-- Artist -->
-      <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="collapse" href="#searchArtist" 
-           role="button" aria-expanded="false" aria-controls="searchArtist">
-          Artist
-        </a>
-        <div class="collapse mt-1" id="searchArtist" data-bs-parent="#searchAccordion">
-          <input type="text" id="artist-search-mobile" 
-                 class="form-control form-control-sm bg-black text-light border-success"
-                 placeholder="Search artist...">
-        </div>
-      </li>
-
-      <!-- Venue -->
-      <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="collapse" href="#searchVenue" 
-           role="button" aria-expanded="false" aria-controls="searchVenue">
-          Venue
-        </a>
-        <div class="collapse mt-1" id="searchVenue" data-bs-parent="#searchAccordion">
-          <input type="text" id="venue-search-mobile" 
-                 class="form-control form-control-sm bg-black text-light border-success"
-                 placeholder="Search venue...">
-        </div>
-      </li>
-
-      <!-- Merch -->
-      <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="collapse" href="#searchMerch" 
-           role="button" aria-expanded="false" aria-controls="searchMerch">
-          Merch
-        </a>
-        <div class="collapse mt-1" id="searchMerch" data-bs-parent="#searchAccordion">
-          <input type="text" id="merch-search-mobile" 
-                 class="form-control form-control-sm bg-black text-light border-success"
-                 placeholder="Search merch...">
-        </div>
-      </li>
-
-    </ul>
-  </div>
-</li>
-
+            <a class="nav-link" data-bs-toggle="collapse" href="#offcanvasSearch" 
+              role="button" aria-expanded="false" aria-controls="offcanvasSearch">
+              Search
+            </a>
+            <div class="collapse" id="offcanvasSearch">
+              <ul class="navbar-nav ps-3" id="searchAccordion">
+                <!-- Artist -->
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="collapse" href="#searchArtist" 
+                    role="button" aria-expanded="false" aria-controls="searchArtist">
+                    Artist
+                  </a>
+                  <div class="collapse mt-1" id="searchArtist" data-bs-parent="#searchAccordion">
+                    <input type="text" id="artist-search-mobile" 
+                          class="form-control form-control-sm bg-black text-light border-success"
+                          placeholder="Search artist...">
+                  </div>
+                </li>
+                <!-- Venue -->
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="collapse" href="#searchVenue" 
+                    role="button" aria-expanded="false" aria-controls="searchVenue">
+                    Venue
+                  </a>
+                  <div class="collapse mt-1" id="searchVenue" data-bs-parent="#searchAccordion">
+                    <input type="text" id="venue-search-mobile" 
+                          class="form-control form-control-sm bg-black text-light border-success"
+                          placeholder="Search venue...">
+                  </div>
+                </li>
+                <!-- Merch -->
+                <li class="nav-item">
+                  <a class="nav-link" data-bs-toggle="collapse" href="#searchMerch" 
+                    role="button" aria-expanded="false" aria-controls="searchMerch">
+                    Merch
+                  </a>
+                  <div class="collapse mt-1" id="searchMerch" data-bs-parent="#searchAccordion">
+                    <input type="text" id="merch-search-mobile" 
+                          class="form-control form-control-sm bg-black text-light border-success"
+                          placeholder="Search merch...">
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <!-- Contact -->
           <li class="nav-item text-end">
             <a class="nav-link" href="{% url 'core:contact' %}">Contact</a>
           </li>
+          <!-- Close button -->
           <li class="nav-item text-end">
             <a role="button" type="button" class="nav-link text-end" data-bs-dismiss="offcanvas">X</a>
           </li>
@@ -169,7 +188,6 @@
     <!-- Desktop Nav: Inline Menu (≥768px) -->
     <div class="d-none d-md-block w-100 mt-2">
       {% with url_name=request.resolver_match.url_name %}
-
       <!-- Nav items -->
       <ul class="nav justify-content-between w-100">
         <li class="nav-item">
@@ -178,7 +196,6 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'core:about' %}">About</a>
         </li>
-
         <!-- Events dropdown -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle {% if url_name == 'events' or url_name == 'previous_events' %}active{% endif %}" id="eventsDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
@@ -191,35 +208,40 @@
             </li>
           </ul>
         </li>
-
+        <!-- Merch -->
         <li class="nav-item">
           <a class="nav-link {% if url_name == 'merch_list' or url_name == 'merch_detail' %}active{% endif %}" href="{% url 'products:merch_list' %}">Merch</a>
         </li>
-
+        <!-- Roxoff -->
         <li class="nav-item">
           <a class="nav-link" href="{% url 'products:roxoff' %}">ROXOFF</a>
         </li>
-
-        <li class="nav-item">
-          {% if user.is_authenticated %}
-            <span class="nav-link">
-              Hi {{ user.username }}!
-              <form action="{% url 'logout' %}" method="post" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-link nav-link p-0 text-success">Logout</button>
-              </form>
-            </span>
-          {% else %}
-            <a class="nav-link" href="{% url 'login' %}">Log In</a>
-            <span class="nav-separator">/</span>
-            <a class="nav-link" href="{% url 'user:signup' %}">Sign Up</a>
-          {% endif %}
+        <!-- Account -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="accountDropdown" href="#" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            Account
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="accountDropdown">
+            {% if user.is_authenticated %}
+              <li><a class="dropdown-item" href="{% url 'user:profile' %}">Profile</a></li>
+              <li>
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="dropdown-item text-success">Logout</button>
+                </form>
+              </li>
+            {% else %}
+              <li><a class="dropdown-item" href="{% url 'login' %}">Log In</a></li>
+              <li><a class="dropdown-item" href="{% url 'user:signup' %}">Sign Up</a></li>
+              <li><a class="dropdown-item" href="{% url 'password_reset' %}">Forgot Password?</a></li>
+            {% endif %}
+          </ul>
         </li>
-
+        <!-- Basket -->
         <li class="nav-item">
           <a class="nav-link" href="#">Basket</a>
         </li>
-
         <!-- Search dropdown -->
         {% with url_name=request.resolver_match.url_name %}
         <li class="nav-item dropdown">
@@ -256,7 +278,6 @@
       </ul>
       {% endwith %}
     </div>
-
   </div>
 </nav>
 

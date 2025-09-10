@@ -43,7 +43,8 @@
     <div class="row g-4 align-items-stretch h-100">
       <div class="col-12 col-sm-6 d-flex justify-content-center align-items-center py-2">
         {# --- Merch Image --- #}
-        {% if item.image %}<img class="img-fluid merch-img" src="{{ item.image.url }}" alt="{{ item.product_name }}">{% endif %}
+        {% if item.image %}<img class="img-fluid merch-img" src="{{ item.image.url }}" alt="{{ item.product_name }}">
+        {% endif %}
       </div>
       <div class="col-12 col-sm-6 d-flex flex-column h-100">
         <h1 class="merch-title">{{ item.product_name }}</h1>
@@ -110,14 +111,14 @@
               {% if m.size %} • {{ m.size|upper }}{% endif %} 
               {% if m.price %} • £{{ m.price }}{% endif %}
             </div>
-            <div class="card-footer bg-transparent justify-content-center mx-auto">
-              <a class="btn cta-btn mb-0" href="{% url 'products:merch_detail' m.pk %}">View</a>
-            </div>
+          </div>
+          <div class="card-footer bg-transparent mt-auto">
+            <a class="btn cta-btn mb-0" href="{% url 'products:merch_detail' m.pk %}">View</a>
           </div>
         </div>
       </div>
-      {% endfor %}
-    </div>
+    {% endfor %}
+  </div>
 
     {% if is_paginated %}
       <nav class="mt-3">
