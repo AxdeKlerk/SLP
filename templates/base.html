@@ -106,8 +106,56 @@
             <a class="nav-link" href="#">Basket</a>
           </li>
           <li class="nav-item text-end">
-            <a class="nav-link" href="#">Search</a>
-          </li>
+  <a class="nav-link" data-bs-toggle="collapse" href="#offcanvasSearch" 
+     role="button" aria-expanded="false" aria-controls="offcanvasSearch">
+    Search
+  </a>
+  <div class="collapse" id="offcanvasSearch">
+    <ul class="navbar-nav ps-3" id="searchAccordion">
+
+      <!-- Artist -->
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" href="#searchArtist" 
+           role="button" aria-expanded="false" aria-controls="searchArtist">
+          Artist
+        </a>
+        <div class="collapse mt-1" id="searchArtist" data-bs-parent="#searchAccordion">
+          <input type="text" id="artist-search-mobile" 
+                 class="form-control form-control-sm bg-black text-light border-success"
+                 placeholder="Search artist...">
+        </div>
+      </li>
+
+      <!-- Venue -->
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" href="#searchVenue" 
+           role="button" aria-expanded="false" aria-controls="searchVenue">
+          Venue
+        </a>
+        <div class="collapse mt-1" id="searchVenue" data-bs-parent="#searchAccordion">
+          <input type="text" id="venue-search-mobile" 
+                 class="form-control form-control-sm bg-black text-light border-success"
+                 placeholder="Search venue...">
+        </div>
+      </li>
+
+      <!-- Merch -->
+      <li class="nav-item">
+        <a class="nav-link" data-bs-toggle="collapse" href="#searchMerch" 
+           role="button" aria-expanded="false" aria-controls="searchMerch">
+          Merch
+        </a>
+        <div class="collapse mt-1" id="searchMerch" data-bs-parent="#searchAccordion">
+          <input type="text" id="merch-search-mobile" 
+                 class="form-control form-control-sm bg-black text-light border-success"
+                 placeholder="Search merch...">
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</li>
+
           <li class="nav-item text-end">
             <a class="nav-link" href="{% url 'core:contact' %}">Contact</a>
           </li>

@@ -9,83 +9,60 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
-// Function to fetch artist ID based on search input
+// Function to fetch artist and venue IDs based on search input fro both mobile and desktop
 document.addEventListener("DOMContentLoaded", function () {
-  const artistSearch = document.getElementById("artist-search");
-
-  if (artistSearch) {
-    artistSearch.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        let query = this.value.trim();
-        if (query) {
-          fetch(`/products/api/artist-id/?name=${encodeURIComponent(query)}`)
-            .then(response => response.json())
-            .then(data => {
-              if (data.id) {
-                window.location.href = `/products/artist/${data.id}/`;
-              } else {
-                alert("Artist not found");
-              }
-            });
+  // Reusable function for Artist & Venue (PK based)
+  function handlePKSearch(inputId, apiUrl, redirectPrefix, notFoundMsg) {
+    const input = document.getElementById(inputId);
+    if (input) {
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          let query = this.value.trim();
+          if (query) {
+            fetch(`${apiUrl}?name=${encodeURIComponent(query)}`)
+              .then(response => response.json())
+              .then(data => {
+                if (data.id) {
+                  window.location.href = `${redirectPrefix}${data.id}/`;
+                } else {
+                  alert(notFoundMsg);
+                }
+              });
+          }
         }
-      }
-    });
+      });
+    }
   }
+
+  // Artist (desktop + mobile)
+  handlePKSearch("artist-search", "/products/api/artist-id/", "/products/artist/", "Artist not found");
+  handlePKSearch("artist-search-mobile", "/products/api/artist-id/", "/products/artist/", "Artist not found");
+
+  // Venue (desktop + mobile)
+  handlePKSearch("venue-search", "/products/api/venue-id/", "/products/venue/", "Venue not found");
+  handlePKSearch("venue-search-mobile", "/products/api/venue-id/", "/products/venue/", "Venue not found");
+
+  // Merch (query-based, no PK lookup)
+  function handleMerchSearch(inputId) {
+    const input = document.getElementById(inputId);
+    if (input) {
+      input.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          let query = this.value.trim();
+          if (query) {
+            window.location.href = `/products/merch/?q=${encodeURIComponent(query)}`;
+          }
+        }
+      });
+    }
+  }
+
+  handleMerchSearch("merch-search");        // desktop
+  handleMerchSearch("merch-search-mobile"); // mobile
 });
 
-// Function to fetch venue ID based on search input
-document.addEventListener("DOMContentLoaded", function () {
-  const venueSearch = document.getElementById("venue-search");
-  if (venueSearch) {
-    venueSearch.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        let query = this.value.trim();
-        if (query) {
-          fetch(`/products/api/venue-id/?name=${encodeURIComponent(query)}`)
-            .then(response => response.json())
-            .then(data => {
-              if (data.id) {
-                window.location.href = `/products/venue/${data.id}/`;
-              } else {
-                alert("Venue not found");
-              }
-            });
-        }
-      }
-    });
-  }
-});
-
-// Function to fetch merch ID(s) based on search input
-document.addEventListener("DOMContentLoaded", function () {
-  const merchSearch = document.getElementById("merch-search");
-
-  if (merchSearch) {
-    merchSearch.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") {
-        e.preventDefault();
-        let query = this.value.trim();
-        if (query) {
-          fetch(`/products/api/merch-id/?name=${encodeURIComponent(query)}`)
-            .then(response => response.json())
-            .then(data => {
-              if (data.count === 1) {
-                // go directly to the merch detail
-                window.location.href = `/products/merch/${data.ids[0]}/`;
-              } else if (data.count > 1) {
-                // go to merch list view, filtered by ?q=
-                window.location.href = `/products/merch/?q=${encodeURIComponent(query)}`;
-              } else {
-                alert("Merch item not found");
-              }
-            });
-        }
-      }
-    });
-  }
-});
 
 // Function to update price based on quantity selection and to handle size dropdowns
 document.addEventListener("DOMContentLoaded", function () {
