@@ -13,18 +13,22 @@ from django.db.models import Q
 def events_view(request):
     today = timezone.now().date()  # get today's date
     events = Event.objects.filter(gig_date__gte=today).exclude(event_type='roxoff').order_by('gig_date')
+    for e in events:
+        e.is_upcoming = e.gig_date >= today
     return render(request, 'events.html', {'events': events, 'page_title': 'Upcoming Events'})
 
 def previous_events_view(request):
     today = timezone.now().date()
     past_events = Event.objects.filter(gig_date__lt=today).order_by('-gig_date')
+    for e in past_events:
+        e.is_upcoming = False
     return render(request, 'previous_events.html', {'events': past_events, 'page_title': 'Previous Events'})
 
 def merch_view(request):
     return render(request, 'merch.html', {'page_title': 'Merch'})
 
 def roxoff_view(request):
-    roxoff_event = Event.objects.filter(special_event=True).order_by('gig_date')
+    roxoff_event = Event.objects.filter(special_event=True).order_by('gig_date')  
     return render(request, 'roxoff.html', {'events': roxoff_event})
 
 class ArtistDetailView(DetailView):

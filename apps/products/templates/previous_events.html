@@ -61,9 +61,11 @@
             </div>
 
             {# --- Footer with button always at bottom --- #}
+            {% if event.is_upcoming %}
             <div class="card-footer text-center"> 
               <a href="#" class="btn cta-btn mb-0" target="_blank" aria-label="get event tickets">Get Tickets</a>
             </div>
+            {% endif %}
           </div>
         </div>
       {% endfor %}
