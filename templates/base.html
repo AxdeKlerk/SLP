@@ -38,112 +38,39 @@
   <!-- Navbar container -->
   <div class="container nav-wrapper justify-content-center">
 
-    <!-- Mobile ≤768px: Roxoff logo centered + Hamburger on far right -->
-    <div class="d-flex d-md-none w-100 align-items-center px-3 mb-2">
+    <!-- Mobile ≤768px -->
+    <!-- Row 1: Roxoff logo + hamburger -->
+    <div class="row align-items-center d-md-none w-100 px-3 mb-2">
+      <!-- Empty col for spacing -->
+      <div class="col"></div>
 
-      <!-- Empty flex item for spacing -->
-      <div class="flex-grow-1"></div>
-
-      <!-- Roxoff Logo (mobile only ≤768px, centered) -->
-      <div class="flex-grow-1 text-center">
-          <a href="{% url 'products:roxoff' %}">
+      <!-- Roxoff Logo centered -->
+      <div class="col text-center">
+        <a href="{% url 'products:roxoff' %}">
           <img src="{% static 'images/Roxoff-logo-2026-v3.png' %}" height="35" alt="Roxoff logo" class="header-img">
-          </a>
+        </a>
       </div>
 
-      <!-- Hamburger -->
-      <div class="flex-grow-1 d-flex justify-content-end">
-        <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileNav" aria-controls="mobileNav" aria-label="Toggle navigation">
+      <!-- Hamburger on the right -->
+      <div class="col text-end">
+        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" 
+                data-bs-target="#mobileNav" aria-controls="mobileNav" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
       </div>
     </div>
-
-    <!-- Desktop Nav: Inline Menu (≥768px) -->
-    <div class="d-none d-md-block w-100">
-      {% with url_name=request.resolver_match.url_name %}
-
-      <!-- Nav items -->
-      <ul class="nav justify-content-between w-100">
-        <li class="nav-item">
-        <a class="nav-link" href="{% url 'core:home' %}">Home</a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link" href="{% url 'core:about' %}">About</a>
-        </li>
-        <!-- Events dropdown -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle {% if url_name == 'events' or url_name == 'previous_events' %}active{% endif %}" id="eventsDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
-          <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
-            <li>
-              <a class="dropdown-item {% if url_name == 'events' %}active{% endif %}"href="{% url 'products:events' %}">Upcoming Gigs</a>
-            </li>
-            <li>
-              <a class="dropdown-item {% if url_name == 'previous_events' %}active{% endif %}"href="{% url 'products:previous_events' %}">Previous Gigs</a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if url_name == 'merch_list' or url_name == 'merch_detail' %}active{% endif %}" href="{% url 'products:merch_list' %}">Merch</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'products:roxoff' %}">ROXOFF</a>
-        </li>            
-        <li class="nav-item">
-          {% if user.is_authenticated %}
-            <span class="nav-link">
-              Hi {{ user.username }}! 
-              <form action="{% url 'logout' %}" method="post" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-link nav-link p-0 text-success">Logout</button>
-              </form>
-            </span>
-          {% else %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'login' %}">Log In</a>
-          <span class="nav-separator">/</span>
-          <a class="nav-link" href="{% url 'user:signup' %}">Sign Up</a>
-        </li>
-          {% endif %}
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Basket</a>
-        </li>
-        <!-- Search dropdown -->
-        {% with url_name=request.resolver_match.url_name %}
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle 
-            {% if url_name == 'artist_detail' or url_name == 'venue_detail' %}active{% endif %}"
-            id="searchDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Search
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="searchDropdown">
-            <!-- Artist search -->
-            <li class="px-3 py-2">
-              <label for="artist-search" class="form-label mb-1 text-light">Artist</label>
-              <input type="text" id="artist-search" name="artist"
-                    class="form-control form-control-sm bg-black text-light border-success">
-            </li>
-            <!-- Venue search -->
-            <li class="px-3 py-2">
-              <label for="venue-search" class="form-label mb-1 text-light">Venue</label>
-                <input type="text" id="venue-search" name="venue"
-                class="form-control form-control-sm bg-black text-light border-success">
-            </li>
-            <!-- Merch search -->
-            <li class="px-3 py-2">
-              <label for="merch-search" class="form-label mb-1 text-light">Merch</label>
-              <input type="text" id="merch-search" name="merch"
-                    class="form-control form-control-sm bg-black text-light border-success">
-            </li>
-          </ul>
-        </li>
-        {% endwith %}
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'core:contact' %}">Contact</a>
-        </li>
-      </ul>
-      {% endwith %}
+    <div class="row d-md-none w-100 px-3 mobile-fixed">
+    <!-- Row 2: User status + page title -->
+      <div class="row">
+        <div class="col-12 user-status">
+          {% include "user/user_status.html" %}
+        </div>
+        {% if page_title %}
+        <div class="col-12 text-center">
+          <h1>{{ page_title }}</h1>
+        </div>
+        {% endif %}
+      </div>
     </div>
 
     <!-- Mobile Nav Drawer: Offcanvas on right -->
@@ -169,7 +96,6 @@
               </ul>
             </div>
           </li>
-          </li>
           <li class="nav-item text-end">
             <a class="nav-link" href="{% url 'products:merch_list' %}">Merch</a>
           </li>
@@ -191,23 +117,100 @@
         </ul>
       </div>
     </div>
+
+    <!-- Desktop Nav: Inline Menu (≥768px) -->
+    <div class="d-none d-md-block w-100 mt-2">
+      {% with url_name=request.resolver_match.url_name %}
+
+      <!-- Nav items -->
+      <ul class="nav justify-content-between w-100">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'core:home' %}">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'core:about' %}">About</a>
+        </li>
+
+        <!-- Events dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle {% if url_name == 'events' or url_name == 'previous_events' %}active{% endif %}" id="eventsDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
+          <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
+            <li>
+              <a class="dropdown-item {% if url_name == 'events' %}active{% endif %}" href="{% url 'products:events' %}">Upcoming Gigs</a>
+            </li>
+            <li>
+              <a class="dropdown-item {% if url_name == 'previous_events' %}active{% endif %}" href="{% url 'products:previous_events' %}">Previous Gigs</a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if url_name == 'merch_list' or url_name == 'merch_detail' %}active{% endif %}" href="{% url 'products:merch_list' %}">Merch</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'products:roxoff' %}">ROXOFF</a>
+        </li>
+
+        <li class="nav-item">
+          {% if user.is_authenticated %}
+            <span class="nav-link">
+              Hi {{ user.username }}!
+              <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-link nav-link p-0 text-success">Logout</button>
+              </form>
+            </span>
+          {% else %}
+            <a class="nav-link" href="{% url 'login' %}">Log In</a>
+            <span class="nav-separator">/</span>
+            <a class="nav-link" href="{% url 'user:signup' %}">Sign Up</a>
+          {% endif %}
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">Basket</a>
+        </li>
+
+        <!-- Search dropdown -->
+        {% with url_name=request.resolver_match.url_name %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle 
+            {% if url_name == 'artist_detail' or url_name == 'venue_detail' %}active{% endif %}"
+            id="searchDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Search
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="searchDropdown">
+            <!-- Artist search -->
+            <li class="px-3 py-2">
+              <label for="artist-search" class="form-label mb-1 text-light">Artist</label>
+              <input type="text" id="artist-search" name="artist"
+                    class="form-control form-control-sm bg-black text-light border-success">
+            </li>
+            <!-- Venue search -->
+            <li class="px-3 py-2">
+              <label for="venue-search" class="form-label mb-1 text-light">Venue</label>
+              <input type="text" id="venue-search" name="venue"
+                    class="form-control form-control-sm bg-black text-light border-success">
+            </li>
+            <!-- Merch search -->
+            <li class="px-3 py-2">
+              <label for="merch-search" class="form-label mb-1 text-light">Merch</label>
+              <input type="text" id="merch-search" name="merch"
+                    class="form-control form-control-sm bg-black text-light border-success">
+            </li>
+          </ul>
+        </li>
+        {% endwith %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'core:contact' %}">Contact</a>
+        </li>
+      </ul>
+      {% endwith %}
+    </div>
+
   </div>
 </nav>
-
-<!-- Page title (mobile only ≤768px) -->
-<div class="container mt-3 d-md-none">
-  {% if page_title %}
-    <div class="page-heading text-left">
-      <h1 class="text-light">{{ page_title }}</h1>
-    </div>
-  {% endif %}
-</div>
-
-  <!-- User Status (below navbar) -->
-  {% include "user/user_status.html" %}
-
-  <!-- Divider line -->
-  <hr class="text-success my-2">
 
 {% block content %}{% endblock %}
 

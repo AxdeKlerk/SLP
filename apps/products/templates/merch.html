@@ -95,27 +95,27 @@
 
   {# ---------- LIST VIEW ---------- #}
   {% else %}
-    <div class="row g-3">
-      {% for m in items %}
-        <div class="col-12 col-md-4 col-lg-3">
-          <div class="card standard-card h-100 d-flex flex-column">
-            {% if m.image %}<img src="{{ m.image.url }}" class="card-img-top img-fluid" alt="{{ m.product_name }}">{% endif %}
-            <div class="card-body">
-              <h2 class="merch-title">{{ m.product_name }}</h2>
-              <div class="merch-description">
-                {% if m.product_description %}
-                  {{ m.product_description|linebreaks }}
-                {% endif %}
-                {{ m.get_product_category_display }}
-                {% if m.size %} • {{ m.size|upper }}{% endif %} 
-                {% if m.price %} • £{{ m.price }}{% endif %}
-              </div>
-              <div class="card-footer bg-transparent justify-content-center mx-auto">
-                <a class="btn cta-btn mb-0" href="{% url 'products:merch_detail' m.pk %}">View</a>
-              </div>
+  <div class="row g-3">
+    {% for m in items %}
+      <div class="col-12 col-md-6 col-lg-3">
+        <div class="card standard-card h-100 d-flex flex-column">
+          {% if m.image %}<img src="{{ m.image.url }}" class="card-img-top img-fluid" alt="{{ m.product_name }}">{% endif %}
+          <div class="card-body">
+            <h2 class="merch-title">{{ m.product_name }}</h2>
+            <div class="merch-description">
+              {% if m.product_description %}
+                {{ m.product_description|linebreaks }}
+              {% endif %}
+              {{ m.get_product_category_display }}
+              {% if m.size %} • {{ m.size|upper }}{% endif %} 
+              {% if m.price %} • £{{ m.price }}{% endif %}
+            </div>
+            <div class="card-footer bg-transparent justify-content-center mx-auto">
+              <a class="btn cta-btn mb-0" href="{% url 'products:merch_detail' m.pk %}">View</a>
             </div>
           </div>
         </div>
+      </div>
       {% endfor %}
     </div>
 
