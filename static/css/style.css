@@ -636,8 +636,8 @@ footer {
     }
 }
 @media (max-width: 768px) {
-    .container-global {
-        margin-top: 9rem;
+    .mobile {
+        margin-top: 10rem;
         margin-bottom: 1rem;
     }
     .font-size {
