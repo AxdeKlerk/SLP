@@ -94,7 +94,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_REDIRECT_URL = "/user/profile/"
+LOGIN_REDIRECT_URL = "user:login_success"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Internationalization

@@ -155,8 +155,6 @@ class MerchDeleteView(DeleteView):
         context['page_title'] = "Merch"
         return context
 
-from django.db.models import Q
-
 def search_view(request):
     category = (request.GET.get("category") or "").strip()
     q = (request.GET.get("q") or "").strip()

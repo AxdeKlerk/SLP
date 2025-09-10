@@ -4,8 +4,11 @@ from django.shortcuts import render, redirect
 
 
 @login_required
-def profile(request):
-    return render(request, "user/profile.html")
+def login_success_view(request):
+    return render(request, "user/login_success.html")
+
+def profile_view(request):
+    return render(request, "user/profile.html", {"page_title": "Profile"})
 
 def signup(request):
     if request.method == "POST":
