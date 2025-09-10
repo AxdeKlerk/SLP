@@ -126,7 +126,7 @@
           </li>
           <!-- Basket -->
           <li class="nav-item text-end">
-            <a class="nav-link" href="#">Basket</a>
+            <a class="nav-link" href="{% url 'basket:basket_view' %}">Basket</a>
           </li>
           <!-- Search -->
           <li class="nav-item text-end">
@@ -245,7 +245,7 @@
         </li>
         <!-- Basket -->
         <li class="nav-item">
-          <a class="nav-link" href="#">Basket</a>
+          <a class="nav-link" href="{% url 'basket:basket_view' %}">Basket</a>
         </li>
         <!-- Search dropdown -->
         {% with url_name=request.resolver_match.url_name %}

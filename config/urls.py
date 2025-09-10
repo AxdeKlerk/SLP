@@ -13,6 +13,8 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path("accounts/", include("apps.user.urls")),
     path("accounts/logout/", auth_views.LogoutView.as_view(template_name="registration/logged_out.html"), name="logout"),
+    path('basket/', include('apps.basket.urls', namespace='basket')),
+
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
