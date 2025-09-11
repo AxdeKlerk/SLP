@@ -588,6 +588,7 @@ body {
     border-color: #11ED73;
     background-color: #0000;
     border-block-width: 5px;
+    border-radius: 5px;
     margin-top: 1rem;
     margin-bottom: 1rem;
     font-size: 0.8rem;

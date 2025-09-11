@@ -69,7 +69,10 @@
             {# --- Footer with button always at bottom --- #}
             {% if event.is_upcoming %}
             <div class="card-footer text-center"> 
-              <a href="https://wegottickets.com/event/656935" class="btn cta-btn mb-0" target="_blank" aria-label="get event tickets">Get Tickets</a>
+              <form method="post" action="{% url 'basket:add_to_basket' event.id %}">
+                  {% csrf_token %}
+                  <button type="submit" class="cta-btn">Add to Basket</button>
+              </form>
             </div>
             {% endif %}
           </div>

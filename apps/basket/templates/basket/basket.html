@@ -1,1 +1,25 @@
-<h1>Ax you beautiful thing!</h1>
+{% extends 'base.html' %}
+{% load static %}
+{% load cloudinary %}
+
+{% block title %}Your Basket{% endblock %}
+
+{% block content %}
+<div class="container container-global mobile">
+    <div class="row text-center">
+        <div class="col">
+            <h1>Ax you beautiful thing!</h1>
+
+            {% if basket and basket.items.all %}
+                <ul>
+                    {% for item in basket.items.all %}
+                        <li>{{ item.quantity }} × {{ item.event }}</li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Your basket is empty</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
