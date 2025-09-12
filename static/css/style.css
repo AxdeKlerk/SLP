@@ -657,11 +657,6 @@ footer {
 }
 
 /* Media Queries */
-@media (min-width: 768px) {
-    .c-caption p{
-        font-size: 1rem;
-    }
-}
 @media (max-width: 768px) {
     .mobile {
         margin-bottom: 1rem;
@@ -669,8 +664,14 @@ footer {
     .font-size {
         font-size: 0.5rem;
     }
-
 }
+
+@media (min-width: 768px) {
+    .c-caption p{
+        font-size: 1rem;
+    }
+}
+
 @media (min-width: 1024px) {
     .c-caption-p {
         font-size: 1.5rem; 
