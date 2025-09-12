@@ -74,6 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // --- Quantity dropdown ---
   const qtyDropdown = document.getElementById("qtyDropdown");
   const qtyItems = document.querySelectorAll('[aria-labelledby="qtyDropdown"] .dropdown-item');
+  const hiddenQtyInput = document.getElementById("selected-qty");
 
   qtyItems.forEach(item => {
     item.addEventListener("click", function (e) {
@@ -83,6 +84,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Update button text
       qtyDropdown.textContent = `Quantity: ${selectedQty}`;
+
+      // Update hidden input so form posts correct value
+        hiddenQtyInput.value = selectedQty;
 
       // Update total price
       const total = (selectedQty * basePrice).toFixed(2);

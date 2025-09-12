@@ -32,6 +32,16 @@ def roxoff_view(request):
 class OwnerRequiredMixin(UserPassesTestMixin):
     def test_func(self): return self.get_object().created_by == self.request.user
 
+class EventDetailView(DetailView):
+    model = Event
+    template_name = "event.html"
+    context_object_name = "event"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = "Event"
+        return context
+
 class ArtistDetailView(DetailView):
     model = Artist
     template_name = 'artist.html' 
@@ -82,18 +92,20 @@ def get_merch_id(request):
 
 class MerchListView(ListView):
     model = Merch
-    template_name = "merch.html"
+    template_name = "merch_list.html"
     context_object_name = "items"
     paginate_by = 4
 
     def get_queryset(self):
         qs = super().get_queryset().order_by("product_name")
+        print("DEBUG merch count before filter:", qs.count())
         q = self.request.GET.get("q")
         cat = self.request.GET.get("category")
         if q:
             qs = qs.filter(product_name__icontains=q)
         if cat:
             qs = qs.filter(product_category=cat)
+        print("DEBUG merch count after filter:", qs.count())
         return qs
     
     def get_context_data(self, **kwargs):
@@ -103,8 +115,8 @@ class MerchListView(ListView):
 
 class MerchDetailView(DetailView):
     model = Merch
-    template_name = "merch.html"
-    context_object_name = "item"
+    template_name = "merch_detail.html"
+    context_object_name = "merch"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

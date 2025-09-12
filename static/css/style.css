@@ -555,6 +555,13 @@ body {
 
 /* Price display */
 
+/* Basket page */
+.basket-item {
+    border-bottom: 1px solid #11ED73;
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
 
 /* Password reset */
 .password-reset {

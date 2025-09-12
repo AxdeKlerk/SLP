@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+{% load cloudinary %}
+
+{% block title %}Merch{% endblock %}
+
+{% block content %}
+<div class="container container-global mobile">
+{# ---------- DETAIL VIEW ---------- #}
+  {% if merch %}
+  <a class="btn cta-btn2 mb-2" href="{% url 'products:merch_list' %}">← Back</a>
+    <div class="card merch-card justify-contents-center">
+      <div class="row g-4 align-items-stretch h-100">
+        <div class="col-12 col-sm-6 d-flex justify-content-center align-items-center py-2">
+          <!--- Merch Image --->
+          {% if merch.image %}<img class="img-fluid merch-img" src="{{ merch.image.url }}" alt="{{ merch.product_name }}">
+          {% endif %}
+        </div>
+        <div class="col-12 col-sm-6 d-flex flex-column h-100">
+          <h1 class="merch-title">{{ merch.product_name }}</h1>
+          <div class="merch-description">
+            {% if merch.product_description %}
+              {{ merch.product_description|linebreaks }}
+            {% endif %}
+            <!-- Quantity dropdown -->
+            <div class="dropdown d-inline-block">
+              <button class="nav-link dropdown-toggle" type="button" id="qtyDropdown"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Quantity: 1
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="qtyDropdown">
+                {% for q in "123456789"|make_list %}
+                  <li>
+                    <a class="dropdown-item" href="#" data-value="{{ q }}">{{ q }}</a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+            <!-- Size dropdown -->
+            <div class="dropdown d-inline-block ms-3">
+              <button class="nav-link dropdown-toggle" type="button" id="sizeDropdown"
+                data-bs-toggle="dropdown" aria-expanded="false">
+                Size: {{ merch.get_size_display }}
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="sizeDropdown">
+              {% for key, label in size_choices %}
+                <li>
+                  <a class="dropdown-item" href="#" data-value="{{ key }}">{{ label }}</a>
+                </li>
+              {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <!-- Price + button at bottom -->
+          <div class="mt-auto">
+            <p class="merch-description mt-4" id="total-price" data-price="{{ merch.price }}">
+              Total Price: £{{ merch.price }}
+            </p>
+            <form method="post" action="{% url 'basket:add_merch_to_basket' merch.id %}">
+            {% csrf_token %}
+              <input type="hidden" name="quantity" id="selected-qty" value="1">
+              <button type="submit" class="btn cta-btn">Add to Basket</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

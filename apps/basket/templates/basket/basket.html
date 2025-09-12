@@ -8,18 +8,66 @@
 <div class="container container-global mobile">
     <div class="row page-item">
         <div class="col-12 text-center">
-            <h1>Ax you beautiful thing!</h1>
-
+            <h1>Your Basket</h1>
             {% if basket and basket.items.all %}
-                <ul>
+                <div class="basket-items">
                     {% for item in basket.items.all %}
-                        <li>{{ item.quantity }} × {{ item.event }}</li>
+                    <div class="row align-items-center basket-item">
+                        <!-- Thumbnail -->
+                        <div class="col-3 col-md-2">
+                        {% if item.event and item.event.image %}
+                            <img src="{{ item.event.image.url }}" alt="{{ item.event.title }}" class="img-fluid rounded">
+                        {% elif item.merch and item.merch.image %}
+                            <img src="{{ item.merch.image.url }}" alt="{{ item.merch.product_name }}" class="img-fluid rounded">
+                        {% else %}
+                            <img src="{% static 'images/placeholder.png' %}" alt="No image" class="img-fluid rounded">
+                        {% endif %}
+                        </div>
+                        <!-- Details -->
+                        <div class="col-9 col-md-10 d-flex justify-content-between align-items-center">
+                        <div>
+                            {% if item.event %}
+                            <p class="mb-1"><strong>{{ item.quantity }} × {{ item.event }}</strong></p>
+                            {% elif item.merch %}
+                            <p class="mb-1"><strong>{{ item.quantity }} × {{ item.merch.product_name }}</strong></p>
+                            {% endif %}
+                        </div>
+                        <div>
+                            <p class="mb-1">£{{ item.line_total }}</p>
+                        </div>
+                        </div>
+                        <!-- Update quantity -->
+                        <div class="col-auto">
+                        <form method="post" action="{% url 'basket:update_item' item.id %}">
+                            {% csrf_token %}
+                            <select name="quantity" onchange="this.form.submit()">
+                            {% for q in "12345678910" %}
+                                <option value="{{ q }}" {% if q|stringformat:"s" == item.quantity|stringformat:"s" %}selected{% endif %}>
+                                {{ q }}
+                                </option>
+                            {% endfor %}
+                            </select>
+                        </form>
+                        </div>
+                        <!-- Delete button -->
+                        <div class="col-auto">
+                            <form method="post" action="{% url 'basket:delete_item' item.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-danger">X</button>
+                            </form>
+                        </div>
+                    </div>
                     {% endfor %}
-                </ul>
+                </div>
+                <!-- Subtotal row (only once, outside the loop) -->
+                <div class="row basket-subtotal text-end">
+                    <div class="col-12">
+                        <p>Subtotal: £{{ subtotal }}</p>
+                    </div>
+                </div>
             {% else %}
                 <p>Your basket is empty</p>
             {% endif %}
         </div>
     </div>
-</div>
 {% endblock %}

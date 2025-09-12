@@ -26,7 +26,7 @@ class Event(models.Model):
         ('14+', '14+ must be accompanied by an adult'),
     ]
     age = models.CharField(choices=AGE_CHOICES, default='14+ must be accompanied by an adult')
-    price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    price = models.DecimalField(max_digits=6, decimal_places=0, null=True, blank=True)
     special_event = models.BooleanField(default=False)
     EVENT_TYPE_CHOICES = [
         ('regular', 'Regular Event'),
@@ -70,7 +70,7 @@ class Merch(models.Model):
     product_name = models.CharField(max_length=100)
     product_description = models.TextField(blank=True)
     image = CloudinaryField("image", blank=True, null=True)
-    price = models.DecimalField(max_digits=6, decimal_places=2, default=0.00)
+    price = models.DecimalField(max_digits=6, decimal_places=0, default=0.00)
     CATEGORY_CHOICES = [
         ("tshirt", "T-Shirt"),
         ("hoodie", "Hoodie"),
