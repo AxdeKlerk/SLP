@@ -120,6 +120,11 @@ body {
   font-size: 0.7rem;
   padding: 0.5rem;
 }
+.dropdown-menu input[type="text"] {
+  width: 100%;      
+  min-width: 150px;
+  box-sizing: border-box;
+}
 .navbar .dropdown-menu input,
 .navbar .dropdown-menu label {
   font-size: 0.7rem;
@@ -402,10 +407,10 @@ body {
     width: 500px;
     height: auto;
     max-height: 300px;
-    object-fit: contain; /* Ensures the entire image is visible */
+    object-fit: contain; 
     object-position: center;
     display: block;
-    margin: 0 auto;         /* Centres it horizontally */
+    margin: 0 auto;         
     background-color: black;
 }
 .bio {
