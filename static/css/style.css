@@ -86,7 +86,7 @@ body {
   color: #F5F5F5;
 }
 .nav-link.active {
-  border: 2px solid #11ED73; /* Glow green, baby */
+  border: 2px solid #11ED73;
   border-radius: 5px;
 }
 /* Highlight parent toggle when any submenu item is active or the menu is open */
@@ -553,16 +553,45 @@ body {
     color: #11ED73;
 }
 
-/* Price display */
-
 /* Basket page */
 .basket-item {
     border-bottom: 1px solid #11ED73;
-    padding-bottom: 0.75rem;
-    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
 }
-
-
+/* Basket thumbnails */
+.basket-thumb {
+  width: 100%;
+  max-width: 150px;  
+  height: auto;
+  max-height: 150px; 
+  object-fit: cover;  
+  padding: 0;    
+}
+/* Basket dropdown items */
+.dropdown-menu {
+    min-width: auto;
+    width: auto;       
+    padding: 0.25rem;
+}
+.dropdown-menu .dropdown-item {
+    color: #11ED73;         
+    background-color: #000;
+    min-width: 100% !important;   
+    width: 100%;
+}
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+  background-color: #F5F5F5; 
+  color: #11ED73;
+}
+.basket-details {
+    padding: 0;
+}
+.basket-subtotal {
+    font-size: 0.9rem;
+}
 /* Password reset */
 .password-reset {
     font-size: 0.9rem;
@@ -576,7 +605,6 @@ body {
     color: #F5F5F5;
     text-decoration: none;
 }
-
 
 /*Contact page*/
 .cp-text {
@@ -614,6 +642,16 @@ body {
     width: 1em;
     height: 1em;
 }
+.basket-qty-btn  {
+    align-items: start;
+    padding: 0;
+}
+.btn-xs {
+    padding: 0.15rem 0.4rem;
+    font-size: 0.75rem;
+    line-height: 1;
+    border-radius: 4px;
+    }
 /* Alert buttons */
 .btn-close-green {
   background: none;

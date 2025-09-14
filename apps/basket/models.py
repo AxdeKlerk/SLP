@@ -14,6 +14,7 @@ class BasketItem(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='event_basket_items' , null=True, blank=True)
     merch = models.ForeignKey(Merch, on_delete=models.CASCADE, related_name='merch_basket_items' , null=True, blank=True)
     quantity = models.PositiveIntegerField(default=1)
+    size = models.CharField(max_length=10, blank=True, null=True)
 
     def __str__(self):
         return f"{self.quantity} × {self.event}"
@@ -32,3 +33,6 @@ class BasketItem(models.Model):
         if self.merch:
             return f"{self.quantity} × {self.merch}"
         return "Basket Item"
+    
+    class Meta:
+        ordering = ["id"]  # keeps insertion order
