@@ -83,7 +83,11 @@
                     <a href="{% url 'checkout:checkout' %}" class="btn cta-btn">Checkout</a>
                 </div>
             {% else %}
-                <p>Your basket is empty</p>
+            <div class=" row mx-auto justify-content-center text-center page-item">
+                <div class="col-12">
+                    <p>Your basket is empty</p>
+                </div>
+            </div>
             {% endif %}
         </div>
     </div>
