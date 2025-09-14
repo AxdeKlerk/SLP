@@ -401,5 +401,7 @@ subtotal += line_total`
     price=(line_total / item.quantity) if item.quantity else 0,
 )`
 
+**Lesson Learned:**
 
+I should not assume fields exist on a model without checking. If I’ve already written helper methods or properties like line_total, I should reuse them instead of duplicating logic. This keeps the code consistent and avoids errors like calling item.price when no such field exists.
 
