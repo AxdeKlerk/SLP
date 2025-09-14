@@ -16,7 +16,6 @@ urlpatterns = [
     path('basket/', include('apps.basket.urls', namespace='basket')),
     path("checkout/", include("apps.checkout.urls")),
     path("confirmation/<int:order_id>/", views.confirmation_view, name="confirmation"),
-
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

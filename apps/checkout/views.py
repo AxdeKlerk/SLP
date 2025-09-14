@@ -30,7 +30,7 @@ def checkout_view(request):
 
         # 3. Update totals
         order.subtotal = subtotal
-        order.total = subtotal  # add shipping/taxes later
+        order.total = subtotal  # add shipping/vat later
         order.save()
 
         # 4. Clear basket
