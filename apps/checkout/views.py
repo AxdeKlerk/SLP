@@ -18,14 +18,14 @@ def checkout_view(request):
 
         # 2. Add items
         for item in basket_items:
-            line_total = item.quantity * item.price
+            line_total = item.line_total
             subtotal += line_total
 
             OrderItem.objects.create(
                 order=order,
-                product_name=str(item),  # str() picks up basket item __str__
+                product_name=str(item),
                 quantity=item.quantity,
-                price=item.price,
+                price=(line_total / item.quantity) if item.quantity else 0,
             )
 
         # 3. Update totals
