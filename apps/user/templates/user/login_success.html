@@ -8,11 +8,10 @@
   <div class=" row mx-auto justify-content-center align-items-start page-item">
     <div class="col-12 text-center">
       <img src="{% static 'images/Searchlight-icon-grn.png' %}" alt="searchlight logo" class="img-fluid mb-3" style="max-width: 150px;">
-      <h1 style="color: #11ED73;">Hello you<br>absolute legend!</h1>
-      <p>You have logged in successfully as</p>
-      <h3 style="color: #11ED73;">{{ user.username }}</h3><br>
+      <p>You have logged in successfully!</p>
       <p>Prepare yourself for some mind-blowing content...</p>
-      <a href="{% url 'core:home' %}" class="d-md-none btn cta-btn2">Home</a>
+      <a href="{% url 'products:events' %}" class="d-md-none btn cta-btn2">Events</a>
+      <a href="{% url 'products:merch_list' %}" class="d-md-none btn cta-btn2">Merch</a>
     </div>
   </div>
 </div>
