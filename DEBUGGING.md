@@ -379,4 +379,27 @@ I restructured the template using Bootstrap’s grid system:
 
 When debugging responsive layouts, design separately for mobile and desktop first, then merge. Bootstrap’s `d-none`, `d-md-block`, and breakpoint classes are essential for tailoring layouts. Never assume one structure will look right on both small and large screens without breakpoint adjustments.
 
+## AttributeError
+
+**Bug:**
+
+When I tried to place an order at `/checkout/`, I got the error:  
+`AttributeError: 'BasketItem' object has no attribute 'price'`.  
+This happened because in `checkout_view` I was trying to use `item.price`, but my `BasketItem` model did not have a `price` field. Instead, it only had `event` or `merch`, each of which has its own price.
+
+**Fix:**
+
+I already had a `line_total` property in `BasketItem` that handled both event and merch correctly. I updated the `checkout_view` to use `item.line_total` instead of `item.price`. For the `OrderItem` snapshot, I stored the unit price by dividing `line_total` by `item.quantity`.
+
+`line_total = item.line_total
+subtotal += line_total`
+
+`OrderItem.objects.create(
+    order=order,
+    product_name=str(item),
+    quantity=item.quantity,
+    price=(line_total / item.quantity) if item.quantity else 0,
+)`
+
+
 
