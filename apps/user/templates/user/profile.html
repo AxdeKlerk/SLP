@@ -1,51 +1,51 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}User Profile{% endblock %}
+{% block title %}Profile{% endblock %}
 
 {% block content %}
 <div class="container container-global mobile text-center">
-  <div class=" row mx-auto justify-content-center align-items-start page-item">
-    <div class="col-12 text-center">
-      <h1 style="color: #11ED73;">User Profile</h1>
-        <p>This is a placeholder for the user profile page.</p>
-        <p>More features coming soon!</p>
-    </div>
-  </div>
-</div>
-{% endblock %}
-
-
-<div class="container container-global mobile">
-    <div class="row justify-content-center align-items-center">
-        <div class="col-lg-8 page-item">
-                    <h2 class="mb-4">Thank You!</h2>
-                        <p>Your order <strong>#{{ order.id }}</strong> has been placed successfully.</p>
-
-                        <h4 class="mt-3">Order Summary</h4>
-                        <!-- Basket Summary -->
-                        {% if basket_items %}
-                        <ul class="list-group mb-4">
-                            {% for item in basket_items %}
-                                <li class="list-group-item d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <strong>{% if item.event %}
-                                                    {{ item.event }}
-                                                {% elif item.merch %}
-                                                    {{ item.merch.product_name }} | {{ item.size }}
-                                                {% endif %}</strong>
-                                        <br>
-                                        Quantity: {{ item.quantity }}
-                                    </div>
-                                    <span><strong>£{{ item.line_total }}</strong></span>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                        {% endif %}
-                        <p><strong>Total Paid:</strong> £{{ order.total }}</p>
-                    </div>
+    <div class=" row mx-auto justify-content-center align-items-start page-item">
+        <div class="col-12 text-center">
+        <h1 style="color: #11ED73;">User Profile</h1>
+            <h3>Orders in Progress</h3>
+            {% if current_orders %}
+            <ul>
+                {% for order in current_orders %}
+                <li>
+                    Order #{{ order.id }} – Status: {{ order.status }} – £{{ order.total }}
+                    <ul>
+                    {% for item in order.items.all %}
+                        <li>{{ item.product_name }} (x{{ item.quantity }}) – £{{ item.line_total }}</li>
+                    {% endfor %}
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No orders in progress.</p>
+            {% endif %}
+            <h3>Order History</h3>
+            {% if past_orders %}
+            <ul>
+                {% for order in past_orders %}
+                <li>
+                    Order #{{ order.id }} – Completed on {{ order.created_at|date:"M d, Y" }}
+                    <ul>
+                    {% for item in order.items.all %}
+                        <li>{{ item.product_name }} (x{{ item.quantity }}) – £{{ item.line_total }}</li>
+                    {% endfor %}
+                    </ul>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>No past orders.</p>
+            {% endif %}
         </div>
     </div>
 </div>
+{% endblock %}
+
 
 
