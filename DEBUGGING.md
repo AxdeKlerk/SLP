@@ -419,7 +419,7 @@ I discovered that the `.standard-card` CSS had `max-width: 300px;` but no horizo
 
 When using `max-width` on a card inside a Bootstrap column, the card will not center itself automatically. Even if the column is full width, the child element needs `margin: auto` to align correctly. Always check custom CSS rules like `max-width` if a card or element looks offset at certain breakpoints. Although, it is quite basic syntax and something I should have known, going off into a panic about it when it is not working is not helpful, and most certainly a pause moment to step-back and think clearly without doubting myself.
 
-## Template Logic Bug for size Dropdown Menu items for Flags, Mugs and Caps
+## Template Logic Bug for Size Dropdown Menu items for Flags, Mugs and Caps
 
 **Bug:** 
 

@@ -4,15 +4,15 @@
 {% block content %}
 <div class="container container-global mobile">
   <div class="row page-item mx-auto text-center">
-    <h2 style="color: #11ED73;">Reset Your Password</h2>
+    <h2 style="color: #11ED73;">Forgot Username</h2>
     <form method="post">
       {% csrf_token %}
       {{ form.as_p }}
-      <button type="submit" class="btn cta-btn2">Send Reset Link</button>
+      <button type="submit" class="btn cta-btn2">Send Username</button>
     </form>
-    <p class="mt-3">
-      <a href="{% url 'user:forgot_username' %}" style="color:#11ED73;">
-        Forgot your username?
+    <p class="mt-3 text-center">
+      <a href="{% url 'user:password_reset' %}" style="color:#11ED73;">
+        Forgot your password?
       </a>
     </p>
   </div>

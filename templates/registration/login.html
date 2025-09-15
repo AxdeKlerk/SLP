@@ -6,10 +6,8 @@
   <div class="row mx-auto justify-content-center align-items-start page-item">
     <div class="col-12 text-center">
       <h1 style="color: #11ED73;">Login</h1>
-
       <form method="post" class="needs-validation" novalidate>
         {% csrf_token %}
-
         <!-- Username field -->
         <div class="mb-3">
           {{ form.username.label_tag }}
@@ -18,7 +16,6 @@
             <p class="custom-error">{{ error }}</p>
           {% endfor %}
         </div>
-
         <!-- Password field -->
         <div class="mb-4">
           {{ form.password.label_tag }}
@@ -27,14 +24,12 @@
             <p class="custom-error">{{ error }}</p>
           {% endfor %}
         </div>
-
         <!-- Log in button -->
         <button type="submit" class="btn cta-btn2">Log In</button>
       </form>
-
       <!-- Password reset & Sign up links -->
       <div class="password-reset mt-3">
-        <a href="{% url 'password_reset' %}">Forgot Password? Username? or Both?</a><br>
+        <a href="{% url 'password_reset' %}">Forgot your password or username?</a><br>
       </div>
     </div>
   </div>
