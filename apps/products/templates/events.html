@@ -9,7 +9,7 @@
 <div class="container container-global mobile">
     <div class="row justify-content-center">
       {% for event in events %}
-        <div class="col-12 col-md-6 col-lg-4 col-xl-3 g-4">
+        <div class="col-12 col-md-6 col-lg-4 col-xl-3 g-4 mx-auto">
           <div class="card standard-card h-100 d-flex flex-column">
 
             {# --- Event Image with Placeholder Check --#}
@@ -70,8 +70,14 @@
             {% if event.is_upcoming %}
             <div class="card-footer text-center"> 
               <form method="post" action="{% url 'basket:add_event_to_basket' event.id %}">
-                  {% csrf_token %}
-                  <button type="submit" class="cta-btn">Add to Basket</button>
+                {% csrf_token %}
+                  {% if user.is_authenticated %}
+                    <button type="submit" class="btn cta-btn">Add to Basket</button>
+                  {% else %}
+                  <div class="alert alert-danger mt-2 text-center">
+                      Please log in or sign up to buy tickets
+                  </div>
+                {% endif %}
               </form>
             </div>
             {% endif %}
