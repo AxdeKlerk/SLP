@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from apps.basket.models import BasketItem
-from .models import Order, OrderItem
+from apps.checkout.models import Order, OrderItem
 
 def checkout_view(request):
     # Get all basket items (for now, no user filter)

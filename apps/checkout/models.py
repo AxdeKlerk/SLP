@@ -1,10 +1,12 @@
 from django.db import models
+from django.conf import settings
 
 class Order(models.Model):
     first_name = models.CharField(max_length=50, blank=True, null=True)
     last_name = models.CharField(max_length=50, blank=True, null=True)
     email = models.EmailField()
     phone = models.CharField(max_length=20, blank=True, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="orders")
 
     # Order totals
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0)
@@ -14,7 +16,6 @@ class Order(models.Model):
     STATUS_CHOICES = [
         ("pending", "Pending"),
         ("paid", "Paid"),
-        ("failed", "Failed"),
     ]
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="pending")
 

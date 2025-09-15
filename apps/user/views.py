@@ -4,14 +4,21 @@ from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from apps.user.forms import ForgotUsernameForm
+from apps.checkout.models import Order
 
 
 @login_required
 def login_success_view(request):
     return render(request, "user/login_success.html")
 
+@login_required
 def profile_view(request):
-    return render(request, "user/profile.html", {"page_title": "Profile"})
+    current_orders = Order.objects.filter(user=request.user, status="pending")
+    past_orders = Order.objects.filter(user=request.user, status="paid")
+    return render(request, "user/profile.html", {
+        "current_orders": current_orders,
+        "past_orders": past_orders,
+        "page_title": "Profile"})
 
 def signup(request):
     if request.method == "POST":
