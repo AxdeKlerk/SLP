@@ -434,3 +434,18 @@ I solved the problem by chaining multiple conditions with `or` in the template. 
 **Lesson Learned:**  
 
 The *Django* template language does not support Python tuple syntax in `if` statements. To check multiple values, I must use `or` (or `and`) to chain conditions. It is important to reference the correct model field, in this case the (`product_category`), when testing values. Using the wrong field name will always fail, even `if` the condition looks correct.
+
+## Logic Error for Forgot Username View
+
+**Bug:** 
+
+The forgot username feature did not work. Submitting the form just reloaded the same page and never redirected to the done page. No email was sent to the terminal. After checking the `views.py`, I saw the condition was written as `if request.method == "Post":`. The browser always sends the HTTP method in uppercase (`"POST"`), so this condition never matched. As a result, the code inside never ran.
+
+**Fix:**  
+I corrected the case of the request method check to `"POST"`. With this fix, the form submission was processed, the email was printed to the terminal, and the redirect to the `password_reset_done` page worked as expected.
+
+
+**Lesson Learned:**  
+
+In *Django*, `request.method` is always uppercase. If I use lowercase or mixed case like `"Post"`, the condition will never be true. Always check against `"POST"` for form submissions and `"GET"` for page loads.
+
