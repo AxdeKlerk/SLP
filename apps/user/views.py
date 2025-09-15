@@ -25,7 +25,7 @@ def signup(request):
 
 def forgot_username(request):
     message_sent = False
-    if request.method == "Post":
+    if request.method == "POST":
         form = ForgotUsernameForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data["email"]
