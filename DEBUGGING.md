@@ -419,3 +419,18 @@ I discovered that the `.standard-card` CSS had `max-width: 300px;` but no horizo
 
 When using `max-width` on a card inside a Bootstrap column, the card will not center itself automatically. Even if the column is full width, the child element needs `margin: auto` to align correctly. Always check custom CSS rules like `max-width` if a card or element looks offset at certain breakpoints. Although, it is quite basic syntax and something I should have known, going off into a panic about it when it is not working is not helpful, and most certainly a pause moment to step-back and think clearly without doubting myself.
 
+## Template Logic Bug for size Dropdown Menu items for Flags, Mugs and Caps
+
+**Bug:** 
+
+The size dropdown was showing for all merch items, including flags, mugs, and caps. These products do not need size options, but the template always displayed the dropdown. My first attempt was to use `{% if merch.category == "flag" %}`, but this failed because the correct model field name was `product_category`. When I later tried to check multiple categories with `in ("flag", "mug", "cap")`, it caused a *Django* `TemplateSyntaxError` because template conditions do not support tuple syntax.
+
+**Fix:**  
+
+I solved the problem by chaining multiple conditions with `or` in the template. This allowed me to remove the dropdown for flags, mugs, and caps, while keeping it for t-shirts and hoodies using a conditional `if` statement.
+
+    {% if merch.product_category == "flag" or merch.product_category == "mug" or merch.product_category == "cap" %}
+
+**Lesson Learned:**  
+
+The *Django* template language does not support Python tuple syntax in `if` statements. To check multiple values, I must use `or` (or `and`) to chain conditions. It is important to reference the correct model field, in this case the (`product_category`), when testing values. Using the wrong field name will always fail, even `if` the condition looks correct.
