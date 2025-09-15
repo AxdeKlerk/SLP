@@ -405,3 +405,17 @@ subtotal += line_total`
 
 I should not assume fields exist on a model without checking. If I’ve already written helper methods or properties like line_total, I should reuse them instead of duplicating logic. This keeps the code consistent and avoids errors like calling item.price when no such field exists.
 
+## CSS Layout Bug
+
+**Bug:**  
+
+On screens between 576px and 767px, my event cards were not centered. The `.row` container was full width, but the `.standard-card` element stayed stuck to the left side. This only happened on small screens because the card had a `max-width` set, which prevented it from stretching to fill the column. Without centering rules, it always aligned left.
+
+**Fix:** 
+
+I discovered that the `.standard-card` CSS had `max-width: 300px;` but no horizontal centering. The card was narrower than its parent column and defaulted to the left. I fixed this by adding `margin-left: auto;` and `margin-right: auto;` to the `.standard-card` CSS so that it stayed centered inside its column.
+
+**Lesson Learned:**  
+
+When using `max-width` on a card inside a Bootstrap column, the card will not center itself automatically. Even if the column is full width, the child element needs `margin: auto` to align correctly. Always check custom CSS rules like `max-width` if a card or element looks offset at certain breakpoints. Although, it is quite basic syntax and something I should have known, going off into a panic about it when it is not working is not helpful, and most certainly a pause moment to step-back and think clearly without doubting myself.
+
