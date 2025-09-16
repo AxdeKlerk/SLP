@@ -449,3 +449,20 @@ I corrected the case of the request method check to `"POST"`. With this fix, the
 
 In *Django*, `request.method` is always uppercase. If I use lowercase or mixed case like `"Post"`, the condition will never be true. Always check against `"POST"` for form submissions and `"GET"` for page loads.
 
+## Ticket Oversell Error Not Displaying
+
+**Bug:** 
+
+When I set the `capacity` of a venue to 3 and added 4 tickets for the event in the basket, the checkout did not show the error message. The basket page loaded normally without any oversell warning.  
+
+**Fix:**
+
+I discovered that the ticket guardrail check was placed inside the `if request.method == "POST":` block in `checkout_view`. Since the checkout button in the basket template was a simple link (`<a href="...">`), it triggered a `GET` request, not a `POST`. This meant the oversell check never ran.  
+
+To fix it, I moved the `oversell check` above the `POST` block so it always executes.  
+
+**Lesson Learned:**
+
+Placing validation logic only inside a `POST` block means it never runs when checkout is accessed with a `GET` request. For guardrails like ticket limits, the check should be at the top of the view so it always runs before proceeding. I also confirmed that my *BasketItem model* correctly linked to events, and that the `effective_capacity() method` in the *Event model* was being used. This ensured that overselling tickets could be caught and displayed with a clear error message.
+
+
