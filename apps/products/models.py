@@ -48,6 +48,11 @@ class Event(models.Model):
                 event=self, order__status="paid"
             )
         )
+    
+    def effective_capacity(self):
+        return min(self.ticket_capacity, self.venue.capacity
+            if self.venue
+            else self.ticket_capacity)
 
     def tickets_remaining(self):
         return self.ticket_capacity - self.tickets_sold()
@@ -73,6 +78,7 @@ class Venue(models.Model):
     logo = CloudinaryField('image', blank=True, null=True)
     bio = models.TextField(max_length=2000, null=False, blank=False)
     website = models.URLField(blank=True)
+    capacity = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ['name']

@@ -14,7 +14,7 @@ def checkout_view(request):
         # Check ticket qty first
         for item in basket_items:
             if item.event:
-                if item.event.tickets_sold() + item.quantity > item.event.ticket_capacity:
+                if item.event.tickets_sold() + item.quantity > item.event.effective_capacity():
                     messages.error(request, f"Not enough tickets available for {item.event}")
                     return redirect("basket:view")
                 
