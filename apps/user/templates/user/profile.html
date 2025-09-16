@@ -11,10 +11,10 @@
             <!-- Orders in Progress -->
             <h4 class="mb-2">Orders in Progress</h4>
             {% if current_orders %}
-                <div class="row row-cols-1 row-cols-md-2 row-col-lg-4 g-4">
+                <div class="row">
                     {% for order in current_orders %}
-                    <div class="col">
-                        <div class="card merch-card">
+                    <div class="col-12">
+                        <div class="card merch-card mb-2">
                             <div class="card-header cp-item">
                                 <strong>Order #{{ order.id }}</strong> – Status: {{ order.get_status_display }}
                             </div>
@@ -45,9 +45,9 @@
             <!-- Order History -->
             <h4 class="mb-2 mt-3">Order History</h4>
             {% if past_orders %}
-            <div class="row row-cols-1 row-cols-md-2 row-col-lg-4 g-4">
+            <div class="row">
                 {% for order in past_orders %}
-                <div class="col">
+                <div class="col-12">
                     <div class="card merch-card">
                         <div class="card-header cp-item">
                                 <strong>Order #{{ order.id }}</strong> – Completed {{ order.created_at|date:"M d, Y" }}

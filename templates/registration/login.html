@@ -29,6 +29,9 @@
       </form>
       <!-- Password reset & Sign up links -->
       <div class="password-reset mt-3">
+        <a href="{% url 'user:signup' %}">Need to create an account</a><br>
+      </div> 
+      <div class="password-reset mt-3">
         <a href="{% url 'password_reset' %}">Forgot your password or username?</a><br>
       </div>
     </div>
