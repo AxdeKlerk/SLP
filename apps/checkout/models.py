@@ -28,9 +28,18 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
-    product_name = models.CharField(max_length=200)
+    event = models.ForeignKey("products.Event", null=True, blank=True, on_delete=models.CASCADE)
+    merch = models.ForeignKey("products.Merch", null=True, blank=True, on_delete=models.CASCADE)
+    product_name = models.CharField(max_length=200, blank=True)  
     quantity = models.PositiveIntegerField(default=1)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=10, decimal_places=0)
+
+    def save(self, *args, **kwargs):
+        if self.event:
+            self.product_name = self.event.title or str(self.event)
+        elif self.merch:
+            self.product_name = self.merch.product_name
+        super().save(*args, **kwargs)
 
     def line_total(self):
         return self.quantity * self.price

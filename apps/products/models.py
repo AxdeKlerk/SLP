@@ -12,6 +12,7 @@ class Event(models.Model):
     gig_date = models.DateField(null=False, blank=False)
     door_time = models.TimeField(null=False, blank=False)
     start_time = models.TimeField(null=False, blank=False)
+    ticket_capacity = models.PositiveIntegerField(default=0)
     GENRE_CHOICES = [
         ('classic_rock', 'Classic Rock'),
         ('rock', 'Rock'),
@@ -39,6 +40,18 @@ class Event(models.Model):
     ]
     roxoff_day = models.CharField(max_length=10,choices=ROXOFF_DAY_CHOICES, blank=True, null=True,help_text="Only required for Roxoff events")
     
+    def tickets_sold(self):
+        from orders.models import OrderItem
+        return sum(
+            item.quantity
+            for item in OrderItem.objects.filter(
+                event=self, order__status="paid"
+            )
+        )
+
+    def tickets_remaining(self):
+        return self.ticket_capacity - self.tickets_sold()
+
     class Meta:
         ordering = ['-gig_date']
     def __str__(self):
