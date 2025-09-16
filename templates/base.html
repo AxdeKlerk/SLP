@@ -286,19 +286,6 @@
   </div>
 </nav>
 
-  {# --- Global Messages --- #}
-  {% if messages %}
-    <div class="container mt-3">
-      {% for message in messages %}
-        <div class="alert alert-dismissible fade show mb-2">
-          {{ message }}
-          <button type="button" class="btn-close btn-close-green" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-      {% endfor %}
-    </div>
-  {% endif %}
-
-
 {% block content %}{% endblock %}
 
 <footer class="container-fluid text-center">

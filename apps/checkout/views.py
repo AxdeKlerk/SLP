@@ -5,18 +5,24 @@ from apps.basket.models import BasketItem
 from apps.checkout.models import Order, OrderItem
 
 def checkout_view(request):
+    print("DEBUG BASKET COUNT:", BasketItem.objects.count())
    # Get all basket items
     basket_items = BasketItem.objects.all()
 
+    # Check ticket qty first
+    for item in basket_items:
+        print("DEBUG:", item, "event:", item.event, "qty:", item.quantity)
+        if item.event:
+            print("DEBUG CAPACITY:", 
+            "sold:", item.event.tickets_sold(), 
+            "requested:", item.quantity, 
+            "capacity:", item.event.effective_capacity())
+            if item.event.tickets_sold() + item.quantity > item.event.effective_capacity():
+                messages.error(request, f"Not enough tickets available for {item.event}")
+                return redirect("basket:basket_view")
+            
     if request.method == "POST":
         subtotal = 0
-
-        # Check ticket qty first
-        for item in basket_items:
-            if item.event:
-                if item.event.tickets_sold() + item.quantity > item.event.effective_capacity():
-                    messages.error(request, f"Not enough tickets available for {item.event}")
-                    return redirect("basket:basket_view")
                 
         # 1. Create the order
         order = Order.objects.create(

@@ -696,27 +696,12 @@ footer {
   margin-top: 0.25rem;
 }
 
-/* Global alert styling */
-.alert {
-  background-color: #000;        
-  color: #FF1744;               
-  border: 2px solid #FF1744;     
-  border-radius: 6px;
-  font-size: 0.9rem;
-}
-/* Additional spacing */
-.alert + .alert {
-  margin-top: 0.5rem;
-}
+/* Alert message */
 .basket-error-text {
   color: #FF4C4C;
   font-size: 0.9rem;     
   margin: 0;
-}
-/* Override Bootstrap alert link colors */
-.alert a {
-  color: #FF1744;
-  text-decoration: none;
+  padding-right: 0.5rem;
 }
 
 /* Media Queries */
