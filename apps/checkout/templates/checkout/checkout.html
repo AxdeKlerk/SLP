@@ -36,14 +36,8 @@
                             <label for="email" class="form-label">Email Address</label>
                             <input type="email" id="email" name="email" class="form-control" required>
                         </div>
-                        {% if user.is_authenticated %}
                         <button type="submit" class="btn cta-btn2">Place Order</button>
-                        {% else %}
-                        <div class="alert alert-danger mt-2 text-center">
-                            Please log in or sign up to continue
-                        </div>
-                        {% endif %}
-                    </form>
+                     </form>
                 {% else %}
                     <div class=" row mx-auto justify-content-center text-center page-item">
                         <div class="col-12">
