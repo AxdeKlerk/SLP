@@ -15,11 +15,14 @@ def login_success_view(request):
 def profile_view(request):
     current_orders = Order.objects.filter(user=request.user, status="pending")
     past_orders = Order.objects.filter(user=request.user, status="paid")
-    return render(request, "user/profile.html", {
+
+    context = {
         "current_orders": current_orders,
         "past_orders": past_orders,
-        "page_title": "Profile"})
-
+        "page_title": "Profile"       
+    }
+    return render(request, "user/profile.html", context)
+ 
 def signup(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
@@ -31,7 +34,7 @@ def signup(request):
     return render(request, "user/signup.html", {"form": form})
 
 def forgot_username(request):
-    message_sent = False
+    message_sent = True
     if request.method == "POST":
         form = ForgotUsernameForm(request.POST)
         if form.is_valid():

@@ -4,44 +4,75 @@
 {% block title %}Profile{% endblock %}
 
 {% block content %}
-<div class="container container-global mobile text-center">
-    <div class=" row mx-auto justify-content-center align-items-start page-item">
-        <div class="col-12 text-center">
-        <h1 style="color: #11ED73;">User Profile</h1>
-            <h3>Orders in Progress</h3>
+<div class="container container-global mobile">
+    <a class="btn cta-btn2 mb-2" href="{% url 'basket:basket_view' %}">← Back</a>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Orders in Progress -->
+            <h4 class="mb-2">Orders in Progress</h4>
             {% if current_orders %}
-            <ul>
-                {% for order in current_orders %}
-                <li>
-                    Order #{{ order.id }} – Status: {{ order.status }} – £{{ order.total }}
-                    <ul>
-                    {% for item in order.items.all %}
-                        <li>{{ item.product_name }} (x{{ item.quantity }}) – £{{ item.line_total }}</li>
+                <div class="row row-cols-1 row-cols-md-2 row-col-lg-4 g-4">
+                    {% for order in current_orders %}
+                    <div class="col">
+                        <div class="card merch-card">
+                            <div class="card-header cp-item">
+                                <strong>Order #{{ order.id }}</strong> – Status: {{ order.get_status_display }}
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group">
+                                    {% for item in order.items.all %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>{{ item.product_name }} (x{{ item.quantity }})</span>
+                                        <span>£{{ item.line_total }}</span>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="mt-3 mb-2 text-end cp-item">
+                                    <strong>Total: £{{ order.total }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     {% endfor %}
-                    </ul>
-                </li>
-                {% endfor %}
-            </ul>
+                </div>
             {% else %}
-            <p>No orders in progress.</p>
+                <p class="">No orders in progress.</p>
             {% endif %}
-            <h3>Order History</h3>
+        </div>  
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Order History -->
+            <h4 class="mb-2 mt-3">Order History</h4>
             {% if past_orders %}
-            <ul>
+            <div class="row row-cols-1 row-cols-md-2 row-col-lg-4 g-4">
                 {% for order in past_orders %}
-                <li>
-                    Order #{{ order.id }} – Completed on {{ order.created_at|date:"M d, Y" }}
-                    <ul>
-                    {% for item in order.items.all %}
-                        <li>{{ item.product_name }} (x{{ item.quantity }}) – £{{ item.line_total }}</li>
+                <div class="col">
+                    <div class="card merch-card">
+                        <div class="card-header cp-item">
+                                <strong>Order #{{ order.id }}</strong> – Completed {{ order.created_at|date:"M d, Y" }}
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    {% for item in order.items.all %}
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span>{{ item.product_name }} (x{{ item.quantity }})</span>
+                                        <span>£{{ item.line_total }}</span>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="mt-3 mb-2 text-end cp-item">
+                                    <strong>Total: £{{ order.total }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     {% endfor %}
-                    </ul>
-                </li>
-                {% endfor %}
-            </ul>
-            {% else %}
-            <p>No past orders.</p>
-            {% endif %}
+                </div>
+                {% else %}
+                    <p class="cp-item">No past orders</p>
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>
