@@ -4,47 +4,47 @@
 <div class="container container-global mobile">
   <div class="row mx-auto justify-content-center align-items-start page-item">
     <div class="col-12 text-center">
-        <h1 style="color:#11ED73;">Sign Up</h1>
+      <h1 style="color:#11ED73;">Sign Up</h1>
         <p>Please don't use your email address as your user name</p>
-      <form method="post" class="needs-validation" novalidate>
-        {% csrf_token %}
-        <div class="mb-3">
-          {{ form.username.label_tag }}
-          {{ form.username }}
-          {% if form.username %}
-            <p>Required 150 characters or fewer using etters, digits and @/./+/-/_ only</p>
-          {% endif %}
-          {% for error in form.username.errors %}
-            <p class="custom-error">{{ error }}</p>
-          {% endfor %}
-        </div>
+        <form method="post" class="needs-validation" novalidate>
+          {% csrf_token %}
+          <div class="mb-3">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+            {% if form.username %}
+              <p>Required 150 characters or fewer using etters, digits and @/./+/-/_ only</p>
+            {% endif %}
+            {% for error in form.username.errors %}
+              <p class="custom-error">{{ error }}</p>
+            {% endfor %}
+          </div>
 
-        <div class="mb-4">
-          {{ form.password1.label_tag }}
-          {{ form.password1 }}
-          {% if form.password1 %}
-            <p>Your password can’t be too similar to your other personal information</p>
-            <p>Your password must contain at least 8 characters</p>
-            <p>Your password can’t be a commonly used password</p>
-            <p>Your password can’t be entirely numeric</p>
-          {% endif %}
-          {% for error in form.password1.errors %}
-            <p class="custom-error">{{ error }}</p>
-          {% endfor %}
-        </div>
+          <div class="mb-4">
+            {{ form.password1.label_tag }}
+            {{ form.password1 }}
+            {% if form.password1 %}
+              <p>Your password can’t be too similar to your other personal information</p>
+              <p>Your password must contain at least 8 characters</p>
+              <p>Your password can’t be a commonly used password</p>
+              <p>Your password can’t be entirely numeric</p>
+            {% endif %}
+            {% for error in form.password1.errors %}
+              <p class="custom-error">{{ error }}</p>
+            {% endfor %}
+          </div>
 
-        <div class="mb-4">
-          {{ form.password2.label_tag }}
-          {{ form.password2 }}
-          {% if form.password2 %}
-            <p>Enter the same password as before, for verification</p>
-          {% endif %}
-          {% for error in form.password2.errors %}
-            <p class="custom-error">{{ error }}</p>
-          {% endfor %}
-        </div>
-        <button type="submit" class="btn cta-btn2">Create Account</button>
-      </form>
+          <div class="mb-4">
+            {{ form.password2.label_tag }}
+            {{ form.password2 }}
+            {% if form.password2 %}
+              <p>Enter the same password as before, for verification</p>
+            {% endif %}
+            {% for error in form.password2.errors %}
+              <p class="custom-error">{{ error }}</p>
+            {% endfor %}
+          </div>
+          <button type="submit" class="btn cta-btn2">Create Account</button>
+        </form>
     </div>
   </div>
 </div>
