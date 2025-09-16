@@ -5,7 +5,7 @@ from apps.basket.models import BasketItem
 from apps.checkout.models import Order, OrderItem
 
 def checkout_view(request):
-    # Get all basket items (for now, no user filter)
+   # Get all basket items
     basket_items = BasketItem.objects.all()
 
     if request.method == "POST":
@@ -16,7 +16,7 @@ def checkout_view(request):
             if item.event:
                 if item.event.tickets_sold() + item.quantity > item.event.effective_capacity():
                     messages.error(request, f"Not enough tickets available for {item.event}")
-                    return redirect("basket:view")
+                    return redirect("basket:basket_view")
                 
         # 1. Create the order
         order = Order.objects.create(

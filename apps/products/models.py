@@ -41,7 +41,7 @@ class Event(models.Model):
     roxoff_day = models.CharField(max_length=10,choices=ROXOFF_DAY_CHOICES, blank=True, null=True,help_text="Only required for Roxoff events")
     
     def tickets_sold(self):
-        from orders.models import OrderItem
+        from apps.checkout.models import OrderItem
         return sum(
             item.quantity
             for item in OrderItem.objects.filter(

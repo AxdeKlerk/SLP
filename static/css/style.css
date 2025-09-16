@@ -708,6 +708,11 @@ footer {
 .alert + .alert {
   margin-top: 0.5rem;
 }
+.basket-error-text {
+  color: #FF4C4C;
+  font-size: 0.9rem;     
+  margin: 0;
+}
 /* Override Bootstrap alert link colors */
 .alert a {
   color: #FF1744;
