@@ -5,7 +5,7 @@
 body {
     background-color: black;
     font-family: "Geist Mono", monospace;
-    font-size: 10px;
+    font-size: 9px;
     color:#F5F5F5;
     height: 100vh;
     max-width: 1440px;
@@ -13,11 +13,12 @@ body {
     margin-right: auto;
 }
 .container-global {
-    margin-top: 6rem;
+    margin-top: 10rem;
     margin-bottom: 2rem;
     padding-left: 1rem;
     padding-right: 1rem;
 }
+
 /* Page Title */
 .page-heading {
     margin-top: 5rem;
@@ -86,7 +87,7 @@ body {
   color: #F5F5F5;
 }
 .nav-link.active {
-  border: 2px solid #11ED73; /* Glow green, baby */
+  border: 2px solid #11ED73;
   border-radius: 5px;
 }
 /* Highlight parent toggle when any submenu item is active or the menu is open */
@@ -119,6 +120,11 @@ body {
   color: #F5F5F5;
   font-size: 0.7rem;
   padding: 0.5rem;
+}
+.dropdown-menu input[type="text"] {
+  width: 100%;      
+  min-width: 150px;
+  box-sizing: border-box;
 }
 .navbar .dropdown-menu input,
 .navbar .dropdown-menu label {
@@ -169,10 +175,27 @@ body {
   color: #11ED73;           /* neon green only on hover */
   background-color: transparent;
 }
+/* Mobile sticky page title */
+.mobile-fixed {
+    position: fixed;
+    height: auto;
+    width: 100%;
+    top: 7rem; /* Adjust based on navbar height */
+    z-index: 1000;
+    background-color: black;
+    margin:0;
+    padding: 0;
+}
+.mobile-fixed h1 {
+    font-size: 0.9rem;
+    font-weight: 300;
+    margin: 0;
+    color: #11ED73 !important;
+}
 /* User status */
 .user-status {
     color: #11ED73;
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 /*Sign up / Login pages*/
 .page-item {
@@ -202,8 +225,8 @@ body {
 .page-item select,
 .page-item textarea {
   width: 100%;
-  background-color: #0000 !important;
-  /*color: #F5F5F5 !important;*/
+  color: #0000;
+  background-color: #F5F5F5 !important;
   border: 1px solid #11ED73 !important;
   font-size: 1.1rem;
   border-radius: 4px;
@@ -211,7 +234,6 @@ body {
 .page-item input[type="date"] {
   width: 100%;
   background-color: #0000 !important;
-  /*color: #F5F5F5;*/
   border: 1px solid #11ED73 !important;
   font-size: 1.1rem;
   border-radius: 4px;
@@ -220,8 +242,7 @@ body {
 }
 .page-item input[type="file"]::file-selector-button {
   background-color: #0000;
-  border: 1px solid #11ED73;
-  /*color: #F5F5F5;*/
+  border: 2px solid #11ED73;
 }
 .page-item input:focus,
 .page-item select:focus,
@@ -229,7 +250,7 @@ body {
   outline: none;
   border-color: #11ED73 !important;
   box-shadow: none;
-  background-color: #0000 !important;
+  background-color: #F5F5F5 !important;
 }
 
 /*Carousel*/
@@ -288,6 +309,8 @@ body {
     padding-top: 1rem;
     margin-bottom: 0;
     padding-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
 }
 .card-body {
     padding-top: 0;
@@ -387,10 +410,10 @@ body {
     width: 500px;
     height: auto;
     max-height: 300px;
-    object-fit: contain; /* Ensures the entire image is visible */
+    object-fit: contain; 
     object-position: center;
     display: block;
-    margin: 0 auto;         /* Centres it horizontally */
+    margin: 0 auto;         
     background-color: black;
 }
 .bio {
@@ -446,6 +469,27 @@ body {
     font-size: 0.8rem;
     color: #F5F5F5;
 }
+.merch-price {
+    font-size: 1.2rem;
+    color: #11ED73;
+    font-weight: bold;
+}
+.page-link {
+    color: #11ED73 !important;        /* green text */
+    background-color: #000 !important;/* black background */
+    border: 2px solid #11ED73 !important; /* green border */
+    font-size: 0.8rem;
+}
+.page-link:hover {
+    background-color: #11ED73 !important; /* green hover */
+    color: #000 !important;               /* black text on hover */
+}
+.page-item.disabled .page-link {
+    color: #11ED73 !important;  
+    background-color: #000 !important;
+    border: 2px solid #11ED73 !important;
+    opacity: 0.6; /* optional fade */
+}
 /* Quantity dropdown */
 #qtyDropdown {
   font-size: 0.8rem;
@@ -480,7 +524,6 @@ body {
     background-color: #F5F5F5;
     color: #11ED73;
 }
-
 /* Size dropdown */
 #sizeDropdown {
     font-size: 0.8rem;
@@ -516,9 +559,45 @@ body {
     color: #11ED73;
 }
 
-/* Price display */
-
-
+/* Basket page */
+.basket-item {
+    border-bottom: 1px solid #11ED73;
+    display: flex;
+    align-items: center;
+    font-size: 0.8rem;
+}
+/* Basket thumbnails */
+.basket-thumb {
+  width: 100%;
+  max-width: 150px;  
+  height: auto;
+  max-height: 150px; 
+  object-fit: cover;  
+  padding: 0;    
+}
+/* Basket dropdown items */
+.dropdown-menu {
+    min-width: auto;
+    width: auto;       
+    padding: 0.25rem;
+}
+.dropdown-menu .dropdown-item {
+    color: #11ED73;         
+    background-color: #000;
+    min-width: 100% !important;   
+    width: 100%;
+}
+.dropdown-menu .dropdown-item:hover,
+.dropdown-menu .dropdown-item:focus {
+  background-color: #F5F5F5; 
+  color: #11ED73;
+}
+.basket-details {
+    padding: 0;
+}
+.basket-subtotal {
+    font-size: 0.9rem;
+}
 /* Password reset */
 .password-reset {
     font-size: 0.9rem;
@@ -533,6 +612,12 @@ body {
     text-decoration: none;
 }
 
+/*Checkout page*/
+.list-group-item {
+    background-color: #F5F5F5;
+    color: #000;
+    font-size: 0.8rem;
+}
 
 /*Contact page*/
 .cp-text {
@@ -551,6 +636,7 @@ body {
     border-color: #11ED73;
     background-color: #0000;
     border-block-width: 5px;
+    border-radius: 5px;
     margin-top: 1rem;
     margin-bottom: 1rem;
     font-size: 0.8rem;
@@ -569,6 +655,27 @@ body {
     width: 1em;
     height: 1em;
 }
+.basket-qty-btn  {
+    align-items: start;
+    padding: 0;
+}
+.btn-xs {
+    padding: 0.15rem 0.4rem;
+    font-size: 0.75rem;
+    line-height: 1;
+    border-radius: 4px;
+    }
+/* Alert buttons */
+.btn-close-green {
+  background: none;
+  opacity: 1;
+}
+.btn-close-green::before {
+  content: "×";
+  font-size: 1.2rem;
+  color: #11ED73;
+  font-weight: bold;
+}
 
 /*footer*/
 footer {
@@ -583,34 +690,41 @@ footer {
 }
 /* Error Messages */
 .custom-error {
-  color: #11ED73;
-  font-weight: bold;
+  color: #FF1744;
   list-style: none;
   padding-left: 0;
   margin-top: 0.25rem;
 }
 
-/* Media Queries */
-@media (min-width: 768px) {
-    .c-caption p{
-        font-size: 1rem;
-    }
+/* Alert message */
+.basket-error-text {
+  color: #FF4C4C;
+  font-size: 0.9rem;     
+  margin: 0;
+  padding-right: 0.5rem;
 }
 
+/* Media Queries */
+@media (max-width: 320px) {
+    .c-caption {
+        top: 10%
+    }
+}
 @media (max-width: 768px) {
-    .container-global {
-        margin-top: 4rem;
+    .mobile {
         margin-bottom: 1rem;
     }
     .font-size {
         font-size: 0.5rem;
     }
-    .carousel {
-        margin-top: 0.3rem;
-  }
+}
+@media (min-width: 768px) {
+    .c-caption p{
+        font-size: 1rem;
+    }
 }
 @media (min-width: 1024px) {
     .c-caption-p {
-        font-size: 1.2rem; 
+        font-size: 1.5rem; 
   }
 }
