@@ -3,7 +3,7 @@
 
 /*global styles*/
 body {
-    background-color: black;
+    background-color: #000000;
     font-family: "Geist Mono", monospace;
     font-size: 9px;
     color:#F5F5F5;
@@ -29,7 +29,7 @@ body {
     margin: 0;
     padding: 0.4rem 0.4rem;
     color: #11ED73 !important;
-    background-color: black;
+    background-color: #000000;
 }
 
 /*Header*/
@@ -39,7 +39,7 @@ body {
     margin-top: 1rem;
     z-index: 1000;
     margin-bottom: 10px;
-    background-color:black;
+    background-color #000000;
 }
 .header img {
     height: 2.5rem;
@@ -54,7 +54,7 @@ body {
   right: 0;
   left: 0;
   z-index: 1000;
-  background-color: black;
+  background-color: #000000;
   width: 100%;
 }
 .nav-wrapper ul.nav {
@@ -110,7 +110,7 @@ body {
 }
 /* Dropdown menu background */
 .dropdown-menu {
-  background-color: black;
+  background-color: #000000;
   border: 2px solid #11ED73; 
   border-radius: 5px;
   padding: 0;
@@ -139,7 +139,7 @@ body {
 .navbar .nav-link.dropdown-toggle:focus,
 .navbar .nav-link.dropdown-toggle:active,
 .navbar .nav-link.dropdown-toggle[aria-expanded="true"] {
-  background-color: black;
+  background-color: #000000;
   color: #F5F5F5;
   box-shadow: none;
 }
@@ -182,7 +182,7 @@ body {
     width: 100%;
     top: 7rem; /* Adjust based on navbar height */
     z-index: 1000;
-    background-color: black;
+    background-color: #000000;
     margin:0;
     padding: 0;
 }
@@ -203,7 +203,7 @@ body {
     margin-bottom: 2rem;
     font-size: 0.9rem;
     max-width: 700px;
-    color: #F5F5F5;
+    color: #000000;
 }
 /* Help text */
 .helptext {
@@ -290,7 +290,7 @@ body {
     height: 100%;
     padding: 0.8rem;
     background-color: #11ED73;
-    color: black;
+    color: #000000;
 }
 .a-img {
     border-radius: 50%;
@@ -300,7 +300,7 @@ body {
 
 /*Events page*/
 .standard-card {
-    background-color: black;
+    background-color: #000000;
     color: #F5F5F5;
     max-width: 300px;
     height: 100%;
@@ -414,7 +414,7 @@ body {
     object-position: center;
     display: block;
     margin: 0 auto;         
-    background-color: black;
+    background-color: #000000;
 }
 .bio {
     font-size: 1rem;
@@ -440,7 +440,7 @@ body {
 
 /* Merch page */
 .merch-card {
-    background-color: black;
+    background-color: #000000;
     color: #F5F5F5;
     border: 2px solid #11ED73;
     border-radius: 10px;
@@ -458,7 +458,7 @@ body {
     object-position: center;
     margin: 0;
     padding: 0;         
-    background-color: black;
+    background-color: #000000;
 }
 .merch-title {
     padding-top: 0.9rem;
@@ -476,13 +476,13 @@ body {
 }
 .page-link {
     color: #11ED73 !important;        /* green text */
-    background-color: #000000 !important;/* black background */
+    background-color: #000000 !important;/* #000000 background */
     border: 2px solid #11ED73 !important; /* green border */
     font-size: 0.8rem;
 }
 .page-link:hover {
     background-color: #11ED73 !important; /* green hover */
-    color: #000000 !important;               /* black text on hover */
+    color: #000000 !important;               /* #000000 text on hover */
 }
 .page-item.disabled .page-link {
     color: #11ED73 !important;  
@@ -496,21 +496,21 @@ body {
   padding: 0.5rem 0.5rem;
   border: 2px solid #11ED73 !important;
   border-radius: 5px;
-  background-color: black;
+  background-color: #000000;
   color: #11ED73;
 }
 /* When dropdown is open, keep it glowing */
 #qtyDropdown[aria-expanded="true"] {
   border: 2px solid #11ED73;
   border-radius: 5px;
-  background-color: black;
+  background-color: #000000;
   color: #11ED73;
 }
 /* Dropdown menu */
 #qtyDropdown + .dropdown-menu {
     min-width: 100% !important;   
     width: 100%;
-    background-color: black;
+    background-color: #000000;
     border: 2px solid #11ED73;
     border-radius: 5px;
 }
@@ -530,21 +530,21 @@ body {
     padding: 0.5rem 1rem;
     border: 2px solid #11ED73 !important;
     border-radius: 5px;
-    background-color: black;
+    background-color: #000000;
     color: #11ED73;
 }
 /* When dropdown is open, keep it glowing */
 #sizeDropdown[aria-expanded="true"] {
     border: 2px solid #11ED73;
     border-radius: 5px;
-    background-color: black;
+    background-color: #000000;
     color: #11ED73;
 }
 /* Dropdown menu */
 #sizeDropdown + .dropdown-menu {
     min-width: 100% !important;   
     width: 100%;
-    background-color: black;
+    background-color: #000000;
     border: 2px solid #11ED73;
     border-radius: 5px;
 }
