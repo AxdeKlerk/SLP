@@ -252,6 +252,13 @@ body {
   background-color: #F5F5F5 !important;
   color: #000000 !important;
 }
+.page-item input.form-control,
+.page-item select.form-control,
+.page-item textarea.form-control {
+    color: #000000 !important;
+    background-color: #F5F5F5 !important;
+}
+
 .page-item input::placeholder,
 .page-item textarea::placeholder {
     color: #888;
