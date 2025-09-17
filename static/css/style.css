@@ -258,7 +258,6 @@ body {
     color: #000000 !important;
     background-color: #F5F5F5 !important;
 }
-
 .page-item input::placeholder,
 .page-item textarea::placeholder {
     color: #888;
