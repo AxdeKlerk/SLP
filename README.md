@@ -126,7 +126,7 @@ Slipknot's merch page stood out amoungst the rest and the decidion was made that
 
 ### 2.3 User Journeys
 
-Having completed the wireframes user journeys were plotted out as imagined the user would journey ould be through the website. First, the  current user journey was plotted out, from the *[Searchlight Promotions](www.searchlightpromotions.co.uk)* website, as shown here:
+Having completed the wireframes, user journeys were plotted out as imagined the user would journey ould be through the website. First, the  current user journey was plotted out, from the *[Searchlight Promotions](www.searchlightpromotions.co.uk)* website, as shown here:
 
 ![current user journey](DOCS/images/current-user-journey.jpg)
 
@@ -142,7 +142,7 @@ Below is the new user journey as first imagined. The items in red are still 3rd 
 
 This project was developed using Agile methodologies to ensure a user-focused, iterative, and flexible development process. Key Agile principles were applied throughout.
 
-Having plotted the new user journey, 'Epics' were extracted form the user journey into the categories that follow. Each 'Epic' represents an App in the *Django* project design. Under each 'Epic', user stories were created using the "As a **user** I want to **action** so that I can **benefit**" statement to ensure a user story driven development and that all development decisions were tied directly to user needs. From each user story actionable tasks were created representing the acceptance criteria for each user story. 
+Having plotted the new user journey and user stories, 'Epics' were extracted form the user journey into the categories that follow. Each 'Epic' represents an App in the *Django* project design. Under each 'Epic', user stories were created using the "As a **user** I want to **action** so that I can **benefit**" statement to ensure a user story driven development and that all development decisions were tied directly to user needs. From each user story actionable tasks were created representing the acceptance criteria for each user story. 
 
 The project was created in *[Github](https://github.com/users/AxdeKlerk/projects/7)*.
 
@@ -152,29 +152,149 @@ Each epic was added to the Project Board using labels as can be seen here:
 
 ![project board](DOCS/images/project-board-v2.jpg)
 
-From the collapsable Core Epic, the below details a descrption of the covered features, with the first 3 user stories below, and the tasks listed below the user stories:
+From the collapsable Core Epic, for example, the below details a descrption of the covered features, with the first 3 user stories below, and the tasks listed below the user stories:
 
-![core epic](DOCS/images/core-epic-v2.jpg)
+![core epic](DOCS/images/core-epic.jpg)
 
-The below shows the Site Indintification User Story as well as its corresponding Tasks List:
+The below shows the Site Indentification User Story as well as its corresponding Tasks List, as an example:
 
-![site identification user story](DOCS/images/us-site-identification-v2.jpg)
+![site identification user story](DOCS/images/user-site-identification.jpg)
 
-![site identification user story tasks list](DOCS/images/us-site-identification-tasks-v1.jpg)
+The above is a representation of the Kaban board and all its components. As the project developed more user stories and tasks were created. Throughout the design of the website this project baord was referenced to keep the scope of the project realistic and on track. For convenience the project board can be found here: ![project board](https://github.com/users/AxdeKlerk/projects/7)
 
-The above is a representation of the Kaban board and all its components. As the project developed more user stories and tasks were created. Throughout the design of the website this project baord was referenced to keep the scope of the project realistic and on track.
+Below details all the Epic headings with their user story headings: 
 
-In addition to the above two other epics were created, namely the Planning and Dev-Ops Epics as show below:
+#### 2.4.1.1 Core Epic
 
-![planning epic](DOCS/images/planning-epic-v2.jpg)
+- Site Identification  
 
-Showing completed tasks in purple and the actionable tasks in green.
+- Navigation  
 
-Below is the "README Initial write-up" Task list, and the Dev-Ops Epic:
+- Search  
 
-![readme-initial-task-list](DOCS/images/readme-task-list-v1.jpg)
+- Contact Form  
 
-![dev-ops epic](DOCS/images/dev-ops-epic-v2.jpg)
+- Footer  
+
+- Base Template  
+
+#### 2.4.1.2 Products Epic  
+
+- Event Listings  
+
+- Event Detail Page  
+
+- Merch Listings  
+
+- Merch Detail Page  
+
+- Ticket Availability Tracking  
+
+- Roxoff Page & Event Tickets  
+
+### 2.4.1.3 Basket Epic  
+
+- Add to Basket  
+
+- View Basket  
+
+- Update Basket  
+
+- Remove from Basket  
+
+- Basket Totals  
+
+### 2.4.1.4 User Epic  
+
+- Sign Up  
+
+- Log In  
+
+- Password Reset  
+
+- Log Out  
+
+- Profile  
+
+- Email Confirmations (Backlog – Not MVP)  
+
+### 2.4.1.5 Checkout & Payments Epic  
+
+- Checkout Page  
+
+- Square Payments Integration  
+
+- Order Confirmation Page  
+
+- Order History in Profile  
+
+### 2.4.1.6 DevOps Epic  
+
+- Deployment  
+
+- 400 Error Page  
+
+- 500 Error Page  
+
+### 2.4.2 User stories (following the same order as above)
+
+- As a **user** I want to **land on the website and immediately recognise that it is for a rock and metal music promotion company** so that I **know I am in the right place**.  
+
+- As a **user** I want to **be able to navigate between Home, About, Event, Merch, Contact Form and Basket** so that I can **reach any section quickly**. 
+
+- As a **user,** I want to **be able to search for artists, merch and venues** so that I can **navigate quickly to my selected choice**.  
+
+- As a **user**, I want to **contact the promotions company** so that **my query reaches the right place**.  .  
+
+- As a **user**, I want to **see a basic footer with copyright information** so that I can **know where the end of the page is by the consistent copyright protection displayed beneath**.  
+
+- As a **developer**, I want a **reusable base.html template** so that **all pages share the same layout, styling, and design consistency**.  
+
+- As a **user**, I want to **view all upcoming events** so that I **can decide which ones to attend**.  
+
+- As a **user**, I want to **view available merchandise** so that I can **browse and choose items to buy**.  
+
+- As a **user**, I want to **view details of a merch item** so that I can **decide whether to purchase it**. 
+
+- As an **event organiser**, I want ticket sales to **update availability** so that **users cannot purchase more tickets than exist**.   
+
+- As a **user**, I want to **access the Roxoff page** so that I can **easily view and purchase tickets for upcoming events promoted under the Roxoff brand**.   
+
+- As a **user**, I want to **add event tickets or merchandise to my basket** so that I can** purchase them later**.  
+
+- As a **user**, I want to **view my basket** so that I can **see the items I intend to purchase**.  
+
+- As a **user**, I want to **update the quantity of basket items** so that I can **adjust my order before checkout**.    
+
+- As a **user**, I want to **delete items from my basket** so that I **don’t purchase items I no longer want**.    
+
+- As a **user**, I want to **see my basket total** so that I **know the total cost before checkout**.  .  
+
+- As a **new user**, I want to **create an account** so that I can **log in, purchase tickets/merch, and track my orders**.    
+
+- As a **registered user**, I want to **log in** so that I can **access my account and complete purchases**.   
+
+- As a **registered user**, I want to **reset my password if I forget it** so that I can **regain access to my account**.   
+
+- As a **logged in user**, I want to **log out** so that **my account is secure when I leave the site**.    
+
+- As a **logged in user**, I want to **view my profile** so that I can **track my order history**.  
+
+- As a **registered user**, I want to **receive email confirmations** so that I can **verify my account and trust the platform**.  
+
+- As a **logged in user**, I want to **proceed to a checkout page** so that I can **review my order and complete my purchase**.   
+
+- As a **logged in user**, I want to **pay securely with Square** so that I can **complete my order with confidence**.   
+
+- As a **logged in user**, I want to see **an order confirmation page after payment** so that I **know my purchase was successful**.    
+
+- As a **logged in user**, I want to **view my past orders in my profile** so that I **can track what I’ve purchased**.  
+
+- As a **developer**, I want to **deploy the application to Heroku** so that **users can access the live site**.   
+
+- As a **user**, I want to **see a friendly 400 error page when I make a bad request** so that I **am not shown a confusing error message**.    
+
+- As a **user**, I want **to see a friendly 500 error page when something goes wrong** so that I **understand the site is temporarily unavailable.** 
 
 
 ## Credits and Acknowledgements
