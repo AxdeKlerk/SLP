@@ -27,3 +27,31 @@ I tested that the checkout view prevented users from overselling tickets for an 
 
 **Notes:**  
 Initially, the oversell check did not run because it was inside the `if request.method == "POST":` block, and the *checkout button* triggered a `GET` request. Moving the *guardrail check* above the `POST` block fixed the issue. The error messages now displays correctly, styled in line with the project theme, and gives users immediate feedback before completing an order.
+
+#### 9.2.1 Input Text Visibility Fix
+
+As a *user signing up or logging in* I want *the text I type into input fields to be clearly visible in black* so that I *can easily read what I am entering without confusion*.
+
+**What Was Tested:** 
+
+I tested that the signup and login form input fields displayed black text when users typed into them. I verified that the CSS loaded correctly on *Heroko* and that text remained visible across all input types. As a user signing up or logging in, I wanted the text I typed into input fields to be clearly visible in black so that I could easily read what I was entering without confusion.
+
+**Acceptance Criteria:** 
+
+- [x] Input text in all signup and login fields displayed in black.  
+- [x] Placeholder text remained a lighter gray (`#888`) and did not override typed text.  
+- [x] CSS changes worked correctly in local development.  
+- [x] CSS changes deployed correctly to *Heroku* after running `collectstatic`.  
+- [x] No invisible or transparent input text remained.  
+
+**Tasks Completed:** 
+
+- [x] Updated CSS rules for `.page-item input`, `.page-item select`, and `.page-item textarea` with `color: #000000 !important;`.  
+- [x] Added focus state overrides to ensure the text stayed black when active.  
+- [x] Cleared stale static files from *Heroku*.  
+- [x] Ran `python manage.py collectstatic` to regenerate a clean `staticfiles/` directory.  
+- [x] Verified the changes by redeploying and testing live on *Heroku*.  
+
+**Notes:** 
+
+At first, the text wasn't invisible because old static files were being served with `color: #0000;` (transparent). This caused the input text to appear blank even though it was being typed. The fix required cleaning out *Heroku*’s cached static files, ensuring `STATIC_URL` was set correctly, and re-running `collectstatic` so the updated `style.css` was deployed. Once that pipeline was corrected, the black text styling worked consistently both locally and on *Heroku*.
