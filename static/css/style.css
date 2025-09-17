@@ -225,7 +225,7 @@ body {
 .page-item select,
 .page-item textarea {
   width: 100%;
-  color: #0000;
+  color: #0000000;
   background-color: #F5F5F5 !important;
   border: 1px solid #11ED73 !important;
   font-size: 1.1rem;
@@ -233,7 +233,7 @@ body {
 }
 .page-item input[type="date"] {
   width: 100%;
-  background-color: #0000 !important;
+  background-color: #0000000 !important;
   border: 1px solid #11ED73 !important;
   font-size: 1.1rem;
   border-radius: 4px;
@@ -241,7 +241,7 @@ body {
   cursor: pointer;
 }
 .page-item input[type="file"]::file-selector-button {
-  background-color: #0000;
+  background-color: #0000000;
   border: 2px solid #11ED73;
 }
 .page-item input:focus,
@@ -476,17 +476,17 @@ body {
 }
 .page-link {
     color: #11ED73 !important;        /* green text */
-    background-color: #000 !important;/* black background */
+    background-color: #000000 !important;/* black background */
     border: 2px solid #11ED73 !important; /* green border */
     font-size: 0.8rem;
 }
 .page-link:hover {
     background-color: #11ED73 !important; /* green hover */
-    color: #000 !important;               /* black text on hover */
+    color: #000000 !important;               /* black text on hover */
 }
 .page-item.disabled .page-link {
     color: #11ED73 !important;  
-    background-color: #000 !important;
+    background-color: #000000 !important;
     border: 2px solid #11ED73 !important;
     opacity: 0.6; /* optional fade */
 }
@@ -583,7 +583,7 @@ body {
 }
 .dropdown-menu .dropdown-item {
     color: #11ED73;         
-    background-color: #000;
+    background-color: #000000;
     min-width: 100% !important;   
     width: 100%;
 }
@@ -615,7 +615,7 @@ body {
 /*Checkout page*/
 .list-group-item {
     background-color: #F5F5F5;
-    color: #000;
+    color: #000000;
     font-size: 0.8rem;
 }
 
@@ -634,7 +634,7 @@ body {
 .cta-btn {
     color: #11ED73;
     border-color: #11ED73;
-    background-color: #0000;
+    background-color: #0000000;
     border-block-width: 5px;
     border-radius: 5px;
     margin-top: 1rem;
@@ -644,7 +644,7 @@ body {
 .cta-btn2 {
     font-size: 0.8rem;
     border-color: #11ED73;
-    background-color: #0000;
+    background-color: #0000000;
     border-block-width: 0.2rem;
     color: #11ED73;
 }
