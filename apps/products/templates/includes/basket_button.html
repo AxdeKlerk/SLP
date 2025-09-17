@@ -1,0 +1,28 @@
+{% comment %}
+Reusable Basket Button
+Params expected:
+- item_type: "event" or "merch"
+- item_id: the object ID
+- item_label: what to display on the button (e.g. "Roxoff Friday", "T-shirt")
+{% endcomment %}
+
+{% if user.is_authenticated %}
+    <form method="post" 
+          action="{% if item_type == 'event' %}{% url 'basket:add_event_to_basket' item_id %}
+                  {% elif item_type == 'merch' %}{% url 'basket:add_merch_to_basket' item_id %}
+                  {% endif %}">
+        {% csrf_token %}
+        {% if item_type == "merch" %}
+            <!-- Hidden inputs for merch only -->
+            <input type="hidden" name="quantity" id="selected-qty" value="1">
+            <input type="hidden" name="size" id="selected-size" value="">
+        {% endif %}
+        <button type="submit" class="btn cta-btn">
+            Add {{ item_label }} to Basket
+        </button>
+    </form>
+{% else %}
+    <a href="{% url 'login' %}?next={{ request.get_full_path }}" class="btn cta-btn">
+        Log in to Add {{ item_label }} to Basket
+    </a>
+{% endif %}

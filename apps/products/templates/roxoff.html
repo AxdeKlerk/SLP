@@ -62,20 +62,8 @@
               Price: £{{ event.price }}
             </p>
           </div>
-
           <div class="card-footer text-center">
-            {% if user.is_authenticated %}
-              <form method="post" action="{% url 'basket:add_event_to_basket' event.id %}">
-                  {% csrf_token %}
-                  <button type="submit" class="btn cta-btn mb-0" aria-label="add {{ event.get_roxoff_day_display }} to basket">
-                      Add {{ event.get_roxoff_day_display }} to Basket
-                  </button>
-              </form>
-            {% else %}
-              <a href="{% url 'login' %}" class="btn cta-btn mb-0" aria-label="log in to add {{ event.get_roxoff_day_display }} to basket">
-                  Log in to Add {{ event.get_roxoff_day_display }} to Basket
-              </a>
-            {% endif %}
+            {% include "includes/basket_button.html" with item_type="event" item_id=event.id item_label=event.get_roxoff_day_display %}
           </div>
         </div>
       </div>

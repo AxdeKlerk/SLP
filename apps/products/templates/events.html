@@ -68,12 +68,9 @@
 
             {# --- Footer with button always at bottom --- #}
             {% if event.is_upcoming %}
-            <div class="card-footer text-center"> 
-              <form method="post" action="{% url 'basket:add_event_to_basket' event.id %}">
-                {% csrf_token %}
-                  <button type="submit" class="btn cta-btn">Add to Basket</button>
-              </form>
-            </div>
+            <div class="card-footer text-center">
+            {% include "includes/basket_button.html" with item_type="event" item_id=event.id item_label=event.product_name %}
+          </div>
             {% endif %}
           </div>
         </div>

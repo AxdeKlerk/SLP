@@ -60,15 +60,10 @@
           </div>
           <!-- Price + button at bottom -->
           <div class="mt-auto">
-            <p class="merch-description mt-4" id="total-price" data-price="{{ merch.price }}">
-              Total Price: £{{ merch.price }}
-            </p>
-            <form method="post" action="{% url 'basket:add_merch_to_basket' merch.id %}">
-            {% csrf_token %}
-              <input type="hidden" name="quantity" id="selected-qty" value="1">
-              <input type="hidden" name="size" id="selected-size" value="{{ merch.get_size_display }}">
-                <button type="submit" class="btn cta-btn">Add to Basket</button>
-            </form>
+              <p class="merch-description mt-4" id="total-price" data-price="{{ merch.price }}">
+                  Total Price: £{{ merch.price }}
+              </p>
+              {% include "includes/basket_button.html" with item_type="merch" item_id=merch.id item_label=merch.product_name %}
           </div>
         </div>
       </div>
