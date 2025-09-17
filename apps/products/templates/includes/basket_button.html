@@ -18,11 +18,11 @@ Params expected:
             <input type="hidden" name="size" id="selected-size" value="">
         {% endif %}
         <button type="submit" class="btn cta-btn">
-            Add {{ item_label }} to Basket
+            Add to Basket
         </button>
     </form>
 {% else %}
     <a href="{% url 'login' %}?next={{ request.get_full_path }}" class="btn cta-btn">
-        Log in to Add {{ item_label }} to Basket
+        Log in to Add to Basket
     </a>
 {% endif %}
