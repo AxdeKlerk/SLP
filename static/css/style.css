@@ -203,7 +203,6 @@ body {
     margin-bottom: 2rem;
     font-size: 0.9rem;
     max-width: 700px;
-    color: #000000 !important;
 }
 /* Help text */
 .helptext {
@@ -252,6 +251,10 @@ body {
   box-shadow: none;
   background-color: #F5F5F5 !important;
   color: #000000 !important;
+}
+.page-item input::placeholder,
+.page-item textarea::placeholder {
+    color: #888;
 }
 
 /*Carousel*/
