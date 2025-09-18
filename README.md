@@ -103,7 +103,7 @@ This structured statement sets a clear foundation for building an ERD and a rela
 
 ### 2.1.3 ERD (Entity Relationship Diagram)
 
-![erd](DOCS/images/erd-v2.jpg)
+![erd](DOCS/images/erd_v2.jpg)
 
 ### 2.2 Wireframes
 After completing the first draft of the ERD I draw it out visually as a low fidelity-wireframe for desktops in *Balsamic*, as shown here:
