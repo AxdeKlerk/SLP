@@ -160,7 +160,7 @@ The below shows the Site Indentification User Story as well as its corresponding
 
 ![site identification user story](DOCS/images/user-site-identification.jpg)
 
-The above is a representation of the Kaban board and all its components. As the project developed more user stories and tasks were created. Throughout the design of the website this project baord was referenced to keep the scope of the project realistic and on track. For convenience the project board can be found here: ![project board](https://github.com/users/AxdeKlerk/projects/7)
+The above is a representation of the Kaban board and all its components. As the project developed more user stories and tasks were created. Throughout the design of the website this project baord was referenced to keep the scope of the project realistic and on track. For convenience the project board can be found here: ![project board](DOCS/images/project-board.jpg)
 
 Below details all the Epic headings with their user story headings: 
 
