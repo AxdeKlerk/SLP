@@ -16,6 +16,12 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # Debug mode
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
+# Square API
+SQUARE_APPLICATION_ID = os.getenv('SQUARE_APPLICATION_ID')
+SQUARE_ACCESS_TOKEN = os.getenv('SQUARE_ACCESS_TOKEN')
+SQUARE_LOCATION_ID = os.getenv('SQUARE_LOCATION_ID')
+
+
 # Allowed hosts
 ALLOWED_HOSTS = os.getenv(
     'ALLOWED_HOSTS',
@@ -37,6 +43,7 @@ INSTALLED_APPS = [
     'apps.products',
     'apps.basket',
     'apps.checkout',
+    'apps.payments',
 ]
 
 MIDDLEWARE = [
