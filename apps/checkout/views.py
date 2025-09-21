@@ -11,8 +11,10 @@ def checkout_view(request):
     # Check ticket qty first
     for item in basket_items:
         if item.event:
-            if item.event.tickets_sold() + item.quantity > item.event.effective_capacity():
-                messages.error(request, f"Not enough tickets available for {item.event}")
+            if item.event.tickets_sold + item.quantity > item.event.effective_capacity:
+                remaining = item.event.tickets_remaining
+                ticket_word = "ticket" if remaining == 1 else "tickets"
+                messages.error(request, f"Only {remaining} {ticket_word} left for {item.event}!")
                 return redirect("basket:basket_view")
             
     if request.method == "POST":
@@ -31,9 +33,8 @@ def checkout_view(request):
 
             OrderItem.objects.create(
                 order=order,
-                event=item.event,
-                merch=item.merch if hasattr(item, "merch") else None,
-                product_name=str(item),
+                event=item.event if item.event else None,
+                merch=item.merch if item.merch else None,
                 quantity=item.quantity,
                 price=(line_total / item.quantity) if item.quantity else 0,
             )

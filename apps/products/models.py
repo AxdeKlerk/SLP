@@ -40,22 +40,23 @@ class Event(models.Model):
     ]
     roxoff_day = models.CharField(max_length=10,choices=ROXOFF_DAY_CHOICES, blank=True, null=True,help_text="Only required for Roxoff events")
     
+    @property
     def tickets_sold(self):
         from apps.checkout.models import OrderItem
         return sum(
             item.quantity
             for item in OrderItem.objects.filter(
-                event=self, order__status="paid"
+                order__status="paid", event=self
             )
         )
-    
-    def effective_capacity(self):
-        return min(self.ticket_capacity, self.venue.capacity
-            if self.venue
-            else self.ticket_capacity)
 
+    @property
+    def effective_capacity(self):
+        return min(self.ticket_capacity, self.venue.capacity if self.venue else self.ticket_capacity)
+
+    @property
     def tickets_remaining(self):
-        return self.ticket_capacity - self.tickets_sold()
+        return self.ticket_capacity - self.tickets_sold
 
     class Meta:
         ordering = ['-gig_date']
