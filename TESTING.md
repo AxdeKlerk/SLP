@@ -55,3 +55,32 @@ I tested that the signup and login form input fields displayed black text when u
 **Notes:** 
 
 At first, the text wasn't invisible because old static files were being served with `color: #0000;` (transparent). This caused the input text to appear blank even though it was being typed. The fix required cleaning out *Heroku*’s cached static files, ensuring `STATIC_URL` was set correctly, and re-running `collectstatic` so the updated `style.css` was deployed. Once that pipeline was corrected, the black text styling worked consistently both locally and on *Heroku*.
+
+## Validation Error – Ticket Capacity Message Errors
+
+**User Story:**  
+As a user, I want to be prevented from purchasing more tickets than are available for an event, so that I don’t end up buying tickets for an event that is already at the event's capacity and I want to receive a clear error messages before purchasing my ticket.
+
+**What Was Tested:**
+
+I tested the basket and checkout flow with events tied to venues with limited capacity. I verified that correct error messages were shown when attempting to buy more tickets than available, and that valid purchases went through when quantities matched capacity.
+
+**Acceptance Criteria:**
+ 
+- [x] A user can add tickets up to the venue/event capacity without errors.  
+- [x] A user receives an error if the basket quantity exceeds available tickets.  
+- [x] Error message shows correct remaining tickets.  
+- [x] The checkout is blocked when overselling tickets.  
+- [x] The checkout proceeds when basket quantities exactly match remaining tickets.  
+
+**Tasks Completed:**
+
+- [x] Fixed `@property` usage for `tickets_sold` and `effective_capacity`.  
+- [x] Added logic to calculate `remaining = capacity - sold`.  
+- [x] Updated error message to display the correct number of tickets left.  
+- [x] Removed redundant "event fully booked" block so exact capacity orders succeed.  
+- [x] Confirmed messages only trigger when overselling occurs.  
+
+**Notes:** 
+ 
+During testing, I confirmed that the bug was not with template rendering but with the logic in `checkout_view`. The root cause was treating `@property` methods as callables and mis-handling the condition when basket quantities equaled capacity. After fixing, the flow correctly distinguishes between valid and invalid ticket requests.  
