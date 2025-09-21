@@ -497,3 +497,42 @@ This time `color: #0000;` was gone and only `color: #000000;` remained.
 **Lesson Learned:**  
 
 If old rules show up in production, it usually means stale static files are being cached on *Heroku*. The correct fix is to wipe `/app/staticfiles`, force a rebuild, and regenerate clean static files. Always confirm with a `grep` check to make sure the deployed CSS matches local changes.
+
+## Validation Error – Ticket Capacity Message Errors
+
+**Bug:**
+
+When testing ticket sales against venue and event capacities, three issues appeared:  
+1. I was calling `tickets_sold()` and `effective_capacity()` with parentheses, but they were `@property` methods. This caused `TypeError: 'int' object is not callable`.  
+2. The "Event is now fully booked" message triggered incorrectly even when the basket quantity exactly matched the event capacity. This blocked valid orders.  
+3. Error messages always displayed "0 tickets left" because I wasn’t calculating `remaining` correctly when basket quantities were less than or equal to capacity.
+
+**Fix:**  
+
+I updated the validation logic inside `checkout_view` so that only overselling tickets triggers an error. I corrected `@property` usage by removing parentheses. I also dropped the redundant "event fully booked" branch to allow valid purchases when the basket exactly matched the remaining tickets.
+
+Final working validation:
+
+    for item in basket_items:
+        if item.event and item.event not in checked_events:
+            checked_events.add(item.event)
+
+            sold = item.event.tickets_sold
+            requested_quantity = sum(i.quantity for i in basket_items if i.event == item.event)
+            capacity = item.event.effective_capacity
+
+            remaining = capacity - sold
+
+            if requested_quantity > remaining:
+                ticket_word = "ticket" if remaining == 1 else "tickets"
+                messages.error(
+                    request,
+                    f"Not enough tickets available! Try adjusting quantity! "
+                    f"Only {remaining} {ticket_word} left for {item.event}!"
+                )
+                return redirect("basket:basket_view")
+
+**Lesson Learned:** 
+
+I learned that `@property` methods in *Django* models should not be called with parentheses. I also learned to distinguish between overselling (invalid) and exactly filling capacity (valid) when checking basket quantities. Removing redundant validation branches made the logic simpler and correct. Finally, calculating `remaining` before raising errors is essential to prevent misleading messages like "0 tickets left."  
+
