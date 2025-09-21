@@ -11,18 +11,6 @@
             {% if basket and basket.items.all %}
                 <div class="basket-items">
                     {% for item in basket.items.all %}
-
-                    <!-- Flash message -->
-                    {% if messages %}
-                        <div class="row">
-                            <div class="col-12">
-                                {% for message in messages %}
-                                    <p class="basket-error-text">{{ message }}</p>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
-
                     <div class="row basket-item py-2 align-items-center">
 
                         <!-- Thumbnail (col 1) -->
@@ -91,6 +79,18 @@
                         <p>Subtotal: £{{ subtotal }}</p>
                     </div>
                 </div>
+
+                <!-- Flash message -->
+                {% if messages %}
+                    <div class="row">
+                        <div class="col-12">
+                            {% for message in messages %}
+                                <p class="basket-error-text text-end mb-2">{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endif %}
+
                 <div class="d-flex justify-content-end">
                     <a href="{% url 'checkout:checkout' %}" class="btn cta-btn2">Checkout</a>
                 </div>
