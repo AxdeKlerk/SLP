@@ -536,3 +536,36 @@ Final working validation:
 
 I learned that `@property` methods in *Django* models should not be called with parentheses. I also learned to distinguish between overselling (invalid) and exactly filling capacity (valid) when checking basket quantities. Removing redundant validation branches made the logic simpler and correct. Finally, calculating `remaining` before raising errors is essential to prevent misleading messages like "0 tickets left."  
 
+## Integration Errors (Square API with Django)
+
+**Bug:** 
+
+When I first tried to install the Square Python SDK, I mistakenly installed `squareapp` and then ran into import errors. Even after installing `squareup`, I still saw `ImportError: cannot import name 'Client' from 'square.client'`. Later attempts with `SquareClient` also failed. The installed SDK version defined a `Square` class instead, and its constructor did not accept `access_token`. Calling `list_locations()` raised `AttributeError` because the method name had changed. Finally, trying to check `result.is_success()` failed because the response object was a Pydantic model without that helper method.
+
+**Fix:**  
+
+I uninstalled the incorrect `square` package and reinstalled the official SDK with `pip install squareup`. I then checked the installed file `.venv/Lib/site-packages/square/client.py` to confirm the class name and constructor signature. For my version, the correct setup was:
+
+    import os
+    from square.client import Square, SquareEnvironment
+
+    client = Square(
+        token=os.getenv("SQUARE_ACCESS_TOKEN"),
+        environment=SquareEnvironment.SANDBOX
+    )
+
+Next, instead of `client.locations.list_locations()`, the right call was `client.locations.list()`. Finally, since the response was a Pydantic model, I accessed its `.locations` attribute directly and converted each item to a dict for JSON.
+
+    def test_square_connection(request):
+        result = client.locations.list()
+        if hasattr(result, "errors") and result.errors:
+            return JsonResponse({"errors": [e.detail for e in result.errors]})
+        locations = [loc.dict() for loc in result.locations] if result.locations else []
+        return JsonResponse({"locations": locations})
+
+**Lesson Learned:**
+
+Different versions of the Square SDK have different client class names, constructors, and method patterns. In my version, the correct class was `Square` instead of `Client`, and I had to pass `token` and `SquareEnvironment.SANDBOX` instead of `access_token`. API methods like `list_locations()` may be renamed to `list()`, and response handling moved to Pydantic models without helpers like `.is_success()`. Always confirm the installed SDK version and inspect its client class directly when debugging integration errors with external APIs in *Django*.
+
+
+
