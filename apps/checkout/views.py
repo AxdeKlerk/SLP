@@ -23,10 +23,6 @@ def checkout_view(request):
             # How many tickets are being requested in this basket for this event
             requested_quantity = sum(i.quantity for i in basket_items if i.event == item.event)
 
-            print(
-                f"DEBUG: event={item.event}, sold={sold}, capacity={capacity}, remaining={remaining}, requested={requested_quantity}"
-            )
-
             # If too many tickets requested
             if requested_quantity > remaining:
                 ticket_word = "ticket" if remaining == 1 else "tickets"
@@ -43,6 +39,7 @@ def checkout_view(request):
 
         # 1. Create the order
         order = Order.objects.create(
+            user=request.user if request.user.is_authenticated else None,
             email=request.POST.get("email"),
             subtotal=0,
             total=0,

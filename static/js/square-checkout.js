@@ -49,10 +49,17 @@ async function initSquare() {
 
       const data = await resp.json();
       if (resp.ok && data.ok) {
+        statusEl.className = "status-msg success";
         statusEl.textContent = "Payment details received. Proceeding...";
       } else {
-        statusEl.textContent = "Something went wrong. Please try again!";
+        statusEl.className = "status-msg error";
+        statusEl.textContent = "Server rejected token. Please try again.";
       }
+
+      // If tokenization failed
+      const first = (result.errors && result.errors[0]) || {};
+      statusEl.className = "status-msg error";
+      statusEl.textContent = `Tokenization failed: ${first.message || "Unknown error"}`;
     } 
 
     payBtn.disabled = false;
