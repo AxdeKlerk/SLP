@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Checkout (Sandbox)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+  {% csrf_token %}
+
+  <div class="container py-4">
+    <h1>Checkout (Sandbox)</h1>
+    <p class="text-muted">Enter any Square Sandbox test card to generate a token.</p>
+
+    <label for="amount" class="form-label">Amount (GBP)</label>
+    <input id="amount" type="number" min="1" step="0.01" value="10.00"
+           class="form-control" style="max-width: 240px;" />
+
+    <hr />
+
+    <div id="card-container" class="my-3"></div>
+
+    <button id="pay-button" type="button" class="btn btn-primary">Generate Token</button>
+    <div id="status" class="mt-3" role="status" aria-live="polite"></div>
+  </div>
+
+  <!-- Config passed in safely -->
+  <div id="square-config"
+       data-app-id="{{ SQUARE_APPLICATION_ID|escape }}"
+       data-location-id="{{ SQUARE_LOCATION_ID|escape }}">
+  </div>
+
+  <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
+  <script src="{% static 'js/square-checkout.js' %}"></script>
+</body>
+</html>

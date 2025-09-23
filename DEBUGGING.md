@@ -536,20 +536,20 @@ Final working validation:
 
 I learned that `@property` methods in *Django* models should not be called with parentheses. I also learned to distinguish between overselling (invalid) and exactly filling capacity (valid) when checking basket quantities. Removing redundant validation branches made the logic simpler and correct. Finally, calculating `remaining` before raising errors is essential to prevent misleading messages like "0 tickets left."  
 
-## Integration Errors (Square API with Django)
+## Integration Errors (*Square* API with Django)
 
 **Bug:** 
 
-When I first tried to install the Square Python SDK, I mistakenly installed `squareapp` and then ran into import errors. Even after installing `squareup`, I still saw `ImportError: cannot import name 'Client' from 'square.client'`. Later attempts with `SquareClient` also failed. The installed SDK version defined a `Square` class instead, and its constructor did not accept `access_token`. Calling `list_locations()` raised `AttributeError` because the method name had changed. Finally, trying to check `result.is_success()` failed because the response object was a Pydantic model without that helper method.
+When I first tried to install the *Square* Python SDK, I mistakenly installed `squareapp` and then ran into import errors. Even after installing `squareup`, I still saw `ImportError: cannot import name 'Client' from 'square.client'`. Later attempts with `SquareClient` also failed. The installed SDK version defined a `*Square*` class instead, and its constructor did not accept `access_token`. Calling `list_locations()` raised `AttributeError` because the method name had changed. Finally, trying to check `result.is_success()` failed because the response object was a Pydantic model without that helper method.
 
 **Fix:**  
 
 I uninstalled the incorrect `square` package and reinstalled the official SDK with `pip install squareup`. I then checked the installed file `.venv/Lib/site-packages/square/client.py` to confirm the class name and constructor signature. For my version, the correct setup was:
 
     import os
-    from square.client import Square, SquareEnvironment
+    from square.client import *Square*, SquareEnvironment
 
-    client = Square(
+    client = *Square*(
         token=os.getenv("SQUARE_ACCESS_TOKEN"),
         environment=SquareEnvironment.SANDBOX
     )
@@ -565,7 +565,58 @@ Next, instead of `client.locations.list_locations()`, the right call was `client
 
 **Lesson Learned:**
 
-Different versions of the Square SDK have different client class names, constructors, and method patterns. In my version, the correct class was `Square` instead of `Client`, and I had to pass `token` and `SquareEnvironment.SANDBOX` instead of `access_token`. API methods like `list_locations()` may be renamed to `list()`, and response handling moved to Pydantic models without helpers like `.is_success()`. Always confirm the installed SDK version and inspect its client class directly when debugging integration errors with external APIs in *Django*.
+Different versions of the *Square* SDK have different client class names, constructors, and method patterns. In my version, the correct class was `*Square*` instead of `Client`, and I had to pass `token` and `SquareEnvironment.SANDBOX` instead of `access_token`. API methods like `list_locations()` may be renamed to `list()`, and response handling moved to Pydantic models without helpers like `.is_success()`. Always confirm the installed SDK version and inspect its client class directly when debugging integration errors with external APIs in *Django*.
+
+## CSRF and Tokenisation Errors
+
+**Bug:** 
+
+When setting up the *Square* Web Payments SDK for tokenisation, I encountered multiple problems that prevented the token from being generated and successfully posted to the *Django* backend. Specifically, there were three main issues:  
+1. The *Square* SDK refused to render the card element because the site was not served over a secure context.  
+2. The token `POST` request was failing with a `404 error` because the `fetch UR`L did not match the configured *Django* route.  
+3. Even after fixing the URL, the request returned a `403 Forbidden error` due to a missing `CSRF cookie`, which meant *Django* blocked the request.
+
+**Fix:**  
+
+1. For the secure context error, I stopped using `127.0.0.1` and switched to `http://localhost:8000/payments/checkout/`, which *Square* treats as a valid sandbox context. This allowed the SDK to initialise and render the card element.  
+2. For the routing error, I corrected the `fetch URL` in the *JavaScript* file. Originally it was pointing to `"/apps/payments/process-payment/"`, but my *Django* configuration exposed the route at `"/payments/process-payment/"`. After updating the `fetch call`, the request reached the correct view. 
+ 
+   Example of the corrected fetch call:  
+       const resp = await fetch("/payments/process-payment/", {
+           method: "POST",
+           headers: {
+               "Content-Type": "application/json",
+               "X-CSRFToken": csrftoken,
+           },
+           body: JSON.stringify({ token, amount }),
+       });
+
+3. For the `CSRF error`, I ensured the `CSRF cookie` was being set and included in the request header. Adding `{% csrf_token %}` to the template and confirming that `csrftoken` was present in the browser cookies fixed the `403 Forbidden` problem. With the `CSRF token` included, *Django* accepted the `POST` and the backend logged the *Square* token.
+
+**Lesson Learned:** 
+
+Tokenisation only works when all three conditions are satisfied: the SDK must be served in a secure context (`localhost` or HTTPS), the `fetch` URL must exactly match the route defined in *Django*, and the `CSRF cookie` must be present and sent with the `POST request`. Missing any of these steps caused errors that blocked the flow. By carefully checking console logs, *Django* terminal output, and *Dev Tools* network responses, I was able to isolate and resolve each issue in turn.
+
+## Invalid Application ID Error
+
+**Bug:**
+
+When testing the *Square* Web Payments SDK, the card input would not render and the console showed `InvalidApplicationIdError: The Payment 'applicationId' option is not in the correct format.` In the logs, the `appId` value appeared as `sandbox\u002Dsq0idb\u002DSGiFCV2Wy5dWVMk2w_OJIQ` instead of `sandbox-sq0idb-SGiFCV2Wy5dWVMk2w_OJIQ`. The issue was caused by the `|escapejs` filter in the template, which converted dashes (`-`) into unicode escapes (`\u002D`). This broke the SDK because *Square* expected the raw application ID string.
+
+**Fix:** 
+
+I updated the template to stop escaping the IDs with `|escapejs` when using them in *HTML* attributes. The corrected code used `|escape` instead, which safely outputs the string without turning dashes into unicode escapes.
+
+    <div id="square-config"
+         data-app-id="{{ SQUARE_APPLICATION_ID|escape }}"
+         data-location-id="{{ SQUARE_LOCATION_ID|escape }}">
+    </div>
+
+After this change, the `appId` printed correctly as `sandbox-sq0idb-...`, and the *Square* card input rendered as expected.
+
+**Lesson Learned:**
+
+The `|escapejs` filter in *Django* templates is only for values inserted into inline *JavaScript* blocks. When passing values into *HTML* `data-` attributes, using `|escapejs` will incorrectly encode special characters and break *API*s that expect raw values. The right approach is to use `|escape` or no filter at all for safe IDs. This ensured the *Square* SDK received the correct `applicationId` and allowed tokenisation to work.
 
 
 

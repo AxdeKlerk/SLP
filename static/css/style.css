@@ -686,13 +686,6 @@ body {
   font-weight: bold;
 }
 
-/*footer*/
-footer {
-    Font-size: 0.8rem;
-    text-align: center;
-    color: #11ED73;
-}
-
 /*404 & 500 error message*/
 .error-item {
     color: #11ED73;
@@ -709,6 +702,13 @@ footer {
   font-size: 0.9rem;     
   margin: 0;
   padding-right: 0.5rem;
+}
+
+/*footer*/
+footer {
+    Font-size: 0.8rem;
+    text-align: center;
+    color: #11ED73;
 }
 
 /* Media Queries */
