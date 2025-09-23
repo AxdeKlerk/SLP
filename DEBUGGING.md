@@ -536,7 +536,7 @@ Final working validation:
 
 I learned that `@property` methods in *Django* models should not be called with parentheses. I also learned to distinguish between overselling (invalid) and exactly filling capacity (valid) when checking basket quantities. Removing redundant validation branches made the logic simpler and correct. Finally, calculating `remaining` before raising errors is essential to prevent misleading messages like "0 tickets left."  
 
-## Integration Errors (*Square* API with Django)
+## Integration Errors (*Square* API with *Django*)
 
 **Bug:** 
 

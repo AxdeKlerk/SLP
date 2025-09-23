@@ -84,3 +84,35 @@ I tested the basket and checkout flow with events tied to venues with limited ca
 **Notes:** 
  
 During testing, I confirmed that the bug was not with template rendering but with the logic in `checkout_view`. The root cause was treating `@property` methods as callables and mis-handling the condition when basket quantities equaled capacity. After fixing, the flow correctly distinguishes between valid and invalid ticket requests.  
+
+## Invalid Application ID Error
+
+**User Story:**
+
+As a **developer**, I wanted to **render the Square card input in my checkout page** so that I **could generate a token from a sandbox card and confirm the frontend to backend tokenisation flow worked correctly**.
+
+**What Was Tested:**
+
+I tested that the *Square* Web Payments SDK loaded correctly, that the application ID and location ID passed from *Django* to the frontend were in the right format, and that the card input rendered without errors. The user story was considered complete when a sandbox card could be entered, tokenised, and successfully posted to the backend.
+
+**Acceptance Criteria:** 
+
+- [x] The *Square* SDK script loaded with status 200.  
+- [x] The application ID in the browser console displayed as `sandbox-sq0idb-...` without unicode escapes.  
+- [x] The card input rendered inside the `#card-container` div.  
+- [x] No `InvalidApplicationIdError` appeared in the console.  
+- [x] Clicking the *Generate Token* button returned a token and updated the status message on screen.  
+- [x] The *Django* backend logged the received token and amount.  
+
+**Tasks Completed:**  
+
+- [x] Removed the `|escapejs` filter from the template and replaced it with `|escape` in the `data-app-id` and `data-location-id` attributes.  
+- [x] Reloaded the checkout page and checked that the IDs displayed correctly in console logs.  
+- [x] Verified that the *Square* card input rendered correctly in the browser.  
+- [x] Entered a *sandbox* test card and clicked the *Generate Token* button.  
+- [x] Confirmed token and amount were posted to the backend and logged.  
+
+**Notes:** 
+
+The error occurred because `|escapejs` converted dashes (`-`) into unicode escapes (`\u002D`), which broke the application ID format expected by *Square*. By switching to `|escape`, the IDs were passed in raw format to the *HTML* attributes and the SDK accepted them. This proved the tokenisation flow worked correctly once the correct filter was used.
+
