@@ -4,7 +4,7 @@ from django.contrib import messages
 from apps.basket.models import Basket, BasketItem
 from apps.checkout.models import Order, OrderItem
 
-def checkout_view(request):
+def order_review(request):
     # Get this user's basket
     basket = Basket.objects.filter(user=request.user).first()
     basket_items = basket.items.all() if basket else []
