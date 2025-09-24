@@ -11,7 +11,7 @@ function getCookie(name) {
 }
 const csrftoken = getCookie("csrftoken");
 
-// Grab elements
+// DOM elements
 const statusEl = document.getElementById("status");
 const payBtn = document.getElementById("pay-button");
 const amountInput = document.getElementById("amount");
@@ -22,13 +22,13 @@ async function initSquare() {
     return;
   }
 
+  // Create payments instance and card element
   const payments = window.Square.payments(appId, locationId);
   const card = await payments.card();
   await card.attach("#card-container");
 
-  // Handle click
+  // On button click
   payBtn.addEventListener("click", async () => {
-
     statusEl.textContent = "Tokenizing card...";
     payBtn.disabled = true;
 
@@ -53,20 +53,24 @@ async function initSquare() {
         statusEl.textContent = "Payment details received. Proceeding...";
       } else {
         statusEl.className = "status-msg error";
-        statusEl.textContent = "Server rejected token. Please try again.";
+        statusEl.textContent = "Server rejected token. Check server logs.";
       }
-
-      // If tokenization failed
-      const first = (result.errors && result.errors[0]) || {};
-      statusEl.className = "status-msg error";
-      statusEl.textContent = `Tokenization failed: ${first.message || "Unknown error"}`;
-    } 
+    } else {
+      if (result.errors && result.errors.length > 0) {
+        statusEl.className = "status-msg error";
+        statusEl.textContent = `Tokenization failed: ${result.errors
+          .map((e) => e.message)
+          .join(", ")}`;
+      } else {
+        statusEl.className = "status-msg error";
+        statusEl.textContent =
+          "Tokenization failed: No detailed error returned.";
+      }
+    }
 
     payBtn.disabled = false;
   });
 }
 
-console.log("appId =", appId, "locationId =", locationId);
-
-// Run
+// Init
 initSquare();

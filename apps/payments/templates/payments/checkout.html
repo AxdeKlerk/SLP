@@ -1,10 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 
-  {% csrf_token %}
-
-  {% block content %}
-  <div class="container checkout-container">
+{% block content %}
+  <div class="container container-global mobile">
     <h1 class="checkout-title">Checkout (Sandbox)</h1>
     <p class="checkout-subtitle">Enter any Square Sandbox test card to generate a token.</p>
 
@@ -22,13 +20,13 @@
     <button id="pay-button" type="button" class="btn cta-btn">Generate Token</button>
     <div id="status" class="status-msg" role="status" aria-live="polite"></div>
   </div>
-{% endblock %}
 
   <!-- Config passed in safely -->
   <div id="square-config"
        data-app-id="{{ SQUARE_APPLICATION_ID|escape }}"
        data-location-id="{{ SQUARE_LOCATION_ID|escape }}">
   </div>
+{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/square-checkout.css' %}">
@@ -38,5 +36,4 @@
 <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
 <script src="{% static 'js/square-checkout.js' %}"></script>
 {% endblock %}
-</body>
-</html>
+
