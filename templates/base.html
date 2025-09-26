@@ -75,6 +75,10 @@
     <div class="offcanvas offcanvas-end bg-black" tabindex="-1" id="mobileNav">
       <div class="offcanvas-body d-flex flex-column align-items-end">
         <ul class="nav flex-column gap-2 w-100">
+          <!-- Close button -->
+          <li class="nav-item text-end">
+            <a role="button" type="button" class="nav-link text-end" data-bs-dismiss="offcanvas">X</a>
+          </li>
           <!-- Home -->
           <li class="nav-item text-end">
             <a class="nav-link" href="{% url 'core:home' %}">Home</a>
@@ -102,34 +106,6 @@
           </li>
           <li class="nav-item text-end">
             <a class="nav-link" href="{% url 'products:roxoff' %}">ROXOFF</a>
-          </li>
-          <!-- Account -->
-          <li class="nav-item text-end">
-            <a class="nav-link" data-bs-toggle="collapse" href="#offcanvasAccount" role="button"
-              aria-expanded="false" aria-controls="offcanvasAccount">Account</a>
-            <div class="collapse" id="offcanvasAccount">
-              <ul class="navbar-nav ps-3">
-                {% if user.is_authenticated %}
-                  <a href="{% url 'user:login_success' %}"></a>
-                <li><a class="nav-link" href="{% url 'user:profile_view' %}">Profile</a></li>
-                <li>
-                <li>
-                  <form action="{% url 'logout' %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-link nav-link p-0 text-success">Logout</button>
-                  </form>
-                </li>
-              {% else %}
-                <li><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
-                <li><a class="nav-link" href="{% url 'user:signup' %}">Sign Up</a></li>
-                <li><a class="nav-link" href="{% url 'password_reset' %}">Forgot Password?</a></li>
-              {% endif %}
-              </ul>
-            </div>
-          </li>
-          <!-- Basket -->
-          <li class="nav-item text-end">
-            <a class="nav-link" href="{% url 'basket:basket_view' %}">Basket</a>
           </li>
           <!-- Search -->
           <li class="nav-item text-end">
@@ -182,9 +158,33 @@
           <li class="nav-item text-end">
             <a class="nav-link" href="{% url 'core:contact' %}">Contact</a>
           </li>
-          <!-- Close button -->
+          <!-- Account -->
           <li class="nav-item text-end">
-            <a role="button" type="button" class="nav-link text-end" data-bs-dismiss="offcanvas">X</a>
+            <a class="nav-link" data-bs-toggle="collapse" href="#offcanvasAccount" role="button"
+              aria-expanded="false" aria-controls="offcanvasAccount">Account</a>
+            <div class="collapse" id="offcanvasAccount">
+              <ul class="navbar-nav ps-3">
+                {% if user.is_authenticated %}
+                  <a href="{% url 'user:login_success' %}"></a>
+                <li><a class="nav-link" href="{% url 'user:profile_view' %}">Profile</a></li>
+                <li>
+                <li>
+                  <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link nav-link p-0 text-success">Logout</button>
+                  </form>
+                </li>
+              {% else %}
+                <li><a class="nav-link" href="{% url 'login' %}">Log In</a></li>
+                <li><a class="nav-link" href="{% url 'user:signup' %}">Sign Up</a></li>
+                <li><a class="nav-link" href="{% url 'password_reset' %}">Forgot Password?</a></li>
+              {% endif %}
+              </ul>
+            </div>
+          </li>
+          <!-- Basket -->
+          <li class="nav-item text-end">
+            <a class="nav-link" href="{% url 'basket:basket_view' %}">Basket</a>
           </li>
         </ul>
       </div>
@@ -221,35 +221,6 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'products:roxoff' %}">ROXOFF</a>
         </li>
-        <!-- Account -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="accountDropdown" href="#" role="button"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            Account
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="accountDropdown">
-            {% if user.is_authenticated %}
-              <a href="{% url 'user:login_success' %}"></a>
-            <li>
-              <a class="dropdown-item" href="{% url 'user:profile_view' %}">Profile</a></li>
-            <li>
-            <li>
-              <form action="{% url 'logout' %}" method="post" style="display:inline;">
-                {% csrf_token %}
-                <button type="submit" class="dropdown-item text-success">Logout</button>
-              </form>
-            </li>
-            {% else %}
-              <li><a class="dropdown-item" href="{% url 'login' %}">Log In</a></li>
-              <li><a class="dropdown-item" href="{% url 'user:signup' %}">Sign Up</a></li>
-              <li><a class="dropdown-item" href="{% url 'password_reset' %}">Forgot Password?</a></li>
-            {% endif %}
-          </ul>
-        </li>
-        <!-- Basket -->
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'basket:basket_view' %}">Basket</a>
-        </li>
         <!-- Search dropdown -->
         {% with url_name=request.resolver_match.url_name %}
         <li class="nav-item dropdown">
@@ -282,6 +253,35 @@
         {% endwith %}
         <li class="nav-item">
           <a class="nav-link" href="{% url 'core:contact' %}">Contact</a>
+        </li>
+        <!-- Account -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="accountDropdown" href="#" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            Account
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="accountDropdown">
+            {% if user.is_authenticated %}
+              <a href="{% url 'user:login_success' %}"></a>
+            <li>
+              <a class="dropdown-item" href="{% url 'user:profile_view' %}">Profile</a></li>
+            <li>
+            <li>
+              <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="dropdown-item text-success">Logout</button>
+              </form>
+            </li>
+            {% else %}
+              <li><a class="dropdown-item" href="{% url 'login' %}">Log In</a></li>
+              <li><a class="dropdown-item" href="{% url 'user:signup' %}">Sign Up</a></li>
+              <li><a class="dropdown-item" href="{% url 'password_reset' %}">Forgot Password?</a></li>
+            {% endif %}
+          </ul>
+        </li>
+        <!-- Basket -->
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'basket:basket_view' %}">Basket</a>
         </li>
       </ul>
       {% endwith %}

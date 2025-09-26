@@ -618,6 +618,30 @@ After this change, the `appId` printed correctly as `sandbox-sq0idb-...`, and th
 
 The `|escapejs` filter in *Django* templates is only for values inserted into inline *JavaScript* blocks. When passing values into *HTML* `data-` attributes, using `|escapejs` will incorrectly encode special characters and break *API*s that expect raw values. The right approach is to use `|escape` or no filter at all for safe IDs. This ensured the *Square* SDK received the correct `applicationId` and allowed tokenisation to work.
 
+## Quantity Clamping Error
+
+**Bug:** 
+
+I realised that the basket handlers did not limit item quantities. This meant a malicious user could tamper with the form or send a direct POST request to set `quantity` to 0, a negative number, or something excessive like 99. This caused broken basket totals and risked over-selling tickets or merch items.
+
+**Fix:** 
+
+I added clamping logic in the basket views to enforce valid ranges. Specifically:
+- In `add_merch_to_basket`, I wrapped the POSTed quantity with a check so anything below 1 defaults to 1, and anything above 9 defaults to 9.
+- In `update_basket_item`, I replaced the old conditional with the same clamp logic to ensure updates cannot bypass the rule.
+- In `add_event_to_basket`, I updated the increment logic so that repeated additions cannot push the quantity above 9.  
+
+Example adjustment in `add_merch_to_basket`:  
+
+    quantity = int(request.POST.get("quantity", 1))
+    if quantity < 1:
+        quantity = 1
+    elif quantity > 9:
+        quantity = 9
+
+**Lesson Learned:**  
+
+Always enforce business rules on the backend, not just the frontend. Even if the form uses a `<select>` limited to 1–9, users can still tamper with `POST` data. By clamping the quantity inside the *Django* `views`, the basket remains safe against malicious inputs and ensures stable order totals.
 
 
 

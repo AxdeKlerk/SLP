@@ -116,3 +116,29 @@ I tested that the *Square* Web Payments SDK loaded correctly, that the applicati
 
 The error occurred because `|escapejs` converted dashes (`-`) into unicode escapes (`\u002D`), which broke the application ID format expected by *Square*. By switching to `|escape`, the IDs were passed in raw format to the *HTML* attributes and the SDK accepted them. This proved the tokenisation flow worked correctly once the correct filter was used.
 
+#### Basket Quantity Clamping
+
+**User Story:**  
+As a developer, I want the basket to only allow item quantities between 1 and 9 so that the system is not broken by invalid or malicious inputs.
+
+**What Was Tested:**  
+I tested the basket handlers to ensure that if a user tries to add or update an item with a quantity below 1 or above 9, the backend automatically corrects the value. This ensures the basket is safe from tampered form submissions or direct POST requests.
+
+**Acceptance Criteria:**  
+- [x] If a user tries to set quantity to 0, it is corrected to 1.  
+- [x] If a user tries to set quantity to a negative number, it is corrected to 1.  
+- [x] If a user tries to set quantity to greater than 9, it is corrected to 9.  
+- [x] Event items cannot exceed a quantity of 9, even if repeatedly added.  
+- [x] Merch items cannot exceed a quantity of 9, regardless of form tampering.  
+- [x] Basket totals calculate correctly after the clamping logic is applied.  
+
+**Tasks Completed:**  
+- [x] Added clamp logic (`if` statement) in `add_merch_to_basket`.  
+- [x] Added clamp logic (`if` ststement) in `update_basket_item`.  
+- [x] Updated `add_event_to_basket` so increments cannot exceed 9.  
+- [x] Manually tested with valid and invalid inputs.  
+- [x] Confirmed basket pages display corrected quantities.  
+
+**Notes:**  
+
+During testing I confirmed that invalid inputs (0, -5, 20, etc.) cannot be accepted. The basket automatically enforces a minimum of 1 and a maximum of 9 for all items. This prevents malicious or accidental misuse and ensures stable basket totals.

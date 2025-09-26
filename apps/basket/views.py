@@ -28,7 +28,7 @@ def add_event_to_basket(request, event_id):
 
     item, created = BasketItem.objects.get_or_create(basket=basket, event=event)
     if not created:
-        item.quantity += 1
+        item.quantity = min(item.quantity + 1, 9)
         item.save()
 
     return redirect('basket:basket_view')
@@ -42,6 +42,9 @@ def add_merch_to_basket(request, merch_id):
     merch = get_object_or_404(Merch, id=merch_id)
 
     quantity = int(request.POST.get("quantity", 1))
+    if quantity < 1: quantity = 1
+    elif quantity > 9: quantity = 9
+
     size = request.POST.get("size", "")
 
     item, created = BasketItem.objects.get_or_create(basket=basket, merch=merch, size=size)
@@ -59,11 +62,15 @@ def update_basket_item(request, item_id):
         item = get_object_or_404(BasketItem, id=item_id)
         quantity = int(request.POST.get("quantity", 1))
 
-        if quantity > 0:
-            item.quantity = quantity
-            item.save()
-        else:
-            item.delete()
+        if quantity < 1:
+            quantity = 1
+        elif quantity > 9:
+            quantity = 9
+
+        item.quantity = quantity
+        item.save()
+    else:
+        item.delete()
 
     return redirect("basket:basket_view")
 
