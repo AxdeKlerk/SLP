@@ -118,13 +118,16 @@ The error occurred because `|escapejs` converted dashes (`-`) into unicode escap
 
 #### Basket Quantity Clamping
 
-**User Story:**  
-As a developer, I want the basket to only allow item quantities between 1 and 9 so that the system is not broken by invalid or malicious inputs.
+**User Story:**
 
-**What Was Tested:**  
+As a **developer**, I want **the basket to only allow item quantities between 1 and 9** so that **the system is not broken by invalid or malicious inputs**.
+
+**What Was Tested:** 
+
 I tested the basket handlers to ensure that if a user tries to add or update an item with a quantity below 1 or above 9, the backend automatically corrects the value. This ensures the basket is safe from tampered form submissions or direct POST requests.
 
-**Acceptance Criteria:**  
+**Acceptance Criteria:**
+
 - [x] If a user tries to set quantity to 0, it is corrected to 1.  
 - [x] If a user tries to set quantity to a negative number, it is corrected to 1.  
 - [x] If a user tries to set quantity to greater than 9, it is corrected to 9.  
@@ -132,7 +135,8 @@ I tested the basket handlers to ensure that if a user tries to add or update an 
 - [x] Merch items cannot exceed a quantity of 9, regardless of form tampering.  
 - [x] Basket totals calculate correctly after the clamping logic is applied.  
 
-**Tasks Completed:**  
+**Tasks Completed:** 
+
 - [x] Added clamp logic (`if` statement) in `add_merch_to_basket`.  
 - [x] Added clamp logic (`if` ststement) in `update_basket_item`.  
 - [x] Updated `add_event_to_basket` so increments cannot exceed 9.  
@@ -142,3 +146,32 @@ I tested the basket handlers to ensure that if a user tries to add or update an 
 **Notes:**  
 
 During testing I confirmed that invalid inputs (0, -5, 20, etc.) cannot be accepted. The basket automatically enforces a minimum of 1 and a maximum of 9 for all items. This prevents malicious or accidental misuse and ensures stable basket totals.
+
+#### Proceed to Payment Button Routing
+
+**User Story:**
+
+As a **user**, I want the **Proceed to Payment button on my profile page to take me directly to the checkout page** so that I can **complete payment for my selected order**.
+
+**What Was Tested:** 
+
+I tested whether the *Proceed to Payment* button correctly redirected from the profile page to the checkout page. The expected outcome was that clicking the button would resolve the `payments:payment_checkout` URL and load the checkout view.
+
+**Acceptance Criteria:** 
+
+- [x] The *Proceed to Payment* button on the profile page uses the correct namespaced URL (`payments:payment_checkout`).  
+- [x] Clicking the button redirects to `/payments/checkout/`.  
+- [x] The checkout page loads without errors.  
+- [x] No `NoReverseMatch` errors appear in the server logs.  
+
+**Tasks Completed:**
+
+- [x] Updated the template to use `{% url 'payments:payment_checkout' %}`.  
+- [x] Restarted the server to ensure URL changes were picked up.  
+- [x] Verified redirection worked by clicking the button in the browser.  
+- [x] Checked server logs to confirm no routing errors occurred.  
+
+**Notes:**
+
+The error was caused by omitting the `payments:` namespace in the template. Once corrected, *Django* resolved the URL properly, and the button redirected to the checkout page as expected.
+

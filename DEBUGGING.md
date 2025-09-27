@@ -643,5 +643,27 @@ Example adjustment in `add_merch_to_basket`:
 
 Always enforce business rules on the backend, not just the frontend. Even if the form uses a `<select>` limited to 1–9, users can still tamper with `POST` data. By clamping the quantity inside the *Django* `views`, the basket remains safe against malicious inputs and ensures stable order totals.
 
+## Routing Error
+
+**Bug:**
+
+When I clicked the *Proceed to Payment* button on the profile page, *Django* raised a `NoReverseMatch` error:  
+`Reverse for 'payment_checkout' not found. 'payment_checkout' is not a valid view function or pattern name.`  
+
+This happened because in `profile.html` I used `{% url 'payment_checkout' %}` without the correct namespace. Since the `payments` app was included in `config/urls.py` with `namespace="payments"`, *Django* could not resolve the route without the prefix.
+
+**Fix:**
+
+I updated the template to include the `namespace` so the URL matched the registered name:
+
+    {% url 'payments:payment_checkout' %}
+
+After this change and restarting the server, the button correctly resolved to `/payments/checkout/` and redirected as expected.
+
+**Lesson Learned:**
+
+When including an app’s URLs in `config/urls.py` with a `namespace`, all reverse lookups using `{% url %}` or `reverse()` must include that namespace. Forgetting the namespace will always result in a `NoReverseMatch` error, even if the route is defined correctly.
+
+
 
 
