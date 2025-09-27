@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.contrib import messages
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from apps.user.forms import ForgotUsernameForm
@@ -55,4 +56,29 @@ def forgot_username(request):
         "registration/forgot_username.html",
         {"form": form, "message_sent": message_sent},
     )
+
+@login_required
+def bulk_order_action(request):
+    if request.method == "POST":
+        action = request.POST.get("action")
+
+        if action == "pay_single":
+            order_id = request.POST.get("order_id")
+            if order_id:
+                request.session["order_ids_to_pay"] = [order_id]
+                return redirect("payments:payment_checkout")
+
+        elif action == "delete":
+            order_ids = request.POST.getlist("order_ids")
+            if not order_ids:
+                messages.error(request, "No orders selected.")
+            else:
+                # Make sure IDs are integers
+                order_ids = [int(i) for i in order_ids if i.isdigit()]
+                Order.objects.filter(id__in=order_ids, user=request.user).delete()
+                messages.success(request, f"{len(order_ids)} order(s) deleted.")
+            return redirect("user:profile_view")
+
+    return redirect("user:profile_view")
+
 

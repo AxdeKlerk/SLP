@@ -11,32 +11,59 @@
             <!-- Orders in Progress -->
             <h4 class="mb-2">Orders in Progress</h4>
             {% if current_orders %}
-                <div class="row">
-                    {% for order in current_orders %}
-                    <div class="col-12">
-                        <div class="card merch-card mb-2">
-                            <div class="card-header cp-item">
-                                <strong>Order #{{ order.id }}</strong> – Status: {{ order.get_status_display }}
-                            </div>
-                            <div class="card-body">
-                                <ul class="list-group">
-                                    {% for item in order.items.all %}
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <span>{{ item.product_name }} (x{{ item.quantity }})</span>
-                                        <span>£{{ item.line_total }}</span>
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-                                <div class="mt-3 mb-2 text-end cp-item">
-                                    <strong>Total: £{{ order.total }}</strong>
-                                </div>
-                            </div>
-                        </div>
+            <div class="row">
+            {% for order in current_orders %}
+                <div class="col-12">
+                <div class="card merch-card mb-2">
+                    <div class="card-header cp-item">
+                    <form method="post" action="{% url 'user:bulk_order_action' %}" class="d-inline">
+                        {% csrf_token %}
+                        <input type="checkbox" name="order_ids" value="{{ order.id }}">
                     </div>
-                    {% endfor %}
+                    <div class="card-body">
+                    <ul class="list-group">
+                        {% for item in order.items.all %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>{{ item.product_name }} (x{{ item.quantity }})</span>
+                        <span>£{{ item.line_total }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    <div class="mt-3 mb-2 text-end cp-item">
+                        <strong>Total: £{{ order.total }}</strong>
+                    </div>
+                    <!-- Single pay form -->
+                    <div class="text-end">
+                        <form method="post" action="{% url 'user:bulk_order_action' %}">
+                        {% csrf_token %}
+                        <input type="hidden" name="order_id" value="{{ order.id }}">
+                        <button type="submit" name="action" value="pay_single" class="btn btn-primary">
+                            Proceed to Payment
+                        </button>
+                        </form>
+                    </div>
+                    </div>
                 </div>
+                </div>
+            {% endfor %}
+            </div>
+
+            <!-- Bulk delete form after the loop -->
+            <form method="post" action="{% url 'user:bulk_order_action' %}">
+            {% csrf_token %}
+            {% for order in current_orders %}
+                <input type="hidden" name="order_ids" value="{{ order.id }}">
+            {% endfor %}
+            <div class="row mt-2">
+                <div class="col-12 text-start">
+                <button type="submit" name="action" value="delete" class="btn btn-xs btn-danger">
+                    Delete Selected
+                </button>
+                </div>
+            </div>
+            </form>
             {% else %}
-                <p class="">No orders in progress.</p>
+            <p class="cp-item">No orders in progress</p>
             {% endif %}
         </div>  
     </div>

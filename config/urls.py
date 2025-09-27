@@ -14,7 +14,7 @@ urlpatterns = [
     path("accounts/logout/", auth_views.LogoutView.as_view(template_name="registration/logged_out.html"), name="logout"),
     path('basket/', include('apps.basket.urls', namespace='basket')),
     path("checkout/", include("apps.checkout.urls")),
-    path("payments/", include("apps.payments.urls")),
+    path("payments/", include("apps.payments.urls", namespace="payments")),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

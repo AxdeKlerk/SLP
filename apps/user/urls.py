@@ -13,4 +13,5 @@ urlpatterns = [
          (form_class=EmailOnlyPasswordResetForm, template_name="registration/password_reset_form.html",
             email_template_name="registration/password_reset_email.html",), name="password_reset"),
     path("forgot-username/", views.forgot_username, name="forgot_username"),
+    path("bulk-action/", views.bulk_order_action, name="bulk_order_action"),
 ]
