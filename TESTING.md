@@ -175,3 +175,38 @@ I tested whether the *Proceed to Payment* button correctly redirected from the p
 
 The error was caused by omitting the `payments:` namespace in the template. Once corrected, *Django* resolved the URL properly, and the button redirected to the checkout page as expected.
 
+#### Delete Selected Orders
+
+**User Story** 
+
+As a **logged-in user**, I want to **be able to select one or more pending orders from my profile page and delete them**, so that I can **remove orders I no longer wish to keep**.
+
+**What Was Tested**
+
+- Confirmed that the profile page shows checkboxes next to each order in progress.  
+- Verified that selecting one order and clicking *Delete Selected* removes only that order.  
+- Verified that selecting multiple orders and clicking *Delete Selected* removes all selected orders.  
+- Verified that clicking *Delete Selected* with no orders ticked shows the error message “No orders selected”.  
+- Confirmed that the success and error messages only display on the profile page and not on the basket page.  
+
+**Acceptance Criteria** 
+
+- [x] Each order in progress has a checkbox.  
+- [x] Only checked orders are deleted.  
+- [x] Error message displays if no orders are selected.  
+- [x] Success message displays with the number of orders deleted.  
+- [x] Messages appear only on the profile page.  
+
+**Tasks Completed** 
+
+- [x] Replaced hidden inputs with checkboxes in the profile template.  
+- [x] Wrapped all orders in a single form for bulk actions.  
+- [x] Updated `bulk_order_action` view to filter only selected IDs.  
+- [x] Added `extra_tags="orders"` so delete messages only appear on the profile page.  
+- [x] Verified end-to-end flow manually in the browser.  
+
+**Notes** 
+ 
+Initially, all orders were being deleted because hidden inputs sent every order ID to the backend regardless of selection. This was fixed by switching to checkboxes and handling only checked values. Messages were also showing up incorrectly in the basket view, which was resolved by adding message tags (`extra_tags="orders"`) and filtering them in `profile.html`.
+
+
