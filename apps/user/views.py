@@ -71,12 +71,12 @@ def bulk_order_action(request):
         elif action == "delete":
             order_ids = request.POST.getlist("order_ids")
             if not order_ids:
-                messages.error(request, "No orders selected.")
+                messages.error(request, "No orders selected")
             else:
                 # Make sure IDs are integers
                 order_ids = [int(i) for i in order_ids if i.isdigit()]
                 Order.objects.filter(id__in=order_ids, user=request.user).delete()
-                messages.success(request, f"{len(order_ids)} order(s) deleted.")
+                messages.success(request, f"{len(order_ids)} order(s) deleted", extra_tags="orders")
             return redirect("user:profile_view")
 
     return redirect("user:profile_view")
