@@ -664,6 +664,19 @@ After this change and restarting the server, the button correctly resolved to `/
 
 When including an app’s URLs in `config/urls.py` with a `namespace`, all reverse lookups using `{% url %}` or `reverse()` must include that namespace. Forgetting the namespace will always result in a `NoReverseMatch` error, even if the route is defined correctly.
 
+### Template Logic Error
+
+**Bug:**
+
+On the profile page, orders in progress were being displayed twice: once as styled cards and again in a table below. This duplication made the UI confusing and cluttered.
+
+**Fix:**  
+
+Removed the second loop that rendered orders in a table. Integrated `checkboxes` for *bulk delete* directly into the card layout so that only one rendering of the orders is shown. Updated the `bulk delete form` to wrap around the card loop, eliminating the need for a duplicate list.
+
+**Lesson Learned:**
+
+Always ensure each dataset is only rendered once in a template. If a new feature (like `bulk delete`) needs to interact with the same data, integrate it into the existing layout rather than creating a second loop. This keeps the UI consistent and avoids confusing duplication.
 
 
 
