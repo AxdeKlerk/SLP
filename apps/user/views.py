@@ -66,7 +66,7 @@ def bulk_order_action(request):
             order_id = request.POST.get("order_id")
             if order_id:
                 request.session["order_ids_to_pay"] = [order_id]
-                return redirect("payments:payment_checkout")
+                return redirect("payments:payment_checkout", order_id=order_id)
 
         elif action == "delete":
             order_ids = request.POST.getlist("order_ids")

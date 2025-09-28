@@ -1,9 +1,11 @@
 import json
+from django.contrib.auth.decorators import login_required
 import logging
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse, HttpResponseNotAllowed, HttpResponseBadRequest
 from django.conf import settings
 from .utils import client
+from apps.checkout.models import Order
 
 logger = logging.getLogger(__name__)
 
@@ -15,7 +17,7 @@ def test_square_connection(request):
     locations = [loc.dict() for loc in result.locations] if result.locations else []
     return JsonResponse({"locations": locations})
 
-def checkout(request):
+def sandbox_checkout(request):
     print(">>> checkout view hit, App ID =", settings.SQUARE_APPLICATION_ID,
           "Location ID =", settings.SQUARE_LOCATION_ID)  # debug
     ctx = {
@@ -39,3 +41,9 @@ def process_payment(request):
 
     logger.info("Square token received (no charge yet): %s | amount=%s", token, amount)
     return JsonResponse({"ok": True, "received_token": True})
+
+@login_required
+def payment_checkout(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user, status="pending")
+    # Pass order.total into your Square checkout form
+    return render(request, "payments/checkout.html", {"order": order})

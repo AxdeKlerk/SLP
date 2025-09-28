@@ -1,17 +1,17 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from django.core.exceptions import ValidationError
 from django.contrib import messages
-from apps.basket.models import Basket, BasketItem
+from apps.basket.models import Basket
 from apps.checkout.models import Order, OrderItem
 
-def order_review(request):
+@login_required
+def basket_checkout(request):
     # Get this user's basket
     basket = Basket.objects.filter(user=request.user).first()
     basket_items = basket.items.all() if basket else []
 
-    # Track which events we've validated
+    # Validate ticket capacities
     checked_events = set()
-
     for item in basket_items:
         if item.event and item.event not in checked_events:
             checked_events.add(item.event)
@@ -19,60 +19,61 @@ def order_review(request):
             sold = item.event.tickets_sold
             capacity = item.event.effective_capacity
             remaining = capacity - sold
-
-            # How many tickets are being requested in this basket for this event
             requested_quantity = sum(i.quantity for i in basket_items if i.event == item.event)
 
-            # If too many tickets requested
             if requested_quantity > remaining:
                 ticket_word = "ticket" if remaining == 1 else "tickets"
                 messages.error(
                     request,
-                    f"Not enough tickets available!"
-                    f"Only {remaining} {ticket_word} left for {item.event}!"
+                    f"Not enough tickets available! Only {remaining} {ticket_word} left for {item.event}!"
                 )
                 return redirect("basket:basket_view")
 
-    #If we reach here, all ticket checks passed
-    if request.method == "POST":
-        subtotal = 0
+    if not basket_items:
+        messages.error(request, "Your basket is empty.")
+        return redirect("basket:basket_view")
 
-        # 1. Create the order
-        order = Order.objects.create(
-            user=request.user if request.user.is_authenticated else None,
-            email=request.POST.get("email"),
-            subtotal=0,
-            total=0,
+    # Create the pending order
+    order = Order.objects.create(
+        user=request.user,
+        email=getattr(request.user, "email", None),
+        status="pending",
+        subtotal=0,
+        total=0,
+    )
+
+    subtotal = 0
+    for item in basket_items:
+        line_total = item.line_total
+        subtotal += line_total
+
+        OrderItem.objects.create(
+            order=order,
+            event=item.event if item.event else None,
+            merch=item.merch if item.merch else None,
+            quantity=item.quantity,
+            price=(line_total / item.quantity) if item.quantity else 0,
         )
 
-        # 2. Add items
-        for item in basket_items:
-            line_total = item.line_total
-            subtotal += line_total
+    # Update totals
+    order.subtotal = subtotal
+    order.total = subtotal
+    order.save()
 
-            OrderItem.objects.create(
-                order=order,
-                event=item.event if item.event else None,
-                merch=item.merch if item.merch else None,
-                quantity=item.quantity,
-                price=(line_total / item.quantity) if item.quantity else 0,
-            )
+    # Clear basket
+    basket.items.all().delete()
 
-        # 3. Update totals
-        order.subtotal = subtotal
-        order.total = subtotal
-        order.save()
-
-        # 4. Clear basket
-        basket_items.delete()
-
-        # 5. Redirect to confirmation
-        return redirect("checkout:confirmation", order_id=order.id)
-
-    return render(request, "checkout/checkout.html", {"basket_items": basket_items})
+    # Redirect to checkout page
+    return redirect("checkout:checkout_view", order_id=order.id)
 
 
 def confirmation_view(request, order_id):
     order = get_object_or_404(Order, id=order_id)
     return render(request, "checkout/confirmation.html", {"order": order})
 
+
+@login_required
+def checkout_view(request, order_id):
+    # Find the order for this user
+    order = get_object_or_404(Order, id=order_id, user=request.user, status="pending")
+    return render(request, "checkout/checkout.html", {"order": order})

@@ -37,9 +37,7 @@
                         <form method="post" action="{% url 'user:bulk_order_action' %}">
                         {% csrf_token %}
                         <input type="hidden" name="order_id" value="{{ order.id }}">
-                        <button type="submit" name="action" value="pay_single" class="btn btn-primary">
-                            Proceed to Payment
-                        </button>
+                            <button type="submit" name="action" value="pay_single" class="btn cta-btn2 mb-2">Proceed to Payment</button>
                         </form>
                     </div>
                     </div>
