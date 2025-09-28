@@ -664,7 +664,7 @@ After this change and restarting the server, the button correctly resolved to `/
 
 When including an app’s URLs in `config/urls.py` with a `namespace`, all reverse lookups using `{% url %}` or `reverse()` must include that namespace. Forgetting the namespace will always result in a `NoReverseMatch` error, even if the route is defined correctly.
 
-### Template Logic Error
+## Template Logic Error
 
 **Bug:**
 
@@ -678,5 +678,20 @@ Removed the second loop that rendered orders in a table. Integrated `checkboxes`
 
 Always ensure each dataset is only rendered once in a template. If a new feature (like `bulk delete`) needs to interact with the same data, integrate it into the existing layout rather than creating a second loop. This keeps the UI consistent and avoids confusing duplication.
 
+## Logic Error
+
+**Bug:** 
+
+When I added a *merch item* to the basket without choosing a size, the size field was saved as empty instead of defaulting to "L". This happened because the hidden input for `size` in `basket_button.html` had no value set, so unless the *JavaScript* updated it after a click, nothing was passed to the backend.
+
+**Fix:**
+
+I updated the hidden input in `basket_button.html` to include a default value of `"L"`. This meant that if no size was chosen, the basket still received "L" automatically.
+
+    <input type="hidden" name="size" id="selected-size" value="L">
+
+**Lesson Learned:** 
+
+I learned that hidden inputs should always have a sensible default if they rely on *JavaScript* to change their values. Without the default, the backend will just get blanks when no interaction occurs. Keeping things simple with a fallback avoids unexpected empty data being saved.
 
 
