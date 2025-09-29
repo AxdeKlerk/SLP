@@ -1,11 +1,15 @@
 import os
 from square.client import Square, SquareEnvironment
 
-# Initialise the Square client directly with token
+# Create the Square client WITHOUT token
 square = Square(
-    access_token=os.getenv("SQUARE_ACCESS_TOKEN"),
     environment=SquareEnvironment.SANDBOX  # change to PRODUCTION when live
 )
 
-# Example: expose the payments API
+# Attach the token afterwards
+square.access_token = os.getenv("SQUARE_ACCESS_TOKEN")
+
+# Expose the payments API
 payments_api = square.payments
+
+# Expose other APIs similarly, e.g., customers_api = square.customers
