@@ -5,5 +5,13 @@
 {% block title %}{{ venue.name }}{% endblock %}
 
 {% block content %}
-  {% include "_venue_detail_block.html" with venue=venue %}
+<div class="container container-global mobile">
+  <div class="row justify-content-center">
+    <div class="col d-flex justify-content-center">
+      <div class="card text-center w-100">
+        {% include "_venue_detail_block.html" with venue=venue %}
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
