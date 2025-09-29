@@ -15,7 +15,7 @@
                 {% if messages %}
                     {% for message in messages %}
                         {% if "orders" in message.tags %}
-                            <p class="{{ message.tags }}">{{ message }}</p>
+                            <p class="{{ message.tags }}" style="color: red;">{{ message }}</p>
                         {% endif %}
                     {% endfor %}
                 {% endif %}
