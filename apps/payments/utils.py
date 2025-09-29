@@ -1,13 +1,11 @@
 import os
 from square.client import Square, SquareEnvironment
 
-# Initialise the Square client
+# Initialise the Square client directly with token
 square = Square(
+    access_token=os.getenv("SQUARE_ACCESS_TOKEN"),
     environment=SquareEnvironment.SANDBOX  # change to PRODUCTION when live
 )
 
-# Attach the access token after initialisation
-square.config.access_token = os.getenv("SQUARE_ACCESS_TOKEN")
-
-# Example: expose the payments API so views can import it
+# Example: expose the payments API
 payments_api = square.payments
