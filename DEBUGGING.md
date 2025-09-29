@@ -727,4 +727,95 @@ This way, entering "black" lists all artists with "black" in their name, and ent
 
 Using `.first()` in a queryset is only for grabbing one record, which is useful for lookups but not for listing results. For search functionality, I needed to query all matching objects with `.filter()` and then loop through them in the template. This ensures all variations and partial matches are displayed properly to the user.
 
+## Deployment Errors
+
+**Bug 1:** 
+
+When I first deployed my project to *Heroku*, the site crashed with an `Internal Server Error`. The logs showed `ModuleNotFoundError: No module named 'square'`. This meant the *Square SDK* was not installed in production, even though it worked locally.
+
+**Fix 1:** 
+
+I installed the correct package locally with `pip install squareup`, then updated `requirements.txt` using `pip freeze > requirements.txt`, committed the change, and redeployed to *Heroku*. This ensured *Heroku* installed the *Square SDK* during build.
+
+**Lesson Learned 1:**
+
+If a package is not listed in `requirements.txt`, *Heroku* will not install it, even if it works locally.
+
+---
+
+**Bug 2:** 
+
+After installing `squareup`, the import still failed. My code used `from square.client import Square, SquareEnvironment` and later `from square.client import Client`. The SDK version on *Heroku* did not match these imports.
+
+**Fix 2:** 
+
+I ran `heroku run python` and inspected `dir(square.client)`. This showed which classes were actually available. In my version, the correct class was `Square` and `SquareEnvironment`, not `Client`. I updated `apps/payments/utils.py` to import the right objects.
+
+**Lesson Learned 2:** 
+
+The *Python Square SDK* has changed across versions. Always confirm available classes with `dir()` on *Heroku* to avoid chasing outdated documentation.
+
+---
+
+**Bug 3:** 
+
+When I attempted to initialise the `client` with:
+
+    square = Square(
+        access_token=os.getenv("SQUARE_ACCESS_TOKEN"),
+        environment=SquareEnvironment.SANDBOX
+    )
+
+the logs showed `TypeError: Square.__init__() got an unexpected keyword argument 'access_token'`.
+
+**Fix 3:** 
+
+I learned that in my SDK build, `Square` does not accept `access_token` in the constructor. I adjusted the code in `apps/payments/utils.py` to create the `client` with only `environment` and then attach the `token` later:
+
+    import os
+    from square.client import Square, SquareEnvironment
+
+    square = Square(
+        environment=SquareEnvironment.SANDBOX
+    )
+
+    square.access_token = os.getenv("SQUARE_ACCESS_TOKEN")
+    payments_api = square.payments
+
+**Lesson Learned 3:** 
+
+Different builds of the *Square SDK* use different initialisation patterns. Never assume the examples in docs match the installed version. 
+
+---
+
+**Bug 4:** 
+
+On the *Heroku* Eco plan, I could not run `heroku run python manage.py migrate`. The logs returned `Error: Cannot run more than 1 Eco size dynos.`
+
+**Fix 4:** 
+
+The Eco plan only allows one dyno. I solved this by scaling the web dyno down, running migrations, then scaling it back up:
+
+    heroku ps:scale web=0
+    heroku run python manage.py migrate
+    heroku ps:scale web=1
+
+**Lesson Learned 4:** 
+
+On the *Heroku* Eco plan, I cannot run one-off commands while the web dyno is active. I need to scale down before running management commands or upgrade to the Hobby tier.
+
+---
+
+**Bug 5:** 
+
+After scaling down with `heroku ps:scale web=0` and forgetting to scale back up, the app failed with `code=H14 desc="No web processes running"`.
+
+**Fix 5:** 
+
+I restarted the web dyno with `heroku ps:scale web=1`.
+
+**Lesson Learned 5:** 
+
+If I see *H14 errors*, it usually means I forgot to restart the web dyno after scaling it down.
+
 
