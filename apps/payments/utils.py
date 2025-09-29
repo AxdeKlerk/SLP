@@ -1,7 +1,8 @@
 import os
-from square.client import Square, SquareEnvironment
+from square.client import Client
 
-client = Square(
+
+client = Client(
     token=os.getenv("SQUARE_ACCESS_TOKEN"),
-    environment=SquareEnvironment.SANDBOX # change sandbox to "production" later
+    environment='sandbox'  # change sandbox to "production" later
 )
