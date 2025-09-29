@@ -209,4 +209,32 @@ As a **logged-in user**, I want to **be able to select one or more pending order
  
 Initially, all orders were being deleted because hidden inputs sent every order ID to the backend regardless of selection. This was fixed by switching to checkboxes and handling only checked values. Messages were also showing up incorrectly in the basket view, which was resolved by adding message tags (`extra_tags="orders"`) and filtering them in `profile.html`.
 
+## Search Function Variation Testing
+
+**User Story:**  
+As a **user**, I wanted to **search for artists and venues by partial names or even single letters** so that I **could easily find all bands and venues matching my query** (for example, searching "black" or just the letter "b").
+
+**What Was Tested:** 
+
+I tested the updated search function to confirm that typing part of a name (like "black") or a single letter (like "b") returned all matching artists and venues instead of just one.
+
+**Acceptance Criteria:** 
+
+- [x] Searching "black" should return all artists with "black" in their name.  
+- [x] Searching with a single letter (e.g., "b") should return all artists and venues containing that letter.  
+- [x] Multiple results should display stacked correctly using the `_artist_detail_block.html` and `_venue_detail_block.html` template.  
+- [x] Search results should be ordered alphabetically by name.  
+- [x] If no matches exist, a clear "No artists found" message should appear.  
+
+**Tasks Completed:** 
+
+- [x] Updated `views.py` to use `.filter()` instead of `.first()`.  
+- [x] Added `order_by("name")` to ensure results are ordered consistently.  
+- [x] Modified `search_results.html` to loop over all matches with `{% for artist in artist_results %}` and `{% for venue in venue_results %}`.  
+- [x] Verified partial matches and single-letter searches return the correct results.  
+- [x] Confirmed no results message appears when there are no matches.  
+
+**Notes:**
+  
+This test confirmed that the search now behaves like a real search engine, listing all valid results instead of just one. The change from `.first()` to `.filter()` fixed the issue and ensured a better user experience when searching by variations or letters.
 

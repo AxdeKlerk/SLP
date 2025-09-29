@@ -694,4 +694,37 @@ I updated the hidden input in `basket_button.html` to include a default value of
 
 I learned that hidden inputs should always have a sensible default if they rely on *JavaScript* to change their values. Without the default, the backend will just get blanks when no interaction occurs. Keeping things simple with a fallback avoids unexpected empty data being saved.
 
+## Search Function Variation Error
+
+**Bug:**
+
+When I searched for variations such as "black" or even a single letter like "b", the search only returned a single artist. This happened because the search function in my *Django* view was using `.first()`, which only grabs the first match, instead of pulling all relevant results.
+
+**Fix:**  
+
+I updated the `search_view` function to query all matches instead of just one. Specifically, I replaced the use of `.first()` with a queryset and ordered the results. This allowed multiple matches (e.g., "Black Sabbath" and "Black Keys") or all artists starting with "b" to appear.  
+
+Updated section of `views.py`:
+
+    if category == "artist":
+        ctx["artist_results"] = Artist.objects.filter(
+            name__icontains=q
+        ).order_by("name")
+
+I then adjusted the template `search_results.html` to loop through `artist_results` instead of only displaying one:
+
+    {% if artist_results %}
+        {% for artist in artist_results %}
+            {% include "_artist_detail_block.html" with artist=artist %}
+        {% endfor %}
+    {% else %}
+        <p>No artists found for "{{ q }}".</p>
+    {% endif %}
+
+This way, entering "black" lists all artists with "black" in their name, and entering a single letter like "b" lists all artists whose name contains that letter.
+
+**Lesson Learned:**  
+
+Using `.first()` in a queryset is only for grabbing one record, which is useful for lookups but not for listing results. For search functionality, I needed to query all matching objects with `.filter()` and then loop through them in the template. This ensures all variations and partial matches are displayed properly to the user.
+
 
