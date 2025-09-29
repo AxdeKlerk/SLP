@@ -37,34 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Artist search
-  handlePKSearch(
-    "artist-search",
-    "/products/api/artist-id/",
-    "/products/artist/",
-    "Artist not found"
-  );
-  handlePKSearch(
-    "artist-search-mobile",
-    "/products/api/artist-id/",
-    "/products/artist/",
-    "Artist not found"
-  );
-
-  // Venue search
-  handlePKSearch(
-    "venue-search",
-    "/products/api/venue-id/",
-    "/products/venue/",
-    "Venue not found"
-  );
-  handlePKSearch(
-    "venue-search-mobile",
-    "/products/api/venue-id/",
-    "/products/venue/",
-    "Venue not found"
-  );
-
   // Merch search (query-based)
   function handleMerchSearch(inputId) {
     const input = document.getElementById(inputId);

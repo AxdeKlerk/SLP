@@ -1,0 +1,31 @@
+
+/* Inputs */
+.amount-input {
+  max-width: 240px;
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+}
+
+/* Card element box */
+.card-container {
+  border: 2px solid #11ED73;
+  border-radius: 8px;
+  padding: 1rem;
+  margin: 1rem 0;
+  background-color: #fff;
+}
+
+/* Status messages */
+.status-msg {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+.status-msg.success {
+  color: #11ED73;
+}
+.status-msg.error {
+  color: #e63946;
+}
