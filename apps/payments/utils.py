@@ -2,9 +2,12 @@ import os
 from square.client import Square, SquareEnvironment
 
 # Initialise the Square client
-# Uses your Heroku config var: SQUARE_ACCESS_TOKEN
-# Environment should be "SANDBOX" while testing, "PRODUCTION" when live.
-client = Square(
-    access_token=os.getenv("SQUARE_ACCESS_TOKEN"),
-    environment=SquareEnvironment.SANDBOX
+square = Square(
+    environment=SquareEnvironment.SANDBOX  # change to PRODUCTION when live
 )
+
+# Attach the access token after initialisation
+square.config.access_token = os.getenv("SQUARE_ACCESS_TOKEN")
+
+# Example: expose the payments API so views can import it
+payments_api = square.payments
