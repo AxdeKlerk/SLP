@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load cloudinary %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+  <h1>Search Results for "{{ q }}" in {{ category|capfirst }}</h1>
+    <div class="container container-global mobile">
+        <div class="row mx-auto justify-content-center text-center">
+            <div class="col text-center">
+                {% if category == "artist" %}
+                    {% if artist_results %}
+                        {% for artist in artist_results %}
+                            {% include "_artist_detail_block.html" with artist=artist %}
+                        {% endfor %}
+                    {% else %}
+                        <p>No artists found for "{{ q }}".</p>
+                    {% endif %}
+                {% endif %}
+
+                {% if category == "venue" %}
+                    {% if venue_results %}
+                    {% for venue in venue_results %}
+                        {% include "_venue_detail_block.html" with venue=venue %}
+                    {% endfor %}
+                    {% else %}
+                    <p>No venues found for "{{ q }}".</p>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,7 +1,7 @@
 # apps/products/urls.py
 from django.urls import path
 from . import views
-from apps.products.views import ArtistDetailView, VenueDetailView, EventDetailView, MerchListView, MerchDetailView, get_artist_id, get_venue_id, get_merch_id
+from apps.products.views import ArtistDetailView, VenueDetailView, EventDetailView, MerchListView, MerchDetailView
 
 app_name = 'products'
 
@@ -15,9 +15,7 @@ urlpatterns = [
     path('venue/<int:pk>/', views.VenueDetailView.as_view(), name='venue_detail'),
     path("event/<int:pk>/", EventDetailView.as_view(), name="event_detail"),
     # Search for artist, venue and merch
-    path("api/artist-id/", get_artist_id, name="get_artist_id"),
-    path("api/venue-id/", get_venue_id, name="get_venue_id"),
-    path("api/merch-id/", views.get_merch_id, name="get_merch_id"),
+    path('search-view/', views.search_view, name='search_view'),
     # Merch list and detail
     path("merch/", MerchListView.as_view(), name="merch_list"),
     path("merch/<int:pk>/", MerchDetailView.as_view(), name="merch_detail"),

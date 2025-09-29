@@ -116,28 +116,22 @@
             <div class="collapse" id="offcanvasSearch">
               <ul class="navbar-nav ps-3" id="searchAccordion">
                 <!-- Artist search -->
-                <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="collapse" href="#searchArtist" 
-                    role="button" aria-expanded="false" aria-controls="searchArtist">
-                    Artist
-                  </a>
-                  <div class="collapse mt-1" id="searchArtist" data-bs-parent="#searchAccordion">
-                    <input type="text" id="artist-search-mobile" 
-                          class="form-control form-control-sm bg-black text-light border-success"
-                          placeholder="Search artist...">
-                  </div>
+                <li class="px-3 py-2">
+                  <form method="get" action="{% url 'products:search_view' %}">
+                    <input type="hidden" name="category" value="artist">
+                    <label for="artist-search" class="form-label mb- text-light">Artist</label>
+                    <input type="text" id="artist-search" name="q"
+                          class="form-control form-control-sm bg-black text-light border-success">
+                  </form>
                 </li>
                 <!-- Venue search -->
-                <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="collapse" href="#searchVenue" 
-                    role="button" aria-expanded="false" aria-controls="searchVenue">
-                    Venue
-                  </a>
-                  <div class="collapse mt-1" id="searchVenue" data-bs-parent="#searchAccordion">
-                    <input type="text" id="venue-search-mobile" 
-                          class="form-control form-control-sm bg-black text-light border-success"
-                          placeholder="Search venue...">
-                  </div>
+                <li class="px-3 py-2">
+                  <form method="get" action="{% url 'products:search_view' %}">
+                    <input type="hidden" name="category" value="venue">
+                    <label for="artist-search" class="form-label mb-1 text-light">Venue</label>
+                    <input type="text" id="venue-search" name="q"
+                          class="form-control form-control-sm bg-black text-light border-success">
+                  </form>
                 </li>
                 <!-- Merch search -->
                 <li class="nav-item">
@@ -232,15 +226,21 @@
           <ul class="dropdown-menu" aria-labelledby="searchDropdown">
             <!-- Artist search -->
             <li class="px-3 py-2">
-              <label for="artist-search" class="form-label mb-1 text-light">Artist</label>
-              <input type="text" id="artist-search" name="artist"
-                    class="form-control form-control-sm bg-black text-light border-success">
+              <form method="get" action="{% url 'products:search_view' %}">
+                <input type="hidden" name="category" value="artist">
+                <label for="artist-search" class="form-label mb- text-light">Artist</label>
+                <input type="text" id="artist-search" name="q"
+                      class="form-control form-control-sm bg-black text-light border-success">
+              </form>
             </li>
             <!-- Venue search -->
             <li class="px-3 py-2">
-              <label for="venue-search" class="form-label mb-1 text-light">Venue</label>
-              <input type="text" id="venue-search" name="venue"
-                    class="form-control form-control-sm bg-black text-light border-success">
+              <form method="get" action="{% url 'products:search_view' %}">
+                <input type="hidden" name="category" value="venue">
+                <label for="artist-search" class="form-label mb-1 text-light">Venue</label>
+                <input type="text" id="venue-search" name="q"
+                      class="form-control form-control-sm bg-black text-light border-success">
+              </form>
             </li>
             <!-- Merch search -->
             <li class="px-3 py-2">

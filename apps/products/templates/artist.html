@@ -6,17 +6,11 @@
 
 {% block content %}
 <div class="container container-global mobile">
-  <div class="row mx-auto justify-content-center text-center">
-    <div class="col-12 text-center">
-      {% if artist.logo %}
-        <img src="{{ artist.logo.url }}" alt="{{ artist.name }}'s logo" class="img-fluid mb-3 search-item-img">
-      {% endif %}
-      {% if artist.bio %}
-        <div class="bio">{{ artist.bio|linebreaks }}</div>
-      {% endif %}
-      {% if artist.website %}
-        <p class="website">Website: <a class="website-link" href="{{ artist.website }}" target="_blank">{{ artist.website }}</a></p>
-      {% endif %}
+  <div class="row justify-content-center">
+    <div class="col d-flex justify-content-center">
+      <div class="card text-center w-100">
+        {% include "_artist_detail_block.html" with artist=artist %}
+      </div>
     </div>
   </div>
 </div>

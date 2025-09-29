@@ -5,20 +5,5 @@
 {% block title %}{{ venue.name }}{% endblock %}
 
 {% block content %}
-<div class="container container-global mobile">
-  <div class="row mx-auto justify-content-center text-center">
-    <div class="col-12 text-center">
-      {% if venue.logo %}
-        <img src="{{ venue.logo.url }}" alt="{{ venue.name }}'s logo" class="img-fluid mb-3 search-item-img">
-      {% endif %}
-      {% if venue.bio %}
-        <div class="bio">{{ venue.bio|linebreaks }}</div>
-      {% endif %}
-      {% if venue.website %}
-        <p class="website">Website: <a class="website-link" href="{{ venue.website }}" target="_blank">{{ venue.website }}</a></p>
-      {% endif %}
-    </div>
-  </div>
-</div>
-
+  {% include "_venue_detail_block.html" with venue=venue %}
 {% endblock %}

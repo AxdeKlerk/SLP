@@ -1,0 +1,14 @@
+<div class="search-card text-center">
+{% if artist.logo %}
+    <img src="{{ artist.logo.url }}" alt="{{ artist.name }}'s logo" class="card-img-top img-fluid search-item-img mt-2">
+{% endif %}
+    {% if artist.bio %}
+        <div class="bio">{{ artist.bio|linebreaks }}</div>
+    {% endif %}
+    {% if artist.website %}
+        <p class="website">Website: <a class="website-link" href="{{ artist.website }}" target="_blank">{{ artist.website }}</a></p>
+    {% endif %}
+</div>
+
+
+
