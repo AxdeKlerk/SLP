@@ -24,9 +24,11 @@ SQUARE_LOCATION_ID = os.getenv('SQUARE_LOCATION_ID')
 
 # Allowed hosts
 ALLOWED_HOSTS = os.getenv(
-    'ALLOWED_HOSTS',
-    default='127.0.0.1,localhost',
-   ).split(',')
+    "ALLOWED_HOSTS",
+    "127.0.0.1,localhost,.ngrok-free.dev"
+).split(",")
+print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
+
 
 # Application definition
 INSTALLED_APPS = [
