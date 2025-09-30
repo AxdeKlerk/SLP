@@ -1,44 +1,38 @@
 ## Security Bug
 
 **Bug:**
-
-Accidentally committed the *Django* SECRET_KEY to *GitHub* in the initial commit.
+Accidentally committed the *Django* `SECRET_KEY` to *GitHub* in the initial commit.
 
 **Fix:**
+Regenerated a new secure key using `get_random_secret_key()`
 
-Regenerated a new secure key using get_random_secret_key()
+Stored it safely in a `.env` file (excluded via `.gitignore`)
 
-Stored it safely in a .env file (excluded via .gitignore)
-
-Updated settings.py to load the key using python-decouple
+Updated settings.py to load the key using *python*-decouple
 
 Removed the entire *Git* history by deleting .git, reinitializing, and creating a fresh, secure initial commit
 
 Force-pushed the cleaned repo to *GitHub*
 
 **Lesson Learned:**
-
-Even one leaked commit can expose sensitive data permanently. Using environment variables and .gitignore from the start prevents accidental leaks. Rewriting history should be done early if needed, before more commits make it harder.
+Even one leaked commit can expose sensitive data permanently. Using environment variables and `.gitignore` from the start prevents accidental leaks. Rewriting history should be done early if needed, before more commits make it harder.
 
 ## Deployment Issue
 
 **Bug:**
-
-After deploying to Heroku, the app crashed with an Application Error and later returned a 404 page instead of loading the homepage. The logs revealed that some environment variables were missing, and Django couldn’t find SECRET_KEY or `DATABASE_URL`. Even after fixing that, the app loaded but still returned a 404 error for all routes.
+After deploying to *Heroku*, the app crashed with an    `Application Error` and later returned a `404 page` instead of loading the homepage. The logs revealed that some environment variables were missing, and *Django* couldn’t find     SECRET_KEY   or `DATABASE_URL`. Even after fixing that, the app loaded but still returned a `404 error` for all routes.
 
 **Fix:**
-
-Added missing environment variables to Heroku using:
+Added missing environment variables to *Heroku* using:
 
     heroku config:set SECRET_KEY="your-secret-key"
     heroku config:set `DATABASE_URL`="your-database-url"
 
-Added DISABLE_COLLECTSTATIC=1 to stop Heroku failing on missing static files during build.
+Added `DISABLE_COLLECTSTATIC=1` to stop *Heroku* failing on missing static files during build.
 
-The 404 error wasn’t caused by routing issues or template placement — the problem was that the templates were in the templates/ folder, but the view was trying to render core/home.html, which didn’t exist.
+The `404 error` wasn’t caused by routing issues or template placement — the problem was that the templates were in the templates/ folder, but the view was trying to render core/home.html, which didn’t exist.
 
 **Fix:**
-
 Updated the views to match the actual template paths. Since the HTML files were directly inside templates/ (not in a core/ subfolder), we changed from:
 
     return render(request, 'core/home.html') to return render(request, 'home.html')
@@ -46,16 +40,13 @@ Updated the views to match the actual template paths. Since the HTML files were 
 (Same for about.html and contact.html.)
 
 **Lesson Learned:**
+*Heroku* needs all environment variables your app depends on — even if it runs locally.
 
-Heroku needs all environment variables your app depends on — even if it runs locally.
-
-If Django throws a 404 after deployment but the URL paths look correct, double-check the template paths in your render() function.
+If *Django* throws a 404 after deployment but the URL paths look correct, double-check the template paths in your render() function.
 
 Don't assume it's a folder problem — sometimes it's just the wrong string in the render() call.
 
 ## Database Configuration Error
-
-### **Database Configuration Error**
 
 **Bug:**  
 The new *Heroku* app was still connected to the *PostgreSQL database* used in a previous project. This led to seeing old user data in the *Django* admin panel, even though the new app was supposed to be starting fresh. The problem occurred because the ``DATABASE_URL`` in *Heroku* was still pointing to the old *Heroku PostgreSQL* database from the previous project.
@@ -80,13 +71,11 @@ If links inside a *Bootstrap* offcanvas are meant to load a new page (like *Djan
 ## Runtime Error
 
 **Bug:**
-
 *Cloudinary* image uploads failed in the *Django* admin panel. The error traceback ended with:
     `ValueError: Must supply api_key`
 Even though the .env file included separate CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, and CLOUDINARY_API_SECRET variables, they were not being read correctly.
 
 **Fix:**
-
 Instead of using the dictionary-style CLOUDINARY_STORAGE = {...} config in settings.py, I used the unified CLOUDINARY_URL format in .env, like so:
     `CLOUDINARY_URL=cloudinary://<API_KEY>:<API_SECRET>@<CLOUD_NAME>`
 I also made sure to load this into the environment using *python-dotenv*, like this:
@@ -99,7 +88,6 @@ I also made sure to load this into the environment using *python-dotenv*, like t
 I then removed the old cloudinary.config() and CLOUDINARY_STORAGE = { ... } blocks to avoid conflicts with cloudinary_storage.
 
 **Lesson Learned:**
-
 *Cloudinary* prefers the all-in-one CLOUDINARY_URL format, and it must be present in os.environ before *Django* tries to use it. If you’re using *python-decouple*, it won’t export variables to os.environ automatically, which breaks *Cloudinary* unless you handle it manually. *python-dotenv* with *os.getenv()* works better in this case.
 
 ## Template Logic — Navbar active state (dropdown parent)
@@ -113,23 +101,19 @@ I removed the hard-coded `active` from the parent toggle and marked the parent/c
 `{% if url_name == 'events' or url_name == 'previous_events' %}active{% endif %}` based on the current view name with a request resolver above: `{% with url_name=request.resolver_match.url_name %}` and added the `active` status to my css to increase specifity.
 
 **Lesson Learned:**
-
 Don’t hard-code active on nav items; compute it from the current route. For dropdowns, the parent’s state should reflect child activity (via request.resolver_match.url_name) and keep CSS specific but simple; Bootstrap’s defaults can override you unless your rules target the right elements.
 
 ## Logic Bug
 
 **Bug:**
-
 I noticed that my Roxoff event cards were appearing on the Upcoming Gigs page. This wasn’t supposed to happen — Roxoff events should only be shown on their own dedicated template `(roxoff.html)`, not mixed in with regular events.
 
 **Fix:**
-
 I realised I needed a way to clearly separate Roxoff events from regular ones. So I added a new event_type field to the Event model with `regular` and `roxoff` choices. Then I updated the view for the Upcoming Gigs page `(events_view)` to exclude Roxoff events:
 
 `events = Event.objects.filter(gig_date__gte=today).exclude(event_type='roxoff').order_by('gig_date')`
 
 **Lesson Learned:**
-
 It’s better to explicitly separate types of events in the model using a dedicated field like event_type. That way, filtering them in views is more reliable and readable than trying to guess based on other values like roxoff_day. It also makes future development easier, especially if I need more event types later.
 
 ## Routing Error
@@ -161,7 +145,6 @@ When using app-level namespacing `(namespace='products')`, routes must consisten
 ## Navigation Highlight Issue
 
 **Bug:**
-
 The *Search* navbar item did not stay highlighted when navigating to either the artist or venue detail page (`artist_detail`, `venue_detail`). The expected behavior was for the *Search* tab to be marked active when the user was on these pages, just like the *Events* tab behaves when on related event pages.
 
 **Fix:**  
@@ -179,30 +162,25 @@ This helped me verify the actual names *Django* was using for each page. Always 
 ## Template/Context Error
 
 **Bug:**
-
 The size dropdown wasn’t showing any options in the merch detail page. Clicking the button made the dropdown appear, but it was empty. The issue was that I tried looping with `{% for s in size_choices %}` and using `{{ s }}`, but my model’s choices actually return two values `(key, label)`. Because of that, nothing was rendered in the `<ul>`.
 
 **Fix:**
-
 I updated my `MerchDetailVie`w to pass size_choices into the context. Then in my template, I switched from using `{{ s }}` to the correct `{{ key }} and {{ label }}`. Finally, I matched the *Size JS* to the same pattern as the *Quantity JS*, so both dropdowns behave consistently.
 
 **Lesson Learned:**
-
 I need to remember that *Django* model field choices always give back `(key, label)` pairs, not a single value. If I try to loop with the wrong variable, the template will silently fail and look like “nothing happened.” Next time, I’ll check what data type a loop is actually returning before writing the template logic, and I’ll keep dropdown JS patterns consistent across all fields.
 
 ## Configuration Error
 
 **Bug:**  
-
-After deploying to **Heroku**, images uploaded through the Django Admin did not display. In the **Heroku** *Python shell*, running `print(e.image.url)` raised:
+After deploying to *Heroku*, images uploaded through the Django Admin did not display. In the *Heroku* *Python shell*, running `print(e.image.url)` raised:
 
     *ValueError: Must supply cloud_name in tag or in configuration*
 
-The images had uploaded to **Cloudinary** (the `public_id` existed), but without the `cloud_name` in the configuration, **Django** could not generate valid URLs.
+The images had uploaded to *Cloudinary* (the `public_id` existed), but without the `cloud_name` in the configuration, *Django* could not generate valid URLs.
 
 **Fix:**  
-
-I added the missing `CLOUDINARY_URL` environment variable in **Heroku** using the value from the **Cloudinary** dashboard:
+I added the missing `CLOUDINARY_URL` environment variable in *Heroku* using the value from the *Cloudinary* dashboard:
 
     **heroku** *config:set CLOUDINARY_URL="cloudinary://<api_key>:<api_secret>@<cloud_name>" -a slp-upgrade*
 
@@ -210,20 +188,17 @@ Then I restarted the dynos:
 
     *heroku ps:restart -a slp-upgrade*
 
-After this, `{{ event.image.url }}` returned a proper **Cloudinary** URL such as `https://res.cloudinary.com/<cloud_name>/...`, and the images displayed correctly.
+After this, `{{ event.image.url }}` returned a proper *Cloudinary* URL such as `https://res.cloudinary.com/<cloud_name>/...`, and the images displayed correctly.
 
 **Lesson Learned:**  
-
-**Cloudinary** requires the `CLOUDINARY_URL` environment variable, which contains the `cloud_name`. Without it, images cannot be resolved even if they are uploaded. Always verify critical third-party environment variables are set in Heroku before deploying.
+*Cloudinary* requires the `CLOUDINARY_URL` environment variable, which contains the `cloud_name`. Without it, images cannot be resolved even if they are uploaded. Always verify critical third-party environment variables are set in Heroku before deploying.
 
 ## Search Integration Bug
 
 **Bug:**  
-
 I added a "Merch" field to the navbar search dropdown, but it didn’t return results. "Artist" and "Venue" already worked by looking up the PK through small API endpoints and redirecting straight to their detail pages. "Merch" needed to search by `product_name` or `product_category` (both key and label) via the central search view, but nothing happened on Enter because the input wasn’t wired to the same flow and the view didn’t robustly handle category labels.
 
 **Fix:**  
-
 I kept Artist/Venue logic exactly as-is (PK lookup + redirect) and added a *minimal, isolated* merch path:
 
 1) Confirmed a namespaced central search route so I can link to it reliably.
@@ -307,7 +282,6 @@ I kept Artist/Venue logic exactly as-is (PK lookup + redirect) and added a *mini
             return render(request, "search_results.html", ctx)
 
 **Lesson Learned:**
-
 - Static JS cannot use `{% url %}`; expose **Django** URLs via `data-*` attributes in templates or hardcode a stable path.  
 - Keep IDs unique; duplicate IDs silently break listeners.  
 - Standardize query paramaters (`q` + `category`) so server-side logic stays simple.  
@@ -316,41 +290,33 @@ I kept Artist/Venue logic exactly as-is (PK lookup + redirect) and added a *mini
 ## Basket Data Handling Error
 
 **Bug:**
-
 When adding merch items with a specific quantity (e.g., 2), the quantity was not carrying over into the basket. Additionally, when updating quantities of items already in the basket, the order of items would randomly change. This made it look like quantities were being applied inconsistently and the basket was shuffling unpredictably.
 
 **Fix:**
-
-For the missing quantity, I updated the `add_merch_to_basket` view to capture the `quantity` value from the form (`request.POST`) instead of defaulting to 1 every time. This allowed the chosen number from the merch detail dropdown to carry through to the basket correctly.
+  For the missing quantity, I updated the `add_merch_to_basket` view to capture the `quantity` value from the form (`request.POST`) instead of defaulting to 1 every time. This allowed the chosen number from the merch detail dropdown to carry through to the basket correctly.
 
 For the reordering, I added explicit ordering to the queryset with `basket.items.order_by("id")`. This stopped items from appearing in a different order after each update, since **Django** by default doesn’t guarantee order unless specified.
 
 **Lesson Learned:**
-
 Never assume form values are automatically passed through — always grab them explicitly from `request.POST`. And when showing lists of models, always add `order_by` if I want a predictable order; **Django** does not guarantee query ordering without it.
 
 ## Basket Size Display Error
 
 **Bug:**
-
 The merch size wasn’t showing up in the basket, even though it was being selected on the merch detail page. When it did appear, it sometimes showed as a lowercase letter (`l` instead of `L`). 
 
 **Fix:**
-
 I added a `size` field to the `BasketItem` model and ensured the selected size was stored in it when the merch was added to the basket. In the template, I displayed the size using `{{ item.get_size_display }}` instead of just `{{ item.size }}`, so it pulled the capitalised label defined in the model’s `choices`.
 
 **Lesson Learned:**
-
 If a field uses choices in **Django**, always use `get_FIELD_display` to render the user-friendly label instead of the raw database value. That avoids problems like lowercase codes or cryptic letters showing in the UI.
 
 ## Basket Event Details Error
 
 **Bug:**
-
 I originally used `{{ item.event }}` to show event details in the basket, but this included the event name, venue, and date all in one line (because of the model’s `__str__` method). When I tried to split them, the venue ended up being repeated, making the basket confusing.
 
 **Fix:**
-
 I updated the basket template to display the individual attributes separately:
 - `{{ item.event.title }}` for the event name,
 - `{{ item.event.venue }}` for the venue,
@@ -359,36 +325,30 @@ I updated the basket template to display the individual attributes separately:
 This stopped duplication and gave me full control of where each piece of information appeared.
 
 **Lesson Learned:**
-
 Don’t rely on `__str__` when you need fine control over display. It’s better to pull the exact fields needed, especially when showing multiple attributes in different places.
 
 ## Basket Layout/Responsive Error
 
 **Bug:**
-
 The basket layout was inconsistent across screen sizes. On larger screens, the qty dropdown, delete button, and price weren’t lining up properly with the description. On smaller screens (<768px), the layout collapsed in unexpected ways: the description wrapped awkwardly, the qty dropdown wasn’t aligned with the text, and the venue/date sometimes appeared in the wrong place.
 
 **Fix:**
-
 I restructured the template using Bootstrap’s grid system:
 - For ≥768px screens, I kept the original layout with three columns: thumbnail, details, and price aligned with description text. Qty dropdown and delete button sat below in a second row.
   
 - For <768px screens, I stacked the layout into clearer rows: thumbnail in the first column, event/merch details in the second, and price + delete aligned in the third. I also adjusted the delete button size using `btn-sm` for mobiles and tightened spacing with Bootstrap utility classes.
 
 **Lesson Learned:**
-
 When debugging responsive layouts, design separately for mobile and desktop first, then merge. Bootstrap’s `d-none`, `d-md-block`, and breakpoint classes are essential for tailoring layouts. Never assume one structure will look right on both small and large screens without breakpoint adjustments.
 
 ## AttributeError
 
 **Bug:**
-
 When I tried to place an order at `/checkout/`, I got the error:  
 `AttributeError: 'BasketItem' object has no attribute 'price'`.  
 This happened because in `checkout_view` I was trying to use `item.price`, but my `BasketItem` model did not have a `price` field. Instead, it only had `event` or `merch`, each of which has its own price.
 
 **Fix:**
-
 I already had a `line_total` property in `BasketItem` that handled both event and merch correctly. I updated the `checkout_view` to use `item.line_total` instead of `item.price`. For the `OrderItem` snapshot, I stored the unit price by dividing `line_total` by `item.quantity`.
 
 `line_total = item.line_total
@@ -402,43 +362,35 @@ subtotal += line_total`
 )`
 
 **Lesson Learned:**
-
 I should not assume fields exist on a model without checking. If I’ve already written helper methods or properties like line_total, I should reuse them instead of duplicating logic. This keeps the code consistent and avoids errors like calling item.price when no such field exists.
 
 ## CSS Layout Bug
 
 **Bug:**  
-
 On screens between 576px and 767px, my event cards were not centered. The `.row` container was full width, but the `.standard-card` element stayed stuck to the left side. This only happened on small screens because the card had a `max-width` set, which prevented it from stretching to fill the column. Without centering rules, it always aligned left.
 
 **Fix:** 
-
 I discovered that the `.standard-card` CSS had `max-width: 300px;` but no horizontal centering. The card was narrower than its parent column and defaulted to the left. I fixed this by adding `margin-left: auto;` and `margin-right: auto;` to the `.standard-card` CSS so that it stayed centered inside its column.
 
 **Lesson Learned:**  
-
 When using `max-width` on a card inside a Bootstrap column, the card will not center itself automatically. Even if the column is full width, the child element needs `margin: auto` to align correctly. Always check custom CSS rules like `max-width` if a card or element looks offset at certain breakpoints. Although, it is quite basic syntax and something I should have known, going off into a panic about it when it is not working is not helpful, and most certainly a pause moment to step-back and think clearly without doubting myself.
 
 ## Template Logic Bug for Size Dropdown Menu items for Flags, Mugs and Caps
 
 **Bug:** 
-
 The size dropdown was showing for all merch items, including flags, mugs, and caps. These products do not need size options, but the template always displayed the dropdown. My first attempt was to use `{% if merch.category == "flag" %}`, but this failed because the correct model field name was `product_category`. When I later tried to check multiple categories with `in ("flag", "mug", "cap")`, it caused a *Django* `TemplateSyntaxError` because template conditions do not support tuple syntax.
 
 **Fix:**  
-
 I solved the problem by chaining multiple conditions with `or` in the template. This allowed me to remove the dropdown for flags, mugs, and caps, while keeping it for t-shirts and hoodies using a conditional `if` statement.
 
     {% if merch.product_category == "flag" or merch.product_category == "mug" or merch.product_category == "cap" %}
 
 **Lesson Learned:**  
-
 The *Django* template language does not support Python tuple syntax in `if` statements. To check multiple values, I must use `or` (or `and`) to chain conditions. It is important to reference the correct model field, in this case the (`product_category`), when testing values. Using the wrong field name will always fail, even `if` the condition looks correct.
 
 ## Logic Error for Forgot Username View
 
 **Bug:** 
-
 The forgot username feature did not work. Submitting the form just reloaded the same page and never redirected to the done page. No email was sent to the terminal. After checking the `views.py`, I saw the condition was written as `if request.method == "Post":`. The browser always sends the HTTP method in uppercase (`"POST"`), so this condition never matched. As a result, the code inside never ran.
 
 **Fix:**  
@@ -446,33 +398,27 @@ I corrected the case of the request method check to `"POST"`. With this fix, the
 
 
 **Lesson Learned:**  
-
 In *Django*, `request.method` is always uppercase. If I use lowercase or mixed case like `"Post"`, the condition will never be true. Always check against `"POST"` for form submissions and `"GET"` for page loads.
 
 ## Ticket Oversell Error Not Displaying
 
 **Bug:** 
-
 When I set the `capacity` of a venue to 3 and added 4 tickets for the event in the basket, the checkout did not show the error message. The basket page loaded normally without any oversell warning.  
 
 **Fix:**
-
 I discovered that the ticket guardrail check was placed inside the `if request.method == "POST":` block in `checkout_view`. Since the checkout button in the basket template was a simple link (`<a href="...">`), it triggered a `GET` request, not a `POST`. This meant the oversell check never ran.  
 
 To fix it, I moved the `oversell check` above the `POST` block so it always executes.  
 
 **Lesson Learned:**
-
 Placing validation logic only inside a `POST` block means it never runs when checkout is accessed with a `GET` request. For guardrails like ticket limits, the check should be at the top of the view so it always runs before proceeding. I also confirmed that my *BasketItem model* correctly linked to events, and that the `effective_capacity() method` in the *Event model* was being used. This ensured that overselling tickets could be caught and displayed with a clear error message.
 
 ## Static Files Cache Error
 
 **Bug:** 
-
 When I deployed to *Heroku*, the input fields on the login and signup pages did not show any text. Locally the text was black after updating my CSS, but in production it was invisible. Checking the deployed CSS with `heroku run "cat staticfiles/css/style.css | grep color"` showed that `color: #0000;` was present. This confirmed that old CSS was being served by *Heroku*, even though I had already fixed it in my local project.
 
 **Fix:**  
-
 I discovered that the problem was caused by old files inside the `staticfiles/` directory. This folder is generated by `collectstatic`, but older copies had slipped into *Heroku*’s cache.
 
 Steps I followed to fix it:
@@ -495,20 +441,17 @@ Finally, I verified the fix by checking the CSS again:
 This time `color: #0000;` was gone and only `color: #000000;` remained.
 
 **Lesson Learned:**  
-
 If old rules show up in production, it usually means stale static files are being cached on *Heroku*. The correct fix is to wipe `/app/staticfiles`, force a rebuild, and regenerate clean static files. Always confirm with a `grep` check to make sure the deployed CSS matches local changes.
 
 ## Validation Error – Ticket Capacity Message Errors
 
 **Bug:**
-
 When testing ticket sales against venue and event capacities, three issues appeared:  
 1. I was calling `tickets_sold()` and `effective_capacity()` with parentheses, but they were `@property` methods. This caused `TypeError: 'int' object is not callable`.  
 2. The "Event is now fully booked" message triggered incorrectly even when the basket quantity exactly matched the event capacity. This blocked valid orders.  
 3. Error messages always displayed "0 tickets left" because I wasn’t calculating `remaining` correctly when basket quantities were less than or equal to capacity.
 
 **Fix:**  
-
 I updated the validation logic inside `checkout_view` so that only overselling tickets triggers an error. I corrected `@property` usage by removing parentheses. I also dropped the redundant "event fully booked" branch to allow valid purchases when the basket exactly matched the remaining tickets.
 
 Final working validation:
@@ -533,17 +476,14 @@ Final working validation:
                 return redirect("basket:basket_view")
 
 **Lesson Learned:** 
-
 I learned that `@property` methods in *Django* models should not be called with parentheses. I also learned to distinguish between overselling (invalid) and exactly filling capacity (valid) when checking basket quantities. Removing redundant validation branches made the logic simpler and correct. Finally, calculating `remaining` before raising errors is essential to prevent misleading messages like "0 tickets left."  
 
 ## Integration Errors (*Square* API with *Django*)
 
 **Bug:** 
-
 When I first tried to install the *Square* Python SDK, I mistakenly installed `squareapp` and then ran into import errors. Even after installing `squareup`, I still saw `ImportError: cannot import name 'Client' from 'square.client'`. Later attempts with `SquareClient` also failed. The installed SDK version defined a `*Square*` class instead, and its constructor did not accept `access_token`. Calling `list_locations()` raised `AttributeError` because the method name had changed. Finally, trying to check `result.is_success()` failed because the response object was a Pydantic model without that helper method.
 
 **Fix:**  
-
 I uninstalled the incorrect `square` package and reinstalled the official SDK with `pip install squareup`. I then checked the installed file `.venv/Lib/site-packages/square/client.py` to confirm the class name and constructor signature. For my version, the correct setup was:
 
     import os
@@ -564,20 +504,17 @@ Next, instead of `client.locations.list_locations()`, the right call was `client
         return JsonResponse({"locations": locations})
 
 **Lesson Learned:**
-
 Different versions of the *Square* SDK have different client class names, constructors, and method patterns. In my version, the correct class was `*Square*` instead of `Client`, and I had to pass `token` and `SquareEnvironment.SANDBOX` instead of `access_token`. API methods like `list_locations()` may be renamed to `list()`, and response handling moved to Pydantic models without helpers like `.is_success()`. Always confirm the installed SDK version and inspect its client class directly when debugging integration errors with external APIs in *Django*.
 
 ## CSRF and Tokenisation Errors
 
 **Bug:** 
-
 When setting up the *Square* Web Payments SDK for tokenisation, I encountered multiple problems that prevented the token from being generated and successfully posted to the *Django* backend. Specifically, there were three main issues:  
 1. The *Square* SDK refused to render the card element because the site was not served over a secure context.  
 2. The token `POST` request was failing with a `404 error` because the `fetch UR`L did not match the configured *Django* route.  
 3. Even after fixing the URL, the request returned a `403 Forbidden error` due to a missing `CSRF cookie`, which meant *Django* blocked the request.
 
 **Fix:**  
-
 1. For the secure context error, I stopped using `127.0.0.1` and switched to `http://localhost:8000/payments/checkout/`, which *Square* treats as a valid sandbox context. This allowed the SDK to initialise and render the card element.  
 2. For the routing error, I corrected the `fetch URL` in the *JavaScript* file. Originally it was pointing to `"/apps/payments/process-payment/"`, but my *Django* configuration exposed the route at `"/payments/process-payment/"`. After updating the `fetch call`, the request reached the correct view. 
  
@@ -594,17 +531,14 @@ When setting up the *Square* Web Payments SDK for tokenisation, I encountered mu
 3. For the `CSRF error`, I ensured the `CSRF cookie` was being set and included in the request header. Adding `{% csrf_token %}` to the template and confirming that `csrftoken` was present in the browser cookies fixed the `403 Forbidden` problem. With the `CSRF token` included, *Django* accepted the `POST` and the backend logged the *Square* token.
 
 **Lesson Learned:** 
-
 Tokenisation only works when all three conditions are satisfied: the SDK must be served in a secure context (`localhost` or HTTPS), the `fetch` URL must exactly match the route defined in *Django*, and the `CSRF cookie` must be present and sent with the `POST request`. Missing any of these steps caused errors that blocked the flow. By carefully checking console logs, *Django* terminal output, and *Dev Tools* network responses, I was able to isolate and resolve each issue in turn.
 
 ## Invalid Application ID Error
 
 **Bug:**
-
 When testing the *Square* Web Payments SDK, the card input would not render and the console showed `InvalidApplicationIdError: The Payment 'applicationId' option is not in the correct format.` In the logs, the `appId` value appeared as `sandbox\u002Dsq0idb\u002DSGiFCV2Wy5dWVMk2w_OJIQ` instead of `sandbox-sq0idb-SGiFCV2Wy5dWVMk2w_OJIQ`. The issue was caused by the `|escapejs` filter in the template, which converted dashes (`-`) into unicode escapes (`\u002D`). This broke the SDK because *Square* expected the raw application ID string.
 
 **Fix:** 
-
 I updated the template to stop escaping the IDs with `|escapejs` when using them in *HTML* attributes. The corrected code used `|escape` instead, which safely outputs the string without turning dashes into unicode escapes.
 
     <div id="square-config"
@@ -615,17 +549,14 @@ I updated the template to stop escaping the IDs with `|escapejs` when using them
 After this change, the `appId` printed correctly as `sandbox-sq0idb-...`, and the *Square* card input rendered as expected.
 
 **Lesson Learned:**
-
 The `|escapejs` filter in *Django* templates is only for values inserted into inline *JavaScript* blocks. When passing values into *HTML* `data-` attributes, using `|escapejs` will incorrectly encode special characters and break *API*s that expect raw values. The right approach is to use `|escape` or no filter at all for safe IDs. This ensured the *Square* SDK received the correct `applicationId` and allowed tokenisation to work.
 
 ## Quantity Clamping Error
 
 **Bug:** 
-
 I realised that the basket handlers did not limit item quantities. This meant a malicious user could tamper with the form or send a direct POST request to set `quantity` to 0, a negative number, or something excessive like 99. This caused broken basket totals and risked over-selling tickets or merch items.
 
 **Fix:** 
-
 I added clamping logic in the basket views to enforce valid ranges. Specifically:
 - In `add_merch_to_basket`, I wrapped the POSTed quantity with a check so anything below 1 defaults to 1, and anything above 9 defaults to 9.
 - In `update_basket_item`, I replaced the old conditional with the same clamp logic to ensure updates cannot bypass the rule.
@@ -640,20 +571,17 @@ Example adjustment in `add_merch_to_basket`:
         quantity = 9
 
 **Lesson Learned:**  
-
 Always enforce business rules on the backend, not just the frontend. Even if the form uses a `<select>` limited to 1–9, users can still tamper with `POST` data. By clamping the quantity inside the *Django* `views`, the basket remains safe against malicious inputs and ensures stable order totals.
 
 ## Routing Error
 
 **Bug:**
-
 When I clicked the *Proceed to Payment* button on the profile page, *Django* raised a `NoReverseMatch` error:  
 `Reverse for 'payment_checkout' not found. 'payment_checkout' is not a valid view function or pattern name.`  
 
 This happened because in `profile.html` I used `{% url 'payment_checkout' %}` without the correct namespace. Since the `payments` app was included in `config/urls.py` with `namespace="payments"`, *Django* could not resolve the route without the prefix.
 
 **Fix:**
-
 I updated the template to include the `namespace` so the URL matched the registered name:
 
     {% url 'payments:payment_checkout' %}
@@ -661,47 +589,38 @@ I updated the template to include the `namespace` so the URL matched the registe
 After this change and restarting the server, the button correctly resolved to `/payments/checkout/` and redirected as expected.
 
 **Lesson Learned:**
-
 When including an app’s URLs in `config/urls.py` with a `namespace`, all reverse lookups using `{% url %}` or `reverse()` must include that namespace. Forgetting the namespace will always result in a `NoReverseMatch` error, even if the route is defined correctly.
 
 ## Template Logic Error
 
 **Bug:**
-
 On the profile page, orders in progress were being displayed twice: once as styled cards and again in a table below. This duplication made the UI confusing and cluttered.
 
 **Fix:**  
-
 Removed the second loop that rendered orders in a table. Integrated `checkboxes` for *bulk delete* directly into the card layout so that only one rendering of the orders is shown. Updated the `bulk delete form` to wrap around the card loop, eliminating the need for a duplicate list.
 
 **Lesson Learned:**
-
 Always ensure each dataset is only rendered once in a template. If a new feature (like `bulk delete`) needs to interact with the same data, integrate it into the existing layout rather than creating a second loop. This keeps the UI consistent and avoids confusing duplication.
 
 ## Logic Error
 
 **Bug:** 
-
 When I added a *merch item* to the basket without choosing a size, the size field was saved as empty instead of defaulting to "L". This happened because the hidden input for `size` in `basket_button.html` had no value set, so unless the *JavaScript* updated it after a click, nothing was passed to the backend.
 
 **Fix:**
-
 I updated the hidden input in `basket_button.html` to include a default value of `"L"`. This meant that if no size was chosen, the basket still received "L" automatically.
 
     <input type="hidden" name="size" id="selected-size" value="L">
 
 **Lesson Learned:** 
-
 I learned that hidden inputs should always have a sensible default if they rely on *JavaScript* to change their values. Without the default, the backend will just get blanks when no interaction occurs. Keeping things simple with a fallback avoids unexpected empty data being saved.
 
 ## Search Function Variation Error
 
 **Bug:**
-
 When I searched for variations such as "black" or even a single letter like "b", the search only returned a single artist. This happened because the search function in my *Django* view was using `.first()`, which only grabs the first match, instead of pulling all relevant results.
 
 **Fix:**  
-
 I updated the `search_view` function to query all matches instead of just one. Specifically, I replaced the use of `.first()` with a queryset and ordered the results. This allowed multiple matches (e.g., "Black Sabbath" and "Black Keys") or all artists starting with "b" to appear.  
 
 Updated section of `views.py`:
@@ -724,41 +643,29 @@ I then adjusted the template `search_results.html` to loop through `artist_resul
 This way, entering "black" lists all artists with "black" in their name, and entering a single letter like "b" lists all artists whose name contains that letter.
 
 **Lesson Learned:**  
-
 Using `.first()` in a queryset is only for grabbing one record, which is useful for lookups but not for listing results. For search functionality, I needed to query all matching objects with `.filter()` and then loop through them in the template. This ensures all variations and partial matches are displayed properly to the user.
 
 ## Deployment Errors
 
 **Bug 1:** 
-
 When I first deployed my project to *Heroku*, the site crashed with an `Internal Server Error`. The logs showed `ModuleNotFoundError: No module named 'square'`. This meant the *Square SDK* was not installed in production, even though it worked locally.
 
 **Fix 1:** 
-
 I installed the correct package locally with `pip install squareup`, then updated `requirements.txt` using `pip freeze > requirements.txt`, committed the change, and redeployed to *Heroku*. This ensured *Heroku* installed the *Square SDK* during build.
 
 **Lesson Learned 1:**
-
 If a package is not listed in `requirements.txt`, *Heroku* will not install it, even if it works locally.
 
----
-
 **Bug 2:** 
-
 After installing `squareup`, the import still failed. My code used `from square.client import Square, SquareEnvironment` and later `from square.client import Client`. The SDK version on *Heroku* did not match these imports.
 
 **Fix 2:** 
-
 I ran `heroku run python` and inspected `dir(square.client)`. This showed which classes were actually available. In my version, the correct class was `Square` and `SquareEnvironment`, not `Client`. I updated `apps/payments/utils.py` to import the right objects.
 
 **Lesson Learned 2:** 
-
 The *Python Square SDK* has changed across versions. Always confirm available classes with `dir()` on *Heroku* to avoid chasing outdated documentation.
 
----
-
 **Bug 3:** 
-
 When I attempted to initialise the `client` with:
 
     square = Square(
@@ -769,7 +676,6 @@ When I attempted to initialise the `client` with:
 the logs showed `TypeError: Square.__init__() got an unexpected keyword argument 'access_token'`.
 
 **Fix 3:** 
-
 I learned that in my SDK build, `Square` does not accept `access_token` in the constructor. I adjusted the code in `apps/payments/utils.py` to create the `client` with only `environment` and then attach the `token` later:
 
     import os
@@ -783,17 +689,12 @@ I learned that in my SDK build, `Square` does not accept `access_token` in the c
     payments_api = square.payments
 
 **Lesson Learned 3:** 
-
 Different builds of the *Square SDK* use different initialisation patterns. Never assume the examples in docs match the installed version. 
 
----
-
 **Bug 4:** 
-
 On the *Heroku* Eco plan, I could not run `heroku run python manage.py migrate`. The logs returned `Error: Cannot run more than 1 Eco size dynos.`
 
 **Fix 4:** 
-
 The Eco plan only allows one dyno. I solved this by scaling the web dyno down, running migrations, then scaling it back up:
 
     heroku ps:scale web=0
@@ -801,59 +702,45 @@ The Eco plan only allows one dyno. I solved this by scaling the web dyno down, r
     heroku ps:scale web=1
 
 **Lesson Learned 4:** 
-
 On the *Heroku* Eco plan, I cannot run one-off commands while the web dyno is active. I need to scale down before running management commands or upgrade to the Hobby tier.
 
----
-
 **Bug 5:** 
-
 After scaling down with `heroku ps:scale web=0` and forgetting to scale back up, the app failed with `code=H14 desc="No web processes running"`.
 
 **Fix 5:** 
-
 I restarted the web dyno with `heroku ps:scale web=1`.
 
 **Lesson Learned 5:** 
-
 If I see *H14 errors*, it usually means I forgot to restart the web dyno after scaling it down.
 
 ## Webhook Integration Errors
 
 **Bug 1:** 
-
 I initially received `404 Not Found` responses from *Square* when sending test events. The issue was that my *Django* `urls.py` was misconfigured. I had duplicated `checkout/` in both `config/urls.py` and `apps/checkout/urls.py`, which created the path `/checkout/checkout/webhooks/square/`. Square was sending to `/checkout/webhooks/square/`, so *Django* could not find the route.
 
 **Fix 1:** 
-
 I removed the extra `checkout/` from `apps/checkout/urls.py` and left only:
     path("webhooks/square/", views.square_webhook, name="square_webhook")
 This ensured the final URL was `/checkout/webhooks/square/`.
 
 **Lesson Learned 1:** 
-
 Always check how path prefixes combine in *Django* between the project’s `urls.py` and app-level `urls.py`. One extra prefix will create mismatches and cause 404 errors.
 
 **Bug 2:** 
-
 After fixing the URL, *Square* requests returned a `502 Bad Gateway` in *ngrok*. The cause was that I had *ngrok* running, but my *Django* server was not running in another terminal, so *ngrok* had nothing to forward to on `localhost:8000`.
 
 **Fix 2:** 
-
 I ensured `python manage.py runserver` was running in one terminal, and in a second terminal I ran `ngrok http 8000`.
 
 **Lesson Learned 2:** 
-
 Both the *Django* server and *ngrok* must be running at the same time. *Ngrok* forwards requests, but if *Django* is down, *ngrok* cannot deliver them.
 
 **Bug 3:** 
-
 Once Square reached *Django*, I still received `400 Bad Request`. The traceback showed:
     django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'conceptual-stridently-sadie.ngrok-free.dev'
 This meant the *ngrok* domain was not in `ALLOWED_HOSTS`.
 
 **Fix 3:** 
-
 I updated `settings.py` to use a wildcard for all *ngrok* domains:
     ALLOWED_HOSTS = os.getenv(
         "ALLOWED_HOSTS",
@@ -865,36 +752,29 @@ I also added a debug print:
     `ALLOWED_HOSTS=127.0.0.1,localhost,.herokuapp.com,.ngrok-free.dev`
 
 **Lesson Learned 3:** 
-
 Always include `.ngrok-free.dev` with a leading dot in `ALLOWED_HOSTS` so any random *ngrok* subdomain will be accepted. Also check for `.env` overrides, as they take priority over defaults in `settings.py`.
 
 
 **Bug 4:** 
-
 After fixing `ALLOWED_HOSTS`, my view still returned `400` with the error:
     `Webhook error: name 'json' is not defined`. This was because I tried to use `json.loads` without importing the `json` module.
 
 **Fix 4:** At the top of `checkout/views.py`, I added: `import json`
 
 **Lesson Learned 4:** 
-
 Always check that required modules are imported before using them. Even simple oversights can break webhook handling.
 
-
 **Bug 5:** 
-
 I forgot to keep *ngrok* running, which caused *Square* to return `404 Not Found` again. When *ngrok* is stopped, the forwarding URL immediately becomes invalid.
 
 **Fix 5:** 
-
 I made a checklist:  
 1. Start *Django* with `python manage.py runserver`.  
 2. Start *ngrok* with `ngrok http 8000`.  
 3. Copy the current HTTPS forwarding URL.  
-4. Update the *Square* Notification URL to `https://<random>.ngrok-free.dev/checkout/webhooks/square/`.  
+4. Update the *Square* Notification URL to `https://<random>.ngrok-free.dev/checkout/webhooks/square/`. 
 
 **Lesson Learned 5:** 
-
 *Ngrok* subdomains change every run. If *ngrok* closes, the URL dies instantly. Always restart *ngrok* and update *Square*’s Notification URL before sending test events.
 
 
