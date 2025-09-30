@@ -788,5 +788,26 @@ and then computing the `HMAC-SHA256` over that string produced a matching signat
 
 **Lesson Learned:** *Square* webhook signature verification requires hashing the *full notification URL + raw body* string, not just the body. Always check *Square*’s official docs for the string-to-sign format. Using `request.get_host()` and `request.path` avoids hardcoding *ngrok* domains and ensures the `notification URL` matches exactly what *Square* uses. Adding debug prints for header and computed signatures side by side is essential for troubleshooting mismatches.
 
+## Authentication Error
+
+**Bug:** When I attempted to create a *Square* payment link from the profile page, the API consistently returned a `401 Unauthorized` error. I confirmed that my *Django* settings were loading the correct `sandbox token`, `base URL`, and `location ID`. The request headers logged as `Authorization: Bearer EAAA...`, and the debug output showed that the token, base URL, and location ID were aligned with sandbox mode. Despite this, *Square* still rejected the request. The problem was not with credentials but with the request payload format. I was incorrectly sending an `"order": {...}` object, which is not supported by the `CreatePaymentLink` endpoint in this context.
+
+**Fix:** I updated the `payload` to use the `"quick_pay"` object instead of `"order"`. This matched the structure expected by the *Square* API and allowed the request to succeed. The corrected `payload` looked like this:
+
+    payload = {
+        "idempotency_key": str(uuid.uuid4()),
+        "quick_pay": {
+            "name": f"Order #{order.id}",
+            "price_money": {
+                "amount": int(order.total * 100),
+                "currency": "GBP"
+            },
+            "location_id": settings.SQUARE_LOCATION_ID
+        }
+    }
+
+After switching to `"quick_pay"`, *Square* returned a `200 OK` response along with a valid `payment_link.url`, and *Django* successfully redirected to the *Square* Sandbox Checkout page.
+
+**Lesson Learned:** A `401 Unauthorized` error from *Square* does not always mean the token or location is wrong. If the credentials are correct but the payload is invalid for the endpoint, *Square* may still return `401`. Always cross-check the request body against the official *Square* API docs. For the `CreatePaymentLink` endpoint, `"quick_pay"` is the minimal, valid object for sandbox testing. Using `"order"` directly caused the error.
 
 
