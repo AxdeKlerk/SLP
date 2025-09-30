@@ -777,4 +777,16 @@ I made a checklist:
 **Lesson Learned 5:** 
 *Ngrok* subdomains change every run. If *ngrok* closes, the URL dies instantly. Always restart *ngrok* and update *Square*’s Notification URL before sending test events.
 
+## Webhook Signature Verification Errors
+
+**Bug:** After wiring up the *webhook endpoint*, I received `400 Bad Request` errors with the log message `Invalid signature`. The `SQUARE_SIGNATURE_KEY` was loading correctly, and the request body was being hashed with `HMAC-SHA256`, but the computed signature did not match the header sent by *Square*.
+
+**Fix:** I first confirmed the correct header was being used (`X-Square-Hmacsha256-Signature`) and added debug prints for both the header signature and the computed value. The mismatch was due to *Square*’s signing process requiring the *concatenation of the notification URL and the request body*, not just the body alone. Updating the code to build the `string-to-sign` with:
+    notification_url = f"https://{request.get_host()}{request.path}"
+    string_to_sign = notification_url + request.body.decode("utf-8")
+and then computing the `HMAC-SHA256` over that string produced a matching signature. After this correction, *Square* responded with `200 OK`.
+
+**Lesson Learned:** *Square* webhook signature verification requires hashing the *full notification URL + raw body* string, not just the body. Always check *Square*’s official docs for the string-to-sign format. Using `request.get_host()` and `request.path` avoids hardcoding *ngrok* domains and ensures the `notification URL` matches exactly what *Square* uses. Adding debug prints for header and computed signatures side by side is essential for troubleshooting mismatches.
+
+
 
