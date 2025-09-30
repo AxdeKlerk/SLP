@@ -20,14 +20,13 @@ DEBUG = os.getenv('DEBUG', 'False') == 'True'
 SQUARE_APPLICATION_ID = os.getenv('SQUARE_APPLICATION_ID')
 SQUARE_ACCESS_TOKEN = os.getenv('SQUARE_ACCESS_TOKEN')
 SQUARE_LOCATION_ID = os.getenv('SQUARE_LOCATION_ID')
-
+SQUARE_SIGNATURE_KEY = os.getenv("SQUARE_SIGNATURE_KEY")
 
 # Allowed hosts
 ALLOWED_HOSTS = os.getenv(
     "ALLOWED_HOSTS",
     "127.0.0.1,localhost,.ngrok-free.dev"
 ).split(",")
-print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
 
 
 # Application definition

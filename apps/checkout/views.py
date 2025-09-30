@@ -1,12 +1,16 @@
 import json
+import hmac, hashlib, base64, os
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from apps.basket.models import Basket
 from apps.checkout.models import Order, OrderItem
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
+from django.conf import settings
+
+SQUARE_SIGNATURE_KEY = os.getenv("SQUARE_SIGNATURE_KEY")
 
 @login_required
 def basket_checkout(request):
@@ -83,28 +87,44 @@ def checkout_view(request, order_id):
     return render(request, "checkout/checkout.html", {"order": order})
 
 
-@csrf_exempt      # Square won’t send Django’s CSRF token
-@require_POST     # Webhooks are always POST
+@csrf_exempt
+@require_POST
 def square_webhook(request):
     try:
-        # Print headers and body so we can see what’s coming in
-        print("=== Square Webhook Headers ===")
-        for key, value in request.headers.items():
-            print(f"{key}: {value}")
+        # Grab headers
+        signature_header = request.headers.get("X-Square-Hmacsha256-Signature")
+        print("=== Square Webhook Debug ===")
+        print("Header SHA256:", signature_header)
+        print("Header SHA1:", request.headers.get("X-Square-Signature"))
+        print("Body length:", len(request.body))
+        print("Loaded SQUARE_SIGNATURE_KEY:", bool(getattr(settings, "SQUARE_SIGNATURE_KEY", None)))
 
-        print("=== Square Webhook Body ===")
-        print(request.body.decode("utf-8"))
+        # Build the string to sign: notification URL + request body
+        notification_url = f"https://{request.get_host()}{request.path}"
+        print("Notification URL:", notification_url)
 
-        # Try to parse JSON (Square always sends JSON)
+        string_to_sign = notification_url + request.body.decode("utf-8")
+
+        # Compute HMAC-SHA256
+        secret = settings.SQUARE_SIGNATURE_KEY.encode("utf-8")
+        digest = hmac.new(secret, string_to_sign.encode("utf-8"), hashlib.sha256).digest()
+        expected = base64.b64encode(digest).decode("utf-8")
+        print("Computed signature:", expected)
+
+        # Compare with header
+        if not hmac.compare_digest(expected, signature_header or ""):
+            print("Computed signature did not match header.")
+            return HttpResponseBadRequest("Invalid signature")
+
+        # Parse and log event if signature matches
         data = json.loads(request.body)
-        print("=== Parsed JSON ===")
-        print(json.dumps(data, indent=2))
+        print("Webhook Event Type:", data.get("type"))
 
-        return HttpResponse("Webhook received", status=200)
+        return HttpResponse("Webhook verified and received", status=200)
 
     except Exception as e:
-        print(f"Webhook error: {e}")
-        return HttpResponse("Error", status=400)
+        print("Webhook error:", str(e))
+        return HttpResponseBadRequest("Bad Request")
 
 # Note: You will need to implement actual webhook handling logic here
 # based on Square's documentation and your application's requirements.
