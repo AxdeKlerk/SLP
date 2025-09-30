@@ -818,4 +818,83 @@ I restarted the web dyno with `heroku ps:scale web=1`.
 
 If I see *H14 errors*, it usually means I forgot to restart the web dyno after scaling it down.
 
+## Webhook Integration Errors
+
+**Bug 1:** 
+
+I initially received `404 Not Found` responses from *Square* when sending test events. The issue was that my *Django* `urls.py` was misconfigured. I had duplicated `checkout/` in both `config/urls.py` and `apps/checkout/urls.py`, which created the path `/checkout/checkout/webhooks/square/`. Square was sending to `/checkout/webhooks/square/`, so *Django* could not find the route.
+
+**Fix 1:** 
+
+I removed the extra `checkout/` from `apps/checkout/urls.py` and left only:
+    path("webhooks/square/", views.square_webhook, name="square_webhook")
+This ensured the final URL was `/checkout/webhooks/square/`.
+
+**Lesson Learned 1:** 
+
+Always check how path prefixes combine in *Django* between the project’s `urls.py` and app-level `urls.py`. One extra prefix will create mismatches and cause 404 errors.
+
+**Bug 2:** 
+
+After fixing the URL, *Square* requests returned a `502 Bad Gateway` in *ngrok*. The cause was that I had *ngrok* running, but my *Django* server was not running in another terminal, so *ngrok* had nothing to forward to on `localhost:8000`.
+
+**Fix 2:** 
+
+I ensured `python manage.py runserver` was running in one terminal, and in a second terminal I ran `ngrok http 8000`.
+
+**Lesson Learned 2:** 
+
+Both the *Django* server and *ngrok* must be running at the same time. *Ngrok* forwards requests, but if *Django* is down, *ngrok* cannot deliver them.
+
+**Bug 3:** 
+
+Once Square reached *Django*, I still received `400 Bad Request`. The traceback showed:
+    django.core.exceptions.DisallowedHost: Invalid HTTP_HOST header: 'conceptual-stridently-sadie.ngrok-free.dev'
+This meant the *ngrok* domain was not in `ALLOWED_HOSTS`.
+
+**Fix 3:** 
+
+I updated `settings.py` to use a wildcard for all *ngrok* domains:
+    ALLOWED_HOSTS = os.getenv(
+        "ALLOWED_HOSTS",
+        "127.0.0.1,localhost,.ngrok-free.dev"
+    ).split(",")
+
+I also added a debug print:
+    `print("ALLOWED_HOSTS:", ALLOWED_HOSTS)` to confirm `.ngrok-free.dev` was included at startup. I then updated my `.env` file to include `.ngrok-free.dev`:
+    `ALLOWED_HOSTS=127.0.0.1,localhost,.herokuapp.com,.ngrok-free.dev`
+
+**Lesson Learned 3:** 
+
+Always include `.ngrok-free.dev` with a leading dot in `ALLOWED_HOSTS` so any random *ngrok* subdomain will be accepted. Also check for `.env` overrides, as they take priority over defaults in `settings.py`.
+
+
+**Bug 4:** 
+
+After fixing `ALLOWED_HOSTS`, my view still returned `400` with the error:
+    `Webhook error: name 'json' is not defined`. This was because I tried to use `json.loads` without importing the `json` module.
+
+**Fix 4:** At the top of `checkout/views.py`, I added: `import json`
+
+**Lesson Learned 4:** 
+
+Always check that required modules are imported before using them. Even simple oversights can break webhook handling.
+
+
+**Bug 5:** 
+
+I forgot to keep *ngrok* running, which caused *Square* to return `404 Not Found` again. When *ngrok* is stopped, the forwarding URL immediately becomes invalid.
+
+**Fix 5:** 
+
+I made a checklist:  
+1. Start *Django* with `python manage.py runserver`.  
+2. Start *ngrok* with `ngrok http 8000`.  
+3. Copy the current HTTPS forwarding URL.  
+4. Update the *Square* Notification URL to `https://<random>.ngrok-free.dev/checkout/webhooks/square/`.  
+
+**Lesson Learned 5:** 
+
+*Ngrok* subdomains change every run. If *ngrok* closes, the URL dies instantly. Always restart *ngrok* and update *Square*’s Notification URL before sending test events.
+
 
