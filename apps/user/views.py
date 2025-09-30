@@ -1,16 +1,20 @@
+import uuid, requests
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_POST
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.mail import send_mail
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from apps.user.forms import ForgotUsernameForm
 from apps.checkout.models import Order
+from django.conf import settings
 
 
 @login_required
 def login_success_view(request):
     return render(request, "user/login_success.html")
+
 
 @login_required
 def profile_view(request):
@@ -23,7 +27,8 @@ def profile_view(request):
         "page_title": "Profile"       
     }
     return render(request, "user/profile.html", context)
- 
+
+
 def signup(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
@@ -33,6 +38,7 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, "user/signup.html", {"form": form})
+
 
 def forgot_username(request):
     message_sent = True
@@ -57,28 +63,70 @@ def forgot_username(request):
         {"form": form, "message_sent": message_sent},
     )
 
-@login_required
+
+@require_POST
 def bulk_order_action(request):
-    if request.method == "POST":
-        action = request.POST.get("action")
+    order_ids = request.POST.getlist("order_ids")
+    action = request.POST.get("action")
 
-        if action == "pay_single":
-            order_id = request.POST.get("order_id")
-            if order_id:
-                request.session["order_ids_to_pay"] = [order_id]
-                return redirect("payments:payment_checkout", order_id=order_id)
+    if not order_ids:
+        messages.error(request, "No orders selected", extra_tags="orders")
+        return redirect("user:profile_view")
 
-        elif action == "delete":
-            order_ids = request.POST.getlist("order_ids")
-            if not order_ids:
-                messages.error(request, "No orders selected")
-            else:
-                # Make sure IDs are integers
-                order_ids = [int(i) for i in order_ids if i.isdigit()]
-                Order.objects.filter(id__in=order_ids, user=request.user).delete()
-                messages.success(request, f"{len(order_ids)} order(s) deleted", extra_tags="orders")
-            return redirect("user:profile_view")
+    if action == "delete":
+        qs = Order.objects.filter(id__in=order_ids, user=request.user, status="pending")
+        order_count = qs.count()
+        qs.delete()
+        messages.success(request, f"{order_count} order(s) deleted", extra_tags="orders")
+        return redirect("user:profile_view")
 
-    return redirect("user:profile_view")
+    elif action == "pay_single":
+        order_id = order_ids[0]
+        order = get_object_or_404(Order, id=order_id, user=request.user, status="pending")
+
+        # Build payment link payload
+        idempotency_key = str(uuid.uuid4())
+    payload = {
+        "idempotency_key": idempotency_key,
+        "quick_pay": {
+            "name": f"Order #{order.id}",
+            "price_money": {
+                "amount": int(order.total * 100),
+                "currency": "GBP"
+            },
+            "location_id": settings.SQUARE_LOCATION_ID
+        }
+    }
+
+    headers = {
+        "Square-Version": "2025-09-30",
+        "Authorization": f"Bearer {settings.SQUARE_ACCESS_TOKEN}",
+        "Content-Type": "application/json",
+    }
+
+    print("=== Square Debug ===")
+    print("Auth Header:", headers["Authorization"][:20])
+    print("Base URL:", settings.SQUARE_BASE_URL)
+    print("Location ID:", settings.SQUARE_LOCATION_ID)
+
+    response = requests.post(
+        f"{settings.SQUARE_BASE_URL}/v2/online-checkout/payment-links",
+        json=payload,
+        headers=headers,
+        timeout=10,
+    )
+
+    print("Status:", response.status_code)
+    print("Body:", response.text)
+
+    if response.status_code == 200:
+        data = response.json()
+        link_url = data["payment_link"]["url"]
+        messages.success(request, "Redirecting to payment...", extra_tags="orders")
+        return redirect(link_url)
+    else:
+        messages.error(request, f"Square API error: {response.text}", extra_tags="orders")
+        return redirect("user:profile_view")
+
 
 

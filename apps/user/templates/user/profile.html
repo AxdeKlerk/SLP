@@ -44,10 +44,10 @@
                         </div>
                         <!-- Single pay button -->
                         <div class="text-end">
-                            <button type="submit" name="action" value="pay_single" class="btn cta-btn2 mb-2" formaction="{% url 'user:bulk_order_action' %}">
-                                Proceed to Payment
+                            <button type="submit" name="order_ids" value="{{ order.id }}" formaction="{% url 'user:bulk_order_action' %}"
+                                    class="btn cta-btn2 mb-2">Proceed to Payment
                             </button>
-                            <input type="hidden" name="order_id" value="{{ order.id }}">
+                            <input type="hidden" name="action" value="pay_single">
                         </div>
                     </div>
                 </div>

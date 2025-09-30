@@ -21,6 +21,8 @@ SQUARE_APPLICATION_ID = os.getenv('SQUARE_APPLICATION_ID')
 SQUARE_ACCESS_TOKEN = os.getenv('SQUARE_ACCESS_TOKEN')
 SQUARE_LOCATION_ID = os.getenv('SQUARE_LOCATION_ID')
 SQUARE_SIGNATURE_KEY = os.getenv("SQUARE_SIGNATURE_KEY")
+SQUARE_BASE_URL = os.getenv("SQUARE_BASE_URL", "https://connect.squareupsandbox.com")
+
 
 # Allowed hosts
 ALLOWED_HOSTS = os.getenv(

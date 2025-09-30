@@ -125,6 +125,3 @@ def square_webhook(request):
     except Exception as e:
         print("Webhook error:", str(e))
         return HttpResponseBadRequest("Bad Request")
-
-# Note: You will need to implement actual webhook handling logic here
-# based on Square's documentation and your application's requirements.
