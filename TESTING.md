@@ -238,3 +238,31 @@ I tested the updated search function to confirm that typing part of a name (like
   
 This test confirmed that the search now behaves like a real search engine, listing all valid results instead of just one. The change from `.first()` to `.filter()` fixed the issue and ensured a better user experience when searching by variations or letters.
 
+## Payment Link API
+
+**User Story:** 
+
+As a **user**, I wanted to **be redirected to a Square checkout page when I clicked “Proceed to Payment” from my profile**, so that I **could complete my order securely**.
+
+**What Was Tested:**
+
+I tested the new *Square* payment integration flow, ensuring that pressing “Proceed to Payment” from the profile page generated a *Square*-hosted checkout link and redirected me correctly. This confirmed that the API call was working with the sandbox environment.  
+
+**Acceptance Criteria:**  
+
+- [x] Clicking “Proceed to Payment” from the profile page sends a request to *Square*.  
+- [x] *Square* responds with `200 OK` and returns a valid `payment_link.url`.  
+- [x] *Django* redirects the user to the *Square* sandbox checkout page.  
+- [x] The local `Order` record saves the `square_order_id` for `webhook mapping`.  
+- [x] No `401 Unauthorized` errors occur once the payload uses `quick_pay`.  
+
+**Tasks Completed:** 
+
+- [x] Added `square_order_id` field to `Order` model and migrated.  
+- [x] Updated `bulk_order_action` to save the *Square* `order_id`.  
+- [x] Replaced invalid `"order": {...}` payload with `"quick_pay": {...}` payload.  
+- [x] Verified sandbox checkout flow works end-to-end with debug logs.  
+
+**Notes:** 
+
+At first, *Square* returned `401 Unauthorized` because the payload was structured incorrectly with `"order"`. Switching to `"quick_pay"` unlocked the API and returned the correct payment link. With the new mapping field added, orders can now be linked back to their *Square* order IDs. 
