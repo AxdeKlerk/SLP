@@ -810,4 +810,20 @@ After switching to `"quick_pay"`, *Square* returned a `200 OK` response along wi
 
 **Lesson Learned:** A `401 Unauthorized` error from *Square* does not always mean the token or location is wrong. If the credentials are correct but the payload is invalid for the endpoint, *Square* may still return `401`. Always cross-check the request body against the official *Square* API docs. For the `CreatePaymentLink` endpoint, `"quick_pay"` is the minimal, valid object for sandbox testing. Using `"order"` directly caused the error.
 
+## Webhook Authentication Error
+
+**Bug:** When I triggered a test `webhook` from the *Square Sandbox* dashboard, the request kept returning `400 Bad Request` with the message `Signature mismatch`. This meant *Django* was rejecting the webhook because the locally computed HMAC signature did not match the signature Square sent in the header. At first, I was using `request.headers.get("x-square-hmacsha256-signature")` to read the header, and only signing the raw body. Both of these caused issues: the header key wasn’t always read correctly, and Square signs the full HTTPS URL plus body, not just the body.
+
+**Fix:** I switched to accessing the header from `request.META` for reliability:
+
+    signature = request.META.get("HTTP_X_SQUARE_HMACSHA256_SIGNATURE", "")
+
+Then I updated the signature computation to include the `HTTPS URL` (since *Square* always signs the `HTTPS` version, even when using *Ngrok*):
+
+    webhook_url = request.build_absolute_uri().replace("http://", "https://")
+    string_to_sign = webhook_url + body
+
+After making these changes, the computed HMAC matched *Square*’s signature perfectly and the endpoint returned `200 OK`.
+
+**Lesson Learned:** `Webhook` signature mismatches often come from subtle URL or header mismatches, not incorrect keys. *Square*’s webhook signatures always use the `HTTPS` version of the full URL plus the raw request body. Using `request.META` instead of `request.headers` ensures *Django* correctly retrieves the signature header, and replacing `http://` with `https://` aligns the signed string exactly with what Square expects.
 

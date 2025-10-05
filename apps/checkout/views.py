@@ -90,38 +90,53 @@ def checkout_view(request, order_id):
 @csrf_exempt
 @require_POST
 def square_webhook(request):
-    try:
-        # Grab headers
-        signature_header = request.headers.get("X-Square-Hmacsha256-Signature")
-        print("=== Square Webhook Debug ===")
-        print("Header SHA256:", signature_header)
-        print("Header SHA1:", request.headers.get("X-Square-Signature"))
-        print("Body length:", len(request.body))
-        print("Loaded SQUARE_SIGNATURE_KEY:", bool(getattr(settings, "SQUARE_SIGNATURE_KEY", None)))
 
-        # Build the string to sign: notification URL + request body
-        notification_url = f"https://{request.get_host()}{request.path}"
-        print("Notification URL:", notification_url)
+    # --- 1. Verify Square signature ---
+    signature = request.META.get("HTTP_X_SQUARE_HMACSHA256_SIGNATURE", "")
+    body = request.body.decode("utf-8")
+    key = settings.SQUARE_SIGNATURE_KEY.encode("utf-8")
 
-        string_to_sign = notification_url + request.body.decode("utf-8")
+    # Square always signs using HTTPS, even if request came in over HTTP (Ngrok)
+    webhook_url = request.build_absolute_uri().replace("http://", "https://")
+    string_to_sign = webhook_url + body
 
-        # Compute HMAC-SHA256
-        secret = settings.SQUARE_SIGNATURE_KEY.encode("utf-8")
-        digest = hmac.new(secret, string_to_sign.encode("utf-8"), hashlib.sha256).digest()
-        expected = base64.b64encode(digest).decode("utf-8")
-        print("Computed signature:", expected)
+    computed_signature = base64.b64encode(
+        hmac.new(key, string_to_sign.encode("utf-8"), hashlib.sha256).digest()
+    ).decode("utf-8")
 
-        # Compare with header
-        if not hmac.compare_digest(expected, signature_header or ""):
-            print("Computed signature did not match header.")
-            return HttpResponseBadRequest("Invalid signature")
+    print("=== Square Webhook Debug ===")
+    print("Webhook URL from request:", webhook_url)
+    print("Signature from header:", signature)
+    print("Computed signature:", computed_signature)
+    print("Payload body:", body)
+    print("=== End Debug ===")
 
-        # Parse and log event if signature matches
-        data = json.loads(request.body)
-        print("Webhook Event Type:", data.get("type"))
+    if not hmac.compare_digest(computed_signature, signature):
+        print("Signature mismatch")
+        return HttpResponseBadRequest("Invalid signature")
 
-        return HttpResponse("Webhook verified and received", status=200)
+    # --- 2. Parse JSON payload ---
+    event = json.loads(body)
+    event_type = event.get("type", "")
+    print(f"Received Square webhook: {event_type}")
 
-    except Exception as e:
-        print("Webhook error:", str(e))
-        return HttpResponseBadRequest("Bad Request")
+    # --- 3. Check for payment updates ---
+    if event_type == "payment.updated":
+        payment = event["data"]["object"]["payment"]
+        square_order_id = payment.get("order_id")
+        payment_status = payment.get("status")
+
+        print(f"Square order: {square_order_id}, status: {payment_status}")
+
+        # --- 4. Match and update local order ---
+        try:
+            order = Order.objects.get(square_order_id=square_order_id)
+            if payment_status == "COMPLETED":
+                order.status = "completed"
+                order.save()
+                print(f"Order {order.id} marked completed")
+        except Order.DoesNotExist:
+            print(f"No matching local order for {square_order_id}")
+
+    # --- 5. Respond cleanly ---
+    return HttpResponse("OK", status=200)

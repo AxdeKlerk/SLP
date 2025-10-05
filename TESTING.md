@@ -266,3 +266,32 @@ I tested the new *Square* payment integration flow, ensuring that pressing “Pr
 **Notes:** 
 
 At first, *Square* returned `401 Unauthorized` because the payload was structured incorrectly with `"order"`. Switching to `"quick_pay"` unlocked the API and returned the correct payment link. With the new mapping field added, orders can now be linked back to their *Square* order IDs. 
+
+## Webhook Verification
+
+**User Story:** 
+
+As a **developer**, I wanted to **confirm that my webhook endpoint correctly verified *Square*’s signature** so that **only legitimate events from *Square* could trigger order updates**.
+
+**What Was Tested:**
+
+I tested the `webhook endpoint` by sending test `webhook` events from the *Square Sandbox* dashboard and observing how *Django* verified the signature, handled the event, and responded to Square.  
+
+**Acceptance Criteria:** 
+
+- [x] `Webhook` receives `POST` requests from *Square*.  
+- [x] Header `x-square-hmacsha256-signature` is read correctly using `request.META`.  
+- [x] Signature verification includes the `HTTPS URL` and request body.  
+- [x] Matching signatures return `200 OK`.  
+- [x] Mismatched signatures return `400 Bad Request`.  
+
+**Tasks Completed:** 
+
+- [x] Replaced `request.headers` with `request.META` for signature retrieval.  
+- [x] Adjusted URL signing to use `https://` instead of `http://`.  
+- [x] Added debug print statements for verification output.  
+- [x] Successfully verified signature match with a `200 OK` response.  
+
+**Notes:** 
+
+At first, every `webhook` attempt failed with `Signature mismatch`. I confirmed the correct `SQUARE_SIGNATURE_KEY` was loaded but found that *Square* signs the `HTTPS URL` + body, not just the body. After adjusting the URL and signature retrieval, the `webhook` validated correctly, confirming a secure link between *Square* and *Django*.
