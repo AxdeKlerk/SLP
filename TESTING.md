@@ -295,3 +295,35 @@ I tested the `webhook endpoint` by sending test `webhook` events from the *Squar
 **Notes:** 
 
 At first, every `webhook` attempt failed with `Signature mismatch`. I confirmed the correct `SQUARE_SIGNATURE_KEY` was loaded but found that *Square* signs the `HTTPS URL` + body, not just the body. After adjusting the URL and signature retrieval, the `webhook` validated correctly, confirming a secure link between *Square* and *Django*.
+
+#### 10.1.8 Order Status Update via Square Webhook
+
+**User Story:**
+
+As a **user**, I want **my order status to automatically update to “paid” once my *Square* payment completes**, so that I **know my transaction has been confirmed**.
+
+**What Was Tested:** 
+
+The `webhook` connection between *Square* and *Django* was tested to confirm that completed *Square* payments trigger a corresponding status update in the *Order* model.
+
+**Acceptance Criteria:**
+
+[x] `Webhook` endpoint correctly receives `payment.created` event  
+[x] *JSON* payload is parsed successfully without errors  
+[x] *Order* model includes both `square_order_id` and `square_payment_id` fields  
+[x] Matching order is found and updated to `"paid"` when payment status is `"COMPLETED"`  
+[x] Duplicate `webhook` events are safely ignored  
+[x] Successful `200 OK` response returned from `webhook` endpoint  
+
+**Tasks Completed:**
+
+[x] Added `square_payment_id` and `square_order_id` to the *Order* model  
+[x] Migrated database to include new fields  
+[x] Modified `webhook` logic to update `order status` based on *Square* payload  
+[x] Created valid *JSON* test file `test_payment.json`  
+[x] Tested `webhook` locally using `curl.exe` and confirmed database updates  
+[x] Verified `order.status` changed to `"paid"` and `square_payment_id` stored correctly  
+
+**Notes:**
+
+During initial tests, `PowerShell` altered *JSON* formatting, causing `JSONDecodeErrors`. Switching to `--data-binary` preserved the *JSON* structure. After model updates and correct test data setup, `webhook` responses returned `“OK”`, and order status updated successfully. This completed the full payment confirmation loop between *Square* and *Django*.

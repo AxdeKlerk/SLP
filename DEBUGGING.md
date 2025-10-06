@@ -827,3 +827,21 @@ After making these changes, the computed HMAC matched *Square*’s signature per
 
 **Lesson Learned:** `Webhook` signature mismatches often come from subtle URL or header mismatches, not incorrect keys. *Square*’s webhook signatures always use the `HTTPS` version of the full URL plus the raw request body. Using `request.META` instead of `request.headers` ensures *Django* correctly retrieves the signature header, and replacing `http://` with `https://` aligns the signed string exactly with what Square expects.
 
+## Webhook Integration Error
+
+**Bug:** When testing the *Square* `webhook`, the `payload` caused a `JSONDecodeError` due to invalid *JSON* formatting. Even after correction, the `webhook` raised a `FieldError` because the Order model lacked the expected `square_order_id` field.  
+
+**Fix:** 
+
+1. Corrected `test_payment.json` by ensuring all keys and string values were enclosed in double quotes.  
+2. Added `square_payment_id` and `square_order_id` fields to the *Order* model.  
+3. Ran `makemigrations` and `migrate` to update the database schema.  
+4. Set a test `square_order_id` value in the *Django* shell to match the test payload.  
+5. Updated the `webhook` logic to locate the order using `square_order_id` and set the status to `"paid"` when *Square* returns `"COMPLETED"`.  
+6. Used `curl.exe` with `--data-binary` to prevent `PowerShell` from altering *JSON* formatting.  
+7. Temporarily commented out signature verification for local testing.  
+8. Confirmed successful response (`OK`) and verified the order’s status and payment ID in the database.  
+
+**Lesson Learned:** `PowerShell` often mangles *JSON* when using `-d` with multi-line or quoted content, so `--data-binary` or `Invoke-WebRequest` is safer for `webhook` testing. Always ensure model fields match the data you’re referencing in the `webhook` logic. Valid *JSON* must use double quotes for both keys and string values. Once verified locally, always re-enable the *Square* signature validation before pushing to *Heroku* for production security.
+
+
