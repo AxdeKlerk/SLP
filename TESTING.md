@@ -327,3 +327,35 @@ The `webhook` connection between *Square* and *Django* was tested to confirm tha
 **Notes:**
 
 During initial tests, `PowerShell` altered *JSON* formatting, causing `JSONDecodeErrors`. Switching to `--data-binary` preserved the *JSON* structure. After model updates and correct test data setup, `webhook` responses returned `“OK”`, and order status updated successfully. This completed the full payment confirmation loop between *Square* and *Django*.
+
+#### 10.1.8 Order Status Update via Square Webhook
+
+**User Story:**
+
+As a **user**, I want **my order status to automatically update to “paid” once my *Square* payment completes**, so that I **know my transaction has been confirmed**.
+
+**What Was Tested:**
+
+The *Square* `webhook` was tested to confirm that payment events successfully update the associated *Order* in the database and that duplicate `webhook` events are ignored.
+
+**Acceptance Criteria:**
+
+[x] `Webhook` receives and logs incoming *Square* events  
+[x] *JSON* payload parses without error  
+[x] Matching order found using `square_order_id`  
+[x] Order status updates to `"paid"` when payment status is `"COMPLETED"`  
+[x] Duplicate `webhook` events are ignored  
+[x] `200 OK` response returned successfully  
+
+**Tasks Completed:**
+
+[x] Added `square_order_id` and `square_payment_id` fields to *Order* model  
+[x] Created valid `test_payment.json` payload  
+[x] Disabled signature verification for local testing  
+[x] Sent test payload using `curl.exe`  
+[x] Verified `Order.status` changed to `"paid"` and `square_payment_id` recorded  
+[x] Re-tested `webhook` and confirmed duplicate event correctly ignored  
+
+**Notes:** 
+
+Testing confirmed the `webhook` processes live payment events correctly and ignores repeated notifications. The only remaining step before production deployment is to re-enable signature verification to validate real *Square* `webhook` requests once running on *Heroku*.

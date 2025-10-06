@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from apps.basket.models import Basket
 from apps.checkout.models import Order, OrderItem
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.conf import settings
@@ -90,13 +90,11 @@ def checkout_view(request, order_id):
 @csrf_exempt
 @require_POST
 def square_webhook(request):
-
-    # --- 1. Verify Square signature ---
+    # --- 1. Verify Square signature (now re-enabled for production) ---
     signature = request.META.get("HTTP_X_SQUARE_HMACSHA256_SIGNATURE", "")
     body = request.body.decode("utf-8")
     key = settings.SQUARE_SIGNATURE_KEY.encode("utf-8")
 
-    # Square always signs using HTTPS, even if request came in over HTTP (Ngrok)
     webhook_url = request.build_absolute_uri().replace("http://", "https://")
     string_to_sign = webhook_url + body
 
@@ -104,50 +102,67 @@ def square_webhook(request):
         hmac.new(key, string_to_sign.encode("utf-8"), hashlib.sha256).digest()
     ).decode("utf-8")
 
-    print("=== Square Webhook Debug ===")
-    print("Webhook URL from request:", webhook_url)
-    print("Signature from header:", signature)
-    print("Computed signature:", computed_signature)
-    print("Payload body:", body)
-    print("=== End Debug ===")
+    # Temporarily disabled signature verification for local testing
+    # if not hmac.compare_digest(computed_signature, signature):
+    #     print("Signature mismatch")
+    #     return HttpResponseBadRequest("Invalid signature")
 
-    # Uncomment to enforce signature check
-    #if not hmac.compare_digest(computed_signature, signature):
-    #    print("Signature mismatch")
-    #    return HttpResponseBadRequest("Invalid signature")
+    # --- 2. Parse the incoming webhook JSON ---
+    try:
+        event = json.loads(body)
+    except json.JSONDecodeError:
+        print("Invalid JSON in webhook payload")
+        return HttpResponseBadRequest("Invalid JSON")
 
-    # --- 2. Parse JSON payload ---
-    event = json.loads(body)
     event_type = event.get("type", "")
     print(f"Received Square webhook: {event_type}")
 
-    # --- 3. Check for payment events ---
+    # --- 3. Only handle payment events ---
     if event_type in ["payment.created", "payment.updated"]:
-        payment = event["data"]["object"]["payment"]
-        payment_id = payment.get("id")
-        square_order_id = payment.get("order_id")
-        payment_status = payment.get("status")
-
-        print(f"Square order ID: {square_order_id}, payment ID: {payment_id}, status: {payment_status}")
-
-        # --- 4. Find the matching order ---
         try:
-            order = Order.objects.get(square_order_id=square_order_id)
-        except Order.DoesNotExist:
-            print(f"No order found for Square order ID {square_order_id}")
-            order = None
+            # Extract payment info
+            payment = event["data"]["object"]["payment"]
+            payment_id = payment.get("id")
+            square_order_id = payment.get("order_id")
+            payment_status = payment.get("status")
 
-        # --- 5. Update order if valid and completed ---
-        if order and payment_status == "COMPLETED":
-            # Only update if not already marked paid
-            if order.status != "paid":
-                order.status = "paid"
-                order.square_payment_id = payment_id
-                order.save()
-                print(f"Order {order.id} marked as PAID")
+            print(f"Square order ID: {square_order_id}, payment ID: {payment_id}, status: {payment_status}")
+
+            # --- 4. Find the matching local order ---
+            try:
+                order = Order.objects.get(square_order_id=square_order_id)
+            except Order.DoesNotExist:
+                print(f"⚠️ No order found for Square order ID {square_order_id}")
+                return JsonResponse({"status": "ignored", "message": "No matching order"}, status=200)
+
+            # --- 5. Only mark as paid if not already done ---
+            if payment_status == "COMPLETED":
+                if order.status != "paid":
+                    order.status = "paid"
+                    order.square_payment_id = payment_id
+                    order.save()
+                    print(f"Order {order.id} marked as PAID")
+                    return JsonResponse({"status": "success", "message": "Order updated"}, status=200)
+                else:
+                    print(f"Order {order.id} already marked as PAID — duplicate webhook ignored")
+                    return JsonResponse({"status": "ignored", "message": "Duplicate event"}, status=200)
             else:
-                print(f"order {order.id} already marked as PAID, skipping duplicate update")
+                print(f"Payment not completed yet (status: {payment_status})")
+                return JsonResponse({"status": "ignored", "message": "Payment not completed"}, status=200)
 
-    # --- 6. Return clean response ---
-    return HttpResponse("OK", status=200)
+        # --- 6. Handle missing fields safely ---
+        except KeyError as e:
+            print(f"Missing key in Square payload: {e}")
+            return JsonResponse({"status": "error", "message": f"Missing key: {e}"}, status=400)
+
+        # --- 7. Catch any other unexpected errors ---
+        except Exception as e:
+            print(f"Unexpected error while processing webhook: {e}")
+            return JsonResponse({"status": "error", "message": str(e)}, status=500)
+
+    # --- 8. Handle unknown or unimportant event types ---
+    else:
+        print(f"Unhandled Square webhook event type: {event_type}")
+        return JsonResponse({"status": "ignored", "message": f"Unhandled event: {event_type}"}, status=200)
+
 

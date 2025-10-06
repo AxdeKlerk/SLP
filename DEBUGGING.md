@@ -844,4 +844,21 @@ After making these changes, the computed HMAC matched *Square*’s signature per
 
 **Lesson Learned:** `PowerShell` often mangles *JSON* when using `-d` with multi-line or quoted content, so `--data-binary` or `Invoke-WebRequest` is safer for `webhook` testing. Always ensure model fields match the data you’re referencing in the `webhook` logic. Valid *JSON* must use double quotes for both keys and string values. Once verified locally, always re-enable the *Square* signature validation before pushing to *Heroku* for production security.
 
+## Webhook Integration Error
+
+**Bug:** When testing the *Square* `webhook` locally, *Django* returned multiple errors including `JSONDecodeError` (due to invalid *JSON*), `FieldError` (missing `square_order_id` field in the *Order* model), and `NameError` (missing `JsonResponse` import). The `webhook` also rejected local test payloads because of signature mismatch.
+
+**Fix:** 
+
+1. Corrected `test_payment.json` to use valid *JSON* with double quotes.  
+2. Added `square_order_id` and `square_payment_id` fields to the *Order* model and migrated the database.  
+3. Temporarily disabled signature verification for local testing.  
+4. Created a test order in the *Order* table using the *Django* shell and linked it to `"ORDER123456"`.  
+5. Added missing import line:  
+       `from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse`  
+6. Verified full request flow using `curl.exe` with `--data-binary` to prevent `PowerShell` from altering *JSON* structure.  
+7. Confirmed `Order.status` successfully updated to `"paid"` and `square_payment_id` saved.  
+8. Re-tested duplicate webhook to confirm graceful `"Duplicate event"` handling.
+
+**Lesson Learned:** `PowerShell` requires the `--data-binary` flag to send *JSON* exactly as written. *Django*’s `JsonResponse` must be explicitly imported even when `HttpResponse` is already present. Always validate *JSON* syntax before parsing and temporarily disable signature verification when testing webhooks locally. Once deployed to *Heroku*, re-enable verification to secure production webhooks.
 
