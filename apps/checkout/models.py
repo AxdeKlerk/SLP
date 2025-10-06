@@ -19,6 +19,9 @@ class Order(models.Model):
     ]
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="pending")
 
+    square_payment_id = models.CharField(max_length=100, blank=True, null=True)
+    square_order_id = models.CharField(max_length=100, blank=True, null=True)
+
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
 
