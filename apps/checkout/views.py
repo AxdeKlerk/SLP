@@ -90,11 +90,15 @@ def checkout_view(request, order_id):
 @csrf_exempt
 @require_POST
 def square_webhook(request):
+    """
+    Handle incoming Square payment webhooks securely.
+    """
     # --- 1. Verify Square signature (now re-enabled for production) ---
     signature = request.META.get("HTTP_X_SQUARE_HMACSHA256_SIGNATURE", "")
     body = request.body.decode("utf-8")
     key = settings.SQUARE_SIGNATURE_KEY.encode("utf-8")
 
+    # Ensure URL matches exactly to Square dashboard settings
     webhook_url = request.build_absolute_uri().replace("http://", "https://")
     string_to_sign = webhook_url + body
 
@@ -102,10 +106,10 @@ def square_webhook(request):
         hmac.new(key, string_to_sign.encode("utf-8"), hashlib.sha256).digest()
     ).decode("utf-8")
 
-    # Temporarily disabled signature verification for local testing
-    # if not hmac.compare_digest(computed_signature, signature):
-    #     print("Signature mismatch")
-    #     return HttpResponseBadRequest("Invalid signature")
+    # Signature verification now active
+    if not hmac.compare_digest(computed_signature, signature):
+        print("Signature mismatch")
+        return HttpResponseBadRequest("Invalid signature")
 
     # --- 2. Parse the incoming webhook JSON ---
     try:
@@ -132,10 +136,10 @@ def square_webhook(request):
             try:
                 order = Order.objects.get(square_order_id=square_order_id)
             except Order.DoesNotExist:
-                print(f"⚠️ No order found for Square order ID {square_order_id}")
+                print(f"No order found for Square order ID {square_order_id}")
                 return JsonResponse({"status": "ignored", "message": "No matching order"}, status=200)
 
-            # --- 5. Only mark as paid if not already done ---
+            # --- 5. Update only if payment completed ---
             if payment_status == "COMPLETED":
                 if order.status != "paid":
                     order.status = "paid"
@@ -160,7 +164,7 @@ def square_webhook(request):
             print(f"Unexpected error while processing webhook: {e}")
             return JsonResponse({"status": "error", "message": str(e)}, status=500)
 
-    # --- 8. Handle unknown or unimportant event types ---
+    # --- 8. Ignore all other event types ---
     else:
         print(f"Unhandled Square webhook event type: {event_type}")
         return JsonResponse({"status": "ignored", "message": f"Unhandled event: {event_type}"}, status=200)
