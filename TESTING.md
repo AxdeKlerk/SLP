@@ -359,3 +359,39 @@ The *Square* `webhook` was tested to confirm that payment events successfully up
 **Notes:** 
 
 Testing confirmed the `webhook` processes live payment events correctly and ignores repeated notifications. The only remaining step before production deployment is to re-enable signature verification to validate real *Square* `webhook` requests once running on *Heroku*.
+
+#### Square Webhook Integration
+
+**User Story:** 
+
+As a **site owner**, I want **my *Django* application to securely receive and process payment webhooks from *Square***, so that **order statuses automatically update to “paid” when payments are completed**.
+
+**What Was Tested:** 
+
+I tested the end-to-end `webhook integration` between *Square* and *Django*. This included verifying that the `webhook endpoint` accepts real `POST` requests, validates the *Square* signature correctly, parses the payload safely, updates orders to “paid” only when payment status is `"COMPLETED"`, and ignores duplicates or unmatched order IDs.  
+
+**Acceptance Criteria:** 
+
+[x] The `webhook endpoint` accepts `POST` requests from *Square* via HTTPS.  
+[x] Signature verification correctly matches the *Square* `HMAC-SHA256` value.  
+[x] `Webhook` events with invalid signatures return a `400 Bad Request`.  
+[x] Payment events with `status: COMPLETED` update the matching order to “paid.”  
+[x] Duplicate payment events are safely ignored with a `200 response`.  
+[x] Non-matching order IDs are logged and ignored without breaking the endpoint.  
+[x] Unknown event types return `{"status": "ignored"}` with `200 OK`.  
+[x] No `500 errors` occur during `webhook` testing.  
+
+**Tasks Completed:**
+
+[x] Added imports for `JsonResponse` and `HttpResponseBadRequest`.  
+[x] Implemented `@csrf_exempt` and `@require_POST` decorators.  
+[x] Re-enabled signature verification using `HMAC-SHA256`.  
+[x] Forced HTTPS URL reconstruction for accurate signature comparison.  
+[x] Added detailed console logging for event type, order ID, and payment ID.  
+[x] Implemented logic to update order status to “paid” on `COMPLETED` events.  
+[x] Added duplicate event protection.  
+[x] Tested successfully using both `curl` and real *Square* test events through *ngrok*.  
+
+**Notes:** 
+
+During testing, *Square* returned a “payment.created” event with status `"APPROVED"`, which did not yet trigger an order update (correct behaviour). When the same event reached `"COMPLETED"`, the order was marked as “paid” and duplicate `webhook` calls were ignored. This confirms that *Django* and *Square* are fully synchronised, the` webhook` verification is secure, and the system is production-ready.

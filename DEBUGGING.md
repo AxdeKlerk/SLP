@@ -862,3 +862,28 @@ After making these changes, the computed HMAC matched *Square*’s signature per
 
 **Lesson Learned:** `PowerShell` requires the `--data-binary` flag to send *JSON* exactly as written. *Django*’s `JsonResponse` must be explicitly imported even when `HttpResponse` is already present. Always validate *JSON* syntax before parsing and temporarily disable signature verification when testing webhooks locally. Once deployed to *Heroku*, re-enable verification to secure production webhooks.
 
+## Webhook Validation Error
+
+**Bug:** When testing the *Square* `webhook` locally, I initially received signature mismatches and `500 errors` when using the `payment.created` event. The server either rejected requests with “Invalid signature” or failed to match incoming payment data to existing orders. This made it impossible to verify whether the `webhook endpoint` was actually functioning correctly.
+
+**Fix:** I restructured the `square_webhook()` view in the *checkout* app to properly handle both signature verification and event parsing.  
+Key changes included:
+
+- Imported `JsonResponse` and `HttpResponseBadRequest` from `django.http` to handle responses cleanly.  
+- Used `@csrf_exempt` and `@require_POST` decorators to allow external `POST` requests from *Square*.  
+- Ensured that `request.build_absolute_uri()` was forced to HTTPS using  
+      `webhook_url = request.build_absolute_uri().replace("http://", "https://")`  
+  so that the computed signature matched the format used by *Square*’s `HTTPS webhooks`.  
+- Implemented signature verification with  
+      `hmac.new(key, string_to_sign.encode("utf-8"), hashlib.sha256)`  
+  and base64-encoded the digest.  
+- Wrapped all logic in defensive try/except blocks to safely handle malformed payloads and missing fields.  
+- Added handling for `payment.created` and `payment.updated` events, including logic to mark matching orders as “paid” only when the payment status equals `"COMPLETED"`.  
+- Implemented duplicate `webhook protection` to avoid redundant updates.
+
+After testing with both `curl` and real *Square* test events through *ngrok*, the `webhook` now logs all events, correctly updates orders, and ignores duplicate or unmatched events with a `200 OK` response.
+
+**Lesson Learned:** *Square*’s` webhook signature` must be generated using the *exact HTTPS URL* registered in the Developer Dashboard. When testing locally, *Django* builds `webhook URL`s with `http://`, which breaks signature verification unless replaced with `https://`.  
+I also learned that *Square* sends several event types (`APPROVED`, `COMPLETED`, etc.), and my `webhook` should only mark orders as “paid” once the payment reaches `"COMPLETED"`. 
+ 
+With signature verification now re-enabled and event parsing stable, the integration between *Django* and *Square* is fully secure and production-ready.
