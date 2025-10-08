@@ -395,3 +395,40 @@ I tested the end-to-end `webhook integration` between *Square* and *Django*. Thi
 **Notes:** 
 
 During testing, *Square* returned a “payment.created” event with status `"APPROVED"`, which did not yet trigger an order update (correct behaviour). When the same event reached `"COMPLETED"`, the order was marked as “paid” and duplicate `webhook` calls were ignored. This confirms that *Django* and *Square* are fully synchronised, the` webhook` verification is secure, and the system is production-ready.
+
+#### Square Payment Verification (Admin Action)
+
+**User Story:**
+
+As a **site owner**, I want to **verify payment statuses directly from *Django Admin* by checking *Square’s* records**, so that I can **confirm completed transactions even if a webhook fails**.
+
+**What Was Tested:** 
+
+I tested the new *Verify with Square* admin action to ensure it updates each order’s `payment_status` and `verified_on` fields correctly.  
+A mock mode was used for local testing, simulating *Square* responses such as `APPROVED`, `COMPLETED`, and `CANCELED`.  
+I also confirmed that manual entry of fake payment IDs in the admin form saved properly and displayed in the Orders list view.
+
+**Acceptance Criteria:** 
+
+[x] Orders with a `square_payment_id` can be selected and verified through an admin action.  
+[x] The action updates `payment_status` and `verified_on` without errors.  
+[x] Orders without a `square_payment_id` are safely skipped with an admin message.  
+[x] Admin messages confirm each order’s verification result.  
+[x] The action works in mock mode for local testing.  
+[x] The admin form allows editing of `square_payment_id` when `readonly_fields` are adjusted for testing.  
+[x] No `500` or `FieldError` exceptions occur during saving.  
+[x] Verified data appears in `list_display` columns in the Orders table.
+
+**Tasks Completed:**  
+
+[x] Added `payment_status` and `verified_on` fields to the *Order* model.  
+[x] Updated *OrderAdmin* with new columns, filters, and admin action.  
+[x] Added the `verify_with_square()` admin action function using the *Square* Payments API endpoint.  
+[x] Implemented mock mode using *Python*’s `random` module for local testing.  
+[x] Fixed admin field editability by removing `square_payment_id` from `readonly_fields`.  
+[x] Verified success messages and database updates in *Django* Admin.
+
+**Notes:** 
+
+The verification action successfully updated `payment_status` and `verified_on`, while the order’s local `status` remained “pending” (expected behaviour).In production, *Square’s* `webhook`will update `status` automatically when a `payment.completed` event is received, keeping both systems synchronized.
+

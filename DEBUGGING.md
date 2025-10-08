@@ -887,3 +887,24 @@ After testing with both `curl` and real *Square* test events through *ngrok*, th
 I also learned that *Square* sends several event types (`APPROVED`, `COMPLETED`, etc.), and my `webhook` should only mark orders as “paid” once the payment reaches `"COMPLETED"`. 
  
 With signature verification now re-enabled and event parsing stable, the integration between *Django* and *Square* is fully secure and production-ready.
+
+## Admin Field and Payment Verification Errors
+
+**Bug:** While testing the *Square* verification feature, I was unable to manually enter a *Square* Payment ID in the *Django* Admin panel. The admin form either rejected changes, displayed “created_at cannot be specified,” or ignored the new value. In addition, saving fake IDs did not display correctly in the Orders table.
+
+**Fix:** I reviewed the *OrderAdmin* configuration in *admin.py* and identified two issues:
+
+1. `readonly_fields` included `square_payment_id` and `created_at`, which prevented editing non-editable fields.  
+2. The `created_at` field triggered a `FieldError` because it was marked as `auto_now_add=True` in the model but still being rendered as editable.
+
+To fix this:  
+- I removed `square_payment_id` from `readonly_fields` during testing so manual IDs could be entered.  
+- I set `readonly_fields = ("created_at", "verified_on")` to prevent *Django* from treating those fields as editable.  
+- I confirmed the `square_payment_id` appeared correctly in the list view by adding it to `list_display`.
+
+After the fix, I successfully added fake payment IDs, saved them, and confirmed they persisted correctly in the Orders table.
+
+**Lesson Learned:** *Django* will raise a `FieldError` if an admin form tries to edit any model field marked as non-editable (e.g., `auto_now_add=True`).  
+
+For testing, temporarily removing fields from `readonly_fields` is fine, but they should be restored later for data integrity. This debugging process also reinforced the difference between `square_order_id` (*Square*’s internal reference) and `square_payment_id` (used by *Square*'s* Payments API). Entering a fake ID in the wrong field initially caused confusion but clarified how both fields serve distinct roles.
+
