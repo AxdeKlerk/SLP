@@ -17,10 +17,22 @@ class Order(models.Model):
         ("pending", "Pending"),
         ("paid", "Paid"),
     ]
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="pending")
 
     square_payment_id = models.CharField(max_length=100, blank=True, null=True)
     square_order_id = models.CharField(max_length=100, blank=True, null=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="pending")
+
+    # Fields for Square tracking
+    payment_status = models.CharField(
+        max_length=20,
+        default="PENDING",
+        help_text="Latest payment state from Square (e.g. APPROVED, COMPLETED)"
+    )
+    verified_on = models.DateTimeField(
+        null=True,
+        blank=True,
+        help_text="Timestamp when payment status was last verified with Square"
+    )
 
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
