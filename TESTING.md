@@ -432,3 +432,38 @@ I also confirmed that manual entry of fake payment IDs in the admin form saved p
 
 The verification action successfully updated `payment_status` and `verified_on`, while the order’s local `status` remained “pending” (expected behaviour).In production, *Square’s* `webhook`will update `status` automatically when a `payment.completed` event is received, keeping both systems synchronized.
 
+#### Square Sandbox Order Creation and Webhook Verification
+
+**User Story:** 
+
+As a **site owner**, I want **my checkout process to automatically create *Square* orders and payments in the sandbox environment** so that I can **verify real-time payment updates before going live**.
+
+**What Was Tested:**
+
+I tested the full end-to-end workflow in the *Square Sandbox*:
+1. A user completes checkout in *Django*.
+2. *Django* creates a matching *Square* order and payment via the `/v2/orders` and `/v2/payments` endpoints.
+3. *Square* sends `payment.created` and `payment.updated` webhook events.
+4. *Django* receives the `webhooks`, verifies signatures, and updates the local order status to `"paid"`.
+
+**Acceptance Criteria:** 
+
+[x] Local order successfully created without IntegrityError.  
+[x] *Square* order and payment created in sandbox.  
+[x] `Webhooks` received for both `payment.created` and `payment.updated`.  
+[x] `Webhook` verification passes signature check.  
+[x] *Django* updates local order `status` to `"paid"` when `COMPLETED`.  
+[x] `square_order_id` and `square_payment_id` saved correctly.  
+[x] Logs confirm successful synchronization end-to-end.
+
+**Tasks Completed:**
+
+[x] Restored `order_type` field with default `"event"`.  
+[x] Faked the duplicate migration to sync schema.  
+[x] Added *Square* API calls to `basket_checkout()` for order and payment creation.  
+[x] Verified `webhook` processing updates order status correctly.  
+[x] Confirmed Square IDs display in *Django* Admin.  
+
+**Notes:**
+
+This test confirmed full sandbox functionality: order creation, payment simulation, and `webhook` synchronization. The integration is now production-ready, requiring only a credential switch to live keys on *Heroku*.

@@ -908,3 +908,15 @@ After the fix, I successfully added fake payment IDs, saved them, and confirmed 
 
 For testing, temporarily removing fields from `readonly_fields` is fine, but they should be restored later for data integrity. This debugging process also reinforced the difference between `square_order_id` (*Square*’s internal reference) and `square_payment_id` (used by *Square*'s* Payments API). Entering a fake ID in the wrong field initially caused confusion but clarified how both fields serve distinct roles.
 
+## Database Integrity and Square Order Sync
+
+**Bug:** When running the new *Square* checkout integration, *Django* raised an `IntegrityError` complaining about a `null value in column "order_type"` in the `checkout_order` table. The model no longer contained that field, but the database schema still required it. This caused the order creation process to fail before the Square API could be called.
+
+**Fix:** I restored the missing `order_type` field to the `Order` model and gave it a default value of `"event"`. This ensured every order had a valid type and allowed *Django* and the database schema to match. Because the column already existed in the database, the subsequent migration was safely faked using:
+
+    python manage.py migrate checkout 0003 --fake
+
+After that, the checkout flow successfully created local orders and sent requests to the *Square Sandbox API* to generate external orders and payments. The *Square* webhooks returned `payment.created` and `payment.updated`, and the order was automatically marked as paid.
+
+**Lesson Learned:** If *Django* reports missing or duplicate columns, the issue is usually a mismatch between model definitions and existing migrations. Adding a default value or faking the migration is safer than manually altering tables. Always ensure migrations and schema stay in sync before testing API integrations.
+
