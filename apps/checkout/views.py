@@ -1,5 +1,5 @@
 import json
-import hmac, hashlib, base64, os
+import hmac, hashlib, base64, os, requests
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -67,6 +67,77 @@ def basket_checkout(request):
     order.subtotal = subtotal
     order.total = subtotal
     order.save()
+
+    # --- Create matching Square Order in Sandbox ---
+    headers = {
+        "Square-Version": "2025-01-01",
+        "Authorization": f"Bearer {settings.SQUARE_ACCESS_TOKEN}",
+        "Content-Type": "application/json",
+    }
+
+    order_payload = {
+        "order": {
+            "location_id": settings.SQUARE_LOCATION_ID,
+            "line_items": [
+                {
+                    "name": "Checkout Order",
+                    "quantity": "1",
+                    "base_price_money": {
+                        "amount": int(order.total * 100),  # Convert to cents
+                        "currency": "GBP",
+                    },
+                }
+            ],
+            "state": "OPEN",
+        }
+    }
+
+    try:
+        # 1️ Create the Square Order
+        order_response = requests.post(
+            f"{settings.SQUARE_BASE_URL}/v2/orders",
+            headers=headers,
+            json=order_payload,
+        )
+        order_data = order_response.json()
+        square_order_id = order_data.get("order", {}).get("id")
+
+        if square_order_id:
+            order.square_order_id = square_order_id
+            order.save()
+
+            # 2️ Create the Square Payment
+            payment_payload = {
+                "source_id": "cnon:card-nonce-ok",  # Sandbox test card token
+                "amount_money": {
+                    "amount": int(order.total * 100),
+                    "currency": "GBP",
+                },
+                "idempotency_key": f"order-{order.id}",
+                "location_id": settings.SQUARE_LOCATION_ID,
+                "order_id": square_order_id,
+            }
+
+            payment_response = requests.post(
+                f"{settings.SQUARE_BASE_URL}/v2/payments",
+                headers=headers,
+                json=payment_payload,
+            )
+            payment_data = payment_response.json()
+            square_payment_id = payment_data.get("payment", {}).get("id")
+
+            if square_payment_id:
+                order.square_payment_id = square_payment_id
+                order.save()
+                print(f"Created Square Order {square_order_id} and Payment {square_payment_id}")
+            else:
+                print("Payment ID not returned by Square Sandbox")
+
+        else:
+            print("Failed to create Square Order")
+
+    except Exception as e:
+        print(f"Error creating Square order/payment: {e}")
 
     # Clear basket
     basket.items.all().delete()

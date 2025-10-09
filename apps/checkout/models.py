@@ -22,6 +22,8 @@ class Order(models.Model):
     square_order_id = models.CharField(max_length=100, blank=True, null=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="pending")
 
+    order_type = models.CharField(max_length=20, default="event")  # 'event' or 'merch'
+
     # Fields for Square tracking
     payment_status = models.CharField(
         max_length=20,
