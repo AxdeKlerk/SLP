@@ -24,7 +24,8 @@ def profile_view(request):
     context = {
         "current_orders": current_orders,
         "past_orders": past_orders,
-        "page_title": "Profile"       
+        "page_title": "Profile",
+        "previous_page": request.META.get("HTTP_REFERER", "/"),       
     }
     return render(request, "user/profile.html", context)
 

@@ -155,7 +155,13 @@ def confirmation_view(request, order_id):
 def checkout_view(request, order_id):
     # Find the order for this user
     order = get_object_or_404(Order, id=order_id, user=request.user, status="pending")
-    return render(request, "checkout/checkout.html", {"order": order})
+
+    context = {
+        "order": order,
+        "previous_page": request.META.get("HTTP_REFERER", "/"),
+    }
+
+    return render(request, "checkout/checkout.html", context)
 
 
 @csrf_exempt
