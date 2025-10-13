@@ -134,16 +134,13 @@
                   </form>
                 </li>
                 <!-- Merch search -->
-                <li class="nav-item">
-                  <a class="nav-link" data-bs-toggle="collapse" href="#searchMerch" 
-                    role="button" aria-expanded="false" aria-controls="searchMerch">
-                    Merch
-                  </a>
-                  <div class="collapse mt-1" id="searchMerch" data-bs-parent="#searchAccordion">
-                    <input type="text" id="merch-search-mobile" 
-                          class="form-control form-control-sm bg-black text-light border-success"
-                          placeholder="Search merch...">
-                  </div>
+                <li class="px-3 py-2">
+                  <form method="get" action="{% url 'products:search_view' %}">
+                    <input type="hidden" name="category" value="merch">
+                    <label for="merch-search" class="form-label mb-1 text-light">Merch</label>
+                    <input type="text" id="merch-search" name="q"
+                          class="form-control form-control-sm bg-black text-light border-success">
+                  </form>
                 </li>
               </ul>
             </div>
