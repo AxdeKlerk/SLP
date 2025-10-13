@@ -128,5 +128,3 @@ def bulk_order_action(request):
         messages.error(request, f"Square API error: {response.text}", extra_tags="orders")
         return redirect("user:profile_view")
 
-
-

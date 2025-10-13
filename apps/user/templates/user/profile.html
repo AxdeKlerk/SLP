@@ -11,14 +11,6 @@
         <div class="col-lg-8">
             <!-- Orders in Progress -->
             <h4 class="mb-2">Orders in Progress</h4>
-            <!-- Order-specific messages -->
-                {% if messages %}
-                    {% for message in messages %}
-                        {% if "orders" in message.tags %}
-                            <p class="{{ message.tags }} fs-6" style="color: #FF3333;">{{ message }}</p>
-                        {% endif %}
-                    {% endfor %}
-                {% endif %}
             {% if current_orders %}
             <form method="post" action="{% url 'user:bulk_order_action' %}">
                 {% csrf_token %}
@@ -43,11 +35,10 @@
                             <strong>Total: £{{ order.total }}</strong>
                         </div>
                         <!-- Single pay button -->
-                        <div class="text-end">
-                            <button type="submit" name="order_ids" value="{{ order.id }}" formaction="{% url 'user:bulk_order_action' %}"
-                                    class="btn cta-btn2 mb-2">Proceed to Payment
+                        <div class="d-flex justify-content-end mb-2">
+                            <button type="submit" formaction="{% url 'checkout:checkout_view' order.id %}" class="btn cta-btn2 mb-2">
+                                Checkout
                             </button>
-                            <input type="hidden" name="action" value="pay_single">
                         </div>
                     </div>
                 </div>
@@ -76,7 +67,7 @@
             <div class="row">
                 {% for order in past_orders %}
                 <div class="col-12">
-                    <div class="card merch-card">
+                    <div class="card merch-card mb-2">
                         <div class="card-header cp-item">
                             <strong>Order #{{ order.id }}</strong> – Completed {{ order.created_at|date:"M d, Y" }}
                         </div>

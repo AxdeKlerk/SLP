@@ -1,9 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from apps.basket.models import Basket, BasketItem
 from apps.products.models import Event, Merch
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 def basket_view(request):
+     # Clear any old Django messages from previous sessions
+    storage = messages.get_messages(request)
+    list(storage)
+    
     basket = None
     subtotal = 0
 
