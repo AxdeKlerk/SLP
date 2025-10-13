@@ -68,7 +68,7 @@
       <div class="col-12 d-md-none text-left">
         <h1>{{ page_title }}</h1>
       </div>
-        {% endif %}
+      {% endif %}
     </div>
 
     <!-- Mobile Nav Drawer: Offcanvas on right -->
@@ -176,9 +176,26 @@
               </ul>
             </div>
           </li>
-          <!-- Basket -->
+          <!-- Basket Dropdown (mobile) -->
           <li class="nav-item text-end">
-            <a class="nav-link" href="{% url 'basket:basket_view' %}">Basket</a>
+            <a class="nav-link" data-bs-toggle="collapse" href="#offcanvasBasket"
+              role="button" aria-expanded="false" aria-controls="offcanvasBasket">
+              Basket
+            </a>
+            <div class="collapse" id="offcanvasBasket">
+              <ul class="navbar-nav ps-3">
+                <li>
+                  <a class="nav-link" href="{% url 'basket:basket_view' %}">View Basket</a>
+                </li>
+                {% if user.is_authenticated and last_order %}
+                <li>
+                  <a class="nav-link" href="{% url 'checkout:checkout_view' last_order.id %}">
+                    Order Summary
+                  </a>
+                </li>
+                {% endif %}
+              </ul>
+            </div>
           </li>
         </ul>
       </div>
@@ -279,9 +296,24 @@
             {% endif %}
           </ul>
         </li>
-        <!-- Basket -->
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'basket:basket_view' %}">Basket</a>
+        <!-- Basket Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" id="basketDropdown" href="#" role="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+            Basket
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="basketDropdown">
+            <li>
+              <a class="dropdown-item" href="{% url 'basket:basket_view' %}">View Basket</a>
+            </li>
+            {% if user.is_authenticated and last_order %}
+            <li>
+              <a class="dropdown-item" href="{% url 'checkout:checkout_view' last_order.id %}">
+                Order Summary
+              </a>
+            </li>
+            {% endif %}
+          </ul>
         </li>
       </ul>
       {% endwith %}

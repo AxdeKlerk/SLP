@@ -3,6 +3,7 @@ from apps.basket.models import Basket, BasketItem
 from apps.products.models import Event, Merch
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from apps.checkout.models import Order
 
 
 def basket_view(request):
@@ -16,12 +17,18 @@ def basket_view(request):
     if request.user.is_authenticated:
         basket, created = Basket.objects.get_or_create(user=request.user)
         subtotal = sum(item.line_total for item in basket.items.all())
+        last_order = (
+            Order.objects.filter(user=request.user, status="pending")
+            .order_by("-created_at")
+            .first()
+        )
 
     return render(request, 'basket/basket.html', {
         'basket': basket,
         'subtotal': subtotal,
         'quantity_options': range(1, 11),
         'page_title': "Basket",
+        'last_order': last_order,
     })
 
 
