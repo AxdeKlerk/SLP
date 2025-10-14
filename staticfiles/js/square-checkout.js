@@ -18,7 +18,7 @@ const amountInput = document.getElementById("amount");
 
 async function initSquare() {
   if (!window.Square) {
-    statusEl.textContent = "Square SDK failed to load.";
+    statusEl.textContent = "Square SDK failed to load";
     return;
   }
 

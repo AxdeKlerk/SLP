@@ -1,39 +1,36 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block content %}
-  <div class="container container-global mobile">
-    <h4 class="mb-2">Checkout (Sandbox)</h4>
-    <p>Enter any Square Sandbox test card to generate a token.</p>
+<div class="container mt-5 text-center">
+    <h2 class="mb-4">Secure Payment</h2>
+    <p>Please review your order total below and complete payment securely using Square.</p>
 
-    <!-- Amount input -->
-    <label for="amount" class="form-label">Amount (GBP)</label>
-    <input id="amount" type="number" min="1" step="0.01" value="10.00"
-           class="form-control amount-input" />
+    <!-- Order Summary -->
+    <div class="card mx-auto my-4" style="max-width: 400px;">
+        <div class="card-body">
+            <h5 class="card-title">Order #{{ order.id }}</h5>
+            <p class="card-text">Total: <strong>£{{ order.total }}</strong></p>
+        </div>
+    </div>
 
-    <hr />
+    <!-- Square Config -->
+    <div id="square-config"
+         data-app-id="{{ SQUARE_APPLICATION_ID }}"
+         data-location-id="{{ SQUARE_LOCATION_ID }}">
+    </div>
 
-    <!-- Card element goes here -->
-    <div id="card-container" class="card-container"></div>
+    <!-- Square Card Form -->
+    <div id="card-container" class="my-3"></div>
 
-    <!-- Button -->
-    <button id="pay-button" type="button" class="btn cta-btn">Pay</button>
-    <div id="status" class="status-msg" role="status" aria-live="polite"></div>
-  </div>
+    <!-- Amount + Pay Button -->
+    <input type="hidden" id="amount" value="{{ order.total }}">
+    <button id="pay-button" class="btn btn-primary">Pay £{{ order.total }}</button>
 
-  <!-- Config passed in safely -->
-  <div id="square-config"
-       data-app-id="{{ SQUARE_APPLICATION_ID|escape }}"
-       data-location-id="{{ SQUARE_LOCATION_ID|escape }}">
-  </div>
-{% endblock %}
+    <p id="status" class="mt-3 status-msg"></p>
+</div>
 
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/square-checkout.css' %}">
-{% endblock %}
-
-{% block extra_js %}
+<!-- Include Square SDK and your JS -->
 <script src="https://sandbox.web.squarecdn.com/v1/square.js"></script>
 <script src="{% static 'js/square-checkout.js' %}"></script>
 {% endblock %}
-

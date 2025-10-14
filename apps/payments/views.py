@@ -1,6 +1,6 @@
 import json
-from django.contrib.auth.decorators import login_required
 import logging
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse, HttpResponseNotAllowed, HttpResponseBadRequest
 from django.conf import settings
@@ -45,5 +45,8 @@ def process_payment(request):
 @login_required
 def payment_checkout(request, order_id):
     order = get_object_or_404(Order, id=order_id, user=request.user, status="pending")
-    # Pass order.total into your Square checkout form
-    return render(request, "payments/checkout.html", {"order": order})
+    return render(request, "payments/payment.html", {
+        "order": order,
+        "SQUARE_APPLICATION_ID": settings.SQUARE_APPLICATION_ID,
+        "SQUARE_LOCATION_ID": settings.SQUARE_LOCATION_ID,
+    })
