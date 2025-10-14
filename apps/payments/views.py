@@ -45,8 +45,12 @@ def process_payment(request):
 @login_required
 def payment_checkout(request, order_id):
     order = get_object_or_404(Order, id=order_id, user=request.user, status="pending")
+
+    previous_page = request.META.get("HTTP_REFERER", "/checkout/")
+
     return render(request, "payments/payment.html", {
         "order": order,
         "SQUARE_APPLICATION_ID": settings.SQUARE_APPLICATION_ID,
         "SQUARE_LOCATION_ID": settings.SQUARE_LOCATION_ID,
+        "previous_page": previous_page,
     })

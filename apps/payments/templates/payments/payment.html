@@ -1,33 +1,63 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 
-{% block content %}
-<div class="container mt-5 text-center">
-    <h2 class="mb-4">Secure Payment</h2>
-    <p>Please review your order total below and complete payment securely using Square.</p>
+{% block title %}Secure Payment{% endblock %}
 
-    <!-- Order Summary -->
-    <div class="card mx-auto my-4" style="max-width: 400px;">
-        <div class="card-body">
-            <h5 class="card-title">Order #{{ order.id }}</h5>
-            <p class="card-text">Total: <strong>£{{ order.total }}</strong></p>
+{% block content %}
+<div class="container container-global mobile">
+    <a class="btn cta-btn2 mb-2" href="{{ previous_page }}">← Back</a>
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Payment Summary -->
+            <h4 class="mb-2">Payment Summary</h4>
+
+            <div class="card merch-card mb-2">
+                <div class="card-header cp-item d-flex justify-content-between align-items-center">
+                    <strong>Order #{{ order.id }}</strong>
+                    <span class="cp-item">{{ order.created_at|date:"d M Y" }}</span>
+                </div>
+
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for item in order.items.all %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {% if item.event %}
+                                <span>{{ item.event }} (x{{ item.quantity }})</span>
+                            {% elif item.merch %}
+                                <span>{{ item.merch.product_name }} (x{{ item.quantity }})</span>
+                            {% endif %}
+                            <span>£{{ item.line_total }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+
+                    <div class="mt-3 mb-4 text-end cp-item">
+                        <strong>Total: £{{ order.total|floatformat:2 }}</strong>
+                    </div>
+
+                    <!-- Square Config -->
+                    <div id="square-config"
+                         data-app-id="{{ SQUARE_APPLICATION_ID }}"
+                         data-location-id="{{ SQUARE_LOCATION_ID }}">
+                    </div>
+
+                    <!-- Square Card Form -->
+                    <div id="card-container" class="my-3"></div>
+
+                    <!-- Hidden amount + Pay Button -->
+                    <input type="hidden" id="amount" value="{{ order.total }}">
+                    <div class="d-flex justify-content-end">
+                        <button id="pay-button" class="btn cta-btn2 mb-2">
+                            Pay £{{ order.total|floatformat:2 }}
+                        </button>
+                    </div>
+
+                    <p id="status" class="mt-3 status-msg text-center"></p>
+                </div>
+            </div>
         </div>
     </div>
-
-    <!-- Square Config -->
-    <div id="square-config"
-         data-app-id="{{ SQUARE_APPLICATION_ID }}"
-         data-location-id="{{ SQUARE_LOCATION_ID }}">
-    </div>
-
-    <!-- Square Card Form -->
-    <div id="card-container" class="my-3"></div>
-
-    <!-- Amount + Pay Button -->
-    <input type="hidden" id="amount" value="{{ order.total }}">
-    <button id="pay-button" class="btn btn-primary">Pay £{{ order.total }}</button>
-
-    <p id="status" class="mt-3 status-msg"></p>
 </div>
 
 <!-- Include Square SDK and your JS -->
