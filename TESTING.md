@@ -467,3 +467,32 @@ I tested the full end-to-end workflow in the *Square Sandbox*:
 **Notes:**
 
 This test confirmed full sandbox functionality: order creation, payment simulation, and `webhook` synchronization. The integration is now production-ready, requiring only a credential switch to live keys on *Heroku*.
+
+#### Order Summary Event Display
+
+**User Story:**
+
+As a **user**, I want to **see clear and accurate details of my event orders in the checkout and payment summary**, so I can **confirm I’m paying for the correct gig before completing my purchase**.
+
+**What Was Tested:**
+
+The order summary section on the checkout and payment pages was reviewed to ensure event names display correctly. The summary should no longer show “None” for events when the optional `title` field is blank.
+
+**Acceptance Criteria:** 
+
+[x] Event orders display the full event string (artist, venue, and date).  
+[x] Merch items continue to display correctly.  
+[x] No “None” or blank text appears in the summary.  
+[x] The output format matches the `__str__()` of the Event model.
+
+**Tasks Completed:** 
+
+[x] Identified that the template referenced `item.event.title`, which can be `None`.  
+[x] Replaced it with `item.event` to use the Event model’s `__str__()` output.  
+[x] Verified rendering shows correct event name and details.  
+[x] Committed fix to repository.
+
+**Notes:** 
+ 
+This fix ensures future event listings remain consistent even if the optional `title` field isn’t used.  
+Django’s automatic call to the model’s `__str__()` provides a safe fallback for display logic.
