@@ -7,6 +7,12 @@ class Order(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=20, blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="orders")
+    email = models.EmailField(blank=True, null=True, help_text="Customer email for e-tickets or receipts")
+    shipping_name = models.CharField(max_length=100, blank=True, null=True)
+    shipping_address = models.TextField(blank=True, null=True)
+    shipping_city = models.CharField(max_length=100, blank=True, null=True)
+    shipping_postcode = models.CharField(max_length=20, blank=True, null=True)
+    shipping_country = models.CharField(max_length=100, default="UK", blank=True, null=True)
 
     # Order totals
     subtotal = models.DecimalField(max_digits=10, decimal_places=2, default=0)
