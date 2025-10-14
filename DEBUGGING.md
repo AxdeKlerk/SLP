@@ -920,3 +920,14 @@ After that, the checkout flow successfully created local orders and sent request
 
 **Lesson Learned:** If *Django* reports missing or duplicate columns, the issue is usually a mismatch between model definitions and existing migrations. Adding a default value or faking the migration is safer than manually altering tables. Always ensure migrations and schema stay in sync before testing API integrations.
 
+### Template Display Error
+
+**Bug:** The order summary on the checkout and payment pages showed “None” for event items instead of displaying the correct event name and details. This happened because the template referenced `{{ item.event.title }}`, but the `title` field in the *Event* model is optional and often left blank.
+
+**Fix:** Replaced `{{ item.event.title }}` with `{{ item.event }}` in the order summary loop.  
+*Django* automatically calls the *Event* model’s `__str__()` method, which returns the correct readable format:  
+`"{artist} @ {venue} | {gig_date}"`.  
+This ensures event details display correctly even when the optional `title` field is empty.
+
+**Lesson Learned:** When displaying model data in templates, always consider whether the referenced field can be blank.  
+If the model has a meaningful `__str__()` method, using `{{ object }}` is a safer and cleaner approach than referencing a nullable field directly.
