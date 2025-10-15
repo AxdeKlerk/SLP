@@ -931,3 +931,22 @@ This ensures event details display correctly even when the optional `title` fiel
 
 **Lesson Learned:** When displaying model data in templates, always consider whether the referenced field can be blank.  
 If the model has a meaningful `__str__()` method, using `{{ object }}` is a safer and cleaner approach than referencing a nullable field directly.
+
+### Logic Error
+
+**Bug:** Delivery and booking fee charges were not being carried over to the order summary page after checkout. The basket correctly displayed both charges, but the checkout total remained unchanged, only reflecting raw item prices.
+
+**Fix:** Rewrote the `basket_checkout` view to mirror the fee logic used in the basket. Added `Decimal`-based calculations for both booking and delivery fees inside the order creation loop:
+    subtotal += line_total + (booking_fee * item.quantity) + delivery_fee
+This ensured both charges were included in `order.subtotal` and `order.total` before saving.
+
+**Lesson Learned:** When performing multi-step calculations across views, always duplicate or abstract shared logic (e.g. into a helper function) so updates remain consistent. The basket and checkout must use identical fee logic to avoid mismatched totals.
+
+### Template Logic Error
+
+**Bug:** Messages confirming deleted pending orders `(“4 order(s) deleted)”)` appeared in the basket view instead of the “Orders in Progress” section. This caused confusion since the message was unrelated to basket actions.
+
+**Fix:** Tagged order deletion messages in the user view with `extra_tags="orders"` and filtered message display in templates.  
+In the basket template, I excluded messages containing `"orders"` from the flash message loop. In the user profile template, I added a dedicated message block under “Orders in Progress” to display messages with the `"orders"` tag only.
+
+**Lesson Learned:** When using *Django*’s messages framework across multiple views, tagging messages is essential for controlling where they appear. Filtering messages by tags keeps unrelated alerts confined to the correct page context.
