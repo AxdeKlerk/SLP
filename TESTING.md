@@ -496,3 +496,59 @@ The order summary section on the checkout and payment pages was reviewed to ensu
  
 This fix ensures future event listings remain consistent even if the optional `title` field isn’t used.  
 Django’s automatic call to the model’s `__str__()` provides a safe fallback for display logic.
+
+#### Delivery and Booking Fees Carry Over to Order Summary
+
+**User Story:** 
+
+As a **user**, I want **delivery and booking fees shown in my basket to be accurately carried over to my checkout summary**, so that I **always see the correct final total before payment**.
+
+**What Was Tested:** 
+
+I tested whether event booking fees (10%) and merch delivery fees (£5 + 50% per additional item) displayed in the basket were reflected correctly in the order summary after checkout creation.
+
+**Acceptance Criteria:** 
+
+[x] Booking fee included per event ticket in checkout total.  
+[x] Delivery fee included per merch item in checkout total.  
+[x] Checkout total matches basket total exactly.  
+[x] Order stored with both fee values in subtotal and total.  
+
+**Tasks Completed:** 
+
+[x] Updated `basket_checkout` view to include both fees.  
+[x] Verified totals using multiple event and merch combinations.  
+[x] Cross-checked database entries for accurate totals.  
+[x] Confirmed display consistency in both basket and checkout templates.  
+
+**Notes:** 
+
+Initial totals excluded additional fees due to logic mismatch between basket and checkout views. Adjusting `basket_checkout` to include both charges resolved the discrepancy entirely.
+
+#### Order Deletion Messages Appear Under Orders in Progress
+
+**User Story:**  
+
+As a **user**, I want **confirmation messages for deleted orders to appear directly under “Orders in Progress”** so I can **clearly see the result of my action without confusion**.
+
+**What Was Tested:** 
+
+Tested visibility and location of deletion messages after removing pending orders from the user profile page.
+
+**Acceptance Criteria:**
+
+[x] Deleted order message appears in red below “Orders in Progress”.  
+[x] Message no longer appears in basket view.  
+[x] Message persists only for current request and clears on refresh.  
+[x] Basket error messages remain unaffected.  
+
+**Tasks Completed:** 
+
+[x] Tagged order deletion messages with `extra_tags="orders"`.  
+[x] Filtered message rendering in `basket.html` to exclude `"orders"`.  
+[x] Added message block under Orders in Progress to show only `"orders"` messages.  
+[x] Verified display after both single and bulk deletions.  
+
+**Notes:** 
+ 
+The original “4 order(s) deleted” message was caused by shared message context between basket and orders views. Introducing message tags allowed each section to handle its own alerts cleanly and consistently.
