@@ -11,6 +11,14 @@
         <div class="col-lg-8">
             <!-- Orders in Progress -->
             <h4 class="mb-2">Orders in Progress</h4>
+                <!-- Flash messages for deleted orders -->
+                {% if messages %}
+                    {% for message in messages %}
+                        {% if "orders" in message.tags %}
+                            <p class="message-text mt-2">{{ message }}</p>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
             {% if current_orders %}
             <form method="post" action="{% url 'user:bulk_order_action' %}">
                 {% csrf_token %}
@@ -69,7 +77,7 @@
                 <div class="col-12">
                     <div class="card merch-card mb-2">
                         <div class="card-header cp-item">
-                            <strong>Order #{{ order.id }}</strong> – Completed {{ order.created_at|date:"M d, Y" }}
+                            <strong>Order #{{ order.id }}</strong> – Completed {{ order.created_at|date:"d M Y" }}
                         </div>
                         <div class="card-body">
                             <ul class="list-group list-group-flush">

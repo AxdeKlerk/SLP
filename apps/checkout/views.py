@@ -9,6 +9,7 @@ from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.conf import settings
+from decimal import Decimal
 
 SQUARE_SIGNATURE_KEY = os.getenv("SQUARE_SIGNATURE_KEY")
 
@@ -38,7 +39,7 @@ def basket_checkout(request):
                 return redirect("basket:basket_view")
 
     if not basket_items:
-        messages.error(request, "Your basket is empty.")
+        messages.error(request, "Your basket is empty")
         return redirect("basket:basket_view")
 
     # Create the pending order
@@ -50,11 +51,29 @@ def basket_checkout(request):
         total=0,
     )
 
-    subtotal = 0
-    for item in basket_items:
-        line_total = item.line_total
-        subtotal += line_total
+    # Calculate totals
+    subtotal = Decimal('0.00')
 
+    for item in basket_items:
+        booking_fee = Decimal('0.00')
+        delivery_fee = Decimal('0.00')
+        line_total = item.line_total
+
+        # Event booking fee
+        if item.event:
+            booking_fee = (item.event.price * Decimal('0.10')).quantize(Decimal('0.01'))
+
+        # Merch delivery fee
+        if item.merch:
+            base_fee = Decimal('5.00')
+            extra_fee = (base_fee * Decimal('0.50')).quantize(Decimal('0.01'))
+            delivery_fee = base_fee + (extra_fee * (item.quantity - 1))
+            delivery_fee = delivery_fee.quantize(Decimal('0.01'))
+
+        # Total for this item
+        subtotal += line_total + (booking_fee * item.quantity) + delivery_fee
+
+        # Create order item
         OrderItem.objects.create(
             order=order,
             event=item.event if item.event else None,
@@ -63,12 +82,12 @@ def basket_checkout(request):
             price=(line_total / item.quantity) if item.quantity else 0,
         )
 
-    # Update totals
+    # --- Update totals ---
     order.subtotal = subtotal
     order.total = subtotal
     order.save()
 
-    # --- Create matching Square Order in Sandbox ---
+    # --- Create matching Square Order in Sandbox environment ---
     headers = {
         "Square-Version": "2025-01-01",
         "Authorization": f"Bearer {settings.SQUARE_ACCESS_TOKEN}",
@@ -83,7 +102,7 @@ def basket_checkout(request):
                     "name": "Checkout Order",
                     "quantity": "1",
                     "base_price_money": {
-                        "amount": int(order.total * 100),  # Convert to cents
+                        "amount": int(order.total * 100),  # Convert to pennies
                         "currency": "GBP",
                     },
                 }
@@ -139,10 +158,8 @@ def basket_checkout(request):
     except Exception as e:
         print(f"Error creating Square order/payment: {e}")
 
-    # Clear basket
+    # --- Clear basket and redirect ---
     basket.items.all().delete()
-
-    # Redirect to checkout page
     return redirect("checkout:checkout_view", order_id=order.id)
 
 
