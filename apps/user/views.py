@@ -9,6 +9,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from apps.user.forms import ForgotUsernameForm
 from apps.checkout.models import Order
 from django.conf import settings
+from django.core.paginator import Paginator
 
 
 @login_required
@@ -19,9 +20,15 @@ def login_success_view(request):
 @login_required
 def profile_view(request):
     current_orders = Order.objects.filter(user=request.user, status="pending")
-    past_orders = Order.objects.filter(user=request.user, status="paid")
+    past_orders = Order.objects.filter(user=request.user, status="paid").order_by('-created_at')
+
+    # Paginate: 4 per page
+    paginator = Paginator(past_orders, 4)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
 
     context = {
+        "page_obj": page_obj,
         "current_orders": current_orders,
         "past_orders": past_orders,
         "page_title": "Profile",
