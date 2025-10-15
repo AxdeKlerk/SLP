@@ -309,6 +309,9 @@ body {
     border-radius: 50%;
     padding: 0.6rem;
     background-color:#11ED73;
+    max-height: 400px;
+    width: auto;
+    object-fit: cover;
 }
 
 /*Events page*/
