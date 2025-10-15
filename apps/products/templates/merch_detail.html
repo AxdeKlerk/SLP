@@ -26,10 +26,10 @@
             <div class="dropdown d-inline-block">
               <button class="nav-link dropdown-toggle" type="button" id="qtyDropdown"
                 data-bs-toggle="dropdown" aria-expanded="false">
-                Quantity: 1
+                Qty: 1
               </button>
               <ul class="dropdown-menu" aria-labelledby="qtyDropdown">
-                {% for q in "123456789"|make_list %}
+                {% for q in "123456"|make_list %}
                   <li>
                     <a class="dropdown-item" href="#" data-value="{{ q }}">{{ q }}</a>
                   </li>

@@ -4,19 +4,33 @@ from apps.products.models import Event, Merch
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from apps.checkout.models import Order
+from decimal import Decimal
 
-
+@login_required
 def basket_view(request):
-     # Clear any old Django messages from previous sessions
+    # Clear any old Django messages from previous sessions
     storage = messages.get_messages(request)
     list(storage)
-    
+
     basket = None
-    subtotal = 0
+    subtotal = Decimal('0.00')
+    items_with_fees = []  # List to store items + calculated fees
 
     if request.user.is_authenticated:
         basket, created = Basket.objects.get_or_create(user=request.user)
-        subtotal = sum(item.line_total for item in basket.items.all())
+
+        for item in basket.items.all():
+            item.booking_fee = Decimal('0.00')
+
+            if item.event:
+                item.booking_fee = (item.event.price * Decimal('0.10')).quantize(Decimal('0.01'))
+
+            line_total = item.line_total
+            subtotal += line_total + (item.booking_fee * item.quantity)
+
+            # Store each item with its calculated fee
+            items_with_fees.append(item)
+
         last_order = (
             Order.objects.filter(user=request.user, status="pending")
             .order_by("-created_at")
@@ -25,8 +39,9 @@ def basket_view(request):
 
     return render(request, 'basket/basket.html', {
         'basket': basket,
+        'basket_items': items_with_fees,
         'subtotal': subtotal,
-        'quantity_options': range(1, 11),
+        'quantity_options': range(1, 7),
         'page_title': "Basket",
         'last_order': last_order,
     })
@@ -41,7 +56,7 @@ def add_event_to_basket(request, event_id):
 
     item, created = BasketItem.objects.get_or_create(basket=basket, event=event)
     if not created:
-        item.quantity = min(item.quantity + 1, 9)
+        item.quantity = min(item.quantity + 1, 6)  # Max 6 tickets
         item.save()
 
     return redirect('basket:basket_view')
@@ -56,7 +71,7 @@ def add_merch_to_basket(request, merch_id):
 
     quantity = int(request.POST.get("quantity", 1))
     if quantity < 1: quantity = 1
-    elif quantity > 9: quantity = 9
+    elif quantity > 6: quantity = 6
 
     size = request.POST.get("size", "")
 
@@ -77,8 +92,8 @@ def update_basket_item(request, item_id):
 
         if quantity < 1:
             quantity = 1
-        elif quantity > 9:
-            quantity = 9
+        elif quantity > 6:
+            quantity = 6
 
         item.quantity = quantity
         item.save()

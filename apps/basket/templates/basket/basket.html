@@ -10,7 +10,7 @@
         <div class="col-12">
             {% if basket and basket.items.all %}
                 <div class="basket-items">
-                    {% for item in basket.items.all %}
+                    {% for item in basket_items %}
                     <div class="row basket-item py-2 align-items-center">
 
                         <!-- Thumbnail (col 1) -->
@@ -47,7 +47,7 @@
                                         Qty: {{ item.quantity }}
                                     </button>
                                     <ul class="dropdown-menu" aria-labelledby="basketQtyDropdown-{{ item.id }}">
-                                        {% for q in "123456789"|make_list %}
+                                        {% for q in "123456"|make_list %}
                                         <li>
                                             <a class="dropdown-item basket-qty-option" href="#"
                                                data-value="{{ q }}" data-item-id="{{ item.id }}">
@@ -60,15 +60,17 @@
                             </form>
                         </div>
 
-                        <!-- Price + Delete (col 3) -->
+                        <!-- Price + Booking Fee + Delete (col 3) -->
                         <div class="col-2 col-md-3 text-end d-flex flex-column justify-content-end">
                             <p class="mb-1">£{{ item.line_total }}</p>
+                            {% if item.event %}
+                                <small class="cp-item">Booking & Transaction Fee: +10%</small>
+                            {% endif %}
                             <form method="post" action="{% url 'basket:delete_item' item.id %}" class="mt-2">
                                 {% csrf_token %}
                                 <button type="submit" class="btn btn-xs btn-danger">Delete</button>
                             </form>
                         </div>
-
                     </div>
                     {% endfor %}
                 </div>
