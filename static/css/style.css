@@ -294,10 +294,7 @@ body {
 
 /*About page*/
 .about-text {
-    font-size: 1rem;  
-}
-.about-text-p {
-    font-size: 0.9rem;  
+    font-size: 0.8rem;  
 }
 .a-item {
     height: 100%;
@@ -404,8 +401,8 @@ body {
 
 /* Roxoff page */
 .roxoff-img {
-    width: 100%;
-    height: auto;
+    width: auto;
+    max-height: 400px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -413,7 +410,7 @@ body {
     object-position: center center;
 }
 .roxoff-description {
-    font-size: 1rem;
+    font-size: 0.8rem;
     margin-top: 1rem;
 }
 .roxoff .card-img-top {
