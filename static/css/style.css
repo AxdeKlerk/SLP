@@ -179,6 +179,19 @@ body {
   color: #11ED73;
   background-color: transparent;
 }
+
+/* Default Bootstrap width remains */
+.offcanvas.offcanvas-end {
+     right: 0 !important;
+    left: auto !important;
+    width: 320px;
+    transition: width 0.3s ease;
+}
+/* Expanded only when Search opens */
+.offcanvas.offcanvas-end.search-expanded {
+    width: 270px !important;
+}
+
 /* Mobile sticky page title */
 .mobile-fixed {
     position: fixed;
@@ -730,10 +743,20 @@ footer {
 }
 
 /* Media Queries */
-@media (max-width: 320px) {
+@media (max-width: 360px) {
     .c-caption {
         top: 10%
     }
+    .offcanvas.offcanvas-end.search-expanded {
+    width: 200px !important;
+    font-size: 0.7rem !important;
+    }
+}
+@media (max-width: 425px) {
+  .offcanvas.offcanvas-end.search-expanded {
+    width: 240px !important;
+    font-size: 0.8rem !important;
+  }
 }
 @media (max-width: 480px) {
     .mobile {
