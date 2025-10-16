@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{& % load cloudinary %}
 
 {% block title %}About{% endblock %}
 
@@ -11,7 +12,7 @@
 
     <!-- Image: full-width on mobile, centered on large screens -->
     <div class="col-12 col-md-10 text-center mx-auto">
-      <img src="{% static 'images/about/simon-and-terry-4.jpg' %}"
+      <img src="https://res.cloudinary.com/dqde3a83z/image/upload/v1760600732/simon-and-terry-4_sowinb.jpg"
            class="d-block img-fluid w-auto a-img mx-auto"
            alt="photo of simon and terry">
       <p class="mt-2">Simon (L) and Terry (R)</p>
