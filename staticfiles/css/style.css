@@ -179,6 +179,19 @@ body {
   color: #11ED73;
   background-color: transparent;
 }
+
+/* Default Bootstrap width remains */
+.offcanvas.offcanvas-end {
+     right: 0 !important;
+    left: auto !important;
+    width: 320px;
+    transition: width 0.3s ease;
+}
+/* Expanded only when Search opens */
+.offcanvas.offcanvas-end.search-expanded {
+    width: 270px !important;
+}
+
 /* Mobile sticky page title */
 .mobile-fixed {
     position: fixed;
@@ -294,10 +307,7 @@ body {
 
 /*About page*/
 .about-text {
-    font-size: 1rem;  
-}
-.about-text-p {
-    font-size: 0.9rem;  
+    font-size: 0.8rem;  
 }
 .a-item {
     height: 100%;
@@ -309,6 +319,9 @@ body {
     border-radius: 50%;
     padding: 0.6rem;
     background-color:#11ED73;
+    max-height: 400px;
+    width: auto;
+    object-fit: cover;
 }
 
 /*Events page*/
@@ -401,8 +414,8 @@ body {
 
 /* Roxoff page */
 .roxoff-img {
-    width: 100%;
-    height: auto;
+    width: auto;
+    max-height: 400px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -410,7 +423,7 @@ body {
     object-position: center center;
 }
 .roxoff-description {
-    font-size: 1rem;
+    font-size: 0.8rem;
     margin-top: 1rem;
 }
 .roxoff .card-img-top {
@@ -608,10 +621,11 @@ body {
     padding: 0.25rem;
 }
 .dropdown-menu .dropdown-item {
-    color: #11ED73;         
+    color: #F5F5F5;         
     background-color: #000000;
     min-width: 100% !important;   
     width: 100%;
+    font-size: 0.8rem;
 }
 .dropdown-menu .dropdown-item:hover,
 .dropdown-menu .dropdown-item:focus {
@@ -714,7 +728,7 @@ body {
   padding-left: 0;
   margin-top: 0.25rem;
 }
-.basket-error-text {
+.message-text {
   color: #FF1744;
   font-size: 0.9rem;     
   margin: 0;
@@ -729,10 +743,20 @@ footer {
 }
 
 /* Media Queries */
-@media (max-width: 320px) {
+@media (max-width: 360px) {
     .c-caption {
         top: 10%
     }
+    .offcanvas.offcanvas-end.search-expanded {
+    width: 200px !important;
+    font-size: 0.7rem !important;
+    }
+}
+@media (max-width: 425px) {
+  .offcanvas.offcanvas-end.search-expanded {
+    width: 240px !important;
+    font-size: 0.8rem !important;
+  }
 }
 @media (max-width: 480px) {
     .mobile {

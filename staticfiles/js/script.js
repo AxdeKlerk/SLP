@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+
   // ========================================================
   // Search helpers (artist, venue, merch)
   // ========================================================
@@ -37,25 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Merch search (query-based)
-  function handleMerchSearch(inputId) {
-    const input = document.getElementById(inputId);
-    if (input) {
-      input.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          let query = this.value.trim();
-          if (query) {
-            window.location.href = `/products/merch/?q=${encodeURIComponent(
-              query
-            )}`;
-          }
-        }
-      });
-    }
-  }
-  handleMerchSearch("merch-search"); // desktop
-  handleMerchSearch("merch-search-mobile"); // mobile
 
   // ========================================================
   // Merch detail page (live price + size selection)
@@ -103,6 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+
   // ========================================================
   // Basket page (quantity update auto-submit)
   // ========================================================
@@ -132,4 +115,24 @@ document.addEventListener("DOMContentLoaded", function () {
       if (dropdown) dropdown.hide();
     });
   });
+
+  
+  // ========================================================
+  // Mobile search input stretch
+  // ========================================================
+  const searchToggle = document.querySelector('[data-bs-toggle="collapse"][href="#offcanvasSearch"]');
+  const offcanvas = document.querySelector(".offcanvas.offcanvas-end");
+  const searchSection = document.getElementById("offcanvasSearch");
+
+  if (searchToggle && offcanvas && searchSection) {
+    // Expand when search section opens
+    searchSection.addEventListener("shown.bs.collapse", () => {
+      offcanvas.classList.add("search-expanded");
+    });
+
+    // Collapse back when search section closes
+    searchSection.addEventListener("hidden.bs.collapse", () => {
+      offcanvas.classList.remove("search-expanded");
+    });
+  }
 });
