@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
+
   // ========================================================
   // Search helpers (artist, venue, merch)
   // ========================================================
@@ -37,25 +38,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Merch search (query-based)
-  function handleMerchSearch(inputId) {
-    const input = document.getElementById(inputId);
-    if (input) {
-      input.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          let query = this.value.trim();
-          if (query) {
-            window.location.href = `/products/merch/?q=${encodeURIComponent(
-              query
-            )}`;
-          }
-        }
-      });
-    }
-  }
-  handleMerchSearch("merch-search"); // desktop
-  handleMerchSearch("merch-search-mobile"); // mobile
 
   // ========================================================
   // Merch detail page (live price + size selection)
@@ -103,6 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+
   // ========================================================
   // Basket page (quantity update auto-submit)
   // ========================================================
@@ -133,6 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  
   // ========================================================
   // Mobile search input stretch
   // ========================================================

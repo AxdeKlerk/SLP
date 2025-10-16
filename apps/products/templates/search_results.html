@@ -1,33 +1,92 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 {% load static %}
 {% load cloudinary %}
 
 {% block title %}Search Results{% endblock %}
 
 {% block content %}
-    <div class="container container-global mobile">
-        <div class="row justify-content-center text-center">
-            <div class="col-12 text-center">
-                {% if category == "artist" %}
-                    {% if artist_results %}
-                        {% for artist in artist_results %}
-                            {% include "_artist_detail_block.html" with artist=artist %}
-                        {% endfor %}
-                    {% else %}
-                        <p>No artists found for "{{ q }}".</p>
-                    {% endif %}
-                {% endif %}
+<div class="container container-global mobile">
+    {% if category == "artist" %}
+        {% if artist_results %}
+        {% for artist in artist_results %}
+            {% include "_artist_detail_block.html" with artist=artist %}
+        {% endfor %}
+        {% else %}
+        <p>No artists found for "{{ q }}"</p>
+        {% endif %}
+    {% endif %}
 
-                {% if category == "venue" %}
-                    {% if venue_results %}
-                    {% for venue in venue_results %}
-                        {% include "_venue_detail_block.html" with venue=venue %}
-                    {% endfor %}
-                    {% else %}
-                    <p>No venues found for "{{ q }}".</p>
-                    {% endif %}
-                {% endif %}
-            </div>
-        </div>
-    </div>
+    {% if category == "venue" %}
+        {% if venue_results %}
+        {% for venue in venue_results %}
+            {% include "_venue_detail_block.html" with venue=venue %}
+        {% endfor %}
+        {% else %}
+        <p>No venues found for "{{ q }}"</p>
+        {% endif %}
+    {% endif %}
+
+    {% if category == "merch" %}
+        {% if merch_results %}
+            {% if merch_results|length == 1 %}
+                {% with m=merch_results.0 %}
+                {# ---------- SINGLE MATCH (detailed view) ---------- #}
+                    <div class="row g-5 justify-content-center">
+                        <div class="col-12 col-md-6 col-lg-3">
+                            <div class="card standard-card h-100 d-flex flex-column">
+                            {% if m.image %}
+                                <img src="{{ m.image.url }}" class="card-img-top img-fluid" alt="{{ m.product_name }}">
+                            {% endif %}
+                                <div class="card-body">
+                                    <h2 class="merch-title">{{ m.product_name }}</h2>
+                                    <div class="merch-description">
+                                        {% if m.product_description %}
+                                            {{ m.product_description|linebreaks }}
+                                        {% endif %}
+                                        {{ m.get_product_category_display }}
+                                        {% if m.size %} • {{ m.size|upper }}{% endif %}
+                                        {% if m.price %} • £{{ m.price }}{% endif %}
+                                    </div>
+                                </div>
+                                <div class="card-footer bg-transparent mt-auto">
+                                    <a class="btn cta-btn mb-0" href="{% url 'products:merch_detail' m.pk %}">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endwith %}
+
+                {% else %}
+                {# ---------- MULTIPLE MATCHES (grid list-style view) ---------- #}
+                    <div class="row g-5 justify-content-center">
+                        {% for m in merch_results %}
+                            <div class="col-12 col-md-6 col-lg-3">
+                                <div class="card standard-card h-100 d-flex flex-column">
+                                    {% if m.image %}
+                                    <img src="{{ m.image.url }}" class="card-img-top img-fluid" alt="{{ m.product_name }}">
+                                    {% endif %}
+                                    <div class="card-body">
+                                        <h2 class="merch-title">{{ m.product_name }}</h2>
+                                        <div class="merch-description">
+                                            {% if m.product_description %}
+                                                {{ m.product_description|linebreaks }}
+                                            {% endif %}
+                                            {{ m.get_product_category_display }}
+                                            {% if m.size %} • {{ m.size|upper }}{% endif %}
+                                            {% if m.price %} • £{{ m.price }}{% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="card-footer bg-transparent mt-auto">
+                                        <a class="btn cta-btn mb-0" href="{% url 'products:merch_detail' m.pk %}">View</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+            {% endif %}
+        {% else %}
+            <p>No merchandise found for "{{ q }}"</p>
+        {% endif %}
+    {% endif %}
+</div>
 {% endblock %}

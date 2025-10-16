@@ -148,10 +148,24 @@ def search_view(request):
         choices = Merch._meta.get_field("product_category").choices  # [(key, "Label")]
         label_keys = [key for key, label in choices if q.lower() in str(label).lower()]
 
-        ctx["merch_results"] = Merch.objects.filter(
+        merch_results = Merch.objects.filter(
             Q(product_name__icontains=q) |               # name contains
             Q(product_category__icontains=q) |           # key contains (e.g. "hoodie")
-            Q(product_category__in=label_keys)           # label match (e.g. "Hoodie")
+            Q(product_category__in=label_keys)|           # label match (e.g. "Hoodie")
+            Q(product_description__icontains=q)
         ).order_by("product_name", "product_category", "size")
+
+        # Exact match results
+        exact_match = merch_results.filter(product_name__iexact=q).first()
+        if exact_match:
+            size_choices = Merch._meta.get_field("size").choices
+            return render(
+            request,
+            "products/merch_detail.html",
+            {"merch": exact_match, "size_choices": size_choices},
+            )
+
+        # Multiple matching results
+        ctx["merch_results"] = merch_results
 
     return render(request, "search_results.html", ctx)

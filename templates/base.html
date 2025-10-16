@@ -121,7 +121,7 @@
                     <input type="hidden" name="category" value="artist">
                     <label for="artist-search" class="form-label mb- text-light">Artist</label>
                     <input type="text" id="artist-search" name="q"
-                          class="form-control form-control-sm bg-black text-light border-success">
+                          class="form-control form-control-sm bg-black text-light border-success" autocomplete="off">
                   </form>
                 </li>
                 <!-- Venue search -->
@@ -130,7 +130,7 @@
                     <input type="hidden" name="category" value="venue">
                     <label for="artist-search" class="form-label mb-1 text-light">Venue</label>
                     <input type="text" id="venue-search" name="q"
-                          class="form-control form-control-sm bg-black text-light border-success">
+                          class="form-control form-control-sm bg-black text-light border-success" autocomplete="off">
                   </form>
                 </li>
                 <!-- Merch search -->
@@ -139,7 +139,7 @@
                     <input type="hidden" name="category" value="merch">
                     <label for="merch-search" class="form-label mb-1 text-light">Merch</label>
                     <input type="text" id="merch-search" name="q"
-                          class="form-control form-control-sm bg-black text-light border-success">
+                          class="form-control form-control-sm bg-black text-light border-success" autocomplete="off">
                   </form>
                 </li>
               </ul>
@@ -244,7 +244,7 @@
                 <input type="hidden" name="category" value="artist">
                 <label for="artist-search" class="form-label mb- text-light">Artist</label>
                 <input type="text" id="artist-search" name="q"
-                      class="form-control form-control-sm bg-black text-light border-success">
+                      class="form-control form-control-sm bg-black text-light border-success" autocomplete="off">
               </form>
             </li>
             <!-- Venue search -->
@@ -253,14 +253,17 @@
                 <input type="hidden" name="category" value="venue">
                 <label for="artist-search" class="form-label mb-1 text-light">Venue</label>
                 <input type="text" id="venue-search" name="q"
-                      class="form-control form-control-sm bg-black text-light border-success">
+                      class="form-control form-control-sm bg-black text-light border-success" autocomplete="off">
               </form>
             </li>
             <!-- Merch search -->
             <li class="px-3 py-2">
-              <label for="merch-search" class="form-label mb-1 text-light">Merch</label>
-              <input type="text" id="merch-search" name="merch"
-                    class="form-control form-control-sm bg-black text-light border-success">
+              <form method="get" action="{% url 'products:search_view' %}">
+                <input type="hidden" name="category" value="merch">
+                <label for="merch-search" class="form-label mb-1 text-light">Merch</label>
+                <input type="text" id="merch-search" name="q"
+                      class="form-control form-control-sm bg-black text-light border-success" autocomplete="off">
+              </form>
             </li>
           </ul>
         </li>
