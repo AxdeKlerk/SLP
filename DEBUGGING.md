@@ -950,3 +950,19 @@ This ensured both charges were included in `order.subtotal` and `order.total` be
 In the basket template, I excluded messages containing `"orders"` from the flash message loop. In the user profile template, I added a dedicated message block under “Orders in Progress” to display messages with the `"orders"` tag only.
 
 **Lesson Learned:** When using *Django*’s messages framework across multiple views, tagging messages is essential for controlling where they appear. Filtering messages by tags keeps unrelated alerts confined to the correct page context.
+
+### Search Input Responsive Sizing (Mobile) Issue
+
+**Bug:** In mobile view, the search input fields inside the `offcanvas` were far too wide and pushed the layout beyond the screen width. They also expanded even when not active, causing alignment issues.
+
+**Fix:** I added specific width constraints within a media query for screens under 768px and adjusted the offcanvas width so it “hugged” the search inputs. The `offcanvas` now expands only when the search is clicked. This ensures inputs stay within the viewport and aligned correctly.
+
+**Lesson Learned:** Always test responsive elements both in collapsed and expanded states — *Bootstrap*’s `offcanvas` width doesn’t automatically scale with its contents, so manual sizing adjustments are sometimes necessary.
+
+### Merch Search Functionality Issue
+
+**Bug:** The merch search stopped working after introducing form-based searches for artists and venues. Pressing enter on the merch search field no longer redirected to results.
+
+**Fix:** I replaced the static `<input>` with a proper form pointing to `{% url 'products:search_view' %}` and used `name="q"` consistently across all fields. Updated the JavaScript `handleMerchSearch()` to handle the same `id="merch-search"` (desktop) and `id="merch-search-mobile"` (mobile)` logic, matching the artist and venue setups. Adjusted `views.py` to detect merch queries and display either multiple results or a single merch item styled like the merch list.
+
+**Lesson Learned:** Consistency between input names, form actions, and view logic is key. Even one mismatched `name` or `id` can break a working search feature.

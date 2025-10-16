@@ -552,3 +552,57 @@ Tested visibility and location of deletion messages after removing pending order
 **Notes:** 
  
 The original “4 order(s) deleted” message was caused by shared message context between basket and orders views. Introducing message tags allowed each section to handle its own alerts cleanly and consistently.
+
+#### Search Input Responsive Sizing
+
+**User Story:**
+
+As a **user**, I want **the search inputs in the mobile menu to fit within the screen** so that **the interface remains clean and easy to use on smaller devices**.
+
+**What Was Tested:**
+
+Tested how search inputs for Artist, Venue, and Merch displayed across mobile widths, ensuring they only expand when active and stay aligned.
+
+**Acceptance Criteria:** 
+
+- [x] Inputs do not exceed the screen width.  
+- [x] Offcanvas width matches search input width.  
+- [x] Inputs expand only when search is clicked.  
+- [x] Layout remains consistent between 320px and 750px.  
+
+**Tasks Completed:**  
+
+- [x] Adjusted mobile media query for offcanvas width.  
+- [x] Limited input width under 768px.  
+- [x] Ensured expansion only triggers when search toggled.  
+
+**Notes:**  
+
+After adjustments, the offcanvas now expands dynamically without breaking layout. Input boxes scale properly, maintaining perfect alignment.
+
+#### Merch Search Functionality
+
+**User Story:**  
+
+As a **user**, I want to **search for merch items (like hoodies or flags)** and see **all relevant results or a single item displayed consistently with the merch list design**.
+
+**What Was Tested:** 
+
+Tested merch search on both desktop and mobile for single and multiple results.
+
+**Acceptance Criteria:**  
+
+- [x] Pressing enter on merch search triggers a result.  
+- [x] Multiple matches display as a merch list grid.  
+- [x] Single match displays centered using the same card style.  
+- [x] Back button returns to merch list.  
+
+**Tasks Completed:** 
+
+- [x] Replaced static input with a form using `name="q"`.  
+- [x] Unified JS logic for desktop and mobile search IDs.  
+- [x] Updated view logic to detect and render single vs. multiple results.  
+
+**Notes:**
+
+The merch search now behaves identically to artist and venue searches. Single-item searches render a centered card, maintaining layout consistency.
