@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="container container-global mobile">
-    <a class="btn cta-btn2 mb-2" href="{{ previous_page }}">← Back</a>
+    <a class="btn cta-btn2 mb-2" href="{% url 'checkout:restore_basket' order.id %}">← Back to Basket</a>
 
     <div class="row justify-content-center">
         <div class="col-lg-8">

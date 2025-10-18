@@ -162,6 +162,35 @@ def basket_checkout(request):
     basket.items.all().delete()
     return redirect("checkout:checkout_view", order_id=order.id)
 
+@login_required
+def restore_basket(request, order_id):
+    """
+    Rebuilds the user's basket from a pending order so they can continue shopping
+    """
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+
+    # Only rebuild if the order is still pending
+    if order.status != "pending":
+        messages.error(request, "This order has already been completed and cannot be modified")
+        return redirect("basket:basket_view")
+
+    # Get or create the basket
+    basket, _ = Basket.objects.get_or_create(user=request.user)
+
+    # Clear any existing items (optional but keeps it tidy)
+    basket.items.all().delete()
+
+    # Rebuild items from the order
+    for item in order.items.all():
+        basket.items.create(
+            event=item.event,
+            merch=item.merch,
+            quantity=item.quantity
+        )
+
+    messages.success(request, "Your previous basket has been restored")
+    return redirect("basket:basket_view")
+
 
 def confirmation_view(request, order_id):
     order = get_object_or_404(Order, id=order_id)
