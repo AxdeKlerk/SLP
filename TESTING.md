@@ -633,3 +633,34 @@ I tested the functionality of the new "Continue Shopping" button on the basket p
 [x] Tested redirection from basket, events, and merch pages.  
 
 **Notes:** At first, the button did nothing because I forgot to import the `continue_shopping` view. After importing it, I noticed a redirect loop caused by the `HTTP_REFERER` pointing back to the basket. Adding a comparison between the basket URL and the referrer fixed the loop. Once that was done, both the "Continue Shopping" and test links redirected correctly to the merch list. The button now behaves as expected in all cases, ensuring smooth navigation for users.
+
+#### Continue Shopping Persistent Redirect Fallback Logic
+
+**User Story:** 
+
+As a **user**, I wanted the **Continue Shopping button to return me to my last shop section, even after logging back in**, so I **don’t lose my place while shopping**.
+
+**What Was Tested:** 
+
+I tested the updated `continue_shopping` logic to ensure it redirected to the correct page under all conditions — whether I was logged in, logged out, or had no session memory. 
+
+**Acceptance Criteria:**
+
+[x] Redirects to events page if basket contains event tickets.  
+[x] Redirects to merch page if basket contains merch items.  
+[x] Works immediately after adding an item without page reload.  
+[x] Works correctly after logging out and back in.  
+[x] Falls back to merch if basket is empty.  
+[x] No redirect loops or broken links occur.
+
+**Tasks Completed:**  
+
+[x] Updated `continue_shopping` view to inspect basket contents.  
+[x] Added logical priority: referrer → session → basket → default.  
+[x] Verified that basket queries return correct event/merch results.  
+[x] Tested in both logged-in and logged-out states.  
+[x] Confirmed consistent behaviour across desktop and mobile.
+
+**Notes:**
+
+Before the change, the button always redirected to merch after logout because session data was cleared. By checking basket contents when the session is gone, the redirect now behaves intuitively every time. This made the *Continue Shopping* button resilient, predictable, and user-friendly across all scenarios.

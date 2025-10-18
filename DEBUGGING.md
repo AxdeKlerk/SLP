@@ -984,3 +984,48 @@ In the basket template, I excluded messages containing `"orders"` from the flash
         return HttpResponseRedirect(previous_page)
 
 **Lesson Learned:** If a button doesn’t work, the issue is usually a missing import or a redirect loop. The `HTTP_REFERER` header can point to the same page, so it’s not always safe to rely on it without a fallback. I learned to always confirm a new view works by testing its URL directly before assuming there’s a *CSS* or *JavaScript* problem. I also learned to use clear conditional logic to prevent looping redirects when handling referrer-based navigation in *Django*.
+
+## Continue Shopping Persistent Redirect Fallback Logic
+
+**Bug:** After I added the *Continue Shopping* button to the basket, it initially redirected correctly while logged in, but after logging out and back in, it always went to the merch page even if my basket contained an event ticket. The issue occurred because logging out cleared the session, which meant the `last_shop_type` value used for redirection was lost. Without session data, the fallback always defaulted to merch.
+
+**Fix:** I modified the `continue_shopping` view to include a third fallback option that inspects the contents of the user’s basket when the session data is missing. This allowed *Django* to determine whether the basket contained an event or merch item and redirect accordingly, even after logout.  
+
+The final working view now looks like this:
+
+    def continue_shopping(request):
+        """
+        Acts like the standard back button:
+        - Uses a valid referrer if one exists.
+        - Falls back to remembered shop type (session).
+        - If session was cleared (after logout), inspects basket contents.
+        """
+        previous_page = request.META.get('HTTP_REFERER')
+        basket_url = request.build_absolute_uri(reverse('basket:basket_view'))
+
+        merch_url = reverse('products:merch_list')
+        events_url = reverse('products:events')
+
+        # Step 1: Use the referrer if it's valid
+        if previous_page and previous_page != basket_url:
+            return HttpResponseRedirect(previous_page)
+
+        # Step 2: Try the session
+        last_shop_type = request.session.get('last_shop_type')
+        if last_shop_type == 'events':
+            return HttpResponseRedirect(events_url)
+        elif last_shop_type == 'merch':
+            return HttpResponseRedirect(merch_url)
+
+        # Step 3: Session missing — inspect basket contents
+        if request.user.is_authenticated:
+            basket, created = Basket.objects.get_or_create(user=request.user)
+            if basket.items.filter(event__isnull=False).exists():
+                return HttpResponseRedirect(events_url)
+            elif basket.items.filter(merch__isnull=False).exists():
+                return HttpResponseRedirect(merch_url)
+
+        # Step 4: Fallback
+        return HttpResponseRedirect(merch_url)
+
+**Lesson Learned:** Sessions are wiped on logout, so anything stored in them must have a backup plan. I learned that basket-based logic is the most reliable fallback when persistent behaviour is required across sessions. Adding this third check made the *Continue Shopping* button consistent across all user states — logged in, logged out, and freshly returned to the site. It also reinforced how important clear redirect logic is when combining referrers, sessions, and model data in *Django*.
