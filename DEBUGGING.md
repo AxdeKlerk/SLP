@@ -966,3 +966,21 @@ In the basket template, I excluded messages containing `"orders"` from the flash
 **Fix:** I replaced the static `<input>` with a proper form pointing to `{% url 'products:search_view' %}` and used `name="q"` consistently across all fields. Updated the JavaScript `handleMerchSearch()` to handle the same `id="merch-search"` (desktop) and `id="merch-search-mobile"` (mobile)` logic, matching the artist and venue setups. Adjusted `views.py` to detect merch queries and display either multiple results or a single merch item styled like the merch list.
 
 **Lesson Learned:** Consistency between input names, form actions, and view logic is key. Even one mismatched `name` or `id` can break a working search feature.
+
+## Redirect Loop for Continue Shopping Button
+
+**Bug:** When I added the `Continue Shopping` button to the basket template, clicking it did nothing. The button rendered fine, but nothing happened when I clicked it. There was no console output and no redirect. When I visited `/basket/continue-shopping/` directly in the browser, it worked and redirected properly, but clicking the button on the basket page just reloaded the basket instead of returning to the merch list.
+
+**Fix:** I found that I hadn’t imported the `continue_shopping` view at the top of `urls.py`. After adding the import, the button finally triggered the view, but it still redirected back to the basket instead of the merch page. The issue turned out to be that the `HTTP_REFERER` header pointed to the basket page itself, creating a redirect loop. I fixed this by adding a conditional check to compare the referrer URL with the basket URL. If they matched, I forced the redirect to the merch list page instead. My final view looked like this:
+
+    def continue_shopping(request):
+        previous_page = request.META.get('HTTP_REFERER')
+        basket_url = request.build_absolute_uri(reverse('basket:basket_view'))
+        merch_url = reverse('products:merch_list')
+
+        if not previous_page or previous_page == basket_url:
+            previous_page = merch_url
+
+        return HttpResponseRedirect(previous_page)
+
+**Lesson Learned:** If a button doesn’t work, the issue is usually a missing import or a redirect loop. The `HTTP_REFERER` header can point to the same page, so it’s not always safe to rely on it without a fallback. I learned to always confirm a new view works by testing its URL directly before assuming there’s a *CSS* or *JavaScript* problem. I also learned to use clear conditional logic to prevent looping redirects when handling referrer-based navigation in *Django*.
