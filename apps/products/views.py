@@ -9,6 +9,7 @@ from .models import Event, Artist, Venue, Merch
 from django.db.models import Q
 
 def events_view(request):
+    request.session['last_shop_type'] = 'events'
     today = timezone.now().date()  # get today's date
     events = Event.objects.filter(gig_date__gte=today).exclude(event_type='roxoff').order_by('gig_date')
     for e in events:
@@ -21,9 +22,6 @@ def previous_events_view(request):
     for e in past_events:
         e.is_upcoming = False
     return render(request, 'previous_events.html', {'events': past_events, 'page_title': 'Previous Events'})
-
-def merch_view(request):
-    return render(request, 'merch.html', {'page_title': 'Merch'})
 
 def roxoff_view(request):
     roxoff_event = Event.objects.filter(special_event=True).order_by('gig_date')  
@@ -107,6 +105,11 @@ class MerchListView(ListView):
             qs = qs.filter(product_category=cat)
         print("DEBUG merch count after filter:", qs.count())
         return qs
+    
+    def get(self, request, *args, **kwargs):
+        # Remember that user was last in merch
+        request.session['last_shop_type'] = 'merch'
+        return super().get(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

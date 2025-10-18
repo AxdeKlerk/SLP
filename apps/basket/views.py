@@ -133,15 +133,36 @@ def delete_item(request, item_id):
 
 
 def continue_shopping(request):
-    print("Continue shopping view triggered")
-    # Get previous URL from the HTTP header (safe fallback)
+    """
+    Acts like the standard back button:
+    - If there's a valid referrer, go there.
+    - If not, use the last recorded shop type (events or merch).
+    """
     previous_page = request.META.get('HTTP_REFERER')
     basket_url = request.build_absolute_uri(reverse('basket:basket_view'))
+
+    # Default fallback URLs
     merch_url = reverse('products:merch_list')
+    events_url = reverse('products:events')
 
-    if not previous_page or previous_page == basket_url:
-        previous_page = merch_url
+    # Step 1: Use the referrer if it's valid
+    if previous_page and previous_page != basket_url:
+        return HttpResponseRedirect(previous_page)
 
-    print("Continue shopping view triggered")
+    # Step 2: Try the session
+    last_shop_type = request.session.get('last_shop_type')
+    if last_shop_type == 'events':
+        return HttpResponseRedirect(events_url)
+    elif last_shop_type == 'merch':
+        return HttpResponseRedirect(merch_url)
 
-    return HttpResponseRedirect(previous_page)
+    # Step 3: Session missing — inspect basket contents
+    if request.user.is_authenticated:
+        basket, created = Basket.objects.get_or_create(user=request.user)
+        if basket.items.filter(event__isnull=False).exists():
+            return HttpResponseRedirect(events_url)
+        elif basket.items.filter(merch__isnull=False).exists():
+            return HttpResponseRedirect(merch_url)
+
+    # Step 4: Fallback
+    return HttpResponseRedirect(merch_url)
