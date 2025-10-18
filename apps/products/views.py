@@ -1,4 +1,5 @@
 from django.utils import timezone
+import calendar
 from django.shortcuts import render
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib import messages
@@ -10,11 +11,42 @@ from django.db.models import Q
 
 def events_view(request):
     request.session['last_shop_type'] = 'events'
-    today = timezone.now().date()  # get today's date
-    events = Event.objects.filter(gig_date__gte=today).exclude(event_type='roxoff').order_by('gig_date')
+    today = timezone.now().date()
+
+    # --- Get all upcoming events ---
+    events = Event.objects.filter(
+        gig_date__gte=today
+    ).order_by('gig_date')
+
+    # --- Extract selected month from query parameters ---
+    month = request.GET.get('month')
+    selected_month = None
+    if month and month.isdigit():
+        month_num = int(month)
+        selected_month = calendar.month_name[month_num]
+
+    # --- Filter by month if provided ---
+    if month and month.isdigit():
+        events = events.filter(gig_date__month=int(month))
+
+    # --- Build list of available months (only months that actually have events) ---
+    available_months = (
+        Event.objects.filter(gig_date__gte=today)
+        .dates('gig_date', 'month', order='ASC')
+    )
+
+    # Mark upcoming for template logic
     for e in events:
         e.is_upcoming = e.gig_date >= today
-    return render(request, 'events.html', {'events': events, 'page_title': 'Upcoming Events'})
+
+    context = {
+        'events': events,
+        'available_months': available_months,
+        "selected_month": selected_month,
+        'page_title': 'Upcoming Events',
+    }
+    return render(request, 'events.html', context)
+
 
 def previous_events_view(request):
     today = timezone.now().date()
