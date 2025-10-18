@@ -6,6 +6,8 @@
 
 {% block content %}
 <div class="container container-global mobile">
+    <a href="{% url 'basket:continue_shopping' %}" class="btn cta-btn2 mb-2">← Continue Shopping</a>
+
     <div class="row">
         <div class="col-12">
             {% if basket and basket.items.all %}
@@ -77,7 +79,7 @@
                     </div>
                     {% endfor %}
                 </div>
-
+                    
                 <!-- Subtotal -->
                 <div class="row basket-subtotal text-end mt-3">
                     <div class="col-12">

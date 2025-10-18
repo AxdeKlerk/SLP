@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from apps.checkout.models import Order
 from decimal import Decimal
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
 @login_required
 def basket_view(request):
@@ -128,3 +130,18 @@ def delete_item(request, item_id):
         item = get_object_or_404(BasketItem, id=item_id)
         item.delete()
     return redirect("basket:basket_view")
+
+
+def continue_shopping(request):
+    print("Continue shopping view triggered")
+    # Get previous URL from the HTTP header (safe fallback)
+    previous_page = request.META.get('HTTP_REFERER')
+    basket_url = request.build_absolute_uri(reverse('basket:basket_view'))
+    merch_url = reverse('products:merch_list')
+
+    if not previous_page or previous_page == basket_url:
+        previous_page = merch_url
+
+    print("Continue shopping view triggered")
+
+    return HttpResponseRedirect(previous_page)
