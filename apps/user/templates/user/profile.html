@@ -20,7 +20,7 @@
                     {% endfor %}
                 {% endif %}
             {% if current_orders %}
-            <form method="post" action="{% url 'user:bulk_order_action' %}">
+            <form method="post" action="{% url 'user:bulk_order_action' %}" target="_self">
                 {% csrf_token %}
 
                 {% for order in current_orders %}

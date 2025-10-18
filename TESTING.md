@@ -664,3 +664,35 @@ I tested the updated `continue_shopping` logic to ensure it redirected to the co
 **Notes:**
 
 Before the change, the button always redirected to merch after logout because session data was cleared. By checking basket contents when the session is gone, the redirect now behaves intuitively every time. This made the *Continue Shopping* button resilient, predictable, and user-friendly across all scenarios.
+
+#### Checkout Summary Fee and Total Calculations
+
+**User Story:**  
+
+As a **user**, I wanted the **checkout summary to clearly display item costs including booking and delivery fees**, so that I **can understand exactly how my total is calculated before payment**.
+
+**What Was Tested:**  
+
+I tested the updated checkout summary view and template to confirm that all cost breakdowns were displayed accurately. This included checking quantity, unit price, booking fees (for tickets), and delivery fees (for merch). I also confirmed that the totals on the right reflected the full cost of each item with all applicable charges.  
+
+**Acceptance Criteria:**  
+
+[x] Each item displays “Cost: X × £Y ea” under its description.  
+[x] Merch items show “Delivery: £Z” correctly.  
+[x] Ticket items show “Booking Fee (10%): £Z” correctly.  
+[x] The total on the right reflects full cost (item + applicable fees).  
+[x] Subtotal and final total correctly sum all charges.  
+[x] Layout remains aligned and consistent across all items.  
+
+**Tasks Completed:**  
+
+[x] Updated `checkout_view` in `apps/checkout/views.py` to properly calculate `total_with_fees` per item.  
+[x] Multiplied the 10% booking fee by the quantity of tickets for accurate totals.  
+[x] Ensured delivery fee scales correctly for multiple merch items.  
+[x] Updated the template to display full fee breakdown beneath each item.  
+[x] Verified subtotal, delivery, and total calculations match backend logic.  
+
+**Notes:**  
+
+Before the fix, the total for each item didn’t include the 10% booking fee or delivery charge, and the fee calculation only applied once per item line instead of per quantity. After the correction, each item’s total reflects the full cost with all fees, matching the intended checkout logic and user expectations. The summary is now accurate, readable, and consistent with the basket display.
+

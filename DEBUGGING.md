@@ -1029,3 +1029,30 @@ The final working view now looks like this:
         return HttpResponseRedirect(merch_url)
 
 **Lesson Learned:** Sessions are wiped on logout, so anything stored in them must have a backup plan. I learned that basket-based logic is the most reliable fallback when persistent behaviour is required across sessions. Adding this third check made the *Continue Shopping* button consistent across all user states — logged in, logged out, and freshly returned to the site. It also reinforced how important clear redirect logic is when combining referrers, sessions, and model data in *Django*.
+
+## Calculation Error
+
+**Bug:** When testing the checkout summary, I noticed that the total on the right-hand side of each item was not including the associated booking or delivery fees. Additionally, the booking fee for multiple tickets only showed £1.00 for six tickets, which was incorrect. The logic used in the `checkout_view` was not multiplying the booking fee properly per quantity, and the total_with_fees field was not being updated to reflect the final cost.
+
+**Fix:** I updated the fee calculation logic inside the `checkout_view` function to multiply the event booking fee correctly and ensure that the total for each item (including delivery or booking) was added to the right-hand column. The corrected section now ensures that event and merch items each calculate and display accurate totals. The updated code used this logic:  
+
+    for item in order.items.all():
+        item.line_total = item.price * item.quantity
+
+        if item.event:
+            item.booking_fee = (item.event.price * Decimal('0.10')) * item.quantity
+            item.total_with_fees = item.line_total + item.booking_fee
+
+        elif item.merch:
+            base_fee = Decimal('5.00')
+            extra_fee = (base_fee * Decimal('0.50')) * (item.quantity - 1)
+            item.delivery_fee = base_fee + extra_fee if item.quantity > 1 else base_fee
+            item.total_with_fees = item.line_total + item.delivery_fee
+
+After this fix, the checkout summary displayed:
+- “Cost: X × £Y ea” for each item  
+- Correct 10% booking fee for ticket totals  
+- Properly calculated delivery charge for merch items  
+- Accurate right-hand totals including all charges  
+
+**Lesson Learned:** I learned that reusing shared logic from other views like `basket_view` requires careful attention to how quantities and related fields are calculated. Even a small oversight, like not multiplying a percentage fee per quantity, can lead to visible errors in totals. Ensuring consistent fee calculations across both *Django* views avoids mismatched totals between basket and checkout summaries.

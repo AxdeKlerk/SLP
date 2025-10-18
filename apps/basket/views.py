@@ -8,45 +8,58 @@ from decimal import Decimal
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+
+def calculate_fees(items):
+    subtotal = Decimal('0.00')
+    delivery_charge = Decimal('0.00')
+    order_items = []
+
+    for item in items:
+        # Base total for this item
+        line_total = item.price * item.quantity
+
+        # Default values
+        item.booking_fee = Decimal('0.00')
+        item.delivery_fee = Decimal('0.00')
+
+        # --- Booking fee (10% of total ticket value) ---
+        if getattr(item, 'event', None):
+            item.booking_fee = (line_total * Decimal('0.10')).quantize(Decimal('0.01'))
+            item.total_with_fees = (line_total + item.booking_fee).quantize(Decimal('0.01'))
+
+        # --- Delivery fee for merch ---
+        elif getattr(item, 'merch', None):
+            base_fee = Decimal('5.00')
+            extra_fee_per_item = (base_fee * Decimal('0.50')).quantize(Decimal('0.01'))
+
+            if item.quantity == 1:
+                item.delivery_fee = base_fee
+            else:
+                item.delivery_fee = base_fee + (extra_fee_per_item * (item.quantity - 1))
+
+            item.delivery_fee = item.delivery_fee.quantize(Decimal('0.01'))
+            item.total_with_fees = (line_total + item.delivery_fee).quantize(Decimal('0.01'))
+            delivery_charge += item.delivery_fee
+
+        # --- Add to subtotal ---
+        subtotal += item.total_with_fees
+        order_items.append(item)
+
+    # Final totals
+    basket_total = subtotal
+    return order_items, subtotal, delivery_charge, basket_total
+
+
 @login_required
 def basket_view(request):
-    # Clear any old Django messages from previous sessions
+    # Clear old messages
     storage = messages.get_messages(request)
     list(storage)
 
     basket = None
-    subtotal = Decimal('0.00')
-    items_with_fees = []  # List to store items + calculated fees
-    delivery_charge = Decimal('0.00')
-
     if request.user.is_authenticated:
         basket, created = Basket.objects.get_or_create(user=request.user)
-
-        for item in basket.items.all():
-            item.booking_fee = Decimal('0.00')
-            item.delivery_fee = Decimal('0.00')
-
-            # Event items: booking fee
-            if item.event:
-                item.booking_fee = (item.event.price * Decimal('0.10')).quantize(Decimal('0.01'))
-
-            # Merch items: delivery charge 
-            if item.merch:
-                base_fee = Decimal('5.00')
-                extra_fee_per_item = (base_fee * Decimal('0.50')).quantize(Decimal('0.01'))
-
-                if item.quantity == 1:
-                    item.delivery_fee = base_fee
-                else:
-                    item.delivery_fee = base_fee + (extra_fee_per_item * (item.quantity - 1))
-
-                item.delivery_fee = item.delivery_fee.quantize(Decimal('0.01'))
-
-            line_total = item.line_total
-            subtotal += line_total + (item.booking_fee * item.quantity) + item.delivery_fee
-
-            # Store each item with its calculated fee
-            items_with_fees.append(item)
+        items_with_fees, subtotal, delivery_charge, basket_total = calculate_fees(basket.items.all())
 
         last_order = (
             Order.objects.filter(user=request.user, status="pending")
@@ -54,15 +67,12 @@ def basket_view(request):
             .first()
         )
 
-    # Add delivery charge to subtotal
-    basket_total = subtotal 
-
     return render(request, 'basket/basket.html', {
         'basket': basket,
         'basket_items': items_with_fees,
         'subtotal': subtotal,
-        'delivery_charge': delivery_charge, 
-        'basket_total': basket_total,       
+        'delivery_charge': delivery_charge,
+        'basket_total': basket_total,
         'quantity_options': range(1, 7),
         'page_title': "Basket",
         'last_order': last_order,

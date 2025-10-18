@@ -18,26 +18,36 @@
                     <span class="cp-item">{{ order.created_at|date:"d M Y" }}</span>
                 </div>
                 <div class="card-body">
+                    <div class="mt-3 mb-2 text-end cp-item">
                     <ul class="list-group">
-                        {% for item in order.items.all %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            {% if item.event %}
-                                <span>{{ item.event }} (x{{ item.quantity }})</span>
-                            {% elif item.merch %}
-                                <span>{{ item.merch.product_name }} (x{{ item.quantity }})</span>
-                            {% endif %}
-                            <span>£{{ item.line_total }}</span>
+                        {% for item in order_items %}
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto text-start">
+                                {% if item.event %}
+                                    <strong>{{ item.event }}</strong><br>
+                                    Cost: {{ item.quantity }} x £{{ item.price|floatformat:2 }} ea<br>
+                                    Booking Fee (10%): £{{ item.booking_fee|floatformat:2 }}<br>
+                                    Transaction Fee included
+                                {% elif item.merch %}
+                                    <strong>{{ item.merch.product_name }}</strong><br>
+                                    Cost: {{ item.quantity }} x £{{ item.price|floatformat:2 }} ea<br>
+                                    Delivery: £{{ item.delivery_fee|floatformat:2 }}
+                                {% endif %}
+                            </div>
+                            <div class="text-end">
+                                £{{ item.total_with_fees|floatformat:2 }}
+                            </div>
                         </li>
                         {% endfor %}
                     </ul>
 
-                    <div class="mt-3 mb-2 text-end cp-item">
-                        <strong>Total: £{{ order.total|floatformat:2 }}</strong>
+                    <hr>
+                    <strong>Total: £{{ basket_total|floatformat:2 }}</strong>
                     </div>
 
                     <div class="d-flex justify-content-end mb-2">
                         <!-- changed action to point to payments app -->
-                        <form method="get" action="{% url 'payments:payment_checkout' order.id %}">
+                        <form method="get" action="{% url 'payments:payment_checkout' order.id %}" target="_self">
                             <button type="submit" class="btn cta-btn2 mb-2">
                                 Proceed to Payment
                             </button>

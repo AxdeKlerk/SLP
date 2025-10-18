@@ -10,6 +10,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.conf import settings
 from decimal import Decimal
+from apps.basket.views import calculate_fees
+
 
 SQUARE_SIGNATURE_KEY = os.getenv("SQUARE_SIGNATURE_KEY")
 
@@ -199,11 +201,22 @@ def confirmation_view(request, order_id):
 
 @login_required
 def checkout_view(request, order_id):
-    # Find the order for this user
     order = get_object_or_404(Order, id=order_id, user=request.user, status="pending")
+
+    # Reuse unified fee logic
+    order_items, subtotal, delivery_charge, basket_total = calculate_fees(order.items.all())
+
+    # Update the database
+    order.subtotal = subtotal
+    order.total = basket_total
+    order.save()
 
     context = {
         "order": order,
+        "order_items": order_items,
+        "subtotal": subtotal,
+        "delivery_charge": delivery_charge,
+        "basket_total": basket_total,
         "previous_page": request.META.get("HTTP_REFERER", "/"),
     }
 
