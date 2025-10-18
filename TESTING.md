@@ -606,3 +606,30 @@ Tested merch search on both desktop and mobile for single and multiple results.
 **Notes:**
 
 The merch search now behaves identically to artist and venue searches. Single-item searches render a centered card, maintaining layout consistency.
+
+#### Continue Shopping Button Redirect
+
+**User Story:** 
+
+As a **user**, I want to **click a "Continue Shopping" button on the basket page**  so that **return to browsing merch or events without starting over**.
+
+**What Was Tested:**  
+
+I tested the functionality of the new "Continue Shopping" button on the basket page to ensure that it redirected users back to the merch list when the basket page was their referrer. I also confirmed that the button worked when the user arrived at the basket from either the events or merch page.
+
+**Acceptance Criteria:** 
+
+[x] The "Continue Shopping" button appears correctly at the top of the basket page.  
+[x] Clicking the button from the basket redirects to the previous page if the user came from events or merch.  
+[x] No redirect loop occurs.  
+[x] The button works the same in both desktop and mobile views.
+
+**Tasks Completed:**
+  
+[x] Added `continue_shopping` view to `apps/basket/views.py`.  
+[x] Added corresponding URL path to `apps/basket/urls.py`.  
+[x] Imported the new view properly at the top of the file.  
+[x] Updated the view logic to prevent redirect loops when `HTTP_REFERER` matches the basket page.  
+[x] Tested redirection from basket, events, and merch pages.  
+
+**Notes:** At first, the button did nothing because I forgot to import the `continue_shopping` view. After importing it, I noticed a redirect loop caused by the `HTTP_REFERER` pointing back to the basket. Adding a comparison between the basket URL and the referrer fixed the loop. Once that was done, both the "Continue Shopping" and test links redirected correctly to the merch list. The button now behaves as expected in all cases, ensuring smooth navigation for users.
