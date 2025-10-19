@@ -18,7 +18,7 @@ const amountInput = document.getElementById("amount");
 
 async function initSquare() {
   if (!window.Square) {
-    statusEl.textContent = "Square SDK failed to load";
+    statusEl.textContent = "Square SDK failed to load.";
     return;
   }
 
@@ -71,6 +71,23 @@ async function initSquare() {
     payBtn.disabled = false;
   });
 }
+
+// Billing / Delivery address
+  const useBilling = document.getElementById("useBillingForDelivery");
+  const updateDelivery = document.getElementById("updateDelivery");
+  const deliverySection = document.getElementById("deliveryAddressSection");
+
+  useBilling.addEventListener("change", function() {
+      if (useBilling.checked) {
+          deliverySection.style.display = "none";
+      }
+  });
+
+  updateDelivery.addEventListener("change", function() {
+      if (updateDelivery.checked) {
+          deliverySection.style.display = "block";
+      }
+  });
 
 // Init
 initSquare();
