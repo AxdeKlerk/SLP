@@ -108,7 +108,10 @@ class Merch(models.Model):
         ("xxl", "XXL"),
     ]
     size = models.CharField(
-        max_length=5, choices=SIZE_CHOICES, blank=True, null=True,
+        max_length=5,
+        choices=SIZE_CHOICES,
+        blank=True,
+        null=True,
         help_text="Leave blank for items without sizes (flags, mugs, etc.)."
     )
     quantity = models.PositiveIntegerField(
@@ -116,9 +119,16 @@ class Merch(models.Model):
         help_text="Units per product item (keep 1 unless you sell multi-packs)."
     )
     stock = models.PositiveIntegerField(default=0, help_text="How many you have in stock.")
+    
+    # Sold Items
+    items_sold = models.PositiveIntegerField(
+        default=0,
+        help_text="How many units of this item have been sold (auto-updated)."
+    )
 
     class Meta:
-        ordering = ['product_name'] 
+        ordering = ['product_name']
+
     def __str__(self):
         return f"{self.product_name} - {self.get_product_category_display()} ({self.size if self.size else 'One Size'})"
 

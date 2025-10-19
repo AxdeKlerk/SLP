@@ -84,12 +84,12 @@ def basket_checkout(request):
             price=(line_total / item.quantity) if item.quantity else 0,
         )
 
-    # --- Update totals ---
+    # Update totals and save to db
     order.subtotal = subtotal
     order.total = subtotal
     order.save()
 
-    # --- Create matching Square Order in Sandbox environment ---
+    # Create matching Square Order in Sandbox environment
     headers = {
         "Square-Version": "2025-01-01",
         "Authorization": f"Bearer {settings.SQUARE_ACCESS_TOKEN}",
@@ -160,7 +160,7 @@ def basket_checkout(request):
     except Exception as e:
         print(f"Error creating Square order/payment: {e}")
 
-    # --- Clear basket and redirect ---
+    # Clear basket and redirect to checkout
     basket.items.all().delete()
     return redirect("checkout:checkout_view", order_id=order.id)
 
@@ -237,12 +237,11 @@ def square_webhook(request):
     """
     Handle incoming Square payment webhooks securely.
     """
-    # --- 1. Verify Square signature (now re-enabled for production) ---
+    # 1. Verify Square signature 
     signature = request.META.get("HTTP_X_SQUARE_HMACSHA256_SIGNATURE", "")
     body = request.body.decode("utf-8")
     key = settings.SQUARE_SIGNATURE_KEY.encode("utf-8")
 
-    # Ensure URL matches exactly to Square dashboard settings
     webhook_url = request.build_absolute_uri().replace("http://", "https://")
     string_to_sign = webhook_url + body
 
@@ -250,12 +249,11 @@ def square_webhook(request):
         hmac.new(key, string_to_sign.encode("utf-8"), hashlib.sha256).digest()
     ).decode("utf-8")
 
-    # Signature verification now active
     if not hmac.compare_digest(computed_signature, signature):
         print("Signature mismatch")
         return HttpResponseBadRequest("Invalid signature")
 
-    # --- 2. Parse the incoming webhook JSON ---
+    # 2. Parse incoming JSON 
     try:
         event = json.loads(body)
     except json.JSONDecodeError:
@@ -265,52 +263,64 @@ def square_webhook(request):
     event_type = event.get("type", "")
     print(f"Received Square webhook: {event_type}")
 
-    # --- 3. Only handle payment events ---
-    if event_type in ["payment.created", "payment.updated"]:
-        try:
-            # Extract payment info
-            payment = event["data"]["object"]["payment"]
-            payment_id = payment.get("id")
-            square_order_id = payment.get("order_id")
-            payment_status = payment.get("status")
-
-            print(f"Square order ID: {square_order_id}, payment ID: {payment_id}, status: {payment_status}")
-
-            # --- 4. Find the matching local order ---
-            try:
-                order = Order.objects.get(square_order_id=square_order_id)
-            except Order.DoesNotExist:
-                print(f"No order found for Square order ID {square_order_id}")
-                return JsonResponse({"status": "ignored", "message": "No matching order"}, status=200)
-
-            # --- 5. Update only if payment completed ---
-            if payment_status == "COMPLETED":
-                if order.status != "paid":
-                    order.status = "paid"
-                    order.square_payment_id = payment_id
-                    order.save()
-                    print(f"Order {order.id} marked as PAID")
-                    return JsonResponse({"status": "success", "message": "Order updated"}, status=200)
-                else:
-                    print(f"Order {order.id} already marked as PAID — duplicate webhook ignored")
-                    return JsonResponse({"status": "ignored", "message": "Duplicate event"}, status=200)
-            else:
-                print(f"Payment not completed yet (status: {payment_status})")
-                return JsonResponse({"status": "ignored", "message": "Payment not completed"}, status=200)
-
-        # --- 6. Handle missing fields safely ---
-        except KeyError as e:
-            print(f"Missing key in Square payload: {e}")
-            return JsonResponse({"status": "error", "message": f"Missing key: {e}"}, status=400)
-
-        # --- 7. Catch any other unexpected errors ---
-        except Exception as e:
-            print(f"Unexpected error while processing webhook: {e}")
-            return JsonResponse({"status": "error", "message": str(e)}, status=500)
-
-    # --- 8. Ignore all other event types ---
-    else:
+    # 3. Handle only payment events 
+    if event_type not in ["payment.created", "payment.updated"]:
         print(f"Unhandled Square webhook event type: {event_type}")
         return JsonResponse({"status": "ignored", "message": f"Unhandled event: {event_type}"}, status=200)
+
+    try:
+        # 4. Extract payment info 
+        payment = event["data"]["object"]["payment"]
+        payment_id = payment.get("id")
+        square_order_id = payment.get("order_id")
+        payment_status = payment.get("status")
+
+        print(f"Square order ID: {square_order_id}, payment ID: {payment_id}, status: {payment_status}")
+
+        # 5. Find the matching local order
+        try:
+            order = Order.objects.get(square_order_id=square_order_id)
+        except Order.DoesNotExist:
+            print(f"No order found for Square order ID {square_order_id}")
+            return JsonResponse({"status": "ignored", "message": "No matching order"}, status=200)
+
+        # 6. Update only if payment completed 
+        if payment_status == "COMPLETED":
+            if order.status != "paid":
+                order.status = "paid"
+                order.square_payment_id = payment_id
+                order.save()
+
+                # Update event ticket and merch stock counts
+                for item in order.items.all():
+                    if item.event:
+                        event_obj = item.event
+                        event_obj.tickets_sold += item.quantity
+                        event_obj.save()
+                    elif item.merch:
+                        merch = item.merch
+                        if hasattr(merch, "items_sold"):
+                            merch.items_sold += item.quantity
+                        if hasattr(merch, "stock"):
+                            merch.stock = max(merch.stock - item.quantity, 0)
+                        merch.save()
+
+                return JsonResponse({"status": "success", "message": "Order updated"}, status=200)
+            else:
+                print(f"Order {order.id} already marked as PAID — duplicate webhook ignored")
+                return JsonResponse({"status": "ignored", "message": "Duplicate event"}, status=200)
+        else:
+            print(f"Payment not completed yet (status: {payment_status})")
+            return JsonResponse({"status": "ignored", "message": "Payment not completed"}, status=200)
+
+    # 7. Handle missing fields safely 
+    except KeyError as e:
+        print(f"Missing key in Square payload: {e}")
+        return JsonResponse({"status": "error", "message": f"Missing key: {e}"}, status=400)
+
+    # 8. Catch any other unexpected errors
+    except Exception as e:
+        print(f"Unexpected error while processing webhook: {e}")
+        return JsonResponse({"status": "error", "message": str(e)}, status=500)
 
 
