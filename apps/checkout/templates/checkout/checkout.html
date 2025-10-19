@@ -24,12 +24,12 @@
                             <div class="ms-2 me-auto text-start">
                                 {% if item.event %}
                                     <strong>{{ item.event }}</strong><br>
-                                    Cost: {{ item.quantity }} x £{{ item.price|floatformat:2 }} ea<br>
+                                    Cost: {{ item.quantity }} x £{{ item.price|floatformat:2 }}<br>
                                     Booking Fee (10%): £{{ item.booking_fee|floatformat:2 }}<br>
                                     Transaction Fee included
                                 {% elif item.merch %}
                                     <strong>{{ item.merch.product_name }}</strong><br>
-                                    Cost: {{ item.quantity }} x £{{ item.price|floatformat:2 }} ea<br>
+                                    Cost: {{ item.quantity }} x £{{ item.price|floatformat:2 }}<br>
                                     Delivery: £{{ item.delivery_fee|floatformat:2 }}
                                 {% endif %}
                             </div>

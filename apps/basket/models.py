@@ -16,9 +16,14 @@ class BasketItem(models.Model):
     quantity = models.PositiveIntegerField(default=1)
     size = models.CharField(max_length=10, blank=True, null=True)
 
-    def __str__(self):
-        return f"{self.quantity} × {self.event}"
-
+    def get_line_total(self):
+        """Calculate total cost for this item (price x quantity)."""
+        if self.event:
+            return (self.event.price or 0) * self.quantity
+        if self.merch:
+            return (self.merch.price or 0) * self.quantity
+        return 0
+    
     @property
     def line_total(self):
         if self.event:
@@ -29,9 +34,9 @@ class BasketItem(models.Model):
 
     def __str__(self):
         if self.event:
-            return f"{self.quantity} × {self.event}"
+            return f"{self.quantity} x {self.event}"
         if self.merch:
-            return f"{self.quantity} × {self.merch}"
+            return f"{self.quantity} x {self.merch}"
         return "Basket Item"
     
     class Meta:

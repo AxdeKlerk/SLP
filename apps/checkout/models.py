@@ -64,8 +64,12 @@ class OrderItem(models.Model):
             self.product_name = self.merch.product_name
         super().save(*args, **kwargs)
 
-    def line_total(self):
+    def get_line_total(self):
         return self.quantity * self.price
+
+    @property
+    def line_total(self):
+        return self.get_line_total()
 
     def __str__(self):
         return f"{self.product_name} (x{self.quantity})"

@@ -19,7 +19,8 @@ def calculate_fees(order_items, discount=0):
     delivery_charge = Decimal("0.00")
 
     for item in order_items:
-        item_total = item.line_total()
+        item_total = item.get_line_total()
+        item.display_line_total = item_total
 
         # Per-item booking fee (10% of event cost)
         if item.event:
@@ -44,7 +45,7 @@ def calculate_fees(order_items, discount=0):
 
     #For debugging
     for i in order_items:
-        print(f"DEBUG: {i} | line_total={i.line_total()} | total_with_fees={getattr(i, 'total_with_fees', None)}")
+        print(f"DEBUG: {i} | line_total={i.get_line_total()} | total_with_fees={getattr(i, 'total_with_fees', None)}")
 
     return order_items, subtotal, delivery_charge, basket_total
 
