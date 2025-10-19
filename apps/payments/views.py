@@ -7,6 +7,9 @@ from django.conf import settings
 from .utils import client
 from apps.checkout.models import Order
 from .models import Invoice
+from apps.basket.views import calculate_fees
+from apps.checkout.views import prepare_order_context
+
 
 logger = logging.getLogger(__name__)
 
@@ -80,11 +83,14 @@ def process_payment(request):
 def payment_checkout(request, order_id):
     order = get_object_or_404(Order, id=order_id, user=request.user, status="pending")
 
-    previous_page = request.META.get("HTTP_REFERER", "/checkout/")
+    context, subtotal, basket_total = prepare_order_context(order)
 
-    return render(request, "payments/payment.html", {
-        "order": order,
-        "SQUARE_APPLICATION_ID": settings.SQUARE_APPLICATION_ID,
-        "SQUARE_LOCATION_ID": settings.SQUARE_LOCATION_ID,
-        "previous_page": previous_page,
-    })
+    # Save final totals before payment
+    order.subtotal = subtotal
+    order.total = basket_total
+    order.save()
+
+    context["previous_page"] = request.META.get("HTTP_REFERER", "/")
+
+    return render(request, "payments/payment.html", context)
+

@@ -1056,3 +1056,28 @@ After this fix, the checkout summary displayed:
 - Accurate right-hand totals including all charges  
 
 **Lesson Learned:** I learned that reusing shared logic from other views like `basket_view` requires careful attention to how quantities and related fields are calculated. Even a small oversight, like not multiplying a percentage fee per quantity, can lead to visible errors in totals. Ensuring consistent fee calculations across both *Django* views avoids mismatched totals between basket and checkout summaries.
+
+## Runtime Error for Checkout and Payment Summary Totals
+
+**Bug:** The totals on the right-hand side of both the checkout and payment summary templates only showed the base item cost (`price × quantity`). The per-item booking and delivery fees were missing, even though they were correctly calculated in the `calculate_fees()` function. The grand total at the bottom was correct, but each item’s total on the right-hand side did not include the added fees.
+
+**Fix:** I confirmed through debug prints that the per-item attributes (`booking_fee`, `delivery_fee`, and `total_with_fees`) were being correctly attached to each item inside `calculate_fees()`. However, the template still showed old totals because *Django* was re-fetching the `QuerySet` when rendering the page, losing those in-memory attributes.
+
+The fix was to convert the queryset into a list before passing it to `calculate_fees()` so that the modified objects would be preserved and sent to the template. I also updated the template to reference the correct variable `item.total_with_fees` instead of `item.line_total`.
+
+    def prepare_order_context(order):
+        """Recalculate fees and return a consistent context for checkout/payment views."""
+        items = list(order.items.all())  # convert queryset to list to preserve attached attributes
+        order_items, subtotal, delivery_charge, basket_total = calculate_fees(items)
+
+        context = {
+            "order": order,
+            "order_items": order_items,
+            "subtotal": subtotal,
+            "delivery_charge": delivery_charge,
+            "basket_total": basket_total,
+        }
+
+        return context, subtotal, basket_total
+
+**Lesson Learned:** When attaching calculated attributes to *Django* model instances (like per-item totals with fees), the queryset must be converted into a list before rendering. If I pass a `QuerySet` directly, *Django* re-queries the database during template rendering and drops any in-memory attributes. Always verify the data reaching the template with debug prints to confirm that calculated fields persist through the context.

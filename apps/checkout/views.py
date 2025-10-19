@@ -203,24 +203,32 @@ def confirmation_view(request, order_id):
 def checkout_view(request, order_id):
     order = get_object_or_404(Order, id=order_id, user=request.user, status="pending")
 
-    # Reuse unified fee logic
-    order_items, subtotal, delivery_charge, basket_total = calculate_fees(order.items.all())
+    context, _, _ = prepare_order_context(order)
+    context["previous_page"] = request.META.get("HTTP_REFERER", "/")
 
-    # Update the database
-    order.subtotal = subtotal
-    order.total = basket_total
-    order.save()
+    return render(request, "checkout/checkout.html", context)
 
+
+def prepare_order_context(order):
+    """Recalculate fees and return a consistent context for checkout/payment views."""
+    # Force the queryset into a list so attached attributes are preserved
+    items = list(order.items.all())
+    order_items, subtotal, delivery_charge, basket_total = calculate_fees(items)
+
+    # Make absolutely sure we’re returning the *same* modified list
     context = {
         "order": order,
-        "order_items": order_items,
+        "order_items": order_items,  # this list has .total_with_fees attached
         "subtotal": subtotal,
         "delivery_charge": delivery_charge,
         "basket_total": basket_total,
-        "previous_page": request.META.get("HTTP_REFERER", "/"),
     }
 
-    return render(request, "checkout/checkout.html", context)
+    # For debugging
+    for i in order_items:
+        print(f"CTX CHECK: {i} | total_with_fees={getattr(i, 'total_with_fees', None)}")
+
+    return context, subtotal, basket_total
 
 
 @csrf_exempt

@@ -19,24 +19,31 @@
                 </div>
 
                 <div class="card-body">
-                    <ul class="list-group">
-                        {% for item in order.items.all %}
+                    <!-- Order Items -->
+                    <ul class="list-group mb-3">
+                        {% for item in order_items %}
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             {% if item.event %}
                                 <span>{{ item.event }} (x{{ item.quantity }})</span>
                             {% elif item.merch %}
                                 <span>{{ item.merch.product_name }} (x{{ item.quantity }})</span>
                             {% endif %}
-                            <span>£{{ item.line_total }}</span>
+                            <div class="text-end">
+                                £{{ item.total_with_fees|floatformat:2 }}
+                           </div>
                         </li>
                         {% endfor %}
                     </ul>
 
+                    <hr>
+
+                    <!-- Totals -->
                     <div class="mt-3 mb-4 text-end cp-item">
-                        <strong>Total: £{{ order.total|floatformat:2 }}</strong>
+                        <p>Booking fees and delivery chanrges included</p>
+                        <strong>Total: £{{ basket_total|floatformat:2 }}</strong>
                     </div>
 
-                    <!-- Customer Contact & Billing Details -->
+                    <!-- Billing Details -->
                     <div class="mt-3 mb-4 text-start">
                         <h5>Billing Details</h5>
 
@@ -50,10 +57,12 @@
                                 <label for="shipping_name" class="form-label">Full Name</label>
                                 <input type="text" class="form-control" id="shipping_name" required>
                             </div>
+
                             <div class="mb-3 cp-item">
                                 <label for="shipping_address" class="form-label">Address</label>
                                 <input type="text" class="form-control" id="shipping_address" placeholder="123 Main Street" required>
                             </div>
+
                             <div class="row">
                                 <div class="col-md-6 mb-3 cp-item">
                                     <label for="shipping_city" class="form-label">City</label>
@@ -82,10 +91,10 @@
                     <div id="card-container" class="my-3"></div>
 
                     <!-- Hidden amount + Pay Button -->
-                    <input type="hidden" id="amount" value="{{ order.total }}">
+                    <input type="hidden" id="amount" value="{{ basket_total }}">
                     <div class="d-flex justify-content-end">
                         <button id="pay-button" class="btn cta-btn2 mb-2">
-                            Pay £{{ order.total|floatformat:2 }}
+                            Pay £{{ basket_total|floatformat:2 }}
                         </button>
                     </div>
 

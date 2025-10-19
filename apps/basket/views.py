@@ -4,51 +4,49 @@ from apps.products.models import Event, Merch
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from apps.checkout.models import Order
-from decimal import Decimal
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from decimal import Decimal
 
 
-def calculate_fees(items):
-    subtotal = Decimal('0.00')
-    delivery_charge = Decimal('0.00')
-    order_items = []
+def calculate_fees(order_items, discount=0):
+    """
+    Calculate subtotal, booking fee, delivery charge, and total.
+    Reattaches per-item fees for template display.
+    """
+    subtotal = Decimal("0.00")
+    booking_fee_total = Decimal("0.00")
+    delivery_charge = Decimal("0.00")
 
-    for item in items:
-        # Base total for this item
-        line_total = item.price * item.quantity
+    for item in order_items:
+        item_total = item.line_total()
 
-        # Default values
-        item.booking_fee = Decimal('0.00')
-        item.delivery_fee = Decimal('0.00')
+        # Per-item booking fee (10% of event cost)
+        if item.event:
+            item.booking_fee = (item_total * Decimal("0.10")).quantize(Decimal("0.01"))
+            booking_fee_total += item.booking_fee
+        else:
+            item.booking_fee = Decimal("0.00")
 
-        # --- Booking fee (10% of total ticket value) ---
-        if getattr(item, 'event', None):
-            item.booking_fee = (line_total * Decimal('0.10')).quantize(Decimal('0.01'))
-            item.total_with_fees = (line_total + item.booking_fee).quantize(Decimal('0.01'))
+        # Per-item delivery fee (£5 flat for merch)
+        if item.merch:
+            item.delivery_fee = Decimal("5.00")
+            delivery_charge = Decimal("5.00")
+        else:
+            item.delivery_fee = Decimal("0.00")
 
-        # --- Delivery fee for merch ---
-        elif getattr(item, 'merch', None):
-            base_fee = Decimal('5.00')
-            extra_fee_per_item = (base_fee * Decimal('0.50')).quantize(Decimal('0.01'))
+        # For right-hand total display in template
+        item.total_with_fees = item_total + item.booking_fee + item.delivery_fee
 
-            if item.quantity == 1:
-                item.delivery_fee = base_fee
-            else:
-                item.delivery_fee = base_fee + (extra_fee_per_item * (item.quantity - 1))
+        subtotal += item_total
 
-            item.delivery_fee = item.delivery_fee.quantize(Decimal('0.01'))
-            item.total_with_fees = (line_total + item.delivery_fee).quantize(Decimal('0.01'))
-            delivery_charge += item.delivery_fee
+    basket_total = max(subtotal + booking_fee_total + delivery_charge - discount, 0)
 
-        # --- Add to subtotal ---
-        subtotal += item.total_with_fees
-        order_items.append(item)
+    #For debugging
+    for i in order_items:
+        print(f"DEBUG: {i} | line_total={i.line_total()} | total_with_fees={getattr(i, 'total_with_fees', None)}")
 
-    # Final totals
-    basket_total = subtotal
     return order_items, subtotal, delivery_charge, basket_total
-
 
 @login_required
 def basket_view(request):

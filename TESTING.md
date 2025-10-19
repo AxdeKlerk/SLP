@@ -696,3 +696,33 @@ I tested the updated checkout summary view and template to confirm that all cost
 
 Before the fix, the total for each item didn’t include the 10% booking fee or delivery charge, and the fee calculation only applied once per item line instead of per quantity. After the correction, each item’s total reflects the full cost with all fees, matching the intended checkout logic and user expectations. The summary is now accurate, readable, and consistent with the basket display.
 
+#### Checkout and Payment Summary Totals
+
+**User Story:** 
+
+As a **user**, I wanted to **see accurate per-item totals that include all booking and delivery fees on both the checkout and payment summary pages** so that I **can clearly understand the full cost before completing my order**.
+
+**What Was Tested:** 
+
+I tested that each item’s right-hand total correctly included booking and delivery fees, and that the basket total matched the combined value of all item totals. I verified that both templates displayed consistent values and that no incorrect base prices were shown.
+
+**Acceptance Criteria:**  
+
+- [x] Each item’s total includes all fees (booking and delivery).  
+- [x] The checkout and payment templates show matching totals.  
+- [x] The overall basket total equals the sum of all item totals.  
+- [x] No item displays only the base price × quantity.  
+- [x] Debug prints confirm that fee attributes persist in the context.
+
+**Tasks Completed:** 
+
+- [x] Converted `order.items.all()` to a list in `prepare_order_context()` to preserve in-memory attributes.  
+- [x] Ensured `calculate_fees()` attaches `booking_fee`, `delivery_fee`, and `total_with_fees` to each item.  
+- [x] Updated both templates to display `item.total_with_fees` instead of `item.line_total`.  
+- [x] Verified debug output in the terminal showed correct per-item totals.  
+- [x] Reloaded pages to confirm right-hand totals reflected all fees.
+
+**Notes:**
+
+Before the fix, only base prices were shown because *Django* re-fetched the queryset during rendering, losing the in-memory fee attributes. After converting the queryset to a list and ensuring the templates referenced `item.total_with_fees`, all per-item and basket totals displayed correctly, matching the backend calculations.
+

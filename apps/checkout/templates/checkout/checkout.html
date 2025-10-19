@@ -18,8 +18,7 @@
                     <span class="cp-item">{{ order.created_at|date:"d M Y" }}</span>
                 </div>
                 <div class="card-body">
-                    <div class="mt-3 mb-2 text-end cp-item">
-                    <ul class="list-group">
+                    <ul class="list-group mb-3">
                         {% for item in order_items %}
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto text-start">
@@ -42,11 +41,14 @@
                     </ul>
 
                     <hr>
-                    <strong>Total: £{{ basket_total|floatformat:2 }}</strong>
+
+                    <!-- Totals -->
+                    <div class="mt-3 mb-4 text-end cp-item">
+                        <strong>Total: £{{ basket_total|floatformat:2 }}</strong>
                     </div>
 
+                    <!-- Proceed to Payment -->
                     <div class="d-flex justify-content-end mb-2">
-                        <!-- changed action to point to payments app -->
                         <form method="get" action="{% url 'payments:payment_checkout' order.id %}" target="_self">
                             <button type="submit" class="btn cta-btn2 mb-2">
                                 Proceed to Payment
