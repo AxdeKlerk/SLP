@@ -135,4 +135,29 @@ document.addEventListener("DOMContentLoaded", function () {
       offcanvas.classList.remove("search-expanded");
     });
   }
+
+
+  // ========================================================
+  // Toggle "Update Shipping Address"
+  // ========================================================
+  const useBilling = document.getElementById("useBillingForshipping");
+  const updateShipping = document.getElementById("updateshipping");
+  const shippingSection = document.getElementById("shippingAddressSection");
+
+  if (useBilling && updateShipping && shippingSection) {
+    function toggleShippingSection() {
+      if (updateShipping.checked) {
+        shippingSection.style.display = "block";
+      } else {
+        shippingSection.style.display = "none";
+      }
+    }
+
+    // Listen for changes
+    useBilling.addEventListener("change", toggleShippingSection);
+    updateShipping.addEventListener("change", toggleShippingSection);
+
+    // Run on page load (in case of saved state)
+    toggleShippingSection();
+  }
 });

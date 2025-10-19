@@ -39,7 +39,7 @@
 
                     <!-- Totals -->
                     <div class="mt-3 mb-4 text-end cp-item">
-                        <p>Booking fees and delivery charges included in item sub-totals</p>
+                        <p>Booking fees and shipping charges included in item sub-totals</p>
                         <strong>Total: £{{ basket_total|floatformat:2 }}</strong>
                     </div>
 
@@ -81,46 +81,51 @@
                         </form>
                     </div>
 
-                    <!-- Delivery Options -->
+                    <!-- shipping Options -->
                     <div class="mt-4 mb-3 text-start">
-                        <h5>Delivery Options</h5>
+                        <h5>shipping Options</h5>
                         <div class="form-check cp-item">
-                            <input class="form-check-input" type="radio" name="deliveryOption" id="useBillingForDelivery" value="useBilling" checked>
-                            <label class="form-check-label" for="useBillingForDelivery">
-                                Use billing address for delivery
+                            <input class="form-check-input" type="radio" name="shippingOption" id="useBillingForshipping" value="useBilling" checked>
+                            <label class="form-check-label" for="useBillingForshipping">
+                                Use billing address for shipping
                             </label>
                         </div>
                         <div class="form-check cp-item">
-                            <input class="form-check-input" type="radio" name="deliveryOption" id="updateDelivery" value="updateDelivery">
-                            <label class="form-check-label" for="updateDelivery">
-                                Update delivery address
+                            <input class="form-check-input" type="radio" name="shippingOption" id="updateshipping" value="updateshipping">
+                            <label class="form-check-label" for="updateshipping">
+                                Update shipping address
                             </label>
                         </div>
                     </div>
-                    <!-- Hidden delivery address section -->
-                    <div id="deliveryAddressSection" class="mt-3" style="display: none;">
-                        <h6>Delivery Address</h6>
+                    <!-- Hidden shipping address section -->
+                    <div id="shippingAddressSection" class="mt-3" style="display: none;">
+                        <h6>shipping Address</h6>
                         <div class="mb-3 cp-item">
-                            <label for="delivery_name" class="form-label">Full Name</label>
-                            <input type="text" class="form-control" id="delivery_name">
+                            <label for="shipping_name" class="form-label">Full Name</label>
+                            <input type="text" name="shipping_name" class="form-control" id="shipping_name"
+                            value="{{ initial.shipping_name|default:'' }}" required>
                         </div>
                         <div class="mb-3 cp-item">
-                            <label for="delivery_address" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="delivery_address" placeholder="123 Main Street" required>
+                            <label for="shipping_address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="shipping_address" 
+                            name="shipping_address" placeholder="123 Main Street" required>
                         </div>
                         <div class="row">
                             <div class="col-md-6 mb-3 cp-item">
-                                <label for="delivery_city" class="form-label">City</label>
-                                <input type="text" class="form-control" id="delivery_city">
+                                <label for="shipping_city" class="form-label">City</label>
+                                <input type="text" class="form-control" name="shipping_city" id="shipping_city"
+                                value="{{ initial.shipping_city|default:'' }}" required>
                             </div>
                             <div class="col-md-6 mb-3 cp-item">
-                                <label for="delivery_postcode" class="form-label">Postcode</label>
-                                <input type="text" class="form-control" id="delivery_postcode">
+                                <label for="shipping_postcode" class="form-label">Postcode</label>
+                                <input type="text" class="form-control" name="shipping_postcode" id="shipping_postcode"
+                                value="{{ initial.shipping_postcode|default:'' }}" required>
                             </div>
                         </div>
                         <div class="mb-3 cp-item">
-                            <label for="delivery_country" class="form-label">Country</label>
-                            <input type="text" class="form-control" id="delivery_country" value="UK" readonly>
+                            <label for="shipping_country" class="form-label">Country</label>
+                            <input type="text" class="form-control" name="shipping_country" id="shipping_country" 
+                            value="{{ initial.shipping_country|default:'UK' }}" readonly>
                         </div>
                     </div>
 

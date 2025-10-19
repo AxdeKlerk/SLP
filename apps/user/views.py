@@ -16,6 +16,16 @@ from django.core.paginator import Paginator
 def login_success_view(request):
     return render(request, "user/login_success.html")
 
+@login_required
+def profile(request):
+    current_orders = Order.objects.filter(user=request.user).exclude(status="complete")
+    past_orders = Order.objects.filter(user=request.user, status="complete")
+
+    return render(request, "user/profile.html", {
+        "current_orders": current_orders,
+        "past_orders": past_orders,
+    })
+
 
 @login_required
 def profile_view(request):
@@ -94,7 +104,7 @@ def bulk_order_action(request):
 
         # Build payment link payload
         idempotency_key = str(uuid.uuid4())
-    payload = {
+        payload = {
         "idempotency_key": idempotency_key,
         "quick_pay": {
             "name": f"Order #{order.id}",

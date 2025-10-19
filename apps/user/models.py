@@ -1,13 +1,17 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
-@login_required
-def profile(request):
-    current_orders = Order.objects.filter(user=request.user).exclude(status="complete")
-    past_orders = Order.objects.filter(user=request.user, status="complete")
 
-    return render(request, "user/profile.html", {
-        "current_orders": current_orders,
-        "past_orders": past_orders,
-    })
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    full_name = models.CharField(max_length=100, blank=True)
+    address = models.TextField(blank=True)
+    city = models.CharField(max_length=100, blank=True)
+    postcode = models.CharField(max_length=20, blank=True)
+    country = models.CharField(max_length=100, default="UK", blank=True)
+
+    def __str__(self):
+        return self.user.username
+
