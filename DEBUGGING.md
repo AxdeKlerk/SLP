@@ -1081,3 +1081,36 @@ The fix was to convert the queryset into a list before passing it to `calculate_
         return context, subtotal, basket_total
 
 **Lesson Learned:** When attaching calculated attributes to *Django* model instances (like per-item totals with fees), the queryset must be converted into a list before rendering. If I pass a `QuerySet` directly, *Django* re-queries the database during template rendering and drops any in-memory attributes. Always verify the data reaching the template with debug prints to confirm that calculated fields persist through the context.
+
+## Basket and Checkout Totals Calculation Runtime Error
+
+**Bug:** When loading the basket or checkout pages, I repeatedly hit a `TypeError: 'decimal.Decimal' object is not callable` or `AttributeError: 'BasketItem' object has no attribute 'get_line_total'`. The issue started after introducing the new `calculate_fees()` logic, where the code called `item.line_total()` to get totals for each basket or order item. In some cases, `line_total` was being overwritten with a `Decimal` value, and later we renamed the method to `get_line_total()` to prevent this conflict — but only in the `OrderItem` model. The `BasketItem` model did not have that method, which caused the final error when the basket page loaded.
+
+**Fix:** I synchronized both models so they shared the same structure. 
+
+In `OrderItem`, I kept:
+    
+    def get_line_total(self):
+        return self.quantity * self.price
+
+    @property
+    def line_total(self):
+        return self.get_line_total()
+
+Then I added the same structure to `BasketItem`:
+
+    def get_line_total(self):
+        if self.event:
+            return (self.event.price or 0) * self.quantity
+        if self.merch:
+            return (self.merch.price or 0) * self.quantity
+        return 0
+
+    @property
+    def line_total(self):
+        return self.get_line_total()
+
+Finally, I updated all references inside `calculate_fees()` to use `item.get_line_total()` instead of `item.line_total()`. After restarting the server, both basket and checkout pages loaded without error, and the totals rendered correctly.
+
+**Lesson Learned:** Method and property naming collisions can quietly break *Django* logic, especially when reusing calculation functions across multiple models. A method like `line_total()` should never be reassigned a numeric value. Using a uniquely named method like `get_line_total()` plus a property for templates keeps backend logic clean and avoids callability errors. It also helps to ensure that related models (like `BasketItem` and `OrderItem`) stay synchronized when shared logic depends on them.
+

@@ -726,3 +726,37 @@ I tested that each item’s right-hand total correctly included booking and deli
 
 Before the fix, only base prices were shown because *Django* re-fetched the queryset during rendering, losing the in-memory fee attributes. After converting the queryset to a list and ensuring the templates referenced `item.total_with_fees`, all per-item and basket totals displayed correctly, matching the backend calculations.
 
+#### Basket and Checkout Totals Calculation
+
+**User Story:** 
+
+As a **user**, I want **the basket and checkout totals to include the correct booking and delivery fees for each item** so that I can **see accurate costs before payment**.
+
+**What Was Tested:** 
+
+I tested the basket and checkout pages to confirm that all per-item totals (including booking and delivery fees) displayed correctly and that the new `get_line_total()` method was being called consistently across both models.
+
+**Acceptance Criteria:** 
+
+[x] Basket page loads without `TypeError` or `AttributeError`.  
+[x] Checkout page loads without backend errors.  
+[x] Each event item correctly applies a 10% booking fee.  
+[x] Each merch item correctly adds a £5 delivery fee.  
+[x] The totals on the right reflect base price + fees accurately.  
+[x] Both `BasketItem` and `OrderItem` use the same `get_line_total()` logic.  
+
+**Tasks Completed:**
+
+[x] Renamed `line_total()` method to `get_line_total()` in `OrderItem`.  
+[x] Added matching method and property to `BasketItem`.  
+[x] Updated `calculate_fees()` to use `item.get_line_total()`.  
+[x] Restarted *Django* server to clear overwritten cached class definitions.  
+[x] Verified totals render correctly in templates after the fix.  
+
+**Notes:** 
+ 
+This bug was caused by method overwriting and inconsistent naming between models. Aligning both models resolved the problem and ensured that totals remain accurate across all views. The `calculate_fees()` function now works universally for both basket and order items without risk of breaking callable logic again.
+
+
+
+
