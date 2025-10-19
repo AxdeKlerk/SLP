@@ -54,31 +54,74 @@
                             </div>
 
                             <div class="mb-3 cp-item">
-                                <label for="shipping_name" class="form-label">Full Name</label>
-                                <input type="text" class="form-control" id="shipping_name" required>
+                                <label for="billingname" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="billingname" required>
                             </div>
 
                             <div class="mb-3 cp-item">
-                                <label for="shipping_address" class="form-label">Address</label>
-                                <input type="text" class="form-control" id="shipping_address" placeholder="123 Main Street" required>
+                                <label for="billingaddress" class="form-label">Address</label>
+                                <input type="text" class="form-control" id="billingaddress" placeholder="123 Main Street" required>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-6 mb-3 cp-item">
-                                    <label for="shipping_city" class="form-label">City</label>
-                                    <input type="text" class="form-control" id="shipping_city" required>
+                                    <label for="billingcity" class="form-label">City</label>
+                                    <input type="text" class="form-control" id="billingcity" required>
                                 </div>
                                 <div class="col-md-6 mb-3 cp-item">
-                                    <label for="shipping_postcode" class="form-label">Postcode</label>
-                                    <input type="text" class="form-control" id="shipping_postcode" required>
+                                    <label for="billingpostcode" class="form-label">Postcode</label>
+                                    <input type="text" class="form-control" id="billingpostcode" required>
                                 </div>
                             </div>
 
                             <div class="mb-3 cp-item">
-                                <label for="shipping_country" class="form-label">Country</label>
-                                <input type="text" class="form-control" id="shipping_country" value="UK" readonly>
+                                <label for="billingcountry" class="form-label">Country</label>
+                                <input type="text" class="form-control" id="billingcountry" value="UK" readonly>
                             </div>
                         </form>
+                    </div>
+
+                    <!-- Delivery Options -->
+                    <div class="mt-4 mb-3 text-start">
+                        <h5>Delivery Options</h5>
+                        <div class="form-check cp-item">
+                            <input class="form-check-input" type="radio" name="deliveryOption" id="useBillingForDelivery" value="useBilling" checked>
+                            <label class="form-check-label" for="useBillingForDelivery">
+                                Use billing address for delivery
+                            </label>
+                        </div>
+                        <div class="form-check cp-item">
+                            <input class="form-check-input" type="radio" name="deliveryOption" id="updateDelivery" value="updateDelivery">
+                            <label class="form-check-label" for="updateDelivery">
+                                Update delivery address
+                            </label>
+                        </div>
+                    </div>
+                    <!-- Hidden delivery address section -->
+                    <div id="deliveryAddressSection" class="mt-3" style="display: none;">
+                        <h6>Delivery Address</h6>
+                        <div class="mb-3 cp-item">
+                            <label for="delivery_name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="delivery_name">
+                        </div>
+                        <div class="mb-3 cp-item">
+                            <label for="delivery_address" class="form-label">Address</label>
+                            <input type="text" class="form-control" id="delivery_address" placeholder="123 Main Street" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3 cp-item">
+                                <label for="delivery_city" class="form-label">City</label>
+                                <input type="text" class="form-control" id="delivery_city">
+                            </div>
+                            <div class="col-md-6 mb-3 cp-item">
+                                <label for="delivery_postcode" class="form-label">Postcode</label>
+                                <input type="text" class="form-control" id="delivery_postcode">
+                            </div>
+                        </div>
+                        <div class="mb-3 cp-item">
+                            <label for="delivery_country" class="form-label">Country</label>
+                            <input type="text" class="form-control" id="delivery_country" value="UK" readonly>
+                        </div>
                     </div>
 
                     <!-- Square Config -->

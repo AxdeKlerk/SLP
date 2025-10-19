@@ -72,5 +72,22 @@ async function initSquare() {
   });
 }
 
+// Billing / Delivery address
+  const useBilling = document.getElementById("useBillingForDelivery");
+  const updateDelivery = document.getElementById("updateDelivery");
+  const deliverySection = document.getElementById("deliveryAddressSection");
+
+  useBilling.addEventListener("change", function() {
+      if (useBilling.checked) {
+          deliverySection.style.display = "none";
+      }
+  });
+
+  updateDelivery.addEventListener("change", function() {
+      if (updateDelivery.checked) {
+          deliverySection.style.display = "block";
+      }
+  });
+
 // Init
 initSquare();
