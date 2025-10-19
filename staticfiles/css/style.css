@@ -335,8 +335,6 @@ body {
     padding-top: 1rem;
     margin-bottom: 0;
     padding-bottom: 0;
-    margin-left: auto;
-    margin-right: auto;
 }
 .card-body {
     padding-top: 0;
@@ -415,7 +413,7 @@ body {
 /* Roxoff page */
 .roxoff-img {
     width: auto;
-    max-height: 400px;
+    max-height: 500px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -426,9 +424,12 @@ body {
     font-size: 0.8rem;
     margin-top: 1rem;
 }
-.roxoff .card-img-top {
-    width: 72%;
+.roxoff-img-top {
+    width: 60%;
     height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /*Search results page*/
@@ -704,7 +705,16 @@ body {
     font-size: 0.75rem;
     line-height: 1;
     border-radius: 4px;
-    }
+}
+/* Radio button styling */
+.form-check-input:checked {
+    background-color: #000000 !important;
+    border-color: #11ED73 !important;
+    box-shadow: 0 0 6px #11ED73 !important;
+}
+.form-check-input {
+    border: 2px solid #11ED73 !important;
+}
 /* Alert buttons */
 .btn-close-green {
   background: none;
@@ -716,7 +726,6 @@ body {
   color: #11ED73;
   font-weight: bold;
 }
-
 /*404 & 500 error message*/
 .error-item {
     color: #11ED73;
