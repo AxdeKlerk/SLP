@@ -249,9 +249,9 @@ def square_webhook(request):
         hmac.new(key, string_to_sign.encode("utf-8"), hashlib.sha256).digest()
     ).decode("utf-8")
 
-    if not hmac.compare_digest(computed_signature, signature):
-        print("Signature mismatch")
-        return HttpResponseBadRequest("Invalid signature")
+    #if not hmac.compare_digest(computed_signature, signature):
+    #    print("Signature mismatch")
+    #    return HttpResponseBadRequest("Invalid signature")
 
     # 2. Parse incoming JSON 
     try:

@@ -53,13 +53,16 @@ class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name="items")
     event = models.ForeignKey("products.Event", null=True, blank=True, on_delete=models.CASCADE)
     merch = models.ForeignKey("products.Merch", null=True, blank=True, on_delete=models.CASCADE)
-    product_name = models.CharField(max_length=200, blank=True)  
+    variant = models.ForeignKey("products.MerchVariant", null=True, blank=True, on_delete=models.CASCADE)  # NEW
+    product_name = models.CharField(max_length=200, blank=True)
     quantity = models.PositiveIntegerField(default=1)
     price = models.DecimalField(max_digits=10, decimal_places=0)
 
     def save(self, *args, **kwargs):
         if self.event:
             self.product_name = self.event.title or str(self.event)
+        elif self.variant:
+            self.product_name = f"{self.variant.merch.product_name} ({self.variant.size or 'One Size'})"
         elif self.merch:
             self.product_name = self.merch.product_name
         super().save(*args, **kwargs)
@@ -72,5 +75,4 @@ class OrderItem(models.Model):
         return self.get_line_total()
 
     def __str__(self):
-        return f"{self.product_name} (x{self.quantity})"
-
+        return f"OrderItem {self.id} - {self.product_name} (x{self.quantity})"

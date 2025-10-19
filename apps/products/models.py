@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 class Event(models.Model):
     image = CloudinaryField('image', folder='slp-upgrade', use_filename=True, blank=True, null=True)
@@ -126,9 +128,24 @@ class Merch(models.Model):
     )
 
     class Meta:
-        ordering = ['product_name']
+            ordering = ['product_name']
 
     def __str__(self):
         return f"{self.product_name} - {self.get_product_category_display()} ({self.size if self.size else 'One Size'})"
 
+class MerchVariant(models.Model):
+    merch = models.ForeignKey("Merch", on_delete=models.CASCADE, related_name="variants")
+    size = models.CharField(max_length=5, blank=True, null=True)
+    stock = models.PositiveIntegerField(default=0)
+    items_sold = models.PositiveIntegerField(default=0)
 
+    def __str__(self):
+        return f"{self.merch.product_name} ({self.size or 'One Size'})"
+
+    class Meta:
+        ordering = ["size"]
+
+    def save(self, *args, **kwargs):
+        if not self.size:
+            self.size = None
+        super().save(*args, **kwargs)
