@@ -13,6 +13,12 @@ class Event(models.Model):
     door_time = models.TimeField(null=False, blank=False)
     start_time = models.TimeField(null=False, blank=False)
     ticket_capacity = models.PositiveIntegerField(default=0)
+    
+    # Tickets sold
+    tickets_sold = models.PositiveIntegerField(
+        default=0,
+        help_text="How many tickets have been sold (auto-updated)."
+    )
     GENRE_CHOICES = [
         ('classic_rock', 'Classic Rock'),
         ('rock', 'Rock'),
@@ -40,15 +46,7 @@ class Event(models.Model):
     ]
     roxoff_day = models.CharField(max_length=10,choices=ROXOFF_DAY_CHOICES, blank=True, null=True,help_text="Only required for Roxoff events")
     
-    @property
-    def tickets_sold(self):
-        from apps.checkout.models import OrderItem
-        return sum(
-            item.quantity
-            for item in OrderItem.objects.filter(
-                order__status="paid", event=self
-            )
-        )
+    ticket_capacity = models.PositiveIntegerField(default=0)
 
     @property
     def effective_capacity(self):
@@ -63,6 +61,7 @@ class Event(models.Model):
     def __str__(self):
         return f"{self.artist} @ {self.venue} | {self.gig_date}"
    
+
 class Artist(models.Model):
     name = models.CharField(max_length=100, null=False, blank=False)
     logo = CloudinaryField('image', blank=True, null=True)
