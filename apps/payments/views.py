@@ -3,7 +3,6 @@ import logging
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import JsonResponse, HttpResponseNotAllowed, HttpResponseBadRequest
-from django.conf import settings
 from .utils import client
 from apps.checkout.models import Order
 from apps.user.models import UserProfile
@@ -18,27 +17,20 @@ logger = logging.getLogger(__name__)
 @login_required
 def payment_checkout(request, order_id):
     order = get_object_or_404(Order, id=order_id, user=request.user, status="pending")
+    
+    from django.conf import settings
 
-    # --- Get basket totals ---
-    context, subtotal, basket_total = prepare_order_context(order)
+    # Get basket totals and update order
+    base_context, subtotal, basket_total = prepare_order_context(order)
     order.subtotal = subtotal
     order.total = basket_total
     order.save()
 
-    # --- Pre-fill from profile ---
+    # Pre-fill from profile if available
     try:
         profile = UserProfile.objects.get(user=request.user)
     except UserProfile.DoesNotExist:
         profile = None
-
-    if request.method == "POST":
-        order.shipping_name = request.POST.get("shipping_name")
-        order.shipping_address = request.POST.get("shipping_address")
-        order.shipping_city = request.POST.get("shipping_city")
-        order.shipping_postcode = request.POST.get("shipping_postcode")
-        order.shipping_country = request.POST.get("shipping_country")
-        order.save()
-        return redirect("payments:process_payment", order_id=order.id)
 
     initial_data = {}
     if profile:
@@ -50,15 +42,15 @@ def payment_checkout(request, order_id):
             "shipping_country": profile.country,
         }
 
-    context.update({
+    # Build final context for template
+    context = {
+        **base_context,  # merge whatever prepare_order_context returned
         "order": order,
         "initial": initial_data,
         "previous_page": request.META.get("HTTP_REFERER", "/"),
-    })
-    # Square IDs
-    context["SQUARE_APPLICATION_ID"] = settings.SQUARE_APPLICATION_ID
-    context["SQUARE_LOCATION_ID"] = settings.SQUARE_LOCATION_ID
-    context["previous_page"] = request.META.get("HTTP_REFERER", "/")
+        "SQUARE_APPLICATION_ID": settings.SQUARE_APPLICATION_ID,
+        "SQUARE_LOCATION_ID": settings.SQUARE_LOCATION_ID,
+    }
 
     return render(request, "payments/payment.html", context)
 
@@ -72,13 +64,14 @@ def test_square_connection(request):
     return JsonResponse({"locations": locations})
 
 def sandbox_checkout(request):
-    print(">>> checkout view hit, App ID =", settings.SQUARE_APPLICATION_ID,
-          "Location ID =", settings.SQUARE_LOCATION_ID)  # debug
+
+    from django.conf import settings
+
     ctx = {
         "SQUARE_APPLICATION_ID": settings.SQUARE_APPLICATION_ID,
         "SQUARE_LOCATION_ID": settings.SQUARE_LOCATION_ID,
     }
-    return render(request, "payments/checkout.html", ctx)
+    return render(request, "payments/payment.html", ctx)
 
 @login_required
 def process_payment(request, order_id):

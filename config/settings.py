@@ -1,14 +1,13 @@
-import os
 from pathlib import Path
-from dotenv import load_dotenv
+import os
 import dj_database_url
+from dotenv import load_dotenv
 
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# BASE DIRS
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load environment variables from .env file
-load_dotenv(BASE_DIR / '.env')
+# Load .env BEFORE anything uses it
+load_dotenv(BASE_DIR / ".env")
 
 # Security
 SECRET_KEY = os.getenv('SECRET_KEY')
@@ -23,11 +22,10 @@ SQUARE_LOCATION_ID = os.getenv('SQUARE_LOCATION_ID')
 SQUARE_SIGNATURE_KEY = os.getenv("SQUARE_SIGNATURE_KEY")
 SQUARE_BASE_URL = os.getenv("SQUARE_BASE_URL", "https://connect.squareupsandbox.com")
 
-
 # Allowed hosts
 ALLOWED_HOSTS = os.getenv(
     "ALLOWED_HOSTS",
-    "127.0.0.1,localhost,.ngrok-free.dev"
+    "127.0.0.1, localhost, conceptual-stridently-sadie.ngrok-free.dev"
 ).split(",")
 
 
@@ -84,8 +82,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 ssl_mode = True if os.environ.get('ON_HEROKU') else False
 
 DATABASES = {
-    'default': dj_database_url.parse(
-        os.getenv('DATABASE_URL'),
+    'default': dj_database_url.parse(os.getenv('DATABASE_URL'),
         conn_max_age=600,
         ssl_require=True
     )
@@ -138,5 +135,9 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Media files
 MEDIA_URL = '/media/'
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://conceptual-stridently-sadie.ngrok-free.dev",
+]
 
 

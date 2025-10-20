@@ -215,7 +215,6 @@ def prepare_order_context(order):
     items = list(order.items.all())
     order_items, subtotal, delivery_charge, basket_total = calculate_fees(items)
 
-    # Make absolutely sure we’re returning the *same* modified list
     context = {
         "order": order,
         "order_items": order_items,  # this list has .total_with_fees attached
@@ -223,10 +222,6 @@ def prepare_order_context(order):
         "delivery_charge": delivery_charge,
         "basket_total": basket_total,
     }
-
-    # For debugging
-    for i in order_items:
-        print(f"CTX CHECK: {i} | total_with_fees={getattr(i, 'total_with_fees', None)}")
 
     return context, subtotal, basket_total
 
