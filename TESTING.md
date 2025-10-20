@@ -757,6 +757,41 @@ I tested the basket and checkout pages to confirm that all per-item totals (incl
  
 This bug was caused by method overwriting and inconsistent naming between models. Aligning both models resolved the problem and ensured that totals remain accurate across all views. The `calculate_fees()` function now works universally for both basket and order items without risk of breaking callable logic again.
 
+#### Payment Integration and Deployment Testing
+
+**User Story:** 
+
+As a **user**, I want to **complete a secure checkout using the *Squar*e* payment form** so that I can **confidently pay for my order online**.
+
+**What Was Tested:** 
+
+I tested the deployment of the live app on *Heroku* and verified that the *Square* credit card form rendered correctly, processed sandbox payments, and redirected to the success confirmation page without any console or SSL errors. The test covered both the technical flow (payment tokenization and order confirmation) and the security integrity (HTTPS and certificate validation).
+
+**Acceptance Criteria:** 
+
+- [x] The app deployed successfully on *Heroku* with `DEBUG = False`  
+- [x] All static files collected and loaded without errors  
+- [x] The *Square* card input field appeared correctly after page load  
+- [x] Sandbox test cards processed successfully with valid redirects  
+- [x] `SQUARE_APPLICATION_ID` and `SQUARE_LOCATION_ID` loaded from Config Vars  
+- [x] The checkout used HTTPS with a valid SSL certificate  
+- [x] No mixed-content or *JavaScript* console errors on live site  
+- [x] *Chrome*’s “dangerous site” flag identified as a false positive  
+- [x] *SSL Labs* test returned three A– ratings confirming certificate validity  
+
+**Tasks Completed:**
+
+- [x] Updated `square-checkout.js` to use `window.addEventListener("load", ...)` instead of `DOMContentLoaded`  
+- [x] Removed old `setTimeout` wrapper to prevent premature execution  
+- [x] Set *Heroku* Config Vars for *Square* sandbox keys  
+- [x] Verified live deployment with `git push heroku main`  
+- [x] Tested sandbox payments using *Square*-provided card numbers (e.g., Visa `4111 1111 1111 1111`)  
+- [x] Checked SSL integrity using *SSL Labs* external tool  
+- [x] Confirmed *Chrome* red warning was unrelated to app security  
+
+**Notes:** 
+
+During initial tests, the payment form did not appear due to the script running before the DOM had fully loaded. Switching to the `window.onload` event solved this. A second issue occurred when the app and location IDs returned `None` in the console; adding them to *Heroku Config Vars* fixed the integration. After successful redeployment, the sandbox card form rendered perfectly, payments processed, and the confirmation page loaded over secure HTTPS. The A– SSL rating confirmed encryption was valid, and the *Chrome* red screen was verified as a harmless new-domain flag. The payment integration is now live, stable, and secure.
 
 
 

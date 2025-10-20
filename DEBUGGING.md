@@ -1129,3 +1129,26 @@ Finally, I updated all references inside `calculate_fees()` to use `item.get_lin
 After these changes, the *Square* app and location IDs finally appeared in the template, and the credit card form rendered correctly.
 
 **Lesson Learned:** Environment variables must load before *Django* initializes any of its settings. The placement of `load_dotenv()` inside `settings.py` is critical—if it’s too low, environment values won’t be read in time. Always define `DJANGO_SETTINGS_MODULE` explicitly when using a nested configuration folder like `config/`. When debugging missing credentials or blank values, check the live runtime using `python manage.py diffsettings` to confirm what *Django* actually sees instead of assuming the `.env` file is being read correctly.
+
+## Deployment and Payment Integration
+
+**Bug:** After deploying to *Heroku*, the payment page failed to show the Square credit card input. Console logs reported `Uncaught TypeError: Cannot read properties of null (reading 'addEventListener')` and later `InvalidApplicationIdError: The Payment 'applicationId' option is not in the correct format.`
+
+**Fix:** I discovered that the card field was being blocked initially because my script (`square-checkout.js`) ran before the DOM had fully loaded. I replaced `document.addEventListener("DOMContentLoaded", ...)` with `window.addEventListener("load", ...)` and removed the old `setTimeout` wrapper. This ensured that all elements were available before binding the event listener. The corrected bottom section of the file was as follows:
+
+    window.addEventListener("load", async () => {
+        console.log("Window fully loaded — starting Square init");
+        ...
+        initSquare(appId, locationId);
+    });
+
+Once this was corrected, I redeployed using the standard *Heroku* workflow.
+
+The `InvalidApplicationIdError` appeared because my *Heroku* `Config Vars` had not been set for `SQUARE_APPLICATION_ID` and `SQUARE_LOCATION_ID`. I fixed this by opening *Heroku → Settings → Reveal Config Vars* and adding:
+
+    SQUARE_APPLICATION_ID = sandbox-sq0idb-xxxxxxxxxxxxxx
+    SQUARE_LOCATION_ID = Lxxxxxxxxxx
+
+After redeployment, the console output confirmed valid values and the **Square* `iframe` loaded correctly. To verify HTTPS integrity, I ran an *SSL Labs* test and received three A– ratings, proving the encryption setup was sound. The *Chrome* dangerous warning was confirmed as a temporary false positive due to *Heroku*’s new subdomain reputation and did not affect site security.
+
+**Lesson Learned:** The credit card `iframe` will not load unless both HTTPS and valid *Square* credentials are present. Always test the page after full load events to avoid null references, confirm that *Heroku* `Config Vars` are set correctly, and verify SSL status using external tools before assuming an error in code. The *Chrome* red “Dangerous site” warning can safely be ignored on a new *Heroku* domain once the *SSL* rating is verified as A or higher.

@@ -80,7 +80,7 @@ window.addEventListener("load", async () => {
         if (resp.ok && data.ok) {
           statusEl.className = "status-msg success";
           statusEl.textContent = "Payment successful! Redirecting...";
-          window.location.href = `/payments/${data.order_id || "confirmation"}/success/`;
+          window.location.href = `/payments/${orderId}/success/`;
         } else {
           statusEl.className = "status-msg error";
           statusEl.textContent = "Server rejected token. Check server logs.";
