@@ -1,9 +1,8 @@
-
 console.log("Square checkout JS loaded successfully!");
 
 // Wait until everything on the page is fully loaded
 window.addEventListener("load", async () => {
-  console.log("Window fully loaded — starting Square init");
+  console.log("✅ Window fully loaded — starting Square init");
 
   const configEl = document.getElementById("square-config");
   if (!configEl) {
@@ -102,6 +101,6 @@ window.addEventListener("load", async () => {
     });
   }
 
-  // Now initialize
+  // Initialize Square
   initSquare(appId, locationId);
 });
