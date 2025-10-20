@@ -1,6 +1,10 @@
+console.log("Square checkout JS loaded successfully!");
+
 document.addEventListener("DOMContentLoaded", async () => {
   // Get config values from template dataset
   setTimeout(() => {
+    console.log(" Timeout reached");
+
   const configEl = document.getElementById("square-config");
   if (!configEl) {
     console.error("Square config element not found.");
