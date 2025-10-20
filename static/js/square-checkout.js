@@ -21,10 +21,6 @@ window.addEventListener("load", async () => {
     return;
   }
 
-
-});
-
-
   // CSRF helper
   function getCookie(name) {
     const value = `; ${document.cookie}`;
@@ -108,5 +104,4 @@ window.addEventListener("load", async () => {
 
   // Now initialize
   initSquare(appId, locationId);
-  }, 300);
 });
