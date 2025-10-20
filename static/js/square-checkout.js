@@ -1,9 +1,9 @@
+
 console.log("Square checkout JS loaded successfully!");
 
-document.addEventListener("DOMContentLoaded", async () => {
-  // Get config values from template dataset
-  setTimeout(() => {
-    console.log(" Timeout reached");
+// Wait until everything on the page is fully loaded
+window.addEventListener("load", async () => {
+  console.log("Window fully loaded — starting Square init");
 
   const configEl = document.getElementById("square-config");
   if (!configEl) {
@@ -14,12 +14,16 @@ document.addEventListener("DOMContentLoaded", async () => {
   const appId = configEl.dataset.appId;
   const locationId = configEl.dataset.locationId;
 
-  console.log("App ID:", appId, "Loc ID:", locationId); // test log
+  console.log("App ID:", appId, "Loc ID:", locationId);
 
   if (!appId || !locationId) {
     console.error("Square app or location ID missing from dataset.");
     return;
   }
+
+
+});
+
 
   // CSRF helper
   function getCookie(name) {
