@@ -129,11 +129,11 @@ def payment_success(request, order_id):
 
     # Update user profile with latest shipping info
     profile, created = UserProfile.objects.get_or_create(user=request.user)
-    profile.full_name = order.shipping_name
-    profile.address = order.shipping_address
-    profile.city = order.shipping_city
-    profile.postcode = order.shipping_postcode
-    profile.country = order.shipping_country
+    profile.full_name = getattr(order, "shipping_name", "") or profile.full_name
+    profile.address = getattr(order, "shipping_address", "") or profile.address
+    profile.city = getattr(order, "shipping_city", "") or profile.city
+    profile.postcode = getattr(order, "shipping_postcode", "") or profile.postcode
+    profile.country = getattr(order, "shipping_country", "UK")
     profile.save()
 
     return render(request, "checkout/confirmation.html", {"order": order})
