@@ -1114,3 +1114,18 @@ Finally, I updated all references inside `calculate_fees()` to use `item.get_lin
 
 **Lesson Learned:** Method and property naming collisions can quietly break *Django* logic, especially when reusing calculation functions across multiple models. A method like `line_total()` should never be reassigned a numeric value. Using a uniquely named method like `get_line_total()` plus a property for templates keeps backend logic clean and avoids callability errors. It also helps to ensure that related models (like `BasketItem` and `OrderItem`) stay synchronized when shared logic depends on them.
 
+## Environment Variable Load Failure
+
+**Bug:** When I tried to render the *Square* payment form, the credit card section stayed blank and the browser console repeatedly showed the message `Square app or location ID missing from dataset.` Even though my `.env` file had the correct Square credentials, the values for `settings.SQUARE_APPLICATION_ID` and `settings.SQUARE_LOCATION_ID` were empty inside *Django*’s runtime. I confirmed this by running `python manage.py shell` and printing the settings, which returned nothing.  
+
+**Fix:** I discovered that *Django* was loading its settings module before reading the `.env` file, meaning the Square credentials were never actually available when the app started. To fix it, I did the following:
+
+1. Moved the `load_dotenv(BASE_DIR / ".env")` line to the very top of `config/settings.py` so the environment variables were loaded before any other imports.
+2. Added `DJANGO_SETTINGS_MODULE=config.settings` to the `.env` file to make sure *Django* used the correct settings module.
+3. Restarted the server and confirmed that `python manage.py diffsettings | findstr SQUARE` now showed the correct values.
+4. Verified that `DEBUG SQUARE SETTINGS:` printed both the `SQUARE_APPLICATION_ID` and `SQUARE_LOCATION_ID` inside the terminal.
+5. Removed all temporary debug print statements from both `settings.py` and the payment views.
+
+After these changes, the *Square* app and location IDs finally appeared in the template, and the credit card form rendered correctly.
+
+**Lesson Learned:** Environment variables must load before *Django* initializes any of its settings. The placement of `load_dotenv()` inside `settings.py` is critical—if it’s too low, environment values won’t be read in time. Always define `DJANGO_SETTINGS_MODULE` explicitly when using a nested configuration folder like `config/`. When debugging missing credentials or blank values, check the live runtime using `python manage.py diffsettings` to confirm what *Django* actually sees instead of assuming the `.env` file is being read correctly.
