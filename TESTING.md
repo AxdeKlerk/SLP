@@ -822,4 +822,32 @@ I tested the basket display to confirm delivery charges and totals were calculat
   
 This fix restored the intended delivery fee calculation after it was lost during earlier refactoring. The debug output was crucial for confirming the multiplier worked correctly and aligned with displayed totals. The fix now ensures delivery logic is scalable and consistent.
 
+#### Basket Restoration After Proceeding to Payment
+
+**User Story:** 
+
+As a **user**, I want to **return to my basket with all items restored after clicking *Proceed to Payment***, so that I can **review or change my order without losing my selections**.
+
+**What Was Tested:**
+
+I tested the navigation and basket behavior after proceeding to payment and returning via the *View Basket* links in both the navbar and the hamburger menu.  
+
+**Acceptance Criteria:** 
+
+- [x] After proceeding to payment, *View Basket* restores the previous basket contents.  
+- [x] The success message “Your previous basket has been restored” appears.  
+- [x] *Order Summary* remains accessible in both navbar and hamburger menu.  
+- [x] Non-logged-in users without a pending order only see *View Basket* linking to the normal basket.  
+- [x] Navigation functions consistently across both desktop and mobile views.
+
+**Tasks Completed:**
+
+- [x] Added conditional logic for `restore_basket` routing in navbar dropdown.  
+- [x] Applied identical logic to the hamburger menu basket section.  
+- [x] Tested both navigation versions for pending and non-pending order states.  
+- [x] Confirmed success message and basket repopulation work as expected.
+
+**Notes:**
+  
+This fix resolved the empty basket issue and improved user flow between checkout and basket review. The new conditional routing ensures that users can always restore their previous basket if they return from payment or order summary pages.
 

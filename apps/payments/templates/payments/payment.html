@@ -38,8 +38,8 @@
                     <hr>
 
                     <!-- Totals -->
-                    <div class="mt-3 mb-4 text-end cp-item">
-                        <strong>Total: £{{ basket_total|floatformat:2 }}</strong>
+                    <div class="mt-3 mb-4 text-end">
+                        <strong class="cp-item">Total: £{{ basket_total|floatformat:2 }}</strong>
                     </div>
 
                     <!-- Billing Details -->
@@ -144,6 +144,7 @@
                             Pay £{{ basket_total|floatformat:2 }}
                         </button>
                     </div>
+                    <div class="d-flex justify-content-end"><p>(Transaction fees incl.)</p></div>
 
                     <p id="status" class="mt-3 status-msg text-center"></p>
                 </div>

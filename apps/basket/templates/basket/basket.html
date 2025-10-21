@@ -9,7 +9,7 @@
     <a href="{% url 'basket:continue_shopping' %}" class="btn cta-btn2 mb-2">← Continue Shopping</a>
 
     <div class="row">
-        <div class="col-12">
+        <div class="col-11">
             {% if basket and basket.items.all %}
                 <div class="basket-items">
                     {% for item in basket_items %}
@@ -66,10 +66,10 @@
                         <div class="col-2 col-md-3 text-end d-flex flex-column justify-content-end">
                             <p class="mb-1">£{{ item.line_total }}</p>
                             {% if item.event %}
-                                <small class="cp-item">Booking & Transaction Fee: +10%</small>
+                                <small style="color: #11ED73;">Booking Fee: +10%</small>
                             {% endif %}
                             {% if item.delivery_fee %}
-                                <small class="cp-item">Delivery Fee: £{{ item.delivery_fee }}</small>
+                                <small style="color: #11ED73;">Delivery Fee: £{{ item.delivery_fee }}</small>
                             {% endif %}
                             <form method="post" action="{% url 'basket:delete_item' item.id %}" class="mt-2">
                                 {% csrf_token %}
@@ -83,7 +83,7 @@
                 <!-- Subtotal -->
                 <div class="row basket-subtotal text-end mt-3">
                     <div class="col-12">
-                        <p>Subtotal (inc. delivery/booking fees): £{{ basket_total }}</p>
+                        <small>Subtotal (inc. fees): £{{ basket_total }}</small>
                     </div>
                 </div>
 

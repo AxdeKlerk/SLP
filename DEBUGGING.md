@@ -1180,3 +1180,12 @@ For example:
 
 **Lesson Learned:** I learned that accumulating delivery charges across multiple items must consider both item count and type. Using a simple accumulator (`+=`) with condition-based logic ensures flexible delivery calculations while maintaining accuracy. Always confirm quantity multiplication when fees depend on item counts.
 
+## Navigation Routing Error
+
+**Bug:**  After clicking *Proceed to Payment* and moving to the order summary, clicking *View Basket* from the navbar or hamburger menu redirected to an empty basket instead of restoring the previous basket contents. The issue occurred because the navigation links always pointed to `basket_view`, which displays the active basket model — but after an order was created, the basket was cleared, leaving nothing to show.
+
+**Fix:** I implemented conditional logic in both the main navbar and hamburger menu templates. When a user is logged in and has a pending order, *View Basket* now routes to the `restore_basket` view instead of `basket_view`. This view rebuilds the basket from the pending order items, restoring all previous contents.  
+
+Now, when a user proceeds to payment and then clicks *View Basket*, their previous basket is correctly restored, and a confirmation message appears: *“Your previous basket has been restored.”*
+
+**Lesson Learned:** I learned that once an order is generated, the basket becomes empty because its items are moved to the order model. To restore continuity for the user, it’s best to provide a dedicated `restore_basket` route and conditionally link to it in the navigation. This preserves a seamless shopping flow without losing the user’s original basket context.
