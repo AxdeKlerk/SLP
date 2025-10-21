@@ -851,3 +851,31 @@ I tested the navigation and basket behavior after proceeding to payment and retu
   
 This fix resolved the empty basket issue and improved user flow between checkout and basket review. The new conditional routing ensures that users can always restore their previous basket if they return from payment or order summary pages.
 
+#### Custom 404 and 500 Pages with Back Navigation
+
+**User Story:**
+ 
+As a **user**, I want to **see branded and consistent error pages when something goes wrong, with a back button that takes me to my previous page**, so I **don’t lose my place on the site**.
+
+**What Was Tested:**
+
+I tested both the 404 and 500 pages to confirm they render correctly with the back navigation feature and show the custom styling and messaging.  
+
+**Acceptance Criteria:** 
+
+- [x] Visiting a non-existent page loads the custom 404 template.  
+- [x] Triggering the `/crash/` route loads the custom 500 template.  
+- [x] Both pages show the “← Back” button and return to the referring page.  
+- [x] If there’s no referrer, both pages safely link back to the homepage.  
+- [x] The templates retain consistent site styling and layout.  
+
+**Tasks Completed:** 
+
+- [x] Created new `config/views.py` to hold global error handlers.  
+- [x] Registered custom handlers in `config/urls.py`.  
+- [x] Updated both 404 and 500 templates to use the `previous_page` variable.  
+- [x] Tested functionality locally and in the deployed *Heroku* environment.  
+
+**Notes:** 
+ 
+Both error pages now function seamlessly and match the rest of the site’s branding. The back navigation works exactly like other templates, improving user flow and preventing unnecessary redirects to the homepage.

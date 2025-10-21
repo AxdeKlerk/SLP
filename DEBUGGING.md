@@ -1189,3 +1189,13 @@ For example:
 Now, when a user proceeds to payment and then clicks *View Basket*, their previous basket is correctly restored, and a confirmation message appears: *“Your previous basket has been restored.”*
 
 **Lesson Learned:** I learned that once an order is generated, the basket becomes empty because its items are moved to the order model. To restore continuity for the user, it’s best to provide a dedicated `restore_basket` route and conditionally link to it in the navigation. This preserves a seamless shopping flow without losing the user’s original basket context.
+
+## 404 & 500 Template Routing Error
+
+**Bug:** The custom `404` and `500` error pages were not displaying. Instead, *Django*’s default debug pages appeared, even though the custom templates existed in the `templates/` directory. This happened because there were no properly configured global `error handlers` or routes telling *Django* to use the custom templates. Additionally, the original `404` and `500` pages only had “Return Home” buttons rather than a contextual back button that linked users to their previous page.
+
+**Fix:** I created a new `config/views.py` file to define global `error handlers` for both `404` and `500` responses and passed a `previous_page` variable to each template. This variable uses `request.META.get("HTTP_REFERER", "/")` to safely identify the previous URL or default to the homepage. I then registered these handlers in `config/urls.py` and replaced the static “Return Home” button in both templates with a contextual back button.  
+
+**Lesson Learned:** I learned that *Django* only uses custom error templates when global `error handlers` are explicitly defined and registered. 
+
+
