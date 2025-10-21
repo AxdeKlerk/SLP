@@ -31,8 +31,8 @@
             {% if merch_results|length == 1 %}
                 {% with m=merch_results.0 %}
                 {# ---------- SINGLE MATCH (detailed view) ---------- #}
-                    <div class="row g-5 justify-content-center">
-                        <div class="col-12 col-md-6 col-lg-3">
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-md-6 col-lg-3 mb-2">
                             <div class="card standard-card h-100 d-flex flex-column">
                             {% if m.image %}
                                 <img src="{{ m.image.url }}" class="card-img-top img-fluid" alt="{{ m.product_name }}">
@@ -48,7 +48,7 @@
                                         {% if m.price %} • £{{ m.price }}{% endif %}
                                     </div>
                                 </div>
-                                <div class="card-footer bg-transparent mt-auto">
+                                <div class="card-footer mb-2">
                                     <a class="btn cta-btn mb-0" href="{% url 'products:merch_detail' m.pk %}">View</a>
                                 </div>
                             </div>
@@ -58,9 +58,9 @@
 
                 {% else %}
                 {# ---------- MULTIPLE MATCHES (grid list-style view) ---------- #}
-                    <div class="row g-5 justify-content-center">
+                    <div class="row justify-content-center">
                         {% for m in merch_results %}
-                            <div class="col-12 col-md-6 col-lg-3">
+                            <div class="col-12 col-md-6 col-lg-3 mb-2">
                                 <div class="card standard-card h-100 d-flex flex-column">
                                     {% if m.image %}
                                     <img src="{{ m.image.url }}" class="card-img-top img-fluid" alt="{{ m.product_name }}">
@@ -76,7 +76,7 @@
                                             {% if m.price %} • £{{ m.price }}{% endif %}
                                         </div>
                                     </div>
-                                    <div class="card-footer bg-transparent mt-auto">
+                                    <div class="card-footer mb-2">
                                         <a class="btn cta-btn mb-0" href="{% url 'products:merch_detail' m.pk %}">View</a>
                                     </div>
                                 </div>

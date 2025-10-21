@@ -4,14 +4,14 @@
 
 # Table of contents
 
-<details><summary>1 Introduction</summary>
+<details><summary>1. Introduction</summary>
 
 [1.1 The Aim, Purpose and Goal of the Site](#11-the-aim-purpose-and-goal-of-the-site)
 
 [1.2 Target Audience](#12-target-audience)  
 </details>
 
-<details><summary>2 Planning and Development</summary>
+<details><summary>2. Planning and Development</summary>
 
 [2.1 Project Statement and ERD](#21-project-statement-and-erd)
 
@@ -31,17 +31,33 @@
 
 </details>
 
-<details><summary>3 Features</summary>
+<details><summary>3. Features</summary>
 [3.1 Typography]
 
 [3.2 Colour Pallett]
 </details>
-<details><summary>4 Debugging, Testing, Deployment and Future Developments</summary></details>
-<details><summary>5 Credits and Acknowledgements</summary></details>
+
+<details><summary>4. Debugging, Testing, Deployment and Future Developments</summary>
+
+[4.1 Debugging](##debugging)
+
+[4.2 Testing](##testing)
+
+[4.3 Deployment](##deployment)
+
+[4.4 Future](##future-developments)
+
+</details>
+<details><summary>5. Credits and Acknowledgements</summary>
+
+[5.1 Credits](##credits)
+
+[5.2 Acknowledgements](##acknowledgements)
+</details>
 
 [Insert images of responsive designs]
 
-## 1 Introduction
+## 1. Introduction
 This project is the natural progression of my first project *'Searchlight Promotions'*. For my first project I asked a fellow metal head, who runs a music promotion company in and for the Norwich rock and metal scene, if I could design him a website for my project, as he did not have one. After completing and submitting the project he asked me to maintain it going forward as he absolutely loved it. This ultimately meant that I had retained my first customer, and for the conclusion of this course, it is timely that the website is upgraded as the business has developed, my skills have progressed and as a true work-experience piece of practical evidence.
 
 Project 1 can be found here in this *Github* repository (as it was submitted for P1): https://github.com/AxdeKlerk/Searchlight-Promotions, and here as the current working website: www.searchlightpromotions.co.uk. 
@@ -300,7 +316,11 @@ Below details all the Epic headings with their user story headings:
 
 ### 4.1 Debugging
 
+Please refer to the debugging documentation for detailed descritions of all bugs found, fixed and learned from. It can be found here: [DEBUGGING.md](DEBUGGING.md)
+
 ### 4.2 Testing
+
+Please refer to the testing documentation for detailed descritions of the tests completed found here: [TESTING.md](TESTING.md)
 
 ### 4.3 Deployment
 
@@ -385,7 +405,6 @@ This section outlines the full process for deploying this project from *GitHub* 
 
 - Use the *Heroku* CLI or browser to open your app
 - Your project is now live and hosted at "your-app-name.herokuapp.com"
-
 
 ### 4.4 Future Developments
 

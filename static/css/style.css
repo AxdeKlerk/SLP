@@ -19,7 +19,7 @@ body {
     padding-right: 1rem;
 }
 .card {
-    background-color: #000 !important;
+    background-color: #000000 !important;
     border: none;
 }
 
@@ -328,7 +328,7 @@ body {
 .standard-card {
     background-color: #000000;
     color: #F5F5F5;
-    max-width: 300px;
+    max-width: 100%;
     height: 100%;
     border: 1px solid #11ED73;
     border-radius: 10px;
@@ -407,7 +407,7 @@ body {
     margin-top: auto;
     border-top: 0;
     padding-top: 0;
-    padding-bottom: 1rem;
+    padding-bottom: 0;
 }
 
 /* Roxoff page */
@@ -486,8 +486,8 @@ body {
     border-radius: 10px;
     max-width: 800px;
     width: 100%;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 0;
+    padding-right: 0;
     margin-left: auto;
     margin-right: auto;
 }
