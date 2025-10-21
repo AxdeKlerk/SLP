@@ -296,10 +296,102 @@ Below details all the Epic headings with their user story headings:
 
 - As a **user**, I want **to see a friendly 500 error page when something goes wrong** so that I **understand the site is temporarily unavailable.** 
 
+## 4. Debugging, Testing, Deployment and Future Developments
 
-## Credits and Acknowledgements
+### 4.1 Debugging
 
-### Credits
+### 4.2 Testing
+
+### 4.3 Deployment
+
+This section outlines the full process for deploying this project from *GitHub* to your local machine using *VS Code*, and then hosting it live on *Heroku*.
+
+#### 4.3.1 Create a GitHub Repository
+
+- Go to *GitHub* and click the "+" icon to create a new repository
+- Name the repository and optionally add a description
+- Choose "Public" or "Private"
+- Do not initialize with a README, .gitignore, or license
+- Click "Create repository"
+
+#### 4.3.2 Clone the Repository to VS Code
+
+- Open *VS Code* and its terminal
+- Navigate to the folder where you want your project
+- Copy the repository's URL from *GitHub* and use the "Clone Git Repository" option in *VS Code*
+- Open the project folder in *VS Code*
+- 
+#### 4.3.3 Create and Activate a Virtual Environment
+
+- In your terminal, create a virtual environment inside your project folder
+- Activate the environment depending on your system (*Windows*, *Mac*, or *Linux*)
+- Your terminal prompt will change to show the environment is active
+
+#### 4.3.4 Install Project Dependencies
+
+- Use the requirements.txt file to install all necessary *Python* packages:
+
+    -  *Django* – Core web framework for building the project
+    -  *Gunicorn* – WSGI HTTP server for running *Django* on *Heroku*
+    - *dj-database-url* – Parses the *Heroku* database URL into *Django* database settings
+    -  *psycopg2-binary* – *PostgreSQL* database adapter for *Python*
+    -  *whitenoise* – Serves static files efficiently in production
+    -  *cloudinary* – Handles image uploads and storage
+    -  *django-cloudinary-storage* – Integrates *Cloudinary* with *Django*'s media and static file handling
+    - *django-allauth* – (Optional) For user authentication, if used
+
+- If this file doesn’t exist yet, install your packages manually and then generate the file
+
+#### 4.3.5 Prepare the Project for Heroku
+
+- Create a "Procfile" at the root of your project with the necessary *Heroku* command to run the app
+- Ensure "gunicorn", "dj-database-url", and "psycopg2-binary" are installed
+- Update your "requirements.txt" file with any new packages
+- Commit all changes to *Git*
+
+#### 4.3.6 Set Up a Heroku Account and CLI
+
+- Create an account at *Heroku.com*
+- Download and install the *Heroku* CLI for your operating system
+- Use the CLI to log into your *Heroku* account
+
+#### 4.3.7 Create a Heroku App
+
+- Use the *Heroku* CLI to create a new app with a unique name
+- *Heroku* will generate a remote *Git* URL for your project
+
+#### 4.3.8 Push Your Project to Heroku
+
+- Add *Heroku* as a *Git* remote if it wasn’t automatically added
+- Push your local codebase to *Heroku*’s remote repository
+
+#### 4.3.9 Configure Environment Variables on Heroku
+
+- Go to your *Heroku* Dashboard and open your app
+- Under "Settings", click "Reveal Config Vars"
+- Add the following variables:
+    - "DEBUG" = "False"
+    - "SECRET_KEY" = your *Django* secret key
+    - "ALLOWED_HOSTS" = your *Heroku* app's URL
+    - Add any additional variables like database URLs, *Cloudinary* settings, or email credentials as needed
+
+#### 4.3.10 Final Project Setup on Heroku
+
+- Run your database migrations from the *Heroku* CLI
+- Create a "superuser" account to access the *Django* admin panel
+- "Collectstatic" files if not done automatically
+
+#### 4.3.11 Open Your Live Site
+
+- Use the *Heroku* CLI or browser to open your app
+- Your project is now live and hosted at "your-app-name.herokuapp.com"
+
+
+### 4.4 Future Developments
+
+## 5. Credits and Acknowledegements
+
+### 5.1 Credits
 
 Below are the list of resources that I used to complete this project along with aknowledgements for the people who have supportedme and helped me test my ideas.
 
@@ -327,6 +419,24 @@ Below are the list of resources that I used to complete this project along with 
 - [Short Pixel](https://shortpixel.com/) - for image compressions
 - [Slack Edit](https://stackedit.io/) - for markdown references
 - [Slack Overflow](https://stackoverflow.com/questions) - for general queries
+- [AI Image Upscaler](https://imgupscaler.com/) - for upscaling the About image for better quality
 - [W3schools](https://www.w3schools.com/) a constant source of reference for all html, CSS, JavaScript, BootStrap and Django explanations
 - [W3C Markup Validation Service](https://validator.w3.org/) for the html validation
 - [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/) for the CSS validation
+
+### 5.2 Acknowledgements
+
+This project could not have been possible without the support of the following people:
+
+*Julia Brown* - my loving partner who took over the reins at home and kept me fed and watered throughout,
+
+My dearest friends - *Julie*, *Paul*, *Paul B.*, *Dave*, *Steph*, *Thambiso*, *Matthew* & *Elaine* - thank you for your, sometimes brutal, honesty although it was frustrating at times it most definitely gave me the drive to push harder,
+
+*Richard Wells* - Code Institute Mentor - who helped guide me through the process from start to finish,
+
+My study mates on my course - *Steve Powell*, *Robert Lewis* and *Jordan Acomba* who provided continued support and motivation in our weekly study group, every Sunday evening, which gave us time to discuss different aspects of our projects as we went along, 
+
+*Code Institute* for all the course materials and allowing me the opportunity to do this course, and by no means least
+
+*Barry* (my dog) for reminding me that you can't be susuccessful at work without play times.
+

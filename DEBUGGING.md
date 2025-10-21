@@ -1198,4 +1198,3 @@ Now, when a user proceeds to payment and then clicks *View Basket*, their previo
 
 **Lesson Learned:** I learned that *Django* only uses custom error templates when global `error handlers` are explicitly defined and registered. 
 
-
