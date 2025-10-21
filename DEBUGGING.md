@@ -1152,3 +1152,31 @@ The `InvalidApplicationIdError` appeared because my *Heroku* `Config Vars` had n
 After redeployment, the console output confirmed valid values and the **Square* `iframe` loaded correctly. To verify HTTPS integrity, I ran an *SSL Labs* test and received three A– ratings, proving the encryption setup was sound. The *Chrome* dangerous warning was confirmed as a temporary false positive due to *Heroku*’s new subdomain reputation and did not affect site security.
 
 **Lesson Learned:** The credit card `iframe` will not load unless both HTTPS and valid *Square* credentials are present. Always test the page after full load events to avoid null references, confirm that *Heroku* `Config Vars` are set correctly, and verify SSL status using external tools before assuming an error in code. The *Chrome* red “Dangerous site” warning can safely be ignored on a new *Heroku* domain once the *SSL* rating is verified as A or higher.
+
+## Calculation Error
+
+**Bug:** The basket subtotal displayed correctly, but the delivery fees were being calculated as a flat £5.00 per merch item, regardless of quantity or additional items. This meant that multiple merch products did not apply the intended 50% reduction for subsequent items, and quantities were not being multiplied correctly.
+
+**Fix:** I updated the delivery fee logic inside the `calculate_fees()` function in `views.py`. The new code calculates £5.00 for the first merch item and £2.50 (50%) for each additional merch item multiplied by its quantity.  
+The corrected section:
+
+    # Per-item delivery fee (£5 for first merch item, +50% per additional item * quantity)
+    if item.merch:
+        if delivery_charge == 0:
+            # First merch item (whatever its quantity)
+            item.delivery_fee = Decimal("5.00") * item.quantity
+        else:
+            # Additional merch items at 50% of base per quantity
+            item.delivery_fee = Decimal("2.50") * item.quantity
+        delivery_charge += item.delivery_fee
+    else:
+        item.delivery_fee = Decimal("0.00")
+
+After this fix, each merch item line now adds the correct delivery fee.  
+For example:  
+- Hoodie (£5 delivery)  
+- 4 × T-shirt (£2.50 × 4 = £10 delivery)  
+- Event tickets (no delivery fee, just 10% booking)
+
+**Lesson Learned:** I learned that accumulating delivery charges across multiple items must consider both item count and type. Using a simple accumulator (`+=`) with condition-based logic ensures flexible delivery calculations while maintaining accuracy. Always confirm quantity multiplication when fees depend on item counts.
+

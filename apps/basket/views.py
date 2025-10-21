@@ -29,13 +29,18 @@ def calculate_fees(order_items, discount=0):
         else:
             item.booking_fee = Decimal("0.00")
 
-        # Per-item delivery fee (£5 flat for merch)
+        # Per-item delivery fee (£5 for first merch item, +50% per additional item * quantity)
         if item.merch:
-            item.delivery_fee = Decimal("5.00")
-            delivery_charge = Decimal("5.00")
+            if delivery_charge == 0:
+                # First merch item (whatever its quantity)
+                item.delivery_fee = Decimal("5.00") * item.quantity
+            else:
+                # Additional merch items at 50% of base per quantity
+                item.delivery_fee = Decimal("2.50") * item.quantity
+            delivery_charge += item.delivery_fee
         else:
             item.delivery_fee = Decimal("0.00")
-
+            
         # For right-hand total display in template
         item.total_with_fees = item_total + item.booking_fee + item.delivery_fee
 
@@ -48,6 +53,7 @@ def calculate_fees(order_items, discount=0):
         print(f"DEBUG: {i} | line_total={i.get_line_total()} | total_with_fees={getattr(i, 'total_with_fees', None)}")
 
     return order_items, subtotal, delivery_charge, basket_total
+
 
 @login_required
 def basket_view(request):
@@ -76,6 +82,7 @@ def basket_view(request):
         'page_title': "Basket",
         'last_order': last_order,
     })
+
 
 
 def add_event_to_basket(request, event_id):

@@ -793,5 +793,33 @@ I tested the deployment of the live app on *Heroku* and verified that the *Squar
 
 During initial tests, the payment form did not appear due to the script running before the DOM had fully loaded. Switching to the `window.onload` event solved this. A second issue occurred when the app and location IDs returned `None` in the console; adding them to *Heroku Config Vars* fixed the integration. After successful redeployment, the sandbox card form rendered perfectly, payments processed, and the confirmation page loaded over secure HTTPS. The A– SSL rating confirmed encryption was valid, and the *Chrome* red screen was verified as a harmless new-domain flag. The payment integration is now live, stable, and secure.
 
+#### Delivery Fee Multiplier Logic
+
+**User Story:** 
+
+As a **user**, I want the **basket to correctly apply delivery charges where the first merch item costs £5.00 and each additional item adds £2.50 per quantity**, so that **delivery fees are fair and consistent across multiple purchases**.
+
+**What Was Tested:**
+
+I tested the basket display to confirm delivery charges and totals were calculated and displayed accurately, including different combinations of merch and event items.  
+
+**Acceptance Criteria:** 
+
+- [x] First merch item shows a £5.00 delivery fee.  
+- [x] Additional merch items apply £2.50 × quantity.  
+- [x] Event tickets apply only a 10% booking fee.  
+- [x] Subtotal and basket total reflect all delivery and booking fees accurately.  
+- [x] Debug console confirms correct per-item fee breakdown.
+
+**Tasks Completed:**
+
+- [x] Added conditional delivery logic inside `calculate_fees()` for first and subsequent merch items.  
+- [x] Tested various basket combinations (single item, multiple items, mixed merch + event).  
+- [x] Confirmed subtotal and total values update correctly in the template.  
+- [x] Verified debug logs show expected line totals and fee breakdowns.  
+
+**Notes:**
+  
+This fix restored the intended delivery fee calculation after it was lost during earlier refactoring. The debug output was crucial for confirming the multiplier worked correctly and aligned with displayed totals. The fix now ensures delivery logic is scalable and consistent.
 
 
