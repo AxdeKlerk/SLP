@@ -10,10 +10,10 @@
     <div class="col-11 col-md-8 text-center align-items-center error-item">
       <img src="{% static 'images/Searchlight-icon-grn.png' %}" alt="logo" class="img-fluid mx-auto d-block">
       <h1>Ooooops!</h1>
-        <p>My bad!</p>
-        <p>There appears to be bugs in the beer!</p>
-        <p>Please contact us describing the error and we will swat them as soon as possible!</p>
-        <a href="{% url 'core:home' %}" class="btn cta-btn">Return home</a>
+        <p class="cp-item">My bad!</p>
+        <p class="cp-item">There appears to be bugs in the beer!</p>
+        <p class="cp-item">Please contact us describing the error and we will swat them as soon as possible!</p>
+        <a class="btn cta-btn2 mb-2" href="{{ previous_page }}">← Back</a>
     </div>
   </div>
 </div>  

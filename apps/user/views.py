@@ -16,6 +16,7 @@ from django.core.paginator import Paginator
 def login_success_view(request):
     return render(request, "user/login_success.html")
 
+
 @login_required
 def profile(request):
     current_orders = Order.objects.filter(user=request.user).exclude(status="complete")

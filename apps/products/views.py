@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from .models import Event, Artist, Venue, Merch
 from django.db.models import Q
 
+
 def events_view(request):
     request.session['last_shop_type'] = 'events'
     today = timezone.now().date()
@@ -55,12 +56,15 @@ def previous_events_view(request):
         e.is_upcoming = False
     return render(request, 'previous_events.html', {'events': past_events, 'page_title': 'Previous Events'})
 
+
 def roxoff_view(request):
     roxoff_event = Event.objects.filter(special_event=True).order_by('gig_date')  
     return render(request, 'roxoff.html', {'events': roxoff_event})
 
+
 class OwnerRequiredMixin(UserPassesTestMixin):
     def test_func(self): return self.get_object().created_by == self.request.user
+
 
 class EventDetailView(DetailView):
     model = Event
@@ -72,6 +76,7 @@ class EventDetailView(DetailView):
         context['page_title'] = "Event"
         return context
 
+
 class ArtistDetailView(DetailView):
     model = Artist
     template_name = 'artist.html' 
@@ -81,6 +86,7 @@ class ArtistDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['page_title'] = "Artist"
         return context
+
 
 class VenueDetailView(DetailView):
     model = Venue
@@ -92,15 +98,18 @@ class VenueDetailView(DetailView):
         context['page_title'] = "Venue"
         return context
 
+
 def get_artist_id(request):
     name = request.GET.get("name", "")
     artist = Artist.objects.filter(name__icontains=name.strip()).first()
     return JsonResponse({"id": artist.pk if artist else None})
 
+
 def get_venue_id(request):
     name = request.GET.get("name", "")
     venue = Venue.objects.filter(name__icontains=name.strip()).first()
     return JsonResponse({"id": venue.pk if venue else None})
+
 
 def get_merch_id(request):
     name = request.GET.get("name", "").strip()
@@ -119,6 +128,7 @@ def get_merch_id(request):
 
     ids = list(merch_qs.values_list("id", flat=True))
     return JsonResponse({"ids": ids, "count": len(ids)})
+
 
 class MerchListView(ListView):
     model = Merch
@@ -148,6 +158,7 @@ class MerchListView(ListView):
         context['page_title'] = "Merch"
         return context
 
+
 class MerchDetailView(DetailView):
     model = Merch
     template_name = "merch_detail.html"
@@ -158,6 +169,7 @@ class MerchDetailView(DetailView):
         context['page_title'] = "Merch"
         context['size_choices'] = Merch._meta.get_field("size").choices
         return context
+
 
 def search_view(request):
     category = (request.GET.get("category") or "").strip()

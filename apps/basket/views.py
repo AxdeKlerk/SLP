@@ -84,7 +84,6 @@ def basket_view(request):
     })
 
 
-
 def add_event_to_basket(request, event_id):
     if not request.user.is_authenticated:
         return redirect('login')

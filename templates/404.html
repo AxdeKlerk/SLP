@@ -10,14 +10,10 @@
     <div class="col-11 col-md-8 text-center align-items-center error-item">
       <img src="{% static 'images/Searchlight-icon-grn.png' %}" alt="logo" class="img-fluid mx-auto d-block">
       <h1>Ooooops!</h1>
-        <p>Something seems to have gone wrong, but fear not...</p>
-        <p>If the problem persists please send us a message and we will jump on it to fix it.</p>
-        <a href="{% url 'core:home' %}" class="btn cta-btn">Return home</a>
+        <p class="cp-item">Something seems to have gone wrong, but fear not...</p>
+        <p class="cp-item">If the problem persists please send us a message and we will jump on it to fix it.</p>
+        <a class="btn cta-btn2 mb-2" href="{{ previous_page }}">← Back</a>
     </div>
   </div>
 </div>
 {% endblock %}
-
-
-
-

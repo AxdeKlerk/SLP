@@ -164,6 +164,7 @@ def basket_checkout(request):
     basket.items.all().delete()
     return redirect("checkout:checkout_view", order_id=order.id)
 
+
 @login_required
 def restore_basket(request, order_id):
     """

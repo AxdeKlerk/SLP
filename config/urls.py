@@ -3,6 +3,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
+from . import views
 
 
 urlpatterns = [
@@ -15,6 +16,11 @@ urlpatterns = [
     path('basket/', include('apps.basket.urls', namespace='basket')),
     path('checkout/', include('apps.checkout.urls')),
     path('payments/', include('apps.payments.urls', namespace='payments')),
+    path('crash/', views.crash_view, name='crash'), #for testing 500 page
+    path('test404/', views.test_404_template), #for testing 404 page
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = "config.views.error_404"
+handler500 = "config.views.error_500"

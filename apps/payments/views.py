@@ -63,6 +63,7 @@ def test_square_connection(request):
     locations = [loc.dict() for loc in result.locations] if result.locations else []
     return JsonResponse({"locations": locations})
 
+
 def sandbox_checkout(request):
 
     from django.conf import settings
@@ -72,6 +73,7 @@ def sandbox_checkout(request):
         "SQUARE_LOCATION_ID": settings.SQUARE_LOCATION_ID,
     }
     return render(request, "payments/payment.html", ctx)
+
 
 @login_required
 def process_payment(request, order_id):
