@@ -3,57 +3,48 @@
 ![searchlight promotions logo and text](DOCS/images/logo.jpg)
 
 # Table of contents
+- [Searchlight Promotions (Upgrade)](#searchlight-promotions-upgrade)
+- [Table of contents](#table-of-contents)
+  - [1. Introduction](#1-introduction)
+    - [1.1 The Aim, Purpose and Goal of the Site](#11-the-aim-purpose-and-goal-of-the-site)
+    - [1.2 Target Audience](#12-target-audience)
+  - [2. Planning and Development](#2-planning-and-development)
+    - [2.1 Project Statement and ERD](#21-project-statement-and-erd)
+    - [2.1.1 Identified Entities (Key Nouns):](#211-identified-entities-key-nouns)
+    - [2.1.2 Key Relationships:](#212-key-relationships)
+    - [2.1.3 ERD (Entity Relationship Diagram)](#213-erd-entity-relationship-diagram)
+    - [2.2 Wireframes](#22-wireframes)
+    - [2.3 User Journeys](#23-user-journeys)
+    - [2.4 Agile Methodology](#24-agile-methodology)
+      - [2.4.1 Epics](#241-epics)
+      - [2.4.1.1 Core Epic](#2411-core-epic)
+      - [2.4.1.2 Products Epic](#2412-products-epic)
+    - [2.4.1.3 Basket Epic](#2413-basket-epic)
+    - [2.4.1.4 User Epic](#2414-user-epic)
+    - [2.4.1.5 Checkout \& Payments Epic](#2415-checkout--payments-epic)
+    - [2.4.1.6 DevOps Epic](#2416-devops-epic)
+    - [2.4.2 User stories (following the same order as above)](#242-user-stories-following-the-same-order-as-above)
+  - [4. Debugging, Testing, Deployment and Future Developments](#4-debugging-testing-deployment-and-future-developments)
+    - [4.1 Debugging](#41-debugging)
+    - [4.2 Testing](#42-testing)
+    - [4.3 Deployment](#43-deployment)
+      - [4.3.1 Create a GitHub Repository](#431-create-a-github-repository)
+      - [4.3.2 Clone the Repository to VS Code](#432-clone-the-repository-to-vs-code)
+      - [4.3.3 Create and Activate a Virtual Environment](#433-create-and-activate-a-virtual-environment)
+      - [4.3.4 Install Project Dependencies](#434-install-project-dependencies)
+      - [4.3.5 Prepare the Project for Heroku](#435-prepare-the-project-for-heroku)
+      - [4.3.6 Set Up a Heroku Account and CLI](#436-set-up-a-heroku-account-and-cli)
+      - [4.3.7 Create a Heroku App](#437-create-a-heroku-app)
+      - [4.3.8 Push Your Project to Heroku](#438-push-your-project-to-heroku)
+      - [4.3.9 Configure Environment Variables on Heroku](#439-configure-environment-variables-on-heroku)
+      - [4.3.10 Final Project Setup on Heroku](#4310-final-project-setup-on-heroku)
+      - [4.3.11 Open Your Live Site](#4311-open-your-live-site)
+    - [4.4 Future Developments](#44-future-developments)
+  - [5. Credits and Acknowledegements](#5-credits-and-acknowledegements)
+    - [5.1 Credits](#51-credits)
+    - [5.2 Acknowledgements](#52-acknowledgements)
 
-<details><summary>1. Introduction</summary>
-
-[1.1 The Aim, Purpose and Goal of the Site](#11-the-aim-purpose-and-goal-of-the-site)
-
-[1.2 Target Audience](#12-target-audience)  
-</details>
-
-<details><summary>2. Planning and Development</summary>
-
-[2.1 Project Statement and ERD](#21-project-statement-and-erd)
-
-[2.1.1 Identified Entities (Key Nouns)](#221-identified-entities-key-nouns)
-
-[2.1.2 Key Relationships](#212-key-relationships)
-
-[2.2 Wifreframes](#22-wireframes)
-
-[2.3 User Journeys](#23-user-journeys)
-
-[2.4 User Stories](#24-user-stories)
-
-[2.4 Agile Methodology](#24-agile-methodology)
-
-[2.4.1 Epics](#241-epics)
-
-</details>
-
-<details><summary>3. Features</summary>
-[3.1 Typography]
-
-[3.2 Colour Pallett]
-</details>
-
-<details><summary>4. Debugging, Testing, Deployment and Future Developments</summary>
-
-[4.1 Debugging](##debugging)
-
-[4.2 Testing](##testing)
-
-[4.3 Deployment](##deployment)
-
-[4.4 Future](##future-developments)
-
-</details>
-<details><summary>5. Credits and Acknowledgements</summary>
-
-[5.1 Credits](##51-credits)
-
-[5.2 Acknowledgements](##acknowledgements)
-</details>
+---
 
 [Insert images of responsive designs]
 
