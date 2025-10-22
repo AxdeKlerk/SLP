@@ -1,22 +1,69 @@
 ## 4.1 DEBUGGING LOG
-This doocument has been restructured from my original DEBUGGING.md which listed each bug fix in chronological order, as development progressed. The restructing only grouped the relevant entries under the 7 headings listed in the table of contents for ease of reference. All the original entries can be found here: [Chronological entrie](CHRONOLOGICAL.md).
+This doocument has been restructured from my original DEBUGGING.md which listed each bug fix in chronological order, as development progressed. The restructing only grouped the relevant entries under the 7 headings listed in the table of contents for ease of reference. All the original entries can be found here: [Chronological entries](CHRONOLOGICAL.md).
 
 ---
 
-### Table of Contents
-[4.1.1 Frontend / UI](#411-frontend--ui)
-
-[4.1.2 Backend / Logic](#412-backend--logic)
-
-[4.1.3 Database Configuration](#413-database-configuration)
-
-[4.1.4 System / Frameworks](#414-system--frameworks)
-
-[4.1.5 Basket / Checkout / Payment Logic](#415-basket--checkout--payment-logic)
-
-[4.1.6 Webhooks & Square Integration](#416-webhooks--square-integration)
-
-[4.1.7 Security & Deployment](#417-security--deployment)
+### 4.1 Table of Contents
+- [4.1 DEBUGGING LOG](#41-debugging-log)
+  - [4.1 Table of Contents](#41-table-of-contents)
+  - [4.1.1 FRONTEND / UI](#411-frontend--ui)
+    - [4.1.1.1 Offcanvas Navigation Error](#4111-offcanvas-navigation-error)
+    - [4.1.1.2 Template Logic — Navbar active state (dropdown parent)](#4112-template-logic--navbar-active-state-dropdown-parent)
+    - [4.1.1.3 Navigation Highlight Issue](#4113-navigation-highlight-issue)
+    - [4.1.1.4 CSS Layout Bug](#4114-css-layout-bug)
+    - [4.1.1.5 Template Logic Bug for Size Dropdown Menu items](#4115-template-logic-bug-for-size-dropdown-menu-items)
+    - [4.1.1.6 Template/Context Error](#4116-templatecontext-error)
+    - [4.1.1.7 Search Input Responsive Sizing (Mobile) Issue](#4117-search-input-responsive-sizing-mobile-issue)
+    - [4.1.1.8 Merch Search Functionality Issue](#4118-merch-search-functionality-issue)
+  - [4.1.2 BACKEND / LOGIC](#412-backend--logic)
+    - [4.1.2.1 Logic Bug](#4121-logic-bug)
+    - [4.1.2.2 Logic Error for Forgot Username View](#4122-logic-error-for-forgot-username-view)
+    - [4.1.2.3 Logic Error](#4123-logic-error)
+    - [4.1.2.4 Logic Error](#4124-logic-error)
+  - [4.1.2.5 Email Logic Error](#4125-email-logic-error)
+  - [4.1.3 DATABASE CONFIGURATION](#413-database-configuration)
+    - [4.1.3.1 Database Configuration Error](#4131-database-configuration-error)
+    - [4.1.3.2 Database Integrity and Square Order Sync](#4132-database-integrity-and-square-order-sync)
+  - [4.1.4 SYSTEM / FRAMEWORKS](#414-system--frameworks)
+    - [4.1.4.1 404 \& 500 Template Routing Error](#4141-404--500-template-routing-error)
+    - [4.1.4.2 Admin Field and Payment Verification Errors](#4142-admin-field-and-payment-verification-errors)
+  - [4.1.5 BASKET / CHECKOUT / PAYMENT LOGIC](#415-basket--checkout--payment-logic)
+    - [4.1.5.1 Basket Data Handling Error](#4151-basket-data-handling-error)
+    - [4.1.5.2 Basket Size Display Error](#4152-basket-size-display-error)
+    - [4.1.5.3 Basket Event Details Error](#4153-basket-event-details-error)
+    - [4.1.5.4 Basket Layout / Responsive Error](#4154-basket-layout--responsive-error)
+    - [4.1.5.5 AttributeError](#4155-attributeerror)
+    - [4.1.5.6 Quantity Clamping Error](#4156-quantity-clamping-error)
+    - [4.1.5.7 Ticket Oversell Error Not Displaying](#4157-ticket-oversell-error-not-displaying)
+    - [4.1.5.8 Validation Error – Ticket Capacity Message Errors](#4158-validation-error--ticket-capacity-message-errors)
+    - [4.1.5.9 Routing Error (Payment Button)](#4159-routing-error-payment-button)
+    - [4.1.5.10 Routing Error (Products Namespace)](#41510-routing-error-products-namespace)
+    - [4.1.5.11 Calculation Error](#41511-calculation-error)
+    - [4.1.5.12 Calculation Error (Checkout Totals)](#41512-calculation-error-checkout-totals)
+    - [4.1.5.13 Runtime Error for Checkout and Payment Summary Totals](#41513-runtime-error-for-checkout-and-payment-summary-totals)
+    - [4.1.5.14 Basket and Checkout Totals Calculation Runtime Error](#41514-basket-and-checkout-totals-calculation-runtime-error)
+    - [4.1.5.15 Navigation Routing Error](#41515-navigation-routing-error)
+    - [4.1.5.16 Redirect Loop for Continue Shopping Button](#41516-redirect-loop-for-continue-shopping-button)
+    - [4.1.5.17 Continue Shopping Persistent Redirect Fallback Logic](#41517-continue-shopping-persistent-redirect-fallback-logic)
+  - [4.1.6 WEBHOOKS \& SQUARE INTEGRATION](#416-webhooks--square-integration)
+    - [4.1.6.1 Integration Errors (Square API with Django)](#4161-integration-errors-square-api-with-django)
+    - [4.1.6.2 CSRF and Tokenisation Errors](#4162-csrf-and-tokenisation-errors)
+    - [4.1.6.3 Invalid Application ID Error](#4163-invalid-application-id-error)
+    - [4.1.6.4 Authentication Error](#4164-authentication-error)
+    - [4.1.6.5 Webhook Integration Errors](#4165-webhook-integration-errors)
+    - [4.1.6.6 Webhook Signature Verification Errors](#4166-webhook-signature-verification-errors)
+    - [4.1.6.7 Webhook Authentication Error](#4167-webhook-authentication-error)
+    - [4.1.6.8 Webhook Integration Error](#4168-webhook-integration-error)
+    - [4.1.6.9 Webhook Validation Error](#4169-webhook-validation-error)
+  - [4.1.7 SECURITY \& DEPLOYMENT](#417-security--deployment)
+    - [4.1.7.1 Security Bug](#4171-security-bug)
+    - [4.1.7.2 Deployment Issue](#4172-deployment-issue)
+    - [4.1.7.3 Database Configuration Error](#4173-database-configuration-error)
+    - [4.1.7.4 Configuration Error](#4174-configuration-error)
+    - [4.1.7.5 Environment Variable Load Failure](#4175-environment-variable-load-failure)
+    - [4.1.7.6 Deployment Errors](#4176-deployment-errors)
+    - [4.1.7.7 Static Files Cache Error](#4177-static-files-cache-error)
+    - [4.1.7.8 Deployment and Payment Integration](#4178-deployment-and-payment-integration)
 
 ---
 
@@ -76,7 +123,7 @@ When using `max-width` on a card inside a Bootstrap column, the card will not ce
 
 ---
 
-#### 4.1.1.5 Template Logic Bug for Size Dropdown Menu items for Flags, Mugs and Caps
+#### 4.1.1.5 Template Logic Bug for Size Dropdown Menu items
 **Bug:**  
 The size dropdown was showing for all merch items, including flags, mugs, and caps. These products do not need size options, but the template always displayed the dropdown. *My* first attempt was to use `{% if merch.category == "flag" %}`, but this failed because the correct model field name was `product_category`. When I later tried to check multiple categories with `in ("flag", "mug", "cap")`, it caused a *Django* `TemplateSyntaxError` because template conditions do not support tuple syntax.
 

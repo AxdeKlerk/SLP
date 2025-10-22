@@ -50,7 +50,7 @@
 </details>
 <details><summary>5. Credits and Acknowledgements</summary>
 
-[5.1 Credits](##credits)
+[5.1 Credits](##51-credits)
 
 [5.2 Acknowledgements](##acknowledgements)
 </details>
@@ -425,6 +425,7 @@ Below are the list of resources that I used to complete this project along with 
 - [CSS](https://en.wikipedia.org/wiki/CSS) - used for main content styling
 - [Django](https://simple.wikipedia.org/wiki/Django_(web_framework)) - used for the backend of the website
 - [draw.io](https://app.diagrams.net/) for the ERD
+- [Ecotrust](https://ecotrust-canada.github.io/markdown-toc/) - used to generate table of contents
 - [Google Fonts](https://fonts.google.com/) - for typology
 - [Google Images](https://images.google.co.uk/) - for the band and venue logos
 - [HTML](https://en.wikipedia.org/wiki/HTML) - used to build main site content
