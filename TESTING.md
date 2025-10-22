@@ -1,55 +1,57 @@
 ## 4.1 TESTING LOG
-This doocument has been restructured from my original TESTING.md which listed each user story, what was tested, acceptance criteria, and notes in chronological order, as development progressed. The restructing only grouped the relevant entries under the 7 headings listed in the table of contents for ease of reference. All the original entries can be found here: [CHRONOLOGICAL ENTRIES](CHRONOLOGICAL.md).
+This doocument has been restructured from my original TESTING.md which listed each user story, what was tested, acceptance criteria, and notes in chronological order, as development progressed. The restructing only grouped the relevant entries under the 7 headings listed in the table of contents for ease of reference. All the original entries can be found here: [Chronological entries](CHRONOLOGICAL.md).
 
 All functionality was tested manually by working through user stories. Testing was carried out in *Google Chrome*, *Edge*, *Brave* and *Firefox* across desktop and mobile screen sizes. *DevTools* were used to check responsiveness and console errors. Forms and dynamic elements were tested for validation, correct behaviour, and feedback.
 
 ### 4.2 Table of Contents
-## 4.2 TESTING LOG — TABLE OF CONTENTS
-- [4.2.1 Core Epic](#421-core-epic)
-  - [4.2.1.1 Site Identification](#4211-site-identification)
-  - [4.2.1.2 Navigation](#4212-navigation)
-  - [4.2.1.3 Search](#4213-search)
-  - [4.2.1.4 Contact Form](#4214-contact-form)
-  - [4.2.1.5 Footer](#4215-footer)
-  - [4.2.1.6 Base Template](#4216-base-template)
-- [4.2.2 Products Epic](#422-products-epic)
-  - [4.2.2.1 Event Listings](#4221-event-listings)
-  - [4.2.2.2 Event Detail Page — Ticket Oversell Guardrail](#4222-event-detail-page--ticket-oversell-guardrail)
-  - [4.2.2.3 Ticket Availability Tracking — Validation Error Message](#4223-ticket-availability-tracking--validation-error-message)
-  - [4.2.2.4 Roxoff Page & Event Tickets](#4224-roxoff-page--event-tickets)
-- [4.2.3 Basket Epic](#423-basket-epic)
-  - [4.2.3.1 Add to Basket](#4231-add-to-basket)
-  - [4.2.3.2 View Basket](#4232-view-basket)
-  - [4.2.3.3 Update Basket — Basket Quantity Clamping](#4233-update-basket--basket-quantity-clamping)
-  - [4.2.3.4 Remove from Basket](#4234-remove-from-basket)
-  - [4.2.3.5 Basket Totals](#4235-basket-totals)
-- [4.2.4 User Epic](#424-user-epic)
-  - [4.2.4.1 Sign Up — Input Text Visibility Fix](#4241-sign-up--input-text-visibility-fix)
-  - [4.2.4.2 Log In](#4242-log-in)
-  - [4.2.4.3 Password Reset](#4243-password-reset)
-  - [4.2.4.4 Log Out](#4244-log-out)
-  - [4.2.4.5 Profile — Delete Selected Orders](#4245-profile--delete-selected-orders)
-  - [4.2.4.6 Email Confirmations (Backlog – Not MVP)](#4246-email-confirmations-backlog--not-mvp)
-- [4.2.5 Checkout & Payments Epic](#425-checkout--payments-epic)
-  - [4.2.5.1 Checkout Page — Proceed to Payment Button Routing](#4251-checkout-page--proceed-to-payment-button-routing)
-  - [4.2.5.2 Order Summary Event Display](#4252-order-summary-event-display)
-  - [4.2.5.3 Delivery and Booking Fees Carry Over to Order Summary](#4253-delivery-and-booking-fees-carry-over-to-order-summary)
-  - [4.2.5.4 Checkout Summary Fee and Total Calculations](#4254-checkout-summary-fee-and-total-calculations)
-  - [4.2.5.5 Checkout and Payment Summary Totals](#4255-checkout-and-payment-summary-totals)
-  - [4.2.5.6 Basket and Checkout Totals Calculation](#4256-basket-and-checkout-totals-calculation)
-  - [4.2.5.7 Payment Integration and Deployment Testing](#4257-payment-integration-and-deployment-testing)
-- [4.2.6 Webhooks & Integrations Epic](#426-webhooks--integrations-epic)
-  - [4.2.6.1 Invalid Application ID Error](#4261-invalid-application-id-error)
-  - [4.2.6.2 Payment Link API](#4262-payment-link-api)
-  - [4.2.6.3 Webhook Verification](#4263-webhook-verification)
-  - [4.2.6.4 Order Status Update via Square Webhook](#4264-order-status-update-via-square-webhook)
-  - [4.2.6.5 Square Webhook Integration](#4265-square-webhook-integration)
-  - [4.2.6.6 Square Payment Verification (Admin Action)](#4266-square-payment-verification-admin-action)
-  - [4.2.6.7 Square Sandbox Order Creation and Webhook Verification](#4267-square-sandbox-order-creation-and-webhook-verification)
-- [4.2.7 DevOps Epic](#427-devops-epic)
-  - [4.2.7.1 Deployment](#4271-deployment)
-  - [4.2.7.2 400 Error Page](#4272-400-error-page)
-  - [4.2.7.3 500 Error Page — Custom 404 and 500 Pages with Back Navigation](#4273-500-error-page--custom-404-and-500-pages-with-back-navigation)
+- [4.1 TESTING LOG](#41-testing-log)
+  - [4.2 Table of Contents](#42-table-of-contents)
+  - [4.2.1 Core Epic](#421-core-epic)
+    - [4.2.1.1 Site Identification](#4211-site-identification)
+    - [4.2.1.2 Navigation](#4212-navigation)
+    - [4.2.1.3 Search](#4213-search)
+    - [4.2.1.4 Contact Form](#4214-contact-form)
+    - [4.2.1.5 Footer](#4215-footer)
+    - [4.2.1.6 Base Template](#4216-base-template)
+  - [4.2.2 Products Epic](#422-products-epic)
+    - [4.2.2.1 Event Listings](#4221-event-listings)
+    - [4.2.2.2 Event Detail Page — Ticket Oversell Guardrail](#4222-event-detail-page--ticket-oversell-guardrail)
+    - [4.2.2.3 Ticket Availability Tracking — Validation Error Message](#4223-ticket-availability-tracking--validation-error-message)
+    - [4.2.2.4 Roxoff Page \& Event Tickets](#4224-roxoff-page--event-tickets)
+  - [4.2.3 Basket Epic](#423-basket-epic)
+    - [4.2.3.1 Add to Basket](#4231-add-to-basket)
+    - [4.2.3.2 View Basket](#4232-view-basket)
+    - [4.2.3.3 Update Basket — Basket Quantity Clamping](#4233-update-basket--basket-quantity-clamping)
+    - [4.2.3.4 Remove from Basket](#4234-remove-from-basket)
+    - [4.2.3.5 Basket Totals](#4235-basket-totals)
+  - [4.2.4 User Epic](#424-user-epic)
+    - [4.2.4.1 Add Required Email Field to Sign Up](#4241-add-required-email-field-to-sign-up)
+    - [4.2.4.2 Sign Up — Input Text Visibility Fix](#4242-sign-up--input-text-visibility-fix)
+    - [4.2.4.3 Log In](#4243-log-in)
+    - [4.2.4.4 Password Reset](#4244-password-reset)
+    - [4.2.4.5 Log Out](#4245-log-out)
+    - [4.2.4.6 Profile — Delete Selected Orders](#4246-profile--delete-selected-orders)
+    - [4.2.4.7 Email Confirmations (Backlog – Not MVP)](#4247-email-confirmations-backlog--not-mvp)
+  - [4.2.5 Checkout \& Payments Epic](#425-checkout--payments-epic)
+    - [4.2.5.1 Checkout Page — Proceed to Payment Button Routing](#4251-checkout-page--proceed-to-payment-button-routing)
+    - [4.2.5.2 Order Summary Event Display](#4252-order-summary-event-display)
+    - [4.2.5.3 Delivery and Booking Fees Carry Over to Order Summary](#4253-delivery-and-booking-fees-carry-over-to-order-summary)
+    - [4.2.5.4 Checkout Summary Fee and Total Calculations](#4254-checkout-summary-fee-and-total-calculations)
+    - [4.2.5.5 Checkout and Payment Summary Totals](#4255-checkout-and-payment-summary-totals)
+    - [4.2.5.6 Basket and Checkout Totals Calculation](#4256-basket-and-checkout-totals-calculation)
+    - [4.2.5.7 Payment Integration and Deployment Testing](#4257-payment-integration-and-deployment-testing)
+  - [4.2.6 Webhooks \& Integrations Epic](#426-webhooks--integrations-epic)
+    - [4.2.6.1 Invalid Application ID Error](#4261-invalid-application-id-error)
+    - [4.2.6.2 Payment Link API](#4262-payment-link-api)
+    - [4.2.6.3 Webhook Verification](#4263-webhook-verification)
+    - [4.2.6.4 Order Status Update via Square Webhook](#4264-order-status-update-via-square-webhook)
+    - [4.2.6.5 Square Webhook Integration](#4265-square-webhook-integration)
+    - [4.2.6.6 Square Payment Verification (Admin Action)](#4266-square-payment-verification-admin-action)
+    - [4.2.6.7 Square Sandbox Order Creation and Webhook Verification](#4267-square-sandbox-order-creation-and-webhook-verification)
+  - [4.2.7 DevOps Epic](#427-devops-epic)
+    - [4.2.7.1 Deployment](#4271-deployment)
+    - [4.2.7.2 400 Error Page](#4272-400-error-page)
+    - [4.2.7.3 500 Error Page — Custom 404 and 500 Pages with Back Navigation](#4273-500-error-page--custom-404-and-500-pages-with-back-navigation)
 
 
 
@@ -345,7 +347,36 @@ Notes:
 
 ### 4.2.4 User Epic
 
-#### 4.2.4.1 Sign Up — Input Text Visibility Fix
+#### 4.2.4.1 Add Required Email Field to Sign Up
+
+**User Story:**  
+As a new user, I want to provide my email address during registration so that I can receive receipts and e-tickets linked to my account.
+
+**What Was Tested:**  
+I tested the addition of a required email field on the user sign-up form. The goal was to ensure that the form validates email input correctly, stores the value in the `User` model, and allows the payment page to automatically populate the logged-in user’s email address for ticket and receipt delivery.
+
+**Acceptance Criteria:**
+- [x] The sign-up form includes an email field below the username input.  
+- [x] The email field is required.  
+- [x] Invalid email formats trigger the “Enter a valid email address” error message.  
+- [x] Submitting the form with a valid email successfully creates a new user.  
+- [x] The user’s email appears under their record in the Django admin panel.  
+- [x] The payment page displays the user’s email address automatically via `{{ request.user.email }}`.  
+- [x] The email field on the payment page is read-only and prefilled.
+
+**Tasks Completed:**
+- [x] Created `CustomUserCreationForm` extending `UserCreationForm` with a required `email` field.  
+- [x] Updated the `signup` view to use `CustomUserCreationForm`.  
+- [x] Updated `signup.html` to include the new `{{ form.email }}` input with validation messages.  
+- [x] Tested blank, invalid, and valid email scenarios for correct validation.  
+- [x] Verified the email value is saved to `User.email` in the admin panel.  
+- [x] Confirmed that the email auto-populates on the payment page using `request.user.email`.
+
+**Notes:**  
+This change resolves the issue identified by the mentor during review — missing email information prevented receipt delivery. The implementation uses Django’s built-in `User.email` field for simplicity and compatibility. No migrations or custom user models were required. The form remains fully compatible with the existing signup template.
+
+
+#### 4.2.4.2 Sign Up — Input Text Visibility Fix
 User Story:  
 As a user signing up or logging in I want the text I type into input fields to be clearly visible in black so that I can easily read what I am entering without confusion.  
 
@@ -366,7 +397,7 @@ I tested that the signup and login form input fields displayed black text when u
 **Notes:**  
 Old static files caused text invisibility. Cleaning Heroku static files resolved it.
 
-#### 4.2.4.2 Log In
+#### 4.2.4.3 Log In
 User Story:  
 As a registered user, I want to log in so that I can access my account and complete purchases.  
 What Was Tested:  
@@ -383,7 +414,7 @@ Tasks Completed:
 [x]  
 Notes:  
 
-#### 4.2.4.3 Password Reset
+#### 4.2.4.4 Password Reset
 User Story:  
 As a registered user, I want to reset my password if I forget it so that I can regain access to my account.  
 What Was Tested:  
@@ -400,7 +431,7 @@ Tasks Completed:
 [x]  
 Notes:  
 
-#### 4.2.4.4 Log Out
+#### 4.2.4.5 Log Out
 User Story:  
 As a logged in user, I want to log out so that my account is secure when I leave the site.  
 What Was Tested:  
@@ -417,7 +448,7 @@ Tasks Completed:
 [x]  
 Notes:  
 
-#### 4.2.4.5 Profile — Delete Selected Orders
+#### 4.2.4.6 Profile — Delete Selected Orders
 User Story:  
 As a logged-in user, I want to be able to select one or more pending orders from my profile page and delete them, so that I can remove orders I no longer wish to keep.  
 
@@ -437,7 +468,7 @@ Checked checkbox actions, success/error messages, and scope isolation to profile
 **Notes:**  
 Previously, all orders deleted due to hidden inputs. Fixed with checkboxes and message tags.
 
-#### 4.2.4.6 Email Confirmations (Backlog – Not MVP)
+#### 4.2.4.7 Email Confirmations (Backlog – Not MVP)
 User Story:  
 As a registered user, I want to receive email confirmations so that I can verify my account and trust the platform.  
 What Was Tested:  

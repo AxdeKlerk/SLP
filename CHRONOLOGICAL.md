@@ -1207,7 +1207,16 @@ Now, when a user proceeds to payment and then clicks *View Basket*, their previo
 
 **Lesson Learned:** I learned that *Django* only uses custom error templates when global `error handlers` are explicitly defined and registered. 
 
-Testing Logs
+### Logic Error
+
+**Bug:**  During mentor testing, the payment page could not auto-populate the user’s email address because the sign-up process never required or stored one. Users were able to register without providing an email, which prevented receipts and e-tickets from being delivered after checkout.
+
+**Fix:** I created a custom form called `CustomUserCreationForm` that extends Django’s default `UserCreationForm` and includes a required `email` field. The new form was imported into the `signup` view and replaced the default form reference. The `signup.html` template was then updated to include the email field between the username and password inputs. Validation messages were confirmed for blank, invalid, and valid entries. Once a user is registered, their email now saves correctly to `User.email` and automatically appears on the payment page using `{{ request.user.email }}`.
+
+**Lesson Learned:** Even when using *Django*’s built-in authentication, the default `UserCreationForm` doesn’t collect email addresses by design. If email-based functionality (like receipts or password resets) is part of the workflow, a custom registration form is essential.  
+Extending *Django*’s existing forms is the cleanest way to add required fields without disrupting authentication or introducing a custom user model.
+
+# Testing Logs
 
 ## Testing
 
@@ -2090,3 +2099,37 @@ I tested both the 404 and 500 pages to confirm they render correctly with the ba
 **Notes:** 
  
 Both error pages now function seamlessly and match the rest of the site’s branding. The back navigation works exactly like other templates, improving user flow and preventing unnecessary redirects to the homepage.
+
+#### Add Required Email Field to Sign Up
+
+**User Story:**
+
+As a **new user**, I want to **provide my email address during registration** so that I can **receive receipts and e-tickets linked to my account**.
+
+**What Was Tested:**
+
+I tested the addition of a required email field on the user sign-up form. The goal was to ensure that the form validates email input correctly, stores the value in the `User` model, and allows the payment page to automatically populate the logged-in user’s email address for ticket and receipt delivery.
+
+**Acceptance Criteria:**
+
+- [x] The sign-up form includes an email field below the username input.  
+- [x] The email field is required.  
+- [x] Invalid email formats trigger the “Enter a valid email address” error message.  
+- [x] Submitting the form with a valid email successfully creates a new user.  
+- [x] The user’s email appears under their record in the Django admin panel.  
+- [x] The payment page displays the user’s email address automatically via `{{ request.user.email }}`.  
+- [x] The email field on the payment page is read-only and prefilled.
+
+**Tasks Completed:**
+
+- [x] Created `CustomUserCreationForm` extending `UserCreationForm` with a required `email` field.  
+- [x] Updated the `signup` view to use `CustomUserCreationForm`.  
+- [x] Updated `signup.html` to include the new `{{ form.email }}` input with validation messages.  
+- [x] Tested blank, invalid, and valid email scenarios for correct validation.  
+- [x] Verified the email value is saved to `User.email` in the admin panel.  
+- [x] Confirmed that the email auto-populates on the payment page using `request.user.email`.
+
+**Notes:**
+
+This change resolves the issue identified by the mentor during review — missing email information prevented receipt delivery. The implementation uses Django’s built-in `User.email` field for simplicity and compatibility. No migrations or custom user models were required. The form remains fully compatible with the existing signup template.
+

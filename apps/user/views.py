@@ -48,14 +48,16 @@ def profile_view(request):
     return render(request, "user/profile.html", context)
 
 
+from .forms import CustomUserCreationForm
+
 def signup(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect("login")
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, "user/signup.html", {"form": form})
 
 

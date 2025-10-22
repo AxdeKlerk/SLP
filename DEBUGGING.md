@@ -1,5 +1,5 @@
 ## 4.1 DEBUGGING LOG
-This doocument has been restructured from my original DEBUGGING.md which listed each bug fix in chronological order, as development progressed. The restructing only grouped the relevant entries under the 7 headings listed in the table of contents for ease of reference. All the original entries can be found here: [CHRONOLOGICAL ENTRIES](CHRONOLOGICAL.md).
+This doocument has been restructured from my original DEBUGGING.md which listed each bug fix in chronological order, as development progressed. The restructing only grouped the relevant entries under the 7 headings listed in the table of contents for ease of reference. All the original entries can be found here: [Chronological entrie](CHRONOLOGICAL.md).
 
 ---
 
@@ -177,6 +177,17 @@ This ensured both charges were included in `order.subtotal` and `order.total` be
 
 **Lesson Learned:**  
 When performing multi-step calculations across views, always duplicate or abstract shared logic (e.g. into a helper function) so updates remain consistent. The basket and checkout must use identical fee logic to avoid mismatched totals.
+
+### 4.1.2.5 Email Logic Error
+
+**Bug:** 
+During mentor testing, the payment page could not auto-populate the user’s email address because the sign-up process never required or stored one. Users were able to register without providing an email, which prevented receipts and e-tickets from being delivered after checkout.
+
+**Fix:** 
+I created a custom form called `CustomUserCreationForm` that extends *Django*’s default `UserCreationForm` and includes a required `email` field. The new form was imported into the `signup` view and replaced the default form reference. The `signup.html` template was then updated to include the email field between the username and password inputs. Validation messages were confirmed for blank, invalid, and valid entries.Once a user is registered, their email now saves correctly to `User.email` and automatically appears on the payment page using `{{ request.user.email }}`.
+
+**Lesson Learned:**  
+Even when using *Django*’s built-in authentication, the default `UserCreationForm` doesn’t collect email addresses by design. If email-based functionality (like receipts or password resets) is part of the workflow, a custom registration form is essential. Extending *Django*’s existing forms is the cleanest way to add required fields without disrupting authentication or introducing a custom user model.
 
 ### 4.1.3 DATABASE CONFIGURATION
 
