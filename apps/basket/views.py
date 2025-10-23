@@ -18,6 +18,12 @@ def calculate_fees(order_items, discount=0):
     booking_fee_total = Decimal("0.00")
     delivery_charge = Decimal("0.00")
 
+    # Track total merch units to apply global delivery logic
+    total_merch_units = sum((item.quantity or 0) for item in order_items if getattr(item, "merch", None))
+    processed_units = 0 
+
+    print(f"DEBUG: total_merch_units = {total_merch_units}")
+
     for item in order_items:
         item_total = item.get_line_total()
         item.display_line_total = item_total
@@ -29,14 +35,15 @@ def calculate_fees(order_items, discount=0):
         else:
             item.booking_fee = Decimal("0.00")
 
-        # Per-item delivery fee (£5 for first merch item, +50% per additional item * quantity)
+        # Global per-unit delivery logic
         if item.merch:
-            if delivery_charge == 0:
-                # First merch item (whatever its quantity)
-                item.delivery_fee = Decimal("5.00") * item.quantity
-            else:
-                # Additional merch items at 50% of base per quantity
-                item.delivery_fee = Decimal("2.50") * item.quantity
+            item.delivery_fee = Decimal("0.00")
+            for _ in range(item.quantity):
+                processed_units += 1
+                if processed_units == 1:
+                    item.delivery_fee += Decimal("5.00")  # first merch unit
+                else:
+                    item.delivery_fee += Decimal("2.50")  # subsequent units
             delivery_charge += item.delivery_fee
         else:
             item.delivery_fee = Decimal("0.00")
@@ -62,15 +69,24 @@ def basket_view(request):
     list(storage)
 
     basket = None
+    delivery_message = None
+
     if request.user.is_authenticated:
         basket, created = Basket.objects.get_or_create(user=request.user)
         items_with_fees, subtotal, delivery_charge, basket_total = calculate_fees(basket.items.all())
+
+        # Generate delivery explanation message
+        merch_units = sum((item.quantity or 0) for item in basket.items.all() if item.merch)
+        if merch_units > 1:
+            delivery_message = "Delivery = £5.00 + £2.50 for ea. extra item"
 
         last_order = (
             Order.objects.filter(user=request.user, status="pending")
             .order_by("-created_at")
             .first()
         )
+
+    print(f"DEBUG: delivery_message = {delivery_message}")
 
     return render(request, 'basket/basket.html', {
         'basket': basket,
@@ -81,6 +97,7 @@ def basket_view(request):
         'quantity_options': range(1, 7),
         'page_title': "Basket",
         'last_order': last_order,
+        "delivery_message": delivery_message,
     })
 
 

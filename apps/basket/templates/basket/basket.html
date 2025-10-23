@@ -81,8 +81,16 @@
                 </div>
                     
                 <!-- Subtotal -->
-                <div class="row basket-subtotal text-end mt-3">
-                    <div class="col-12">
+                <div class="row text-end mt-3">
+                    <!-- Delivery message if applicable -->
+                    {% if delivery_message %}
+                            <div class="col-12 delivery-charges text-end">
+                                <small>{{ delivery_message }}</small>
+                            </div>
+                        {% endif %}
+
+                    <!-- Subtotal -->
+                    <div class="col-12 basket-subtotal mb-3">
                         <small>Subtotal (inc. fees): £{{ basket_total }}</small>
                     </div>
                 </div>

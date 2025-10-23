@@ -75,3 +75,5 @@
 37. As a user, I want to see a friendly 400 error page when I make a bad request so that I am not shown a confusing error message.  
 
 38. As a user, I want to see branded and consistent error pages when something goes wrong, with a back button that takes me to my previous page, so I don’t lose my place on the site.  
+
+39. As a user, I want to clearly see how delivery costs are calculated when buying multiple merch items so that I understand why my delivery fee changes at checkout.
