@@ -46,7 +46,7 @@
 
 ---
 
-[Insert images of responsive designs]
+![Home Page](DOCS/images/home-page.jpg)
 
 ## 1. Introduction
 This project is the natural progression of my first project *'Searchlight Promotions'*. For my first project I asked a fellow metal head, who runs a music promotion company in and for the Norwich rock and metal scene, if I could design him a website for my project, as he did not have one. After completing and submitting the project he asked me to maintain it going forward as he absolutely loved it. This ultimately meant that I had retained my first customer, and for the conclusion of this course, it is timely that the website is upgraded as the business has developed, my skills have progressed and as a true work-experience piece of practical evidence.
@@ -423,6 +423,7 @@ Below are the list of resources that I used to complete this project along with 
 - [JavaScript](https://simple.wikipedia.org/wiki/JavaScript) - used for all interactivity within the website
 - [JSHint](https://jshint.com/) for Javascript validation
 - [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview) - for the performance and accessibility testing
+- [Loom](https://www.loom.com) - for responsive video
 - [MSWord](https://www.microsoft.com/en-us/microsoft-365/word) - used for grammar and spelling checking
 - [Perplexity](https://www.perplexity.ai/) - An AI tool used for general queries and learning
 - [Python](https://simple.wikipedia.org/wiki/Python_(programming_language)) - used for the backend of the website

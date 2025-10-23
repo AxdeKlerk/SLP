@@ -56,9 +56,10 @@ All functionality was tested manually by working through user stories. Testing w
   - [4.2.8 Manaul Testing](#428-manaul-testing)
   - [4.2.9 Automated Testing](#429-automated-testing)
     - [4.2.9.1 Lighthouse](#4291-lighthouse)
-    - [4.2.10 CSS Validation](#4210-css-validation)
-    - [4.2.11 HTLML Validation](#4211-htlml-validation)
-    - [4.2.12 JSHint](#4212-jshint)
+    - [4.2.9.2 CSS Validation](#4292-css-validation)
+    - [4.2.9.3 HTLML Validation](#4293-htlml-validation)
+    - [4.2.4 JSHint](#424-jshint)
+    - [4.2.10 Responsive Testing](#4210-responsive-testing)
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
@@ -860,13 +861,20 @@ Error pages are now fully styled, branded, and user-friendly.
 #### 4.2.9.1 Lighthouse
 
 
-#### 4.2.10 CSS Validation
+#### 4.2.9.2 CSS Validation
 
 
-#### 4.2.11 HTLML Validation
+#### 4.2.9.3 HTLML Validation
 
 
-#### 4.2.12 JSHint
+#### 4.2.4 JSHint
 
 
+#### 4.2.10 Responsive Testing
+
+The video below shows a walk through of the resposive design from 320px to 1440px (max-width). This was captured using a *Loom*.
+
+<a href="https://www.loom.com/share/7540ce4a105a416abedbfc50a50cc7ad?sid=07516197-1b03-4d04-b4c4-61d1ac71324a" target="_blank">Watch responsive video</a>
+
+![Responsive image showing different screen sizes](DOCS/images/collage.png)
 
