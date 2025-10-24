@@ -5,7 +5,7 @@
   margin: 0 auto;
   text-align: center;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #F5F5F5;
   padding: 0.5rem;
 }
 
@@ -15,7 +15,7 @@
   border-radius: 8px;
   padding: 1rem;
   margin: 1rem 0;
-  background-color: #fff;
+  background-color: #F5F5F5;
 }
 
 /* Status messages */
@@ -27,5 +27,5 @@
   color: #11ED73;
 }
 .status-msg.error {
-  color: #e63946;
+color: #e63946;
 }
