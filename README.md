@@ -3,31 +3,42 @@
 ![searchlight promotions logo and text](DOCS/images/logo.jpg)
 
 # Table of contents
-- [Searchlight Promotions (Upgrade)](#searchlight-promotions-upgrade)
+- [Searchlight Promotions (Upgrade)](#searchlight-promotions--upgrade-)
 - [Table of contents](#table-of-contents)
-  - [1. Introduction](#1-introduction)
-    - [1.1 The Aim, Purpose and Goal of the Site](#11-the-aim-purpose-and-goal-of-the-site)
-    - [1.2 Target Audience](#12-target-audience)
-  - [2. Planning and Development](#2-planning-and-development)
-    - [2.1 Project Statement and ERD](#21-project-statement-and-erd)
-    - [2.1.1 Identified Entities (Key Nouns):](#211-identified-entities-key-nouns)
-    - [2.1.2 Key Relationships:](#212-key-relationships)
-    - [2.1.3 ERD (Entity Relationship Diagram)](#213-erd-entity-relationship-diagram)
-    - [2.2 Wireframes](#22-wireframes)
-    - [2.3 User Journeys](#23-user-journeys)
-    - [2.4 Agile Methodology](#24-agile-methodology)
-      - [2.4.1 Epics](#241-epics)
+  * [1. Introduction](#1-introduction)
+    + [1.1 The Aim, Purpose and Goal of the Site](#11-the-aim--purpose-and-goal-of-the-site)
+    + [1.2 Target Audience](#12-target-audience)
+  * [2. Planning and Development](#2-planning-and-development)
+    + [2.1 Project Statement and ERD](#21-project-statement-and-erd)
+    + [2.1.1 Identified Entities (Key Nouns):](#211-identified-entities--key-nouns--)
+    + [2.1.2 Key Relationships:](#212-key-relationships-)
+    + [2.1.3 ERD (Entity Relationship Diagram)](#213-erd--entity-relationship-diagram-)
+    + [2.2 Wireframes](#22-wireframes)
+    + [2.3 User Journeys](#23-user-journeys)
+    + [2.4 Agile Methodology](#24-agile-methodology)
+      - [2.4.1 Epics & their User Stories](#241-epics---their-user-stories)
       - [2.4.1.1 Core Epic](#2411-core-epic)
       - [2.4.1.2 Products Epic](#2412-products-epic)
-    - [2.4.1.3 Basket Epic](#2413-basket-epic)
-    - [2.4.1.4 User Epic](#2414-user-epic)
-    - [2.4.1.5 Checkout \& Payments Epic](#2415-checkout--payments-epic)
-    - [2.4.1.6 DevOps Epic](#2416-devops-epic)
-    - [2.4.2 User stories (following the same order as above)](#242-user-stories-following-the-same-order-as-above)
-  - [4. Debugging, Testing, Deployment and Future Developments](#4-debugging-testing-deployment-and-future-developments)
-    - [4.1 Debugging](#41-debugging)
-    - [4.2 Testing](#42-testing)
-    - [4.3 Deployment](#43-deployment)
+    + [2.4.1.3 Basket Epic](#2413-basket-epic)
+    + [2.4.1.4 User Epic](#2414-user-epic)
+    + [2.4.1.5 Checkout & Payments Epic](#2415-checkout---payments-epic)
+    + [2.4.1.6 DevOps Epic](#2416-devops-epic)
+  * [3. Features](#3-features)
+    + [3.1 Home Page](#31-home-page)
+      - [3.1.1 Site Navigation](#311-site-navigation)
+      - [3.1.1.1 Navbar](#3111-navbar)
+      - [3.1.1.2 Hamburger](#3112-hamburger)
+      - [3.1.1.1 User Greeting](#3111-user-greeting)
+    + [3.2 About Page](#32-about-page)
+    + [3.3 Events Page](#33-events-page)
+      - [3.3.1 Events Dropdown](#331-events-dropdown)
+    + [3.4 Merch](#34-merch)
+      - [3.4.1 Merch List](#341-merch-list)
+      - [3.4.2 Merch Detail](#342-merch-detail)
+  * [4. Debugging, Testing, Deployment and Future Developments](#4-debugging--testing--deployment-and-future-developments)
+    + [4.1 Debugging](#41-debugging)
+    + [4.2 Testing](#42-testing)
+    + [4.3 Deployment](#43-deployment)
       - [4.3.1 Create a GitHub Repository](#431-create-a-github-repository)
       - [4.3.2 Clone the Repository to VS Code](#432-clone-the-repository-to-vs-code)
       - [4.3.3 Create and Activate a Virtual Environment](#433-create-and-activate-a-virtual-environment)
@@ -39,10 +50,11 @@
       - [4.3.9 Configure Environment Variables on Heroku](#439-configure-environment-variables-on-heroku)
       - [4.3.10 Final Project Setup on Heroku](#4310-final-project-setup-on-heroku)
       - [4.3.11 Open Your Live Site](#4311-open-your-live-site)
-    - [4.4 Future Developments](#44-future-developments)
-  - [5. Credits and Acknowledegements](#5-credits-and-acknowledegements)
-    - [5.1 Credits](#51-credits)
-    - [5.2 Acknowledgements](#52-acknowledgements)
+    + [4.4 Future Developments](#44-future-developments)
+  * [5. Credits and Acknowledegements](#5-credits-and-acknowledegements)
+    + [5.1 Credits](#51-credits)
+    + [5.2 Acknowledgements](#52-acknowledgements)
+
 
 ---
 
@@ -133,7 +145,7 @@ Slipknot's merch page stood out amoungst the rest and the decidion was made that
 
 ### 2.3 User Journeys
 
-Having completed the wireframes, user journeys were plotted out as imagined the user would journey ould be through the website. First, the  current user journey was plotted out, from the *[Searchlight Promotions](www.searchlightpromotions.co.uk)* website, as shown here:
+Having completed the wireframes, user journeys were plotted out as imagined the user would journey would be through the website. First, the  current user journey was plotted out, from the *[Searchlight Promotions](www.searchlightpromotions.co.uk)* website, as shown here:
 
 ![current user journey](DOCS/images/current-user-journey.jpg)
 
@@ -153,7 +165,7 @@ Having plotted the new user journey and user stories, 'Epics' were extracted for
 
 The project was created in *[Github](https://github.com/users/AxdeKlerk/projects/7)*.
 
-#### 2.4.1 Epics
+#### 2.4.1 Epics & their User Stories
 
 Each epic was added to the Project Board using labels as can be seen here:
 
@@ -167,9 +179,9 @@ The below shows the Site Indentification User Story as well as its corresponding
 
 ![site identification user story](DOCS/images/user-site-identification.jpg)
 
-The above is a representation of the Kaban board and all its components. As the project developed more user stories and tasks were created. Throughout the design of the website this project baord was referenced to keep the scope of the project realistic and on track. For convenience the project board can be found here: ![project board](DOCS/images/project-board.jpg)
+The above is a representation of the Kaban board and all its components. As the project developed more user stories and tasks were created. Throughout the design of the website this project board was referenced to keep the scope of the project realistic and on track. For convenience the project board can be found here: ![project board](DOCS/images/project-board.jpg)
 
-Below details all the Epic headings with their user story headings: 
+Below details all the Epic headings with their coresponding user stories: 
 
 #### 2.4.1.1 Core Epic
 
@@ -243,65 +255,42 @@ Below details all the Epic headings with their user story headings:
 
 - 500 Error Page  
 
-### 2.4.2 User stories (following the same order as above)
+----
 
-- As a **user** I want to **land on the website and immediately recognise that it is for a rock and metal music promotion company** so that I **know I am in the right place**.  
+## 3. Features
 
-- As a **user** I want to **be able to navigate between Home, About, Event, Merch, Contact Form and Basket** so that I can **reach any section quickly**. 
 
-- As a **user,** I want to **be able to search for artists, merch and venues** so that I can **navigate quickly to my selected choice**.  
+### 3.1 Home Page
 
-- As a **user**, I want to **contact the promotions company** so that **my query reaches the right place**.  .  
 
-- As a **user**, I want to **see a basic footer with copyright information** so that I can **know where the end of the page is by the consistent copyright protection displayed beneath**.  
+#### 3.1.1 Site Navigation
 
-- As a **developer**, I want a **reusable base.html template** so that **all pages share the same layout, styling, and design consistency**.  
 
-- As a **user**, I want to **view all upcoming events** so that I **can decide which ones to attend**.  
+#### 3.1.1.1 Navbar
 
-- As a **user**, I want to **view available merchandise** so that I can **browse and choose items to buy**.  
 
-- As a **user**, I want to **view details of a merch item** so that I can **decide whether to purchase it**. 
+#### 3.1.1.2 Hamburger
 
-- As an **event organiser**, I want ticket sales to **update availability** so that **users cannot purchase more tickets than exist**.   
 
-- As a **user**, I want to **access the Roxoff page** so that I can **easily view and purchase tickets for upcoming events promoted under the Roxoff brand**.   
+#### 3.1.1.1 User Greeting
 
-- As a **user**, I want to **add event tickets or merchandise to my basket** so that I can** purchase them later**.  
 
-- As a **user**, I want to **view my basket** so that I can **see the items I intend to purchase**.  
+### 3.2 About Page
 
-- As a **user**, I want to **update the quantity of basket items** so that I can **adjust my order before checkout**.    
 
-- As a **user**, I want to **delete items from my basket** so that I **don’t purchase items I no longer want**.    
+### 3.3 Events Page
 
-- As a **user**, I want to **see my basket total** so that I **know the total cost before checkout**.  .  
 
-- As a **new user**, I want to **create an account** so that I can **log in, purchase tickets/merch, and track my orders**.    
+#### 3.3.1 Events Dropdown
 
-- As a **registered user**, I want to **log in** so that I can **access my account and complete purchases**.   
 
-- As a **registered user**, I want to **reset my password if I forget it** so that I can **regain access to my account**.   
+### 3.4 Merch
 
-- As a **logged in user**, I want to **log out** so that **my account is secure when I leave the site**.    
+#### 3.4.1 Merch List
 
-- As a **logged in user**, I want to **view my profile** so that I can **track my order history**.  
 
-- As a **registered user**, I want to **receive email confirmations** so that I can **verify my account and trust the platform**.  
+#### 3.4.2 Merch Detail
 
-- As a **logged in user**, I want to **proceed to a checkout page** so that I can **review my order and complete my purchase**.   
-
-- As a **logged in user**, I want to **pay securely with Square** so that I can **complete my order with confidence**.   
-
-- As a **logged in user**, I want to see **an order confirmation page after payment** so that I **know my purchase was successful**.    
-
-- As a **logged in user**, I want to **view my past orders in my profile** so that I **can track what I’ve purchased**.  
-
-- As a **developer**, I want to **deploy the application to Heroku** so that **users can access the live site**.   
-
-- As a **user**, I want to **see a friendly 400 error page when I make a bad request** so that I **am not shown a confusing error message**.    
-
-- As a **user**, I want **to see a friendly 500 error page when something goes wrong** so that I **understand the site is temporarily unavailable.** 
 
 ## 4. Debugging, Testing, Deployment and Future Developments
 

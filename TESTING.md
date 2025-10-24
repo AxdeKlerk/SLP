@@ -61,9 +61,6 @@ All functionality was tested manually by working through user stories. Testing w
     - [4.2.4 JSHint](#424-jshint)
     - [4.2.10 Responsive Testing](#4210-responsive-testing)
 
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
-
 
 ---
 
