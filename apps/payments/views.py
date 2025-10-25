@@ -120,6 +120,28 @@ def process_payment(request, order_id):
 
         invoice_obj.save()
 
+        # Send email confirmation
+        from django.core.mail import send_mail
+        subject = f"Your Searchlight Promotions Order #{order.id} Confirmation"
+        message = (
+            f"Hi {order.shipping_name},\n\n"
+            f"Thank you for your order!\n\n"
+            f"Order Summary:\n"
+            f"- Order ID: {order.id}\n"
+            f"- Total Paid: £{order.total}\n\n"
+            "Your order has been successfully processed. "
+            "We'll send another email when your tickets or merchandise are on their way.\n\n"
+            "Rock on,\n"
+            "The Searchlight Promotions Team"
+        )
+        send_mail(
+            subject,
+            message,
+            None,  # Uses DEFAULT_FROM_EMAIL
+            [order.email],
+            fail_silently=False,
+        )
+
         return JsonResponse({"ok": True, "order_id": order.id, "message": "Payment and invoice processed successfully"})
 
     return JsonResponse({"ok": False, "error": "Invalid request method"}, status=400)
