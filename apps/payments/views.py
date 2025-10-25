@@ -81,6 +81,8 @@ def process_payment(request, order_id):
     Handles Square payment confirmation and creates/updates
     an invoice record for the associated order.
     """
+    try:
+        
     if request.method == "POST":
         data = json.loads(request.body)
         token = data.get("token")
