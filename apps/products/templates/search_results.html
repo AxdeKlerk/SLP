@@ -12,7 +12,7 @@
             {% include "_artist_detail_block.html" with artist=artist %}
         {% endfor %}
         {% else %}
-        <p>No artists found for "{{ q }}"</p>
+        <p class="text-center fs-6">No artists found for "{{ q }}"</p>
         {% endif %}
     {% endif %}
 
@@ -22,7 +22,7 @@
             {% include "_venue_detail_block.html" with venue=venue %}
         {% endfor %}
         {% else %}
-        <p>No venues found for "{{ q }}"</p>
+        <p class="text-center fs-6">No venues found for "{{ q }}"</p>
         {% endif %}
     {% endif %}
 
@@ -85,7 +85,7 @@
                     </div>
             {% endif %}
         {% else %}
-            <p>No merchandise found for "{{ q }}"</p>
+            <p class="text-center fs-6">No merchandise found for "{{ q }}"</p>
         {% endif %}
     {% endif %}
 </div>

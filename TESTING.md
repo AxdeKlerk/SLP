@@ -57,6 +57,8 @@ All functionality was tested manually by working through user stories. Testing w
   - [4.2.9 Automated Testing](#429-automated-testing)
     - [4.2.9.1 Lighthouse](#4291-lighthouse)
     - [4.2.9.2 CSS Validation](#4292-css-validation)
+      - [4.2.9.2.1 style.css](#42921-stylecss)
+      - [4.2.9.2.2 square-checkout.css](#42922-square-checkoutcss)
     - [4.2.9.3 HTLML Validation](#4293-htlml-validation)
     - [4.2.4 JSHint](#424-jshint)
     - [4.2.10 Responsive Testing](#4210-responsive-testing)
@@ -849,8 +851,11 @@ Verified both templates, back navigation, and consistent styling.
 **Notes:**  
 Error pages are now fully styled, branded, and user-friendly.
 
+---
+
 ### 4.2.8 Manaul Testing
 
+---
 
 ### 4.2.9 Automated Testing
 
@@ -860,6 +865,15 @@ Error pages are now fully styled, branded, and user-friendly.
 
 #### 4.2.9.2 CSS Validation
 
+*CSS* validation was completed using *W3C* CSS Validator and both style sheets passed first time, and without errors or warnings.
+
+##### 4.2.9.2.1 style.css
+
+![Style Validation Pass](DOCS/images/testing/style-css-validation.jpg)
+
+##### 4.2.9.2.2 square-checkout.css
+
+![Square Checkout Validation Pass](DOCS/images/testing/square-checkout-css-validation.jpg)
 
 #### 4.2.9.3 HTLML Validation
 
