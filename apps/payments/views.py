@@ -124,9 +124,16 @@ def process_payment(request, order_id):
     # Try sending confirmation email
     from django.core.mail import send_mail
     try:
+        # Determine the best name for email greeting
+        name = (
+            order.shipping_name
+            or request.user.get_full_name()
+            or request.user.username
+            or "there"
+        )
         subject = f"Your Searchlight Promotions Order #{order.id} Confirmation"
         message = (
-            f"Hi {order.shipping_name},\n\n"
+            f"Hi {name},\n\n"
             f"Thank you for your order!\n\n"
             f"Order Summary:\n"
             f"- Order ID: {order.id}\n"
