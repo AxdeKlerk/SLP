@@ -41,6 +41,7 @@ All functionality was tested manually by working through user stories. Testing w
     - [4.2.5.6 Basket and Checkout Totals Calculation](#4256-basket-and-checkout-totals-calculation)
     - [4.2.5.7 Delivery Charge Message](#4257-delivery-charge-message)
     - [4.2.5.7 Payment Integration and Deployment Testing](#4257-payment-integration-and-deployment-testing)
+    - [4.2.5.8 Payment Confirmation Email and Success Page](#4258-payment-confirmation-email-and-success-page)
   - [4.2.6 Webhooks \& Integrations Epic](#426-webhooks--integrations-epic)
     - [4.2.6.1 Invalid Application ID Error](#4261-invalid-application-id-error)
     - [4.2.6.2 Payment Link API](#4262-payment-link-api)
@@ -657,6 +658,37 @@ Tested full Heroku deployment and sandbox payment flow.
 **Notes:**  
 Initial failure due to premature script execution; fixed with window.onload.
 
+#### 4.2.5.8 Payment Confirmation Email and Success Page
+User Story:  
+As a **user**, I want to **receive an order confirmation email and see a success page after checkout** so that **I know my payment was successful and my order has been recorded**.
+
+**What Was Tested**  
+- A full checkout process including both event tickets and merchandise in the basket.  
+- Payment submission using a Square Sandbox test card via the deployed site.  
+- Confirmation email received in the connected Gmail inbox.  
+- Confirmation page displayed immediately after successful payment.  
+- Email content verified to include order details and clear confirmation message.  
+- Verified that email sending did not block order completion if the connection temporarily failed.
+
+**Acceptance Criteria**  
+[x] User is able to submit payment successfully.  
+[x] Order status updates from “pending” to “paid.”  
+[x] Confirmation page is displayed upon success.  
+[x] Confirmation email is sent to the user’s email address.  
+[x] Email content confirms order number and payment total.  
+[x] System gracefully handles any email delivery issues without blocking the payment process.  
+[x] Works for both event and merchandise items within the same order.  
+
+**Tasks Completed**  
+[x] Updated `process_payment` view to finalize order, create invoice, and send confirmation email.  
+[x] Configured Gmail SMTP via secure App Password in Heroku environment variables.  
+[x] Tested end-to-end flow using deployed version with Square Sandbox payment.  
+[x] Verified success redirect and email delivery in production logs.  
+
+**Notes**  
+The integrated confirmation flow now completes seamlessly from payment to email delivery.  
+The email currently uses a plain-text format for simplicity. A future enhancement will convert this into an HTML-formatted message including ticket and merchandise details, along with a dispatch update notice once the merchandise has shipped.
+
 
 ---
 
@@ -792,7 +824,6 @@ End-to-end order and payment flow in sandbox environment.
 
 **Notes:**  
 Full integration confirmed ready for live deployment.
-
 
 ---
 

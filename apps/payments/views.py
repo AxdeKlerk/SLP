@@ -133,7 +133,7 @@ def process_payment(request, order_id):
             f"- Total Paid: £{order.total}\n\n"
             "Your order has been successfully processed. "
             "We'll send another email when your tickets or merchandise are on their way.\n\n"
-            "Rock on,\n"
+            "Stay Loud!\n"
             "The Searchlight Promotions Team"
         )
         send_mail(subject, message, None, [order.email], fail_silently=False)
