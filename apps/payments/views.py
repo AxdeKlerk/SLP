@@ -143,8 +143,14 @@ def process_payment(request, order_id):
         )
 
         return JsonResponse({"ok": True, "order_id": order.id, "message": "Payment and invoice processed successfully"})
+    
+    except Exception as e:
+    import traceback
+    print("ERROR in process_payment:", e)
+    traceback.print_exc()
+    return JsonResponse({"ok": False, "error": str(e)}, status=500)
 
-    return JsonResponse({"ok": False, "error": "Invalid request method"}, status=400)
+    # return JsonResponse({"ok": False, "error": "Invalid request method"}, status=400)
 
 
 @login_required
