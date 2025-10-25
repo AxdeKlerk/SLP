@@ -1,7 +1,7 @@
 console.log("Square checkout JS loaded successfully!");
 
-// Wait until everything on the page is fully loaded
-window.addEventListener("load", async () => {
+// Wait for the DOM to be fully loaded
+document.addEventListener("DOMContentLoaded", async () => {
   console.log("✅ Window fully loaded — starting Square init");
 
   const configEl = document.getElementById("square-config");
