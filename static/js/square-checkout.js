@@ -1,12 +1,10 @@
-console.log("Square checkout JS loaded successfully!");
-
 // Wait for the DOM to be fully loaded
 document.addEventListener("DOMContentLoaded", async () => {
   console.log("✅ Window fully loaded — starting Square init");
 
   const configEl = document.getElementById("square-config");
   if (!configEl) {
-    console.error("Square config element not found.");
+    console.error("Square config element not found");
     return;
   }
 
@@ -100,11 +98,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       payBtn.disabled = false;
     });
   }
-
-  // Get Square IDs from HTML data attributes
-  const configEl = document.getElementById("square-config");
-  const appId = configEl.dataset.appId;
-  const locationId = configEl.dataset.locationId;
 
   // Initialize Square
   initSquare(appId, locationId);
