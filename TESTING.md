@@ -1,5 +1,5 @@
 ## 4.1 TESTING LOG
-This doocument has been restructured from my original TESTING.md which listed each user story, what was tested, acceptance criteria, and notes in chronological order, as development progressed. The restructing only grouped the relevant entries under the 7 headings listed in the table of contents for ease of reference.
+This document has been restructured from my original TESTING.md which listed each user story, what was tested, acceptance criteria, and notes in chronological order, as development progressed. The restructering only grouped the relevant entries under the 7 headings listed in the table of contents for ease of reference.
 
 All functionality was tested manually by working through user stories. Testing was carried out in *Google Chrome*, *Edge*, *Brave* and *Firefox* across desktop and mobile screen sizes. *DevTools* were used to check responsiveness and console errors. Forms and dynamic elements were tested for validation, correct behaviour, and feedback.
 
@@ -560,7 +560,7 @@ I tested that the signup and login form input fields displayed black text when u
 
 **Acceptance Criteria:**  
 [x] Input text visible in black.  
-[x] Placeholder text gray (#888).  
+[x] Placeholder text grey (#888).  
 [x] *CSS* changes deployed correctly to *Heroku*.  
 [x] No transparent text issue.
 

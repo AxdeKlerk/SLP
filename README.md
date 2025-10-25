@@ -17,13 +17,55 @@
     - [2.3 User Journeys](#23-user-journeys)
     - [2.4 Agile Methodology](#24-agile-methodology)
       - [2.4.1 Epics \& their User Stories](#241-epics--their-user-stories)
-      - [2.4.1.1 Core Epic](#2411-core-epic)
-      - [2.4.1.2 Products Epic](#2412-products-epic)
-    - [2.4.1.3 Basket Epic](#2413-basket-epic)
-    - [2.4.1.4 User Epic](#2414-user-epic)
-    - [2.4.1.5 Checkout \& Payments Epic](#2415-checkout--payments-epic)
-    - [2.4.1.6 Webhooks \& Integrations Epic](#2416-webhooks--integrations-epic)
-    - [2.4.1.7 DevOps Epic](#2417-devops-epic)
+    - [2.4.1 Core Epic](#241-core-epic)
+      - [2.4.1.1 Site Identification](#2411-site-identification)
+      - [2.4.1.2 Navigation](#2412-navigation)
+      - [2.4.1.3 Search](#2413-search)
+      - [2.4.1.4 Contact Form](#2414-contact-form)
+      - [2.4.1.5 Footer](#2415-footer)
+      - [2.4.1.6 Base Template](#2416-base-template)
+    - [2.4.2 Products Epic](#242-products-epic)
+      - [2.4.2.1 Event Listings](#2421-event-listings)
+      - [2.4.2.2 Event Detail Page — Ticket Oversell Guardrail](#2422-event-detail-page--ticket-oversell-guardrail)
+      - [2.4.2.3 Ticket Availability Tracking — Validation Error Message](#2423-ticket-availability-tracking--validation-error-message)
+      - [2.4.2.4 Roxoff Page \& Event Tickets](#2424-roxoff-page--event-tickets)
+    - [2.4.3 Basket Epic](#243-basket-epic)
+      - [2.4.3.1 Add to Basket](#2431-add-to-basket)
+      - [2.4.3.2 View Basket](#2432-view-basket)
+      - [2.4.3.3 Update Basket — Basket Quantity Clamping](#2433-update-basket--basket-quantity-clamping)
+      - [2.4.3.4 Remove from Basket](#2434-remove-from-basket)
+      - [2.4.3.5 Basket Totals](#2435-basket-totals)
+    - [2.4.4 User Epic](#244-user-epic)
+      - [2.4.4.1 Add Required Email Field to Sign Up](#2441-add-required-email-field-to-sign-up)
+      - [2.4.4.2 Sign Up — Input Text Visibility Fix](#2442-sign-up--input-text-visibility-fix)
+      - [2.4.4.3 Log In](#2443-log-in)
+      - [2.4.4.4 Password Reset](#2444-password-reset)
+      - [2.4.4.5 Log Out](#2445-log-out)
+      - [2.4.4.6 Profile — Delete Selected Orders](#2446-profile--delete-selected-orders)
+      - [2.4.4.7 Email Confirmations (Backlog – Not MVP)](#2447-email-confirmations-backlog--not-mvp)
+      - [2.4.4.8 Order Confirmation Page](#2448-order-confirmation-page)
+      - [2.4.4.9 Order History in Profile](#2449-order-history-in-profile)
+    - [2.4.5 Checkout \& Payments Epic](#245-checkout--payments-epic)
+      - [2.4.5.1 Checkout Page — Proceed to Payment Button Routing](#2451-checkout-page--proceed-to-payment-button-routing)
+      - [2.4.5.2 Order Summary Event Display](#2452-order-summary-event-display)
+      - [2.4.5.3 Delivery and Booking Fees Carry Over to Order Summary](#2453-delivery-and-booking-fees-carry-over-to-order-summary)
+      - [2.4.5.4 Checkout Summary Fee and Total Calculations](#2454-checkout-summary-fee-and-total-calculations)
+      - [2.4.5.5 Checkout and Payment Summary Totals](#2455-checkout-and-payment-summary-totals)
+      - [2.4.5.6 Basket and Checkout Totals Calculation](#2456-basket-and-checkout-totals-calculation)
+      - [2.4.5.7 Delivery Charge Message](#2457-delivery-charge-message)
+      - [2.4.5.8 Payment Integration and Deployment Testing](#2458-payment-integration-and-deployment-testing)
+    - [2.4.6 Webhooks \& Integrations Epic](#246-webhooks--integrations-epic)
+      - [2.4.6.1 Invalid Application ID Error](#2461-invalid-application-id-error)
+      - [2.4.6.2 Payment Link API](#2462-payment-link-api)
+      - [2.4.6.3 Webhook Verification](#2463-webhook-verification)
+      - [2.4.6.4 Order Status Update via Square Webhook](#2464-order-status-update-via-square-webhook)
+      - [2.4.6.5 Square Webhook Integration](#2465-square-webhook-integration)
+      - [2.4.6.6 Square Payment Verification (Admin Action)](#2466-square-payment-verification-admin-action)
+      - [2.4.6.7 Square Sandbox Order Creation and Webhook Verification](#2467-square-sandbox-order-creation-and-webhook-verification)
+    - [2.4.7 DevOps Epic](#247-devops-epic)
+      - [2.4.7.1 Deployment](#2471-deployment)
+      - [2.4.7.2 400 Error Page](#2472-400-error-page)
+      - [2.4.7.3 500 Error Page — Custom 404 and 500 Pages with Back Navigation](#2473-500-error-page--custom-404-and-500-pages-with-back-navigation)
   - [3. Features](#3-features)
     - [3.1 Home Page](#31-home-page)
       - [3.1.1 Site Navigation](#311-site-navigation)
@@ -182,16 +224,16 @@ The below shows the Site Indentification User Story as well as its corresponding
 
 The above is a representation of the Kaban board and all its components. As the project developed more user stories and tasks were created. Throughout the design of the website this project board was referenced to keep the scope of the project realistic and on track. For convenience the project board can be found here: ![project board](DOCS/images/project-board.jpg)
 
-Below details all the Epic headings with their coresponding user stories: 
+Below details all the Epic headings with their coresponding user stories. All user stories were tested and can be found in the [TESTING.md](TESTING.md).
 
 ### 2.4.1 Core Epic  
 
 #### 2.4.1.1 Site Identification  
-  
+ 
 As a **user** I want to **land on the website and immediately recognise that it is for a rock and metal music promotion company** so that I **know I am in the right place**.  
 
 #### 2.4.1.2 Navigation  
-  
+ 
 As a **user** I want to **be able to navigate between Home, About, Event, Merch, Contact Form and Basket** so that I **can reach any section quickly**.  
 
 #### 2.4.1.3 Search  
@@ -199,11 +241,11 @@ As a **user** I want to **be able to navigate between Home, About, Event, Merch,
 As a **user** I want to **be able to search for artists, merch and venues** so that I **can navigate quickly to my selected choice**.  
 
 #### 2.4.1.4 Contact Form  
- 
+  
 As a **user** I want to **contact the promotions company** so that **my query reaches the right place**.  
 
 #### 2.4.1.5 Footer  
- 
+  
 As a **user** I want to **see a basic footer with copyright information** so that I **can know where the end of the page is by the consistent copyright protection displayed beneath**.  
 
 #### 2.4.1.6 Base Template  
@@ -222,20 +264,12 @@ As a **user** I want to **view all upcoming events** so that I **can decide whic
   
 As a **fan buying tickets** I want **the checkout system to stop me from purchasing more tickets than the event’s available capacity** so that I **cannot buy a ticket to an oversold event with a clear message so that I clearly understand why my order cannot proceed**.  
 
-#### 2.4.2.3 Merch Listings  
-User Story:  
-As a **user**, I want to **browse all available merchandise items** so that I can **see what products are offered before deciding what to buy**.  
-
-#### 2.4.2.4 Merch Detail Page  
-User Story:  
-As a **user**, I want to **view detailed information about a specific merchandise item, including price, image, and description** so that I can **make an informed decision before adding it to my basket**.  
-
-#### 2.4.2.5 Ticket Availability Tracking — Validation Error Message  
+#### 2.4.2.3 Ticket Availability Tracking — Validation Error Message  
   
 As a **user**, I want to **be prevented from purchasing more tickets than are available for an event**, so that I **don’t end up buying tickets for an event that is already at the event's capacity and I want to receive a clear error message before purchasing my ticket**.  
 
-#### 2.4.2.6 Roxoff Page & Event Tickets  
- 
+#### 2.4.2.4 Roxoff Page & Event Tickets  
+  
 As a **user**, I want to **access the Roxoff page** so that **I can easily view and purchase tickets for upcoming events promoted under the Roxoff brand**.  
 
 ---
@@ -243,11 +277,11 @@ As a **user**, I want to **access the Roxoff page** so that **I can easily view 
 ### 2.4.3 Basket Epic  
 
 #### 2.4.3.1 Add to Basket  
- 
+  
 As a **user**, I want to **add event tickets or merchandise to my basket** so that **I can purchase them later**.  
 
 #### 2.4.3.2 View Basket  
- 
+  
 As a **user**, I want to **view my basket** so that I **can see the items I intend to purchase**.  
 
 #### 2.4.3.3 Update Basket — Basket Quantity Clamping  
@@ -267,7 +301,7 @@ As a **user**, I want to **see my basket total** so that I **know the total cost
 ### 2.4.4 User Epic  
 
 #### 2.4.4.1 Add Required Email Field to Sign Up  
- 
+  
 As a **new user**, I want to **provide my email address during registration** so that I **can receive receipts and e-tickets linked to my account**.  
 
 #### 2.4.4.2 Sign Up — Input Text Visibility Fix  
@@ -283,11 +317,11 @@ As a **registered user**, I want to **log in** so that I **can access my account
 As a **registered user**, I want to **be able to reset my password if I forget it** so that I **can regain access to my account**.  
 
 #### 2.4.4.5 Log Out  
- 
+  
 As a **logged in user**, I want to **log out** so that **my account is secure when I leave the site**.  
 
 #### 2.4.4.6 Profile — Delete Selected Orders  
- 
+  
 As a **logged-in user**, I want to **be able to select one or more pending orders from my profile page and delete them**, so that I **can remove orders I no longer wish to keep**.  
 
 #### 2.4.4.7 Email Confirmations (Backlog – Not MVP)  
@@ -295,13 +329,49 @@ As a **logged-in user**, I want to **be able to select one or more pending order
 As a **registered user**, I want to **receive email confirmations** so that I can **verify my account and trust the platform**.  
 
 #### 2.4.4.8 Order Confirmation Page  
-
+  
 As a **user**, I want to **see an order confirmation page after completing my payment** so that I can **be sure my order has been successfully processed and view a summary of my purchase**.  
 
 #### 2.4.4.9 Order History in Profile  
-
+  
 As a **logged-in user**, I want to **view my past orders in my profile page** so that I can **keep track of my purchase history and review order details at any time**.  
+
+---
+
+### 2.4.5 Checkout & Payments Epic  
+
+#### 2.4.5.1 Checkout Page — Proceed to Payment Button Routing  
+  
+As a **user**, I want the **""Proceed to Payment"" button on my profile page to take me directly to the checkout page** so that I **can complete payment for my selected order**.  
+
+#### 2.4.5.2 Order Summary Event Display  
+  
+As a **user**, I want to **see clear and accurate details of my event orders in the checkout and payment summary** so I can **confirm I’m paying for the correct gig before completing my purchase**.  
+
+#### 2.4.5.3 Delivery and Booking Fees Carry Over to Order Summary  
+  
+As a **user**, I want **delivery and booking fees shown in my basket to be accurately carried over to my checkout summary** so that I **always see the correct final total before payment**.  
+
+#### 2.4.5.4 Checkout Summary Fee and Total Calculations  
+  
+As a **user**, I wanted the **checkout summary to clearly display item costs including booking and delivery fees**, so that I can **understand exactly how my total is calculated before payment**.  
+
+#### 2.4.5.5 Checkout and Payment Summary Totals  
  
+As a **user**, I wanted to **see accurate per-item totals that include all booking and delivery fees on both the checkout and payment summary pages** so that I can clearly understand the full cost before completing my order.  
+
+#### 2.4.5.6 Basket and Checkout Totals Calculation  
+  
+As a **user**, I want the **basket and checkout totals to include the correct booking and delivery fees for each item** so that I can **see accurate costs before payment**.  
+
+#### 2.4.5.7 Delivery Charge Message  
+  
+As a **user**, I want to **clearly see how delivery costs are calculated when buying multiple merch items** so that I **understand why my delivery fee changes at checkout**.  
+
+#### 2.4.5.8 Payment Integration and Deployment Testing  
+  
+As a **user**, I want to **complete a secure checkout using the *Square* payment form** so that I can **confidently pay for my order online**.  
+
 ---
 
 ### 2.4.6 Webhooks & Integrations Epic  
@@ -311,7 +381,7 @@ As a **logged-in user**, I want to **view my past orders in my profile page** so
 As a **developer**, I wanted to **render the *Square* card input in my checkout page** so that I **could generate a token from a sandbox card and confirm the frontend to backend tokenisation flow worked correctly**.  
 
 #### 2.4.6.2 Payment Link API  
- 
+  
 As a **user**, I wanted to **be redirected to a *Square* checkout page when I clicked “Proceed to Payment” from my profile**, so that I **could complete my order securely**.  
 
 #### 2.4.6.3 Webhook Verification  
@@ -319,15 +389,15 @@ As a **user**, I wanted to **be redirected to a *Square* checkout page when I cl
 As a **developer**, I wanted to **confirm that my webhook endpoint correctly verified *Square*’s signature** so that **only legitimate events could trigger updates**.  
 
 #### 2.4.6.4 Order Status Update via Square Webhook  
-
+  
 As a **user**, I want **my order status to automatically update to “paid” once my *Square* payment completes**, so that I **know my transaction has been confirmed**.  
 
 #### 2.4.6.5 Square Webhook Integration  
- 
+  
 As a **site owner**, I want **my *Django* application to securely receive and process payment webhooks from *Square***, so that **order statuses automatically update to “paid” when payments are completed**.  
 
 #### 2.4.6.6 Square Payment Verification (Admin Action)  
- 
+  
 As a **site owner**, I want to **verify payment statuses directly from *Django* Admin by checking *Square*’s records**, so that I can **confirm completed transactions even if a webhook fails**.  
 
 #### 2.4.6.7 Square Sandbox Order Creation and Webhook Verification  
@@ -343,7 +413,7 @@ As a **site owner**, I want **my checkout process to automatically create *Squar
 As a **developer**, I want to **deploy the application to *Heroku*** so that **users can access the live site**.  
 
 #### 2.4.7.2 400 Error Page  
- 
+  
 As a **user**, I want to **see a friendly 400 error page when I make a bad request** so that **I am not shown a confusing error message**.  
 
 #### 2.4.7.3 500 Error Page — Custom 404 and 500 Pages with Back Navigation  
