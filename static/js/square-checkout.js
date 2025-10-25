@@ -48,7 +48,7 @@ window.addEventListener("load", async () => {
     // On button click
     payBtn.addEventListener("click", async () => {
       console.log("Pay button clicked");
-      statusEl.textContent = "Tokenizing card...";
+      statusEl.textContent = "Tokenizing card, this may take a few moments...";
       payBtn.disabled = true;
 
       const result = await card.tokenize();
@@ -100,6 +100,11 @@ window.addEventListener("load", async () => {
       payBtn.disabled = false;
     });
   }
+
+  // Get Square IDs from HTML data attributes
+  const configEl = document.getElementById("square-config");
+  const appId = configEl.dataset.appId;
+  const locationId = configEl.dataset.locationId;
 
   // Initialize Square
   initSquare(appId, locationId);
