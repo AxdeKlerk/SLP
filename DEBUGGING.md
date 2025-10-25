@@ -1,9 +1,68 @@
 ## 4.1 DEBUGGING LOG
-This doocument has been restructured from my original DEBUGGING.md which listed each bug fix in chronological order, as development progressed. The restructing only grouped the relevant entries under the 7 headings listed in the table of contents for ease of reference. 
+This document has been restructured from my original DEBUGGING.md which listed each bug fix in chronological order, as development progressed. The restructuring only grouped the relevant entries under the 7 headings listed in the table of contents for ease of reference. 
 
 
 ### 4.1 Table of Contents
-
+- [4.1 DEBUGGING LOG](#41-debugging-log)
+  - [4.1 Table of Contents](#41-table-of-contents)
+  - [4.1.1 FRONTEND / UI](#411-frontend--ui)
+    - [4.1.1.1 Offcanvas Navigation Error](#4111-offcanvas-navigation-error)
+    - [4.1.1.2 Template Logic — Navbar active state (dropdown parent)](#4112-template-logic--navbar-active-state-dropdown-parent)
+    - [4.1.1.3 Navigation Highlight Issue](#4113-navigation-highlight-issue)
+    - [4.1.1.4 CSS Layout Bug](#4114-css-layout-bug)
+    - [4.1.1.5 Template Logic Bug for Size Dropdown Menu items](#4115-template-logic-bug-for-size-dropdown-menu-items)
+    - [4.1.1.6 Template/Context Error](#4116-templatecontext-error)
+    - [4.1.1.7 Search Input Responsive Sizing (Mobile) Issue](#4117-search-input-responsive-sizing-mobile-issue)
+    - [4.1.1.8 Merch Search Functionality Issue](#4118-merch-search-functionality-issue)
+  - [4.1.2 BACKEND / LOGIC](#412-backend--logic)
+    - [4.1.2.1 Logic Bug](#4121-logic-bug)
+    - [4.1.2.2 Logic Error for Forgot Username View](#4122-logic-error-for-forgot-username-view)
+    - [4.1.2.3 Logic Error](#4123-logic-error)
+    - [4.1.2.4 Logic Error](#4124-logic-error)
+  - [4.1.2.5 Email Logic Error](#4125-email-logic-error)
+  - [4.1.3 DATABASE CONFIGURATION](#413-database-configuration)
+    - [4.1.3.1 Database Configuration Error](#4131-database-configuration-error)
+    - [4.1.3.2 Database Integrity and Square Order Sync](#4132-database-integrity-and-square-order-sync)
+  - [4.1.4 SYSTEM / FRAMEWORKS](#414-system--frameworks)
+    - [4.1.4.1 404 \& 500 Template Routing Error](#4141-404--500-template-routing-error)
+    - [4.1.4.2 Admin Field and Payment Verification Errors](#4142-admin-field-and-payment-verification-errors)
+  - [4.1.5 BASKET / CHECKOUT / PAYMENT LOGIC](#415-basket--checkout--payment-logic)
+    - [4.1.5.1 Basket Data Handling Error](#4151-basket-data-handling-error)
+    - [4.1.5.2 Basket Size Display Error](#4152-basket-size-display-error)
+    - [4.1.5.3 Basket Event Details Error](#4153-basket-event-details-error)
+    - [4.1.5.4 Basket Layout / Responsive Error](#4154-basket-layout--responsive-error)
+    - [4.1.5.5 AttributeError](#4155-attributeerror)
+    - [4.1.5.6 Quantity Clamping Error](#4156-quantity-clamping-error)
+    - [4.1.5.7 Ticket Oversell Error Not Displaying](#4157-ticket-oversell-error-not-displaying)
+    - [4.1.5.8 Validation Error – Ticket Capacity Message Errors](#4158-validation-error--ticket-capacity-message-errors)
+    - [4.1.5.9 Routing Error (Payment Button)](#4159-routing-error-payment-button)
+    - [4.1.5.10 Routing Error (Products Namespace)](#41510-routing-error-products-namespace)
+    - [4.1.5.11 Calculation Error](#41511-calculation-error)
+    - [4.1.5.12 Calculation Error (Checkout Totals)](#41512-calculation-error-checkout-totals)
+    - [4.1.5.13 Runtime Error for Checkout and Payment Summary Totals](#41513-runtime-error-for-checkout-and-payment-summary-totals)
+    - [4.1.5.14 Basket and Checkout Totals Calculation Runtime Error](#41514-basket-and-checkout-totals-calculation-runtime-error)
+    - [4.1.5.15 Navigation Routing Error](#41515-navigation-routing-error)
+    - [4.1.5.16 Redirect Loop for Continue Shopping Button](#41516-redirect-loop-for-continue-shopping-button)
+    - [4.1.5.17 Continue Shopping Persistent Redirect Fallback Logic](#41517-continue-shopping-persistent-redirect-fallback-logic)
+  - [4.1.6 WEBHOOKS \& SQUARE INTEGRATION](#416-webhooks--square-integration)
+    - [4.1.6.1 Integration Errors (Square API with Django)](#4161-integration-errors-square-api-with-django)
+    - [4.1.6.2 CSRF and Tokenisation Errors](#4162-csrf-and-tokenisation-errors)
+    - [4.1.6.3 Invalid Application ID Error](#4163-invalid-application-id-error)
+    - [4.1.6.4 Authentication Error](#4164-authentication-error)
+    - [4.1.6.5 Webhook Integration Errors](#4165-webhook-integration-errors)
+    - [4.1.6.6 Webhook Signature Verification Errors](#4166-webhook-signature-verification-errors)
+    - [4.1.6.7 Webhook Authentication Error](#4167-webhook-authentication-error)
+    - [4.1.6.8 Webhook Integration Error](#4168-webhook-integration-error)
+    - [4.1.6.9 Webhook Validation Error](#4169-webhook-validation-error)
+  - [4.1.7 SECURITY \& DEPLOYMENT](#417-security--deployment)
+    - [4.1.7.1 Security Bug](#4171-security-bug)
+    - [4.1.7.2 Deployment Issue](#4172-deployment-issue)
+    - [4.1.7.3 Database Configuration Error](#4173-database-configuration-error)
+    - [4.1.7.4 Configuration Error](#4174-configuration-error)
+    - [4.1.7.5 Environment Variable Load Failure](#4175-environment-variable-load-failure)
+    - [4.1.7.6 Deployment Errors](#4176-deployment-errors)
+    - [4.1.7.7 Static Files Cache Error](#4177-static-files-cache-error)
+    - [4.1.7.8 Deployment and Payment Integration](#4178-deployment-and-payment-integration)
 
 
 ---
@@ -54,10 +113,10 @@ This helped *me* verify the actual names *Django* was using for each page. Alway
 
 #### 4.1.1.4 CSS Layout Bug
 **Bug:**  
-On screens between 576px and 767px, *my* event cards were not centered. The `.row` container was full width, but the `.standard-card` element stayed stuck to the left side. This only happened on small screens because the card had a `max-width` set, which prevented it from stretching to fill the column. Without centering rules, it always aligned left.
+On screens between 576px and 767px, *my* event cards were not centred. The `.row` container was full width, but the `.standard-card` element stayed stuck to the left side. This only happened on small screens because the card had a `max-width` set, which prevented it from stretching to fill the column. Without centring rules, it always aligned left.
 
 **Fix:**  
-I discovered that the `.standard-card` CSS had `max-width: 300px;` but no horizontal centering. The card was narrower than its parent column and defaulted to the left. I fixed this by adding `margin-left: auto;` and `margin-right: auto;` to the `.standard-card` CSS so that it stayed centered inside its column.
+I discovered that the `.standard-card` CSS had `max-width: 300px;` but no horizontal centring. The card was narrower than its parent column and defaulted to the left. I fixed this by adding `margin-left: auto;` and `margin-right: auto;` to the `.standard-card` CSS so that it stayed centered inside its column.
 
 **Lesson Learned:**  
 When using `max-width` on a card inside a Bootstrap column, the card will not center itself automatically. Even if the column is full width, the child element needs `margin: auto` to align correctly. Always check custom CSS rules like `max-width` if a card or element looks offset at certain breakpoints. Although, it is quite basic syntax and something I should have known, going off into a panic about it when it is not working is not helpful, and most certainly a pause moment to step back and think clearly without doubting *myself*.
@@ -172,7 +231,7 @@ When performing multi-step calculations across views, always duplicate or abstra
 During mentor testing, the payment page could not auto-populate the user’s email address because the sign-up process never required or stored one. Users were able to register without providing an email, which prevented receipts and e-tickets from being delivered after checkout.
 
 **Fix:** 
-I created a custom form called `CustomUserCreationForm` that extends *Django*’s default `UserCreationForm` and includes a required `email` field. The new form was imported into the `signup` view and replaced the default form reference. The `signup.html` template was then updated to include the email field between the username and password inputs. Validation messages were confirmed for blank, invalid, and valid entries.Once a user is registered, their email now saves correctly to `User.email` and automatically appears on the payment page using `{{ request.user.email }}`.
+I created a custom form called `CustomUserCreationForm` that extends *Django*’s default `UserCreationForm` and includes a required `email` field. The new form was imported into the `signup` view and replaced the default form reference. The `signup.html` template was then updated to include the email field between the username and password inputs. Validation messages were confirmed for blank, invalid, and valid entries. Once a user is registered, their email now saves correctly to `User.email` and automatically appears on the payment page using `{{ request.user.email }}`.
 
 **Lesson Learned:**  
 Even when using *Django*’s built-in authentication, the default `UserCreationForm` doesn’t collect email addresses by design. If email-based functionality (like receipts or password resets) is part of the workflow, a custom registration form is essential. Extending *Django*’s existing forms is the cleanest way to add required fields without disrupting authentication or introducing a custom user model.
