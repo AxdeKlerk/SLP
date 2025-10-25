@@ -94,6 +94,15 @@
       - [4.3.10 Final Project Setup on Heroku](#4310-final-project-setup-on-heroku)
       - [4.3.11 Open Your Live Site](#4311-open-your-live-site)
     - [4.4 Future Developments](#44-future-developments)
+      - [4.4.1 Email Verification and Account Confirmation](#441-email-verification-and-account-confirmation)
+      - [4.4.2 Enhanced Order Confirmation Emails](#442-enhanced-order-confirmation-emails)
+      - [4.4.3 Merchandise and Ticket Download Functionality](#443-merchandise-and-ticket-download-functionality)
+      - [4.4.4 Admin Dashboard Enhancements](#444-admin-dashboard-enhancements)
+      - [4.4.5 Payment Gateway Expansion](#445-payment-gateway-expansion)
+      - [4.4.6 SEO and Performance Optimisation](#446-seo-and-performance-optimisation)
+      - [4.4.7 Accessibility and UX Refinement](#447-accessibility-and-ux-refinement)
+      - [4.4.8 Testing and Continuous Integration](#448-testing-and-continuous-integration)
+      - [4.4.12 Live Launch Phase](#4412-live-launch-phase)
   - [5. Credits and Acknowledegements](#5-credits-and-acknowledegements)
     - [5.1 Credits](#51-credits)
     - [5.2 Acknowledgements](#52-acknowledgements)
@@ -550,6 +559,75 @@ This section outlines the full process for deploying this project from *GitHub* 
 - Your project is now live and hosted at "your-app-name.herokuapp.com"
 
 ### 4.4 Future Developments
+
+This section outlines planned enhancements and refinements to extend the functionality, scalability, and user experience of *Searchlight Promotions (SLP)* beyond the current MVP release. These features were deferred to maintain submission deadlines and ensure a stable, production-ready deployment.
+
+
+#### 4.4.1 Email Verification and Account Confirmation  
+To strengthen account security and build user trust, future versions will implement a full email confirmation workflow using *Django*’s built-in email verification or *django-allauth*.  
+- Users will receive a confirmation email upon registration with a secure activation link.  
+- Unverified accounts will have limited access until activation.  
+- This addition will improve authenticity, prevent spam registrations, and enhance compliance with best security practices.
+
+
+#### 4.4.2 Enhanced Order Confirmation Emails  
+Current confirmation emails provide essential order summaries only. Future versions will:  
+- Include detailed lists of purchased items (tickets and merchandise).  
+- Display event details such as date, venue, and start time.  
+- Include estimated delivery information for physical goods.  
+- Integrate optional QR codes or ticket barcodes for event entry.  
+
+
+#### 4.4.3 Merchandise and Ticket Download Functionality  
+Users will be able to download digital tickets or receipts directly from their profile page.  
+- Orders in “Paid” status will show a **Download Ticket/Invoice** button.  
+- PDF generation will be handled using *WeasyPrint* or *ReportLab*.  
+- This provides a self-service option, reducing admin workload.
+
+
+#### 4.4.4 Admin Dashboard Enhancements  
+The admin panel will be extended to improve backend usability:  
+- Include quick access panels for orders, tickets, and payments.  
+- Add analytics for ticket sales, event attendance, and merchandise performance.  
+- Implement secure webhook monitoring and event verification dashboards for *Square* API.  
+
+
+#### 4.4.5 Payment Gateway Expansion  
+While *Square* currently handles all transactions, future versions will offer additional payment options:  
+- Integration with *PayPal*, *Google Pay*, and *Apple Pay*.  
+- Intelligent payment fallback for failed transactions.  
+- Enhanced error handling and transaction logs for admin verification.
+
+
+#### 4.4.6 SEO and Performance Optimisation  
+Further work will focus on increasing discoverability and site performance:  
+- Add structured schema markup for events and products.  
+- Integrate *Cloudflare CDN* for static assets and media optimisation.  
+
+
+#### 4.4.7 Accessibility and UX Refinement  
+Accessibility testing will be expanded to meet WCAG 2.2 AA standards:  
+- Add ARIA roles and keyboard navigation support.  
+- Improve focus states and color contrast for readability.  
+
+
+#### 4.4.8 Testing and Continuous Integration  
+To ensure long-term maintainability, additional automated testing and CI/CD workflows will be introduced:  
+- Implement *GitHub Actions* for automated testing on pull requests.  
+- Extend unit and integration test coverage.  
+- Add visual regression testing for core UI components.  
+
+
+#### 4.4.12 Live Launch Phase  
+Once all MVP features have been reviewed and finalised, *Searchlight Promotions* will transition from the sandbox testing environment to full live deployment.  
+- *Square* Sandbox will be replaced with a verified live account.  
+- Email delivery will use a dedicated transactional service such as *SendGrid*.  
+- Monitoring tools (e.g., *Sentry* or *New Relic*) will be configured for uptime and error tracking.  
+- The deployed URL will be changed to www.searchlightpromotions.co.uk and replace the existing live site
+
+**Summary:**  
+These enhancements will transform *Searchlight Promotions* upgrade from a functional MVP into a fully scalable, user-centric live product. The priority roadmap focuses first on user trust (email verification), improved checkout transparency (enhanced confirmation emails), and admin efficiency (downloadable invoices and dashboards).
+
 
 ## 5. Credits and Acknowledegements
 
