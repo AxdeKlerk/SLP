@@ -81,82 +81,77 @@ def process_payment(request, order_id):
     Handles Square payment confirmation and creates/updates
     an invoice record for the associated order.
     """
+    if request.method != "POST":
+        return JsonResponse({"ok": False, "error": "Invalid request method"}, status=400)
+
+    data = json.loads(request.body)
+    token = data.get("token")
+    amount = data.get("amount")
+    address = data.get("addressData", {})
+    invoice = data.get("invoiceData", {})
+    use_same_address = invoice.get("useSameAddress", True)
+
+    # Get the user's pending order
+    order = Order.objects.filter(user=request.user, status="pending").last()
+    if not order:
+        return JsonResponse({"ok": False, "error": "No pending order found."}, status=404)
+
+    order.status = "paid"
+    order.save()
+
+    # Create or update invoice record
+    invoice_obj, created = Invoice.objects.get_or_create(order=order)
+    invoice_obj.use_same_address = use_same_address
+
+    if not use_same_address:
+        invoice_obj.invoice_name = invoice.get("name")
+        invoice_obj.invoice_company = invoice.get("company")
+        invoice_obj.invoice_email = invoice.get("email")
+        invoice_obj.invoice_address = invoice.get("address")
+        invoice_obj.invoice_city = invoice.get("city")
+        invoice_obj.invoice_postcode = invoice.get("postcode")
+        invoice_obj.invoice_country = invoice.get("country", "UK")
+    else:
+        invoice_obj.invoice_name = order.shipping_name
+        invoice_obj.invoice_email = order.email
+        invoice_obj.invoice_address = order.shipping_address
+        invoice_obj.invoice_city = order.shipping_city
+        invoice_obj.invoice_postcode = order.shipping_postcode
+        invoice_obj.invoice_country = order.shipping_country
+
+    invoice_obj.save()
+
+    # Try sending confirmation email
+    from django.core.mail import send_mail
     try:
-        if request.method == "POST":
-            data = json.loads(request.body)
-            token = data.get("token")
-            amount = data.get("amount")
-            address = data.get("addressData", {})
-            invoice = data.get("invoiceData", {})
-            use_same_address = invoice.get("useSameAddress", True)
-
-            # Get the user's pending order
-            order = Order.objects.filter(user=request.user, status="pending").last()
-            if not order:
-                return JsonResponse({"ok": False, "error": "No pending order found."}, status=404)
-
-            order.status = "paid"
-            order.save()
-
-            # Create or update invoice record
-            invoice_obj, created = Invoice.objects.get_or_create(order=order)
-            invoice_obj.use_same_address = use_same_address
-
-            if not use_same_address:
-                invoice_obj.invoice_name = invoice.get("name")
-                invoice_obj.invoice_company = invoice.get("company")
-                invoice_obj.invoice_email = invoice.get("email")
-                invoice_obj.invoice_address = invoice.get("address")
-                invoice_obj.invoice_city = invoice.get("city")
-                invoice_obj.invoice_postcode = invoice.get("postcode")
-                invoice_obj.invoice_country = invoice.get("country", "UK")
-            else:
-                # Copy details from the order’s shipping info
-                invoice_obj.invoice_name = order.shipping_name
-                invoice_obj.invoice_email = order.email
-                invoice_obj.invoice_address = order.shipping_address
-                invoice_obj.invoice_city = order.shipping_city
-                invoice_obj.invoice_postcode = order.shipping_postcode
-                invoice_obj.invoice_country = order.shipping_country
-
-            invoice_obj.save()
-
-            # Send email confirmation
-            from django.core.mail import send_mail
-            subject = f"Your Searchlight Promotions Order #{order.id} Confirmation"
-            message = (
-                f"Hi {order.shipping_name},\n\n"
-                f"Thank you for your order!\n\n"
-                f"Order Summary:\n"
-                f"- Order ID: {order.id}\n"
-                f"- Total Paid: £{order.total}\n\n"
-                "Your order has been successfully processed. "
-                "We'll send another email when your tickets or merchandise are on their way.\n\n"
-                "Rock on,\n"
-                "The Searchlight Promotions Team"
-            )
-            send_mail(
-                subject,
-                message,
-                None,  # Uses DEFAULT_FROM_EMAIL
-                [order.email],
-                fail_silently=False,
-            )
-
-            return JsonResponse({
-                "ok": True,
-                "order_id": order.id,
-                "message": "Payment and invoice processed successfully"
-            })
-
-        else:
-            return JsonResponse({"ok": False, "error": "Invalid request method"}, status=400)
-
+        subject = f"Your Searchlight Promotions Order #{order.id} Confirmation"
+        message = (
+            f"Hi {order.shipping_name},\n\n"
+            f"Thank you for your order!\n\n"
+            f"Order Summary:\n"
+            f"- Order ID: {order.id}\n"
+            f"- Total Paid: £{order.total}\n\n"
+            "Your order has been successfully processed. "
+            "We'll send another email when your tickets or merchandise are on their way.\n\n"
+            "Rock on,\n"
+            "The Searchlight Promotions Team"
+        )
+        send_mail(subject, message, None, [order.email], fail_silently=False)
     except Exception as e:
         import traceback
-        print("ERROR in process_payment:", e)
         traceback.print_exc()
-        return JsonResponse({"ok": False, "error": str(e)}, status=500)
+        # Payment succeeded but email failed — log but don't block success
+        return JsonResponse({
+            "ok": True,
+            "order_id": order.id,
+            "warning": f"Payment succeeded but email failed: {e}"
+        })
+
+    return JsonResponse({
+        "ok": True,
+        "order_id": order.id,
+        "message": "Payment and invoice processed successfully"
+    })
 
 
 @login_required
