@@ -1,6 +1,6 @@
 // Wait for the DOM to be fully loaded
 document.addEventListener("DOMContentLoaded", async () => {
-  console.log("✅ Window fully loaded — starting Square init");
+  console.log("Window fully loaded — starting Square init");
 
   const configEl = document.getElementById("square-config");
   if (!configEl) {

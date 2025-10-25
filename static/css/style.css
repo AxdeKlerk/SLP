@@ -91,6 +91,7 @@ body {
 .nav-link.active {
     border: 2px solid #11ED73;
     border-radius: 5px;
+    color: #11ED73 !important;
 }
 /* Highlight parent toggle when any submenu item is active or the menu is open */
 .navbar .nav-link.active { 
@@ -157,7 +158,7 @@ body {
     text-align: right;
 }
 .offcanvas-body .nav-link:hover {
-    color: #F5F5F5;
+    color: #F5F5F5 !important;
 }
 /* Remove green borders from offcanvas nav links */
 .offcanvas-body .nav-link,
@@ -188,6 +189,16 @@ body {
 /* Expanded only when Search opens */
 .offcanvas.offcanvas-end.search-expanded {
     width: 270px !important;
+}
+/* Fix blue 'Search' link inside offcanvas */
+.offcanvas a {
+    color: #11ED73 !important;
+    text-decoration: none;
+}
+.offcanvas a:hover,
+.offcanvas a:focus {
+    color: #F5F5F5 !important;
+    text-decoration: none;
 }
 
 /* Mobile sticky page title */

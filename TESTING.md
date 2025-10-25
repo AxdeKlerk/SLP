@@ -65,6 +65,8 @@ All functionality was tested manually by working through user stories. Testing w
       - [4.2.9.2.2 square-checkout.css](#42922-square-checkoutcss)
     - [4.2.9.3 HTLML Validation](#4293-htlml-validation)
     - [4.2.4 JSHint](#424-jshint)
+      - [4.2.4.1 script.js](#4241-scriptjs)
+      - [4.2.4.2 square-checkout.js](#4242-square-checkoutjs)
     - [4.2.10 Responsive Testing](#4210-responsive-testing)
 
 ---
@@ -1151,6 +1153,13 @@ Error pages are now fully styled, branded, and user-friendly.
 
 #### 4.2.4 JSHint
 
+##### 4.2.4.1 script.js
+
+![script.js](DOCS/images/testing/jshint-script.jpg)
+
+##### 4.2.4.2 square-checkout.js
+
+![square-checkout.js](DOCS/images/testing/jshint-square-checkout.jpg)
 
 #### 4.2.10 Responsive Testing
 
