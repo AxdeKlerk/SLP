@@ -104,8 +104,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-LOGIN_REDIRECT_URL = "user:login_success"
-LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'user:login_success'
+LOGOUT_REDIRECT_URL = '/accounts/logout/'
 
 
 # Email Configuration
