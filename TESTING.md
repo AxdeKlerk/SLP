@@ -1184,6 +1184,14 @@ My parents tested the site on their Google tablet and Amazon Kindle. 4 close fri
 
 This was incredibly useful as it gave me a full understanding of each user experience. As this core group is very close to me their feedback was honest and to the point, which was both frustrating and extremely valuable.
 
+Below are the three emails generated for order confirmation, password reset and username confirmation (in order):
+
+![Oder confirmation email](DOCS/images/testing/email-confirmation.jpg)
+
+![Password reset email](DOCS/images/testing/email-password-reset.jpg)
+
+![Unsername confirmation email](DOCS/images/testing/email-username.jpg)
+
 ---
 
 ### 4.2.9 Automated Testing

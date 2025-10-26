@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 class EmailOnlyPasswordResetForm(PasswordResetForm):
     def get_users(self, email):
+        
         # Filter users by email only
         active_users = User._default_manager.filter(
             email__iexact=email, is_active=True
