@@ -1135,6 +1135,48 @@ Error pages are now fully styled, branded, and user-friendly.
 
 #### 4.2.9.1 Lighthouse
 
+Below are the performance, Accessibility, Best Priocatice and SEO results for each page. For the most part Accessibility and SEO scored very well and remained in the 'green'. However, there were mixed resilts for Performance and Best Practices with both going from 'green' to 'yellow'. Most of the issues were due to image size and Bootstrap performance and rendering, which beyond the capability of this developer at this stage. Having said that, had there been more time all images would have been compressed. It is noted that with a website of this sort, where there are a lot of photos as well as logos, their size is paramount to the overall performance and best practices of the site.
+
+##### 4.2.9.1.1 Home page
+
+
+
+##### 4.2.9.1.1 About page
+
+
+
+##### 4.2.9.1.1
+
+
+##### 4.2.9.1.1
+
+
+
+##### 4.2.9.1.1
+
+
+
+##### 4.2.9.1.1
+
+
+
+##### 4.2.9.1.1
+
+
+
+##### 4.2.9.1.1
+
+
+
+##### 4.2.9.1.1
+
+
+
+##### 4.2.9.1.1
+
+
+
+##### 4.2.9.1.1
 
 #### 4.2.9.2 CSS Validation
 
