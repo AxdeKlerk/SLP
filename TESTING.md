@@ -1150,10 +1150,17 @@ Error pages are now fully styled, branded, and user-friendly.
 
 ### 4.2.8 Manaul Testing
 
+Testing was done through friends and family who use different OS and devices, for feedback. In particular my girlfriend tested the site on Firefox on her laptop and on her mobile (which dates back to a pre-2018 model).
+
+My parents tested the site on their Google tablet and Amazon Kindle. 4 close friends tested the site on the different Apple devices (2 phones and 1 laptop) and a work colleague ran it through MS Edge as he wanted to keep up to date with the changes as I went along. My work colleague was very polite, but he did send me screen shots when he had questions about the development of the website.
+
+This was incredibly useful as it gave me a full understanding of each user experience. As this core group is very close to me their feedback was honest and to the point, which was both frustrating and extremely valuable.
+
 ---
 
 ### 4.2.9 Automated Testing
 
+Formal (automated) testing of the website was validated using the W3C Validation tools and Lighthouse.
 
 #### 4.2.9.1 Lighthouse
 

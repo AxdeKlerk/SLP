@@ -648,6 +648,7 @@ Below are the list of resources that I used to complete this project along with 
 - [Django](https://simple.wikipedia.org/wiki/Django_(web_framework)) - used for the backend of the website
 - [draw.io](https://app.diagrams.net/) for the ERD
 - [Ecotrust](https://ecotrust-canada.github.io/markdown-toc/) - used to generate table of contents
+- [GMAIL] (https://mail.google.com)
 - [Google Fonts](https://fonts.google.com/) - for typology
 - [Google Images](https://images.google.co.uk/) - for the band and venue logos
 - [HTML](https://en.wikipedia.org/wiki/HTML) - used to build main site content
