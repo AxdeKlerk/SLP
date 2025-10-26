@@ -80,6 +80,8 @@ All functionality was tested manually by working through user stories. Testing w
       - [4.2.9.1.18 Order Summary page](#429118-order-summary-page)
       - [4.2.9.1.19 Payment Summary page](#429119-payment-summary-page)
       - [4.2.9.1.20 Order Confirmation page](#429120-order-confirmation-page)
+      - [4.2.9.1.20 404 page](#429120-404-page)
+      - [4.2.9.1.20 500 page](#429120-500-page)
     - [4.2.9.2 CSS Validation](#4292-css-validation)
       - [4.2.9.2.1 style.css](#42921-stylecss)
       - [4.2.9.2.2 square-checkout.css](#42922-square-checkoutcss)
@@ -1257,6 +1259,18 @@ This page was tested using the word 'hoodie'.
 ##### 4.2.9.1.20 Order Confirmation page
 
 ![Order confirmation page](DOCS/images/testing/lighthouse-order-confirmation-page.jpg)
+
+##### 4.2.9.1.20 404 page
+
+For testing the 404 page I used the following url: https://slp-upgrade-910f8354c673.herokuapp.com/404test/
+
+![404 page](DOCS/images/testing/lighthouse-404-page.jpg)
+
+##### 4.2.9.1.20 500 page
+
+For testing the 500 page I used the following url: https://slp-upgrade-910f8354c673.herokuapp.com/crash/
+
+![500 page](DOCS/images/testing/lighthouse-500-page.jpg)
 
 ---
 
