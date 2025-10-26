@@ -86,6 +86,30 @@ All functionality was tested manually by working through user stories. Testing w
       - [4.2.9.2.1 style.css](#42921-stylecss)
       - [4.2.9.2.2 square-checkout.css](#42922-square-checkoutcss)
     - [4.2.9.3 HTLML Validation](#4293-htlml-validation)
+      - [4.2.9.3.1 Base Template](#42931-base-template)
+      - [4.2.9.3.2 Home template](#42932-home-template)
+      - [4.2.9.3.3 About template](#42933-about-template)
+      - [4.2.9.3.4 Events - Upcoming gigs template](#42934-events---upcoming-gigs-template)
+      - [4.2.9.3.5 Events - Previous gigs template](#42935-events---previous-gigs-template)
+      - [4.2.9.3.6 Merch - List template](#42936-merch---list-template)
+      - [4.2.9.3.7 Merch - Detail template](#42937-merch---detail-template)
+      - [4.2.9.3.8 Roxoff template](#42938-roxoff-template)
+      - [4.2.9.3.9 Search - Artists template](#42939-search---artists-template)
+      - [4.2.9.3.10 Search - Venue template](#429310-search---venue-template)
+      - [4.2.9.3.11 Search - Merch template](#429311-search---merch-template)
+      - [4.2.9.3.12 Contact template](#429312-contact-template)
+      - [4.2.9.3.13 Thank you template](#429313-thank-you-template)
+      - [4.2.9.3.13 Account - Signup template](#429313-account---signup-template)
+      - [4.2.9.3.14 Account - Login template](#429314-account---login-template)
+      - [4.2.9.3.15 Account - Password reset template](#429315-account---password-reset-template)
+      - [4.2.9.3.16 Account - Logout template](#429316-account---logout-template)
+      - [4.2.9.3.17 Account - Orders template](#429317-account---orders-template)
+      - [4.2.9.3.18 View Basket template](#429318-view-basket-template)
+      - [4.2.9.3.19 Order Summary template](#429319-order-summary-template)
+      - [4.2.9.3.20 Payment Summary template](#429320-payment-summary-template)
+      - [4.2.9.3.21 Order Confirmation template](#429321-order-confirmation-template)
+      - [4.2.9.3.22 404 template](#429322-404-template)
+      - [4.2.9.3.23 500 template](#429323-500-template)
     - [4.2.4 JSHint](#424-jshint)
       - [4.2.4.1 script.js](#4241-scriptjs)
       - [4.2.4.2 square-checkout.js](#4242-square-checkoutjs)
@@ -1334,7 +1358,13 @@ This template was tested using the letter 'e'.
 
 This template was tested using the word 'hoodie'.  
 
-##### 4.2.9.3.12 Contact template  
+##### 4.2.9.3.12 Contact template 
+
+##### 4.2.9.3.13 Thank you template
+
+This particular page cannot be tested as it is a live email template linked to *formsubmit.co* for searchlightpromotion@gmail.com. However, when running the html through the HTML validator the following errors returned only relate to the unrendered template. If rendered these errors would not be flagged.
+
+![Thank you template](<DOCS/images/testing/html validator/thank-you-template.jpg>)
 
 ##### 4.2.9.3.13 Account - Signup template  
 
