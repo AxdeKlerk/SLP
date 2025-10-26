@@ -260,7 +260,7 @@ As a **user** I want to **see a basic footer with copyright information** so tha
 
 #### 2.4.1.6 Base Template  
   
-As a developer I want a reusable base.html template so that all pages share the same layout, styling, and design consistency.  
+As a **developer** I want a **reusable base.html template** so that **all pages share the same layout, styling, and design consistency**.  
 
 ---
 
