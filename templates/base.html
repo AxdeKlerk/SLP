@@ -83,7 +83,7 @@
 
           <!-- Close button -->
           <li class="nav-item text-end">
-            <button role="button" type="button" class="nav-link text-end" data-bs-dismiss="offcanvas">X</button>
+            <button type="button" class="nav-link text-end" data-bs-dismiss="offcanvas">X</button>
           </li>
 
           <!-- Home -->
@@ -282,7 +282,7 @@
               <form method="get" action="{% url 'products:search_view' %}">
                 <input type="hidden" name="category" value="venue">
                 <label for="venue-search-desktop" class="form-label mb-1 text-light">Venue</label>
-                <input type="text" id="venue-search-top" name="q"
+                <input type="text" id="venue-search-desktop" name="q"
                       class="form-control form-control-sm bg-black text-light border-success" autocomplete="off">
               </form>
             </li>
@@ -311,7 +311,9 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="accountDropdown">
             {% if user.is_authenticated %}
+            <li>
               <a href="{% url 'user:login_success' %}"></a>
+            </li>
             <li>
               <a class="dropdown-item" href="{% url 'user:profile_view' %}">Orders</a>
             </li>
