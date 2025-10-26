@@ -1,12 +1,11 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!--Meta tags for search engines-->
+    <!-- Meta tags for search engines -->
     <meta name="description" content="Searchlight Promotions is a music promotions company searching for unsigned rock and metal artists and bands for Norwich">
     <meta name="keywords" content="Heavy metal, classic rock, hard rock, heavy rock, rock 'n roll, music promotion, Norwich">
     <meta name="author" content="axdesigns">
@@ -31,6 +30,7 @@
         <a href="{% url 'core:home' %}">
         <img src="{% static 'images/logo-v4.png' %}" class="d-inline-block header-img" alt="logo for searchlight promotions"></a>        
     </div>
+
     <!-- Roxoff logo (desktop only ≥768px) -->
     <div class="col-md-5 d-none d-md-flex justify-content-end align-items-center">
     <a href="{% url 'products:roxoff' %}">
@@ -40,10 +40,9 @@
 </header>
 
 <nav class="navbar navbar-dark bg-black">
-  <!-- Navbar container -->
+  <!-- Navbar container Mobile ≤768px -->
   <div class="container nav-wrapper justify-content-center">
 
-    <!-- Mobile ≤768px -->
     <!-- Row 1: Roxoff logo + hamburger -->
     <div class="row align-items-center d-md-none w-100 px-3 mb-2">
       <!-- Empty col for spacing -->
@@ -64,8 +63,9 @@
         </button>
       </div>
     </div>
+
+    <!-- Row 2: User status + page title -->
     <div class="row w-100 px-3 mobile-fixed">
-      <!-- Row 2: User status + page title -->
       <div class="col-12 user-status">
         {% include "user/user_status.html" %}
       </div>
@@ -80,18 +80,22 @@
     <div class="offcanvas offcanvas-end bg-black" tabindex="-1" id="mobileNav">
       <div class="offcanvas-body d-flex flex-column align-items-end">
         <ul class="nav flex-column gap-2 w-100">
+
           <!-- Close button -->
           <li class="nav-item text-end">
-            <a role="button" type="button" class="nav-link text-end" data-bs-dismiss="offcanvas">X</a>
+            <button role="button" type="button" class="nav-link text-end" data-bs-dismiss="offcanvas">X</button>
           </li>
+
           <!-- Home -->
           <li class="nav-item text-end">
             <a class="nav-link" href="{% url 'core:home' %}">Home</a>
           </li>
+
           <!-- About -->
           <li class="nav-item text-end">
             <a class="nav-link" href="{% url 'core:about' %}">About</a>
           </li>
+
           <!-- Events -->
           <li class="nav-item text-end">
             <a class="nav-link" data-bs-toggle="collapse" href="#offcanvasEvents" role="button" aria-expanded="false" aria-controls="offcanvasEvents">Events</a>
@@ -106,12 +110,17 @@
               </ul>
             </div>
           </li>
+
+          <!-- Merch -->
           <li class="nav-item text-end">
             <a class="nav-link" href="{% url 'products:merch_list' %}">Merch</a>
           </li>
+
+          <!-- Roxoff -->
           <li class="nav-item text-end">
             <a class="nav-link" href="{% url 'products:roxoff' %}">ROXOFF</a>
           </li>
+
           <!-- Search -->
           <li class="nav-item text-end">
             <a class="nav-link" data-bs-toggle="collapse" href="#offcanvasSearch" 
@@ -120,40 +129,45 @@
             </a>
             <div class="collapse" id="offcanvasSearch">
               <ul class="navbar-nav ps-3" id="searchAccordion">
+
                 <!-- Artist search -->
                 <li class="px-3 py-2">
                   <form method="get" action="{% url 'products:search_view' %}">
                     <input type="hidden" name="category" value="artist">
-                    <label for="artist-search" class="form-label mb- text-light">Artist</label>
-                    <input type="text" id="artist-search" name="q"
+                    <label for="artist-search-mobile" class="form-label mb- text-light">Artist</label>
+                    <input type="text" id="artist-search-mobile" name="q"
                           class="form-control form-control-sm bg-black text-light border-success" autocomplete="off">
                   </form>
                 </li>
+
                 <!-- Venue search -->
                 <li class="px-3 py-2">
                   <form method="get" action="{% url 'products:search_view' %}">
                     <input type="hidden" name="category" value="venue">
-                    <label for="artist-search" class="form-label mb-1 text-light">Venue</label>
-                    <input type="text" id="venue-search" name="q"
+                    <label for="venue-search-mobile" class="form-label mb-1 text-light">Venue</label>
+                    <input type="text" id="venue-search-mobile" name="q"
                           class="form-control form-control-sm bg-black text-light border-success" autocomplete="off">
                   </form>
                 </li>
+
                 <!-- Merch search -->
                 <li class="px-3 py-2">
                   <form method="get" action="{% url 'products:search_view' %}">
                     <input type="hidden" name="category" value="merch">
-                    <label for="merch-search" class="form-label mb-1 text-light">Merch</label>
-                    <input type="text" id="merch-search" name="q"
+                    <label for="merch-search-mobile" class="form-label mb-1 text-light">Merch</label>
+                    <input type="text" id="merch-search-mobile" name="q"
                           class="form-control form-control-sm bg-black text-light border-success" autocomplete="off">
                   </form>
                 </li>
               </ul>
             </div>
           </li>
+
           <!-- Contact -->
           <li class="nav-item text-end">
             <a class="nav-link" href="{% url 'core:contact' %}">Contact</a>
           </li>
+
           <!-- Account -->
           <li class="nav-item text-end">
             <a class="nav-link" data-bs-toggle="collapse" href="#offcanvasAccount" role="button"
@@ -161,9 +175,8 @@
             <div class="collapse" id="offcanvasAccount">
               <ul class="navbar-nav ps-3">
                 {% if user.is_authenticated %}
-                  <a href="{% url 'user:login_success' %}"></a>
+                <li><a href="{% url 'user:login_success' %}"></a></li>
                 <li><a class="nav-link" href="{% url 'user:profile_view' %}">Orders</a></li>
-                <li>
                 <li>
                   <form action="{% url 'logout' %}" method="post" style="display:inline;">
                     {% csrf_token %}
@@ -178,6 +191,7 @@
               </ul>
             </div>
           </li>
+
           <!-- Basket -->
           <li class="nav-item text-end">
             <a class="nav-link" data-bs-toggle="collapse" href="#offcanvasBasket"
@@ -188,20 +202,14 @@
               <ul class="navbar-nav ps-3">
                 {% if user.is_authenticated and last_order %}
                   <li>
-                    <a class="nav-link" href="{% url 'checkout:restore_basket' last_order.id %}">
-                      View Basket
-                    </a>
+                    <a class="nav-link" href="{% url 'checkout:restore_basket' last_order.id %}">View Basket</a>
                   </li>
                   <li>
-                    <a class="nav-link" href="{% url 'checkout:checkout_view' last_order.id %}">
-                      Order Summary
-                    </a>
+                    <a class="nav-link" href="{% url 'checkout:checkout_view' last_order.id %}">Order Summary</a>
                   </li>
                 {% else %}
                   <li>
-                    <a class="nav-link" href="{% url 'basket:basket_view' %}">
-                      View Basket
-                    </a>
+                    <a class="nav-link" href="{% url 'basket:basket_view' %}">View Basket</a>
                   </li>
                 {% endif %}
               </ul>
@@ -214,14 +222,18 @@
     <!-- Desktop Nav: Inline Menu (≥768px) -->
     <div class="d-none d-md-block w-100 mt-2">
       {% with url_name=request.resolver_match.url_name %}
-      <!-- Nav items -->
+
+      <!-- Home -->
       <ul class="nav justify-content-between w-100">
         <li class="nav-item">
           <a class="nav-link" href="{% url 'core:home' %}">Home</a>
         </li>
+
+        <!-- About -->
         <li class="nav-item">
           <a class="nav-link" href="{% url 'core:about' %}">About</a>
         </li>
+
         <!-- Events dropdown -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle {% if url_name == 'events' or url_name == 'previous_events' %}active{% endif %}" id="eventsDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Events</a>
@@ -234,47 +246,53 @@
             </li>
           </ul>
         </li>
+
         <!-- Merch -->
         <li class="nav-item">
           <a class="nav-link {% if url_name == 'merch_list' or url_name == 'merch_detail' %}active{% endif %}" href="{% url 'products:merch_list' %}">Merch</a>
         </li>
+
         <!-- Roxoff -->
         <li class="nav-item">
           <a class="nav-link" href="{% url 'products:roxoff' %}">ROXOFF</a>
         </li>
+
         <!-- Search dropdown -->
         {% with url_name=request.resolver_match.url_name %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle 
             {% if url_name == 'artist_detail' or url_name == 'venue_detail' %}active{% endif %}"
-            id="searchDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            id="searchDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Search
           </a>
           <ul class="dropdown-menu" aria-labelledby="searchDropdown">
+            
             <!-- Artist search -->
             <li class="px-3 py-2">
               <form method="get" action="{% url 'products:search_view' %}">
                 <input type="hidden" name="category" value="artist">
-                <label for="artist-search" class="form-label mb- text-light">Artist</label>
-                <input type="text" id="artist-search" name="q"
+                <label for="artist-search-desktop" class="form-label mb- text-light">Artist</label>
+                <input type="text" id="artist-search-desktop" name="q"
                       class="form-control form-control-sm bg-black text-light border-success" autocomplete="off">
               </form>
             </li>
+
             <!-- Venue search -->
             <li class="px-3 py-2">
               <form method="get" action="{% url 'products:search_view' %}">
                 <input type="hidden" name="category" value="venue">
-                <label for="artist-search" class="form-label mb-1 text-light">Venue</label>
-                <input type="text" id="venue-search" name="q"
+                <label for="venue-search-desktop" class="form-label mb-1 text-light">Venue</label>
+                <input type="text" id="venue-search-top" name="q"
                       class="form-control form-control-sm bg-black text-light border-success" autocomplete="off">
               </form>
             </li>
+
             <!-- Merch search -->
             <li class="px-3 py-2">
               <form method="get" action="{% url 'products:search_view' %}">
                 <input type="hidden" name="category" value="merch">
-                <label for="merch-search" class="form-label mb-1 text-light">Merch</label>
-                <input type="text" id="merch-search" name="q"
+                <label for="merch-search-desktop" class="form-label mb-1 text-light">Merch</label>
+                <input type="text" id="merch-search-desktop" name="q"
                       class="form-control form-control-sm bg-black text-light border-success" autocomplete="off">
               </form>
             </li>
@@ -284,6 +302,7 @@
         <li class="nav-item">
           <a class="nav-link" href="{% url 'core:contact' %}">Contact</a>
         </li>
+
         <!-- Account -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="accountDropdown" href="#" role="button"
@@ -294,8 +313,8 @@
             {% if user.is_authenticated %}
               <a href="{% url 'user:login_success' %}"></a>
             <li>
-              <a class="dropdown-item" href="{% url 'user:profile_view' %}">Orders</a></li>
-            <li>
+              <a class="dropdown-item" href="{% url 'user:profile_view' %}">Orders</a>
+            </li>
             <li>
               <form action="{% url 'logout' %}" method="post" style="display:inline;">
                 {% csrf_token %}
@@ -309,6 +328,7 @@
             {% endif %}
           </ul>
         </li>
+        
         <!-- Basket Dropdown -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="basketDropdown" href="#" role="button"
@@ -318,20 +338,14 @@
           <ul class="dropdown-menu" aria-labelledby="basketDropdown">
             {% if user.is_authenticated and last_order %}
               <li>
-                <a class="dropdown-item" href="{% url 'checkout:restore_basket' last_order.id %}">
-                  View Basket
-                </a>
+                <a class="dropdown-item" href="{% url 'checkout:restore_basket' last_order.id %}">View Basket</a>
               </li>
               <li>
-                <a class="dropdown-item" href="{% url 'checkout:checkout_view' last_order.id %}">
-                  Order Summary
-                </a>
+                <a class="dropdown-item" href="{% url 'checkout:checkout_view' last_order.id %}">Order Summary</a>
               </li>
             {% else %}
               <li>
-                <a class="dropdown-item" href="{% url 'basket:basket_view' %}">
-                  View Basket
-                </a>
+                <a class="dropdown-item" href="{% url 'basket:basket_view' %}">View Basket</a>
               </li>
             {% endif %}
           </ul>

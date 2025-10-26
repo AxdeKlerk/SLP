@@ -1297,8 +1297,90 @@ For testing the 500 page I used the following url: https://slp-upgrade-910f8354c
 
 #### 4.2.9.3 HTLML Validation
 
+Below are the results for each of the HTML templates within the project and their corrresponding results using W3C Markup Validator.
 
----
+##### 4.2.9.3.1 Base Template
+
+These validation errors appear because the *Django* template engine tag `{% load static %}` is placed before the `<!DOCTYPE html>` declaration in the base template. The *HTML validator* reads this tag as plain text, not as a *Django* instruction, and therefore reports that the document is missing a `doctype` and that subsequent tags like `<html>` and `<head>` are “stray.” These errors only occur in the unrendered *Django* template and do not appear in the final rendered *HTML* served to users, where the `{% load static %}` tag is processed and removed. The rendered output of the live site begins correctly with `<!DOCTYPE html>` and is fully valid *HTML*.
+
+
+![Base template](<DOCS/images/testing/html validator/base-template.jpg>)
+
+##### 4.2.9.3.2 Home template
+
+
+
+##### 4.2.9.3.3 About template  
+
+##### 4.2.9.3.4 Events - Upcoming gigs template  
+
+##### 4.2.9.3.5 Events - Previous gigs template  
+
+##### 4.2.9.3.6 Merch - List template  
+
+##### 4.2.9.3.7 Merch - Detail template  
+
+##### 4.2.9.3.8 Roxoff template  
+
+##### 4.2.9.3.9 Search - Artists template  
+
+This template was tested using the letter 'a'.  
+
+##### 4.2.9.3.10 Search - Venue template  
+
+This template was tested using the letter 'e'.  
+
+##### 4.2.9.3.11 Search - Merch template  
+
+This template was tested using the word 'hoodie'.  
+
+##### 4.2.9.3.12 Contact template  
+
+##### 4.2.9.3.13 Account - Signup template  
+
+##### 4.2.9.3.14 Account - Login template  
+
+##### 4.2.9.3.15 Account - Password reset template  
+
+##### 4.2.9.3.16 Account - Logout template  
+
+**What Was Tested:**  
+*Lighthouse* testing was attempted on the logout template to verify accessibility, performance, and best practice metrics.  
+
+**Acceptance Criteria:**  
+- [x] Logout template loads successfully for authenticated *users*.  
+- [x] User session is securely ended.  
+- [x] `logged_out.html` template renders correctly.  
+- [ ] *Lighthouse* analysis completes successfully (cannot be tested).  
+
+**Tasks Completed:**  
+- [x] Verified logout template manually in the browser.  
+- [x] Confirmed correct use of `POST` method for `CSRF` protection.  
+- [x] Confirmed logout template renders and user session ends.  
+
+**Notes:**  
+*Lighthouse* testing cannot be performed on this template because *Django*’s `LogoutView` requires a valid `CSRF` token and an active session to process `POST` requests. *Lighthouse* operates in an unauthenticated sandbox environment, which prevents it from submitting secure `POST` requests, resulting in a *405 Method Not Allowed* response. Manual testing confirmed that the logout template functions securely and correctly for real *users*.  
+
+##### 4.2.9.3.17 Account - Orders template  
+
+##### 4.2.9.3.18 View Basket template  
+
+##### 4.2.9.3.19 Order Summary template  
+
+##### 4.2.9.3.20 Payment Summary template  
+
+##### 4.2.9.3.21 Order Confirmation template  
+
+##### 4.2.9.3.22 404 template  
+
+For testing the 404 template I used the following URL:  
+https://slp-upgrade-910f8354c673.herokuapp.com/404test/  
+
+##### 4.2.9.3.23 500 template  
+
+For testing the 500 template I used the following URL:  
+https://slp-upgrade-910f8354c673.herokuapp.com/crash/  
+
 
 #### 4.2.4 JSHint
 
