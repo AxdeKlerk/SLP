@@ -1221,7 +1221,22 @@ This page was tested using the word 'hoodie'.
 
 ##### 4.2.9.1.15 Account - Logout page
 
+**What Was Tested:**  
+*Lighthouse* testing was attempted on the logout page to verify accessibility, performance, and best practice metrics.  
 
+**Acceptance Criteria:**  
+- [x] Logout page loads successfully for authenticated users.  
+- [x] User session is securely ended.  
+- [x] `logged_out.html` template renders correctly.  
+- [ ] *Lighthouse* analysis completes successfully (cannot be tested).  
+
+**Tasks Completed:**  
+- [x] Verified logout page manually in the browser.  
+- [x] Confirmed correct use of `POST` method for `CSRF` protection.  
+- [x] Confirmed logout template renders and user session ends.  
+
+**Notes:**  
+*Lighthouse* testing cannot be performed on this page because *Django*’s `LogoutView` requires a valid `CSRF` token and an active session to process `POST` requests. *Lighthouse* operates in an unauthenticated sandbox environment, which prevents it from submitting secure `POST` requests, resulting in a *405 Method Not Allowed* response. Manual testing confirmed that the logout page functions securely and correctly for real users.
 
 ##### 4.2.9.1.16 Account - Orders page
 
