@@ -60,6 +60,26 @@ All functionality was tested manually by working through user stories. Testing w
   - [4.2.8 Manaul Testing](#428-manaul-testing)
   - [4.2.9 Automated Testing](#429-automated-testing)
     - [4.2.9.1 Lighthouse](#4291-lighthouse)
+      - [4.2.9.1.1 Home page](#42911-home-page)
+      - [4.2.9.1.2 About page](#42912-about-page)
+      - [4.2.9.1.3 Events - Upcoming gigs page](#42913-events---upcoming-gigs-page)
+      - [4.2.9.1.4 Events - Previous gigs page](#42914-events---previous-gigs-page)
+      - [4.2.9.1.5 Merch - List page](#42915-merch---list-page)
+      - [4.2.9.1.6 Merch - Detail page](#42916-merch---detail-page)
+      - [4.2.9.1.7 Roxoff page](#42917-roxoff-page)
+      - [4.2.9.1.8 Search - Artists page](#42918-search---artists-page)
+      - [4.2.9.1.9 Search - Venue page](#42919-search---venue-page)
+      - [4.2.9.1.10 Search - Merch page](#429110-search---merch-page)
+      - [4.2.9.1.11 Contact page](#429111-contact-page)
+      - [4.2.9.1.12 Account - Signup page](#429112-account---signup-page)
+      - [4.2.9.1.13 Account - Login page](#429113-account---login-page)
+      - [4.2.9.1.14 Account - Password reset page](#429114-account---password-reset-page)
+      - [4.2.9.1.15 Account - Logout page](#429115-account---logout-page)
+      - [4.2.9.1.16 Account - Orders page](#429116-account---orders-page)
+      - [4.2.9.1.17 View Basket page](#429117-view-basket-page)
+      - [4.2.9.1.18 Order Summary page](#429118-order-summary-page)
+      - [4.2.9.1.19 Payment Summary page](#429119-payment-summary-page)
+      - [4.2.9.1.20 Order Confirmation page](#429120-order-confirmation-page)
     - [4.2.9.2 CSS Validation](#4292-css-validation)
       - [4.2.9.2.1 style.css](#42921-stylecss)
       - [4.2.9.2.2 square-checkout.css](#42922-square-checkoutcss)
@@ -1139,44 +1159,91 @@ Below are the performance, Accessibility, Best Priocatice and SEO results for ea
 
 ##### 4.2.9.1.1 Home page
 
+![Home page](DOCS/images/testing/lighthouse-home-page.jpg)
+
+##### 4.2.9.1.2 About page
+
+![About page](DOCS/images/testing/lighthouse-about-page.jpg)
+
+##### 4.2.9.1.3 Events - Upcoming gigs page
+
+![Events upcoming gigs page](DOCS/images/testing/lighthouse-events-upcoming-gigs-page.jpg)
+
+##### 4.2.9.1.4 Events - Previous gigs page
+
+![Events previous gigs page](DOCS/images/testing/lighthouse-events-previous-gigs-page.jpg)
+
+##### 4.2.9.1.5 Merch - List page
+
+![Merch list page](DOCS/images/testing/lighthouse-merch-list-page.jpg)
+
+##### 4.2.9.1.6 Merch - Detail page
+
+![Merch detail page](DOCS/images/testing/lighthouse-merch-detail-page.jpg)
+
+##### 4.2.9.1.7 Roxoff page
+
+![Roxoff page](DOCS/images/testing/lighthouse-roxoff-page.jpg)
+
+##### 4.2.9.1.8 Search - Artists page
+
+This page was tested using the letter 'a'.
+
+![Search artists page](DOCS/images/testing/lighthouse-artist-search-page.jpg)
+
+##### 4.2.9.1.9 Search - Venue page
+
+This page was tested using the letter 'e'.
+
+![Search venue page](DOCS/images/testing/lighthouse-venue-search-page.jpg)
+
+##### 4.2.9.1.10 Search - Merch page
+
+This page was tested using the word 'hoodie'.
+
+![Search merch page](DOCS/images/testing/lighthouse-merch-search-page.jpg)
+
+##### 4.2.9.1.11 Contact page
+
+![Contact page](DOCS/images/testing/lighthouse-contact-page.jpg)
+
+##### 4.2.9.1.12 Account - Signup page
+
+![Account signup page](DOCS/images/testing/lighthouse-account-signup-page.jpg)
+
+##### 4.2.9.1.13 Account - Login page
+
+![Account login page](DOCS/images/testing/lighthouse-account-login-page.jpg)
+
+##### 4.2.9.1.14 Account - Password reset page
+
+![Account password reset page](DOCS/images/testing/lighthouse-account-password-reset-page.jpg)
+
+##### 4.2.9.1.15 Account - Logout page
 
 
-##### 4.2.9.1.1 About page
 
+##### 4.2.9.1.16 Account - Orders page
 
+![Account orders page](DOCS/images/testing/lighthouse-account-orders-page.jpg)
 
-##### 4.2.9.1.1
+##### 4.2.9.1.17 View Basket page
 
+![View basket page](DOCS/images/testing/lighthouse-basket-page.jpg)
 
-##### 4.2.9.1.1
+##### 4.2.9.1.18 Order Summary page
 
+![Order summary page](DOCS/images/testing/lighthouse-order-summary-page.jpg)
 
+##### 4.2.9.1.19 Payment Summary page
 
-##### 4.2.9.1.1
+![Payment summary page](DOCS/images/testing/lighthouse-payment-summary-page.jpg)
 
+##### 4.2.9.1.20 Order Confirmation page
 
+![Order confirmation page](DOCS/images/testing/lighthouse-order-confirmation-page.jpg)
 
-##### 4.2.9.1.1
-
-
-
-##### 4.2.9.1.1
-
-
-
-##### 4.2.9.1.1
-
-
-
-##### 4.2.9.1.1
-
-
-
-##### 4.2.9.1.1
-
-
-
-##### 4.2.9.1.1
+---
 
 #### 4.2.9.2 CSS Validation
 
@@ -1190,8 +1257,12 @@ Below are the performance, Accessibility, Best Priocatice and SEO results for ea
 
 ![Square Checkout Validation Pass](DOCS/images/testing/square-checkout-css-validation.jpg)
 
+---
+
 #### 4.2.9.3 HTLML Validation
 
+
+---
 
 #### 4.2.4 JSHint
 
@@ -1202,6 +1273,8 @@ Below are the performance, Accessibility, Best Priocatice and SEO results for ea
 ##### 4.2.4.2 square-checkout.js
 
 ![square-checkout.js](DOCS/images/testing/jshint-square-checkout.jpg)
+
+---
 
 #### 4.2.10 Responsive Testing
 
