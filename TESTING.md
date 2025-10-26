@@ -1332,85 +1332,109 @@ These validation errors appear because the *Django* template engine tag `{% load
 
 ##### 4.2.9.3.2 Home template
 
-
+![Home template](<DOCS/images/testing/html validator/home-template.jpg>)
 
 ##### 4.2.9.3.3 About template  
 
-##### 4.2.9.3.4 Events - Upcoming gigs template  
+![About template](<DOCS/images/testing/html validator/about-template.jpg>)
 
-##### 4.2.9.3.5 Events - Previous gigs template  
+##### 4.2.9.3.4 Events - Upcoming gigs template
 
-##### 4.2.9.3.6 Merch - List template  
+![Events upcoming gigs template](<DOCS/images/testing/html validator/events-upcoming-gigs-template.jpg>)
 
-##### 4.2.9.3.7 Merch - Detail template  
+##### 4.2.9.3.5 Events - Previous gigs template 
 
-##### 4.2.9.3.8 Roxoff template  
+![events previous gigs template](<DOCS/images/testing/html validator/events-previous-gigs-template.jpg>)
+
+##### 4.2.9.3.6 Merch - List template 
+
+![Merch list template](<DOCS/images/testing/html validator/merch-list-template.jpg>)
+
+##### 4.2.9.3.7 Merch - Detail template 
+
+![Merch detail template](<DOCS/images/testing/html validator/merch-detail-template.jpg>)
+
+##### 4.2.9.3.8 Roxoff template 
+
+![Roxoff template](<DOCS/images/testing/html validator/roxoff-template.jpg>)
 
 ##### 4.2.9.3.9 Search - Artists template  
 
-This template was tested using the letter 'a'.  
+This template was tested using the letter 'a'.
+
+![Search artist template](<DOCS/images/testing/html validator/search-artist-template.jpg>)
 
 ##### 4.2.9.3.10 Search - Venue template  
 
-This template was tested using the letter 'e'.  
+This template was tested using the letter 'e'. 
+
+![Search venue template](<DOCS/images/testing/html validator/search-venue-template.jpg>)
 
 ##### 4.2.9.3.11 Search - Merch template  
 
-This template was tested using the word 'hoodie'.  
+This template was tested using the word 'hoodie'. 
+
+![Search merch template](<DOCS/images/testing/html validator/search-merch-template.jpg>)
 
 ##### 4.2.9.3.12 Contact template 
 
+![Contact template](<DOCS/images/testing/html validator/contact-template.jpg>)
+
 ##### 4.2.9.3.13 Thank you template
 
-This particular page cannot be tested as it is a live email template linked to *formsubmit.co* for searchlightpromotion@gmail.com. However, when running the html through the HTML validator the following errors returned only relate to the unrendered template. If rendered these errors would not be flagged.
+This particular page cannot be tested as it is a live email template linked to *formsubmit.co* for searchlightpromotion@gmail.com. However, when running the *html* through the *HTML validator* the following errors returned only relate to the unrendered template. If rendered these errors would not be flagged.
 
 ![Thank you template](<DOCS/images/testing/html validator/thank-you-template.jpg>)
 
-##### 4.2.9.3.13 Account - Signup template  
+##### 4.2.9.3.13 Account - Signup template 
+
+![Account signup template](<DOCS/images/testing/html validator/signup-template-template.jpg>)
 
 ##### 4.2.9.3.14 Account - Login template  
 
-##### 4.2.9.3.15 Account - Password reset template  
+![Account login template](<DOCS/images/testing/html validator/login-template-template.jpg>)
 
-##### 4.2.9.3.16 Account - Logout template  
+##### 4.2.9.3.15 Account - Password reset template 
 
-**What Was Tested:**  
-*Lighthouse* testing was attempted on the logout template to verify accessibility, performance, and best practice metrics.  
+![Password reset template](<DOCS/images/testing/html validator/password-reset-template.jpg>)
 
-**Acceptance Criteria:**  
-- [x] Logout template loads successfully for authenticated *users*.  
-- [x] User session is securely ended.  
-- [x] `logged_out.html` template renders correctly.  
-- [ ] *Lighthouse* analysis completes successfully (cannot be tested).  
+##### 4.2.9.3.16 Account - Logout template 
 
-**Tasks Completed:**  
-- [x] Verified logout template manually in the browser.  
-- [x] Confirmed correct use of `POST` method for `CSRF` protection.  
-- [x] Confirmed logout template renders and user session ends.  
+![Account logout template](<DOCS/images/testing/html validator/logout-template.jpg>)
 
-**Notes:**  
-*Lighthouse* testing cannot be performed on this template because *Django*’s `LogoutView` requires a valid `CSRF` token and an active session to process `POST` requests. *Lighthouse* operates in an unauthenticated sandbox environment, which prevents it from submitting secure `POST` requests, resulting in a *405 Method Not Allowed* response. Manual testing confirmed that the logout template functions securely and correctly for real *users*.  
+##### 4.2.9.3.17 Account - Orders template
 
-##### 4.2.9.3.17 Account - Orders template  
+![Account orders template](<DOCS/images/testing/html validator/account-orders-template.jpg>)
 
-##### 4.2.9.3.18 View Basket template  
+##### 4.2.9.3.18 View Basket template 
+
+![View basket template](<DOCS/images/testing/html validator/basket-template.jpg>)
 
 ##### 4.2.9.3.19 Order Summary template  
 
-##### 4.2.9.3.20 Payment Summary template  
+![Order summary template](<DOCS/images/testing/html validator/order-summary-template.jpg>)
+
+##### 4.2.9.3.20 Payment Summary template
+
+![Payment summary template](<DOCS/images/testing/html validator/payment-summary-template.jpg>)
 
 ##### 4.2.9.3.21 Order Confirmation template  
+
+![Order confirmation template](<DOCS/images/testing/html validator/order-confirmation-template.jpg>)
 
 ##### 4.2.9.3.22 404 template  
 
 For testing the 404 template I used the following URL:  
-https://slp-upgrade-910f8354c673.herokuapp.com/404test/  
+https://slp-upgrade-910f8354c673.herokuapp.com/404test/ 
+
+![404 template](<DOCS/images/testing/html validator/404-template.jpg>)
 
 ##### 4.2.9.3.23 500 template  
 
 For testing the 500 template I used the following URL:  
 https://slp-upgrade-910f8354c673.herokuapp.com/crash/  
 
+![500 template](<DOCS/images/testing/html validator/500-template.jpg>)
 
 #### 4.2.4 JSHint
 
