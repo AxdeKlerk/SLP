@@ -107,7 +107,6 @@
     - [5.1 Credits](#51-credits)
     - [5.2 Acknowledgements](#52-acknowledgements)
 
-
 ---
 
 ![Home Page](DOCS/images/home-page.jpg)
@@ -116,9 +115,9 @@
 
 This project is the natural progression of my first project *'Searchlight Promotions'*. For my first project I asked a fellow metal head, who runs a music promotion company in and for the Norwich rock and metal scene, if I could design him a website for my project, as he did not have one. After completing and submitting the project he asked me to maintain it going forward as he absolutely loved it. This ultimately meant that I had retained my first customer, and for the conclusion of this course, it is timely that the website is upgraded as the business has developed, my skills have progressed and as a true work-experience piece of practical evidence.
 
-Project 1 can be found here in this *Github* repository (as it was submitted for P1): https://github.com/AxdeKlerk/Searchlight-Promotions, and here as the current working website: www.searchlightpromotions.co.uk. 
+Project 1 can be found here in my *Github* repository (as it was submitted for P1): https://github.com/AxdeKlerk/Searchlight-Promotions, and here as the current working website: https://www.searchlightpromotions.co.uk. 
 
-What is evident here is that the website has already had various upgrades, notable the inclusion of the link to the *ROXOFF* page using the logo in the navbar, shown here in the mobile view:
+What is evident here is that the website has already had various upgrades, notable the inclusion of the link to the *ROXOFF* page using the logo in the navbar, shown here in the mobile view, along with the upkeep of the gig listings:
 
 ![roxoff logo shown in mobile view navbar](DOCS/images/nav-mobile.jpg)
 

@@ -9,7 +9,7 @@
     {# ---------- LIST VIEW ---------- #}
     <div class="row justify-content-center">
         {% for m in items %}
-      <div class="col-12 col-md-6 col-lg-3 mb-2">
+      <div class="col-12 col-md-6 col-lg-3 mb-3 mx-auto">
         <div class="card standard-card h-100 d-flex flex-column">
           {% if m.image %}
             <img src="{{ m.image.url }}" class="card-img-top img-fluid" alt="{{ m.product_name }}">
@@ -26,7 +26,7 @@
             </div>
           </div>
           <div class="card-footer mb-2">
-            <a class="btn cta-btn mb-0" href="{% url 'products:merch_detail' m.pk %}">View</a>
+            <a class="btn cta-btn mb-1" href="{% url 'products:merch_detail' m.pk %}">View</a>
           </div>
         </div>
       </div>

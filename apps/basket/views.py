@@ -78,7 +78,7 @@ def basket_view(request):
         # Generate delivery explanation message
         merch_units = sum((item.quantity or 0) for item in basket.items.all() if item.merch)
         if merch_units > 1:
-            delivery_message = "Delivery = £5.00 + £2.50 for ea. extra item"
+            delivery_message = "Delivery = £5 + £2.50 for ea. extra item"
 
         last_order = (
             Order.objects.filter(user=request.user, status="pending")
