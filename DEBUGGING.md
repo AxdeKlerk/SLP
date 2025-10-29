@@ -57,7 +57,7 @@ This document has been restructured from my original DEBUGGING.md which listed e
   - [4.1.7 SECURITY \& DEPLOYMENT](#417-security--deployment)
     - [4.1.7.1 Security Bug](#4171-security-bug)
     - [4.1.7.2 Deployment Issue](#4172-deployment-issue)
-    - [4.1.7.3 Database Configuration Error](#4173-database-configuration-error)
+    - [4.1.7.3 Database Configuration Error (*Heroku*)](#4173-database-configuration-error-heroku)
     - [4.1.7.4 Configuration Error](#4174-configuration-error)
     - [4.1.7.5 Environment Variable Load Failure](#4175-environment-variable-load-failure)
     - [4.1.7.6 Deployment Errors](#4176-deployment-errors)
@@ -119,7 +119,7 @@ On screens between 576px and 767px, *my* event cards were not centred. The `.row
 I discovered that the `.standard-card` CSS had `max-width: 300px;` but no horizontal centring. The card was narrower than its parent column and defaulted to the left. I fixed this by adding `margin-left: auto;` and `margin-right: auto;` to the `.standard-card` CSS so that it stayed centered inside its column.
 
 **Lesson Learned:**  
-When using `max-width` on a card inside a Bootstrap column, the card will not center itself automatically. Even if the column is full width, the child element needs `margin: auto` to align correctly. Always check custom CSS rules like `max-width` if a card or element looks offset at certain breakpoints. Although, it is quite basic syntax and something I should have known, going off into a panic about it when it is not working is not helpful, and most certainly a pause moment to step back and think clearly without doubting *myself*.
+When using `max-width` on a card inside a Bootstrap column, the card will not center itself automatically. Even if the column is full width, the child element needs `margin: auto` to align correctly. Always check custom CSS rules like `max-width` if a card or element looks offset at certain breakpoints. Although it’s quite basic syntax, panicking about it instead of pausing to think clearly was unhelpful — a good reminder to slow down.
 
 ---
 
@@ -175,10 +175,10 @@ Consistency between input names, form actions, and view logic is key. Even one m
 
 #### 4.1.2.1 Logic Bug
 **Bug:**  
-I noticed that *my* Roxoff event cards were appearing on the Upcoming Gigs page. This wasn’t supposed to happen — Roxoff events should only be shown on their own dedicated template `(roxoff.html)`, not mixed in with regular events.
+I noticed that *my* Roxoff event cards were appearing on the Upcoming Gigs page. This wasn’t supposed to happen — Roxoff events should only be shown on their own dedicated template (roxoff.html), not mixed in with regular events.
 
 **Fix:**  
-I realised I needed a way to clearly separate Roxoff events from regular ones. So I added a new `event_type` field to the Event model with `regular` and `roxoff` choices. Then I updated the view for the Upcoming Gigs page `(events_view)` to exclude Roxoff events:
+I realised I needed a way to clearly separate Roxoff events from regular ones. So I added a new `event_type` field to the Event model with `regular` and `roxoff` choices. Then I updated the view for the Upcoming Gigs page (events_view) to exclude Roxoff events:
 
 `events = Event.objects.filter(gig_date__gte=today).exclude(event_type='roxoff').order_by('gig_date')`
 
@@ -225,6 +225,8 @@ This ensured both charges were included in `order.subtotal` and `order.total` be
 **Lesson Learned:**  
 When performing multi-step calculations across views, always duplicate or abstract shared logic (e.g. into a helper function) so updates remain consistent. The basket and checkout must use identical fee logic to avoid mismatched totals.
 
+---
+
 ### 4.1.2.5 Email Logic Error
 
 **Bug:** 
@@ -260,6 +262,8 @@ I restored the missing `order_type` field to the `Order` model and gave it a def
 
 **Lesson Learned:**  
 If *Django* reports missing columns, the issue is usually a mismatch between model definitions and existing migrations. Adding a default value or faking the migration is safer than manually altering tables.
+
+---
 
 ### 4.1.4 SYSTEM / FRAMEWORKS
 
@@ -450,7 +454,7 @@ When attaching custom attributes to objects derived from querysets, convert them
 
 #### 4.1.5.14 Basket and Checkout Totals Calculation Runtime Error
 **Bug:**  
-A `Decimal not callable` runtime error occurred due to parentheses being added after a `Decimal` instance, and the basket item model lacked a compatible `get_line_total()` method.
+A `Decimal not callable` runtime error occurred due to parentheses being added after a `Decimal` instance, and the basket item model lacked a compatible `get_line_total()` method. This error occurred because `Decimal` instances cannot be called like functions (e.g. `Decimal()()`), so removing parentheses resolved the issue.
 
 **Fix:**  
 I corrected the syntax and ensured both the basket and order item models shared a consistent `get_line_total()` method.
@@ -522,7 +526,7 @@ Successful tokenisation requires all three conditions: a secure context (HTTPS o
 
 #### 4.1.6.3 Invalid Application ID Error
 **Bug:**  
-Square returned `InvalidApplicationIdError` because the `|escapejs` filter in the template corrupted the application ID by encoding characters incorrectly.
+*Square* returned `InvalidApplicationIdError` because the `|escapejs` filter in the template corrupted the application ID by encoding characters incorrectly.
 
 **Fix:**  
 I replaced the `|escapejs` filter with `|escape` in all template data attributes to preserve the correct ID formatting.
@@ -534,7 +538,7 @@ Use `|escapejs` only when outputting values inside inline JavaScript. For HTML a
 
 #### 4.1.6.4 Authentication Error
 **Bug:**  
-Square API calls failed with a `401 Unauthorized` error. At first, I assumed it was due to bad credentials, but after testing the same token through curl, I discovered the real issue was the payload format.
+*Square* API calls failed with a `401 Unauthorized` error. At first, I assumed it was due to bad credentials, but after testing the same token through curl, I discovered the real issue was the payload format.
 
 **Fix:**  
 I switched from sending data under an `"order"` key to the correct `"quick_pay"` object structure as required by the current API documentation.
@@ -558,13 +562,13 @@ Webhook testing depends on the environment being synchronised. Always verify the
 
 #### 4.1.6.6 Webhook Signature Verification Errors
 **Bug:**  
-Square rejected every webhook attempt with `Invalid signature` because I only hashed the request body, not the full URL plus body combination.
+*Square* rejected every webhook attempt with `Invalid signature` because I only hashed the request body, not the full URL plus body combination.
 
 **Fix:**  
-I concatenated the HTTPS notification URL with the request body before computing the HMAC signature, matching Square’s official signing method.
+“I concatenated the full HTTPS notification URL with the request body before computing the HMAC signature, following Square’s official verification pattern.
 
 **Lesson Learned:**  
-Square signs the full HTTPS URL concatenated with the request body, not just the body. Verifying only the payload will always fail signature validation.
+*Square* signs the full HTTPS URL concatenated with the request body, not just the body. Verifying only the payload will always fail signature validation.
 
 ---
 
@@ -576,7 +580,7 @@ Signatures still failed to verify, and some headers were missing from the reques
 I switched to retrieving headers directly from `request.META` and ensured that the signature verification used the full HTTPS URL. This fixed the authentication mismatch and made validation consistent between local and deployed environments.
 
 **Lesson Learned:**  
-Always access headers using `request.META` to guarantee compatibility across environments. Signature verification must include the HTTPS URL exactly as Square sent it.
+Always access headers using `request.META` to guarantee compatibility across environments. Signature verification must include the HTTPS URL exactly as *Square* sent it.
 
 ---
 
@@ -639,7 +643,7 @@ If *Django* throws a 404 after deployment, double-check template paths in `rende
 
 ---
 
-#### 4.1.7.3 Database Configuration Error
+#### 4.1.7.3 Database Configuration Error (*Heroku*)
 **Bug:**  
 The new *Heroku* app connected to the old *PostgreSQL* database from a previous project, showing old user data in *Django* admin.
 
@@ -716,7 +720,7 @@ Couldn’t run migrations on the Eco plan due to single dyno limitation.
 Scaled web dyno down with `heroku ps:scale web=0`, ran migrations, then scaled it back up.
 
 **Lesson Learned 4:**  
-On the Eco plan, only one dyno runs at a time. Always scale down before using `heroku run`.
+On the Eco plan, *Heroku* only allows one dyno at a time, meaning migration commands can’t run while the `web dyno` is active.
 
 **Bug 5:**  
 Forgot to scale web dyno back up, causing H14 errors.
