@@ -152,8 +152,6 @@ The goal of the upgrade is to bring the project to the same level of development
 
 The target audience is niche and focuses only on the rock and metal musicians and fans in Norwich. It is specifically aimed at an aging demographic of rock and metal fans who don’t rely on social media for gig information in Norwich, the new rise in younger rock and metal fans who are looking to support up-and-coming artists locally, emerging (and unsigned) rock and metal artists looking for promotion in Norwich, other music promoters who may want to collaborate, as well as music journalists wanting to cover gigs.
 
-[add merch and ticket sales]
-
 ---
 
 ## 2. Planning and Development
@@ -248,7 +246,7 @@ The project was created in *[Github](https://github.com/users/AxdeKlerk/projects
 
 Each epic was added to the Project Board using labels as can be seen here:
 
-![project board](DOCS/images/project-board-v2.jpg)
+![project board labels](DOCS/images/project-labels.jpg)
 
 From the collapsable Core Epic, for example, the below details a description of the covered features, with the first 3 user stories below, and the tasks listed below the user stories:
 
@@ -258,7 +256,9 @@ The below shows the Site Identification User Story as well as its corresponding 
 
 ![site identification user story](DOCS/images/user-site-identification.jpg)
 
-The above is a representation of the Kanban board and all its components. As the project developed more user stories and tasks were created. Throughout the design of the website this project board was referenced to keep the scope of the project realistic and on track. For convenience the project board can be found here: ![project board](DOCS/images/project-board.jpg)
+The below is a representation of the Kanban board and all its components. As the project developed more user stories and tasks were created. Throughout the design of the website this project board was referenced to keep the scope of the project realistic and on track. For convenience the project board can be found here:
+
+ ![project board](DOCS/images/project-board.jpg)
 
 Below details all the Epic headings with their corresponding user stories. All user stories were tested and can be found in the [TESTING.md](TESTING.md).
 
@@ -449,6 +449,8 @@ As a **user**, I want to **see a friendly 400 error page when I make a bad reque
   
 As a **user**, I want to **see branded and consistent error pages when something goes wrong, with a back button that takes me to my previous page**, so I **don’t lose my place on the site**. 
 
+---
+
 ### 2.5 Typography and Colour Palette
 
 The following design choices were made to ensure visual consistency, accessibility, and brand recognition across all pages. The colour palette and typography together create a unified aesthetic that reflects the energy and identity of the Norwich rock and metal scene.  
@@ -507,11 +509,15 @@ When logged in, the navbar greets the user by name, helping to reinforce a sense
 
 ![User greeting](DOCS/images/user-greeting.jpg)
 
+---
+
 ### 3.2 About Page  
 
 The About page provides a brief overview of *Searchlight Promotions* and its work within the Norwich rock and metal community. It includes the main promotional image and concise text about the company’s purpose, keeping the design minimal but true to the site’s overall branding.
 
 ![About page](DOCS/images/about-page.jpg)
+
+---
 
 ### 3.3 Events Page  
 
@@ -524,6 +530,8 @@ The Events page dynamically displays all upcoming events pulled from the databas
 A dropdown filter at the top of the page allows users to view events by month. This is implemented through a simple query parameter passed to the *Django* view, filtering the event queryset into previous and upcoming gigs, before rendering.
 
 ![Events dropdown menu](DOCS/images/events-dropdown.jpg)
+
+---
 
 ### 3.4 Merch  
 
@@ -541,6 +549,8 @@ Each product card links to a detailed product page where users can view an enlar
 
 ![Merch detail](DOCS/images/merch-detail.jpg)
 
+---
+
 #### 3.5 ROXOFF Page
 
 The ROXOFF page was created as a dedicated promotional section within the site, showcasing *Searchlight Promotions*’ flagship annual event. It highlights the full festival lineup, venue details, and individual day tickets, using a bold visual identity that mirrors the festival’s branding.  
@@ -550,6 +560,8 @@ Each event card on this page is styled to match the darker, heavier tone of the 
 Below shows the full ROXOFF page layout with the main event poster, detailed artist lineup, and dynamic ticket cards generated from the database. Again, all artists names are links to their bios
 
 ![Roxoff page](DOCS/images/roxoff-page.jpg)
+
+---
 
 ### 3.6 Search Function  
 
@@ -566,8 +578,12 @@ Below shows the search dropdown menus for both desktop and mobile, with individu
 Search results for “a” (artist), “e” (venue), and “hoodie” (merch) demonstrate the live database filtering and consistent card styling across all result types.  
 
 ![Artist Search Results](DOCS/images/search-artisits.jpg) 
-![Venue Search Results](DOCS/images/search-venues.jpg)  
+
+![Venue Search Results](DOCS/images/search-venues.jpg)
+
 ![Merch Search Results](DOCS/images/search-hoodies.jpg)
+
+---
 
 ### 3.7 Contact Page  
 
@@ -581,6 +597,7 @@ Below shows the Contact page layout with the form fields, “Send” button, and
 
 ![Contact page](DOCS/images/contact-page.jpg)
 
+---
 
 ### 3.8 Account Section  
 
@@ -620,6 +637,8 @@ From a backend perspective, this page pulls data directly from the custom **Orde
 
 ![Account orders page](DOCS/images/account-orders.jpg)
 
+---
+
 ### 3.9 Basket  
 
 The Basket section brings together all user selections — both **event tickets** and **merchandise** — in a clear, minimal layout designed to keep checkout simple. Each item includes its image, name, quantity selector, price, and any associated **booking** or **delivery** fees.  
@@ -638,6 +657,8 @@ The dropdown under **Basket** in the navbar provides quick access to both the **
 
 ![Basket dropdown](DOCS/images/basket-dropdown.jpg)
 
+---
+
 ### 3.10 Order Summary  
 
 The **Order Summary** page provides users with a clear overview of their pending order before they proceed to payment. Each order displays the list of items, quantities, prices, and any associated **delivery** or **booking** fees, ensuring complete transparency.  
@@ -649,6 +670,8 @@ A **“Back to Basket”** button at the top allows users to return and make adj
 Behind the scenes, the page pulls order data directly from the **Order** and **OrderItem** models, filtered by the current user and order ID. This guarantees that only the logged-in user can access and view their order details.
 
 ![Order summary page](DOCS/images/order-summary.jpg)
+
+---
 
 ### 3.11 Payment Summary  
 
@@ -669,6 +692,8 @@ The overall layout remains consistent with the site’s minimalist neon theme, m
 Once completed the user is given a confirmation that their order has been made.
 
 ![Order confirmation](DOCS/images/order-confirmation.jpg)
+
+---
 
 #### 3.12 Summary  
 
@@ -777,13 +802,11 @@ Deployment was successful, and the live site runs stably with DEBUG=False, confi
 
 This section outlines planned enhancements and refinements to extend the functionality, scalability, and user experience of *Searchlight Promotions (SLP)* beyond the current MVP release. These features were deferred to maintain submission deadlines and ensure a stable, production-ready deployment.
 
-
 #### 4.4.1 Email Verification and Account Confirmation  
 To strengthen account security and build user trust, future versions will implement a full email confirmation workflow using *Django*’s built-in email verification or *django-allauth*.  
 - Users will receive a confirmation email upon registration with a secure activation link.  
 - Unverified accounts will have limited access until activation.  
 - This addition will improve authenticity, prevent spam registrations, and enhance compliance with best security practices.
-
 
 #### 4.4.2 Enhanced Order Confirmation Emails  
 Current confirmation emails provide essential order summaries only. Future versions will:  
@@ -792,13 +815,11 @@ Current confirmation emails provide essential order summaries only. Future versi
 - Include estimated delivery information for physical goods.  
 - Integrate optional QR codes or ticket barcodes for event entry.  
 
-
 #### 4.4.3 Merchandise and Ticket Download Functionality  
 Users will be able to download digital tickets or receipts directly from their profile page.  
 - Orders in “Paid” status will show a **Download Ticket/Invoice** button.  
 - PDF generation will be handled using *WeasyPrint* or *ReportLab*.  
 - This provides a self-service option, reducing admin workload.
-
 
 #### 4.4.4 Admin Dashboard Enhancements  
 The admin panel will be extended to improve backend usability:  
@@ -806,32 +827,27 @@ The admin panel will be extended to improve backend usability:
 - Add analytics for ticket sales, event attendance, and merchandise performance.  
 - Implement secure webhook monitoring and event verification dashboards for *Square* API.  
 
-
 #### 4.4.5 Payment Gateway Expansion  
 While *Square* currently handles all transactions, future versions will offer additional payment options:  
 - Integration with *PayPal*, *Google Pay*, and *Apple Pay*.  
 - Intelligent payment fallback for failed transactions.  
 - Enhanced error handling and transaction logs for admin verification.
 
-
 #### 4.4.6 SEO and Performance Optimisation  
 Further work will focus on increasing discoverability and site performance:  
 - Add structured schema markup for events and products.  
 - Integrate *Cloudflare CDN* for static assets and media optimisation.  
-
 
 #### 4.4.7 Accessibility and UX Refinement  
 Accessibility testing will be expanded to meet WCAG 2.2 AA standards:  
 - Add ARIA roles and keyboard navigation support.  
 - Improve focus states and color contrast for readability.  
 
-
 #### 4.4.8 Testing and Continuous Integration  
 To ensure long-term maintainability, additional automated testing and CI/CD workflows will be introduced:  
 - Implement *GitHub Actions* for automated testing on pull requests.  
 - Extend unit and integration test coverage.  
 - Add visual regression testing for core UI components.  
-
 
 #### 4.4.9 Live Launch Phase  
 Once all MVP features have been reviewed and finalised, *Searchlight Promotions* will transition from the sandbox testing environment to full live deployment.  
@@ -882,6 +898,8 @@ Below are the list of resources that I used to complete this project along with 
 - [W3schools](https://www.w3schools.com/) a constant source of reference for all html, CSS, JavaScript, BootStrap and Django explanations
 - [W3C Markup Validation Service](https://validator.w3.org/) for the html validation
 - [W3C CSS Validation Service](https://jigsaw.w3.org/css-validator/) for the CSS validation
+
+---
 
 ### 5.2 Acknowledgements
 
