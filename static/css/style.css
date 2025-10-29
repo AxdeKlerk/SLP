@@ -339,9 +339,9 @@ body {
     color: #F5F5F5;
     max-width: 100%;
     height: 100%;
-    border: 1px solid #11ED73;
+    border: 2px solid #11ED73;
     border-radius: 10px;
-    padding-top: 1rem;
+    padding-top: 0.5rem;
     margin-bottom: 0;
     padding-bottom: 0;
 }
@@ -359,11 +359,10 @@ body {
     width: 90%;
     height: 150px;
     object-fit: cover;
-    border-radius: 10px;
     align-self: center;
-    border: none !important;
     display: block;
     margin: 0;
+    padding: 0;
 }
 .card-title a {
     font-size: 1.5rem;
