@@ -17,8 +17,8 @@ All functionality was tested manually by working through user stories. Testing w
   - [4.2.2 Products Epic](#422-products-epic)
     - [4.2.2.1 Event Listings](#4221-event-listings)
     - [4.2.2.2 Event Detail Page — Ticket Oversell Guardrail](#4222-event-detail-page--ticket-oversell-guardrail)
-    - [2.4.2.3 Merch Listings](#2423-merch-listings)
-    - [2.4.2.4 Merch Detail Page](#2424-merch-detail-page)
+    - [4.2.2.3 Merch Listings](#4223-merch-listings)
+    - [4.2.2.4 Merch Detail Page](#4224-merch-detail-page)
     - [4.2.2.3 Ticket Availability Tracking — Validation Error Message](#4223-ticket-availability-tracking--validation-error-message)
     - [4.2.2.4 Roxoff Page \& Event Tickets](#4224-roxoff-page--event-tickets)
   - [4.2.3 Basket Epic](#423-basket-epic)
@@ -35,8 +35,8 @@ All functionality was tested manually by working through user stories. Testing w
     - [4.2.4.5 Log Out](#4245-log-out)
     - [4.2.4.6 Profile — Delete Selected Orders](#4246-profile--delete-selected-orders)
     - [4.2.4.7 Email Confirmations (Backlog – Not MVP)](#4247-email-confirmations-backlog--not-mvp)
-    - [2.4.4.8 Order Confirmation Page](#2448-order-confirmation-page)
-    - [2.4.4.9 Order History in Profile](#2449-order-history-in-profile)
+    - [4.2.4.8 Order Confirmation Page](#4248-order-confirmation-page)
+    - [4.2.4.9 Order History in Profile](#4249-order-history-in-profile)
   - [4.2.5 Checkout \& Payments Epic](#425-checkout--payments-epic)
     - [4.2.5.1 Checkout Page — Proceed to Payment Button Routing](#4251-checkout-page--proceed-to-payment-button-routing)
     - [4.2.5.2 Order Summary Event Display](#4252-order-summary-event-display)
@@ -57,7 +57,7 @@ All functionality was tested manually by working through user stories. Testing w
   - [4.2.7 DevOps Epic](#427-devops-epic)
     - [4.2.7.2 400 Error Page](#4272-400-error-page)
     - [4.2.7.3 500 Error Page — Custom 404 and 500 Pages with Back Navigation](#4273-500-error-page--custom-404-and-500-pages-with-back-navigation)
-  - [4.2.8 Manaul Testing](#428-manaul-testing)
+  - [4.2.8 Manual Testing](#428-manual-testing)
   - [4.2.9 Automated Testing](#429-automated-testing)
     - [4.2.9.1 Lighthouse](#4291-lighthouse)
       - [4.2.9.1.1 Home page](#42911-home-page)
@@ -110,9 +110,9 @@ All functionality was tested manually by working through user stories. Testing w
       - [4.2.9.3.21 Order Confirmation template](#429321-order-confirmation-template)
       - [4.2.9.3.22 404 template](#429322-404-template)
       - [4.2.9.3.23 500 template](#429323-500-template)
-    - [4.2.4 JSHint](#424-jshint)
-      - [4.2.4.1 script.js](#4241-scriptjs)
-      - [4.2.4.2 square-checkout.js](#4242-square-checkoutjs)
+    - [4.2.9.4 JSHint](#4294-jshint)
+      - [4.2.9.4.1 script.js](#42941-scriptjs)
+      - [4.2.9.4.2 square-checkout.js](#42942-square-checkoutjs)
     - [4.2.10 Responsive Testing](#4210-responsive-testing)
 
 ---
@@ -275,7 +275,7 @@ I confirmed that the `base.html` structure correctly loads the navigation bar, f
 - [x] Tested inheritance with core pages (Home, About, Contact).  
 
 **Notes:**  
-The `base.html` template successfully serves as the universal layout for all site templates. Minor HTML validator warnings (related to Django template tags) are expected and do not affect functionality or compliance once rendered. All sections validated successfully after correction of doctype order and title placement.  
+The `base.html` template successfully serves as the universal layout for all site templates. Minor HTML validator warnings (related to Django template tags) are expected and do not affect functionality or compliance once rendered. All sections validated successfully after correction of doctype declaration and title tag placement.  
 
 ---
 
@@ -329,7 +329,7 @@ I tested that the checkout view prevented users from overselling tickets for an 
 **Notes:**  
 Initially, the oversell check did not run because it was inside the `if request.method == "POST":` block, and the checkout button triggered a GET request. Moving the guardrail check above the POST block fixed the issue. The error messages now display correctly, styled in line with the project theme, and give users immediate feedback before completing an order.
 
-#### 2.4.2.3 Merch Listings  
+#### 4.2.2.3 Merch Listings  
 
 **User Story:**  
 As a **user**, I want to **browse all available merchandise items** so that I can **see what products are offered before deciding what to buy**.  
@@ -353,7 +353,7 @@ I tested the Merch Listings page to ensure that all merchandise items were displ
 **Notes:**  
 The Merch Listings page loads quickly and provides a clean browsing experience. All product links and images function as expected, and layout consistency was confirmed across all screen widths.  
 
-#### 2.4.2.4 Merch Detail Page  
+#### 4.2.2.4 Merch Detail Page  
 
 **User Story:**  
 As a **user**, I want to **view detailed information about a specific merchandise item, including price, image, and description** so that I can **make an informed decision before adding it to my basket**.  
@@ -756,7 +756,7 @@ As a **registered user**, I want to **receive email confirmations** so that I ca
 Email confirmations are intentionally excluded from the MVP to streamline the submission and focus on core e-commerce functionality.  
 This feature will be implemented in a future update using Django’s built-in email verification or a third-party solution such as *django-allauth* to enhance account security and user trust.
 
-#### 2.4.4.8 Order Confirmation Page  
+#### 4.2.4.8 Order Confirmation Page  
 User Story:   
 As a **user**, I want to **see an order confirmation page after completing my payment** so that I can **be sure my order has been successfully processed and view a summary of my purchase**.
 
@@ -780,7 +780,7 @@ I tested the order confirmation page to ensure it displayed accurate order detai
 The confirmation page clearly reassures users that their order has been completed. All relevant information is presented cleanly, with no data mismatches or broken links.  
 
 
-#### 2.4.4.9 Order History in Profile  
+#### 4.2.4.9 Order History in Profile  
 User Story:  
 As a **logged-in user**, I want to **view my past orders in my profile page** so that I can **keep track of my purchase history and review order details at any time**.  
 
@@ -1107,7 +1107,7 @@ User Story:
 As a **developer**, I want to **deploy the application to *Heroku*** so that **users can access the live site**.
 
 **What Was Tested**  
-- Successful deployment of the *Djang*o application to Heroku.  
+- Successful deployment of the *Django* application to Heroku.  
 - Correct build and release process using *Heroku* *Git* integration.  
 - Environment variables securely configured in the *Heroku* dashboard.  
 - Static and media files loading correctly in production.  
@@ -1176,7 +1176,7 @@ Error pages are now fully styled, branded, and user-friendly.
 
 ---
 
-### 4.2.8 Manaul Testing
+### 4.2.8 Manual Testing
 
 Manual testing was done through friends and family who use different OS and devices, for feedback. In particular my girlfriend tested the site on Firefox on her laptop and on her mobile (which dates back to a pre-2018 model).
 
@@ -1186,11 +1186,11 @@ This was incredibly useful as it gave me a full understanding of each user exper
 
 Below are the three emails generated for order confirmation, password reset and username confirmation (in order):
 
-![Oder confirmation email](DOCS/images/testing/email-confirmation.jpg)
+![Order confirmation email](DOCS/images/testing/email-confirmation.jpg)
 
 ![Password reset email](DOCS/images/testing/email-password-reset.jpg)
 
-![Unsername confirmation email](DOCS/images/testing/email-username.jpg)
+![Username confirmation email](DOCS/images/testing/email-username.jpg)
 
 ---
 
@@ -1200,7 +1200,7 @@ Formal (automated) testing of the website was validated using the W3C Validation
 
 #### 4.2.9.1 Lighthouse
 
-Below are the performance, accessibility, best practices and SEO results for each page. For the most part accessibility and SEO scored very well and remained in the 'green'. However, there were mixed results for performance and best practices with both going from visible as 'yellow'. Most of the issues were due to image size and *Bootstrap* performance and rendering with a free version of *Heroku*, which was explained to me by my mentor. 
+Below are the performance, accessibility, best practices and SEO results for each page. For the most part accessibility and SEO scored very well and remained in the 'green'. However, performance and best practices results varied, often appearing in the 'yellow' range due to image size and Bootstrap rendering on the free Heroku tier. Most of the issues were due to image size and *Bootstrap* performance and rendering with a free version of *Heroku*, which was explained to me by my mentor. 
 
 ##### 4.2.9.1.1 Home page
 
@@ -1270,15 +1270,15 @@ This page was tested using the word 'hoodie'.
 *Lighthouse* testing was attempted on the logout page to verify accessibility, performance, and best practice metrics.  
 
 **Acceptance Criteria:**  
-- - [x] Logout page loads successfully for authenticated users.  
-- - [x] User session is securely ended.  
-- - [x] `logged_out.html` template renders correctly.  
+- [x] Logout page loads successfully for authenticated users.  
+- [x] User session is securely ended.  
+- [x] `logged_out.html` template renders correctly.  
 - [ ] *Lighthouse* analysis completes successfully (cannot be tested).  
 
 **Tasks Completed:**  
-- - [x] Verified logout page manually in the browser.  
-- - [x] Confirmed correct use of `POST` method for `CSRF` protection.  
-- - [x] Confirmed logout template renders and user session ends.  
+- [x] Verified logout page manually in the browser.  
+- [x] Confirmed correct use of `POST` method for `CSRF` protection.  
+- [x] Confirmed logout template renders and user session ends.  
 
 **Notes:**  
 *Lighthouse* testing cannot be performed on this page because *Django*’s `LogoutView` requires a valid `CSRF` token and an active session to process `POST` requests. *Lighthouse* operates in an unauthenticated sandbox environment, which prevents it from submitting secure `POST` requests, resulting in a *405 Method Not Allowed* response. Manual testing confirmed that the logout page functions securely and correctly for real users.
@@ -1333,7 +1333,7 @@ For testing the 500 page I used the following url: https://slp-upgrade-910f8354c
 
 #### 4.2.9.3 HTLML Validation
 
-Below are the results for each of the HTML templates within the project and their corrresponding results using W3C Markup Validator.
+Below are the results for each of the HTML templates within the project and their corresponding results using W3C Markup Validator.
 
 ##### 4.2.9.3.1 Base Template
 
@@ -1448,13 +1448,13 @@ https://slp-upgrade-910f8354c673.herokuapp.com/crash/
 
 ![500 template](<DOCS/images/testing/html validator/500-template.jpg>)
 
-#### 4.2.4 JSHint
+#### 4.2.9.4 JSHint
 
-##### 4.2.4.1 script.js
+##### 4.2.9.4.1 script.js
 
 ![script.js](DOCS/images/testing/jshint-script.jpg)
 
-##### 4.2.4.2 square-checkout.js
+##### 4.2.9.4.2 square-checkout.js
 
 ![square-checkout.js](DOCS/images/testing/jshint-square-checkout.jpg)
 
@@ -1462,7 +1462,7 @@ https://slp-upgrade-910f8354c673.herokuapp.com/crash/
 
 #### 4.2.10 Responsive Testing
 
-The video below shows a walk through of the resposive design from 320px to 1440px (max-width). This was captured using a *Loom*.
+The video below shows a walk through of the responsive design from 320px to 1440px (max-width). This was captured using *Loom*.
 
 <a href="https://www.loom.com/share/7540ce4a105a416abedbfc50a50cc7ad?sid=07516197-1b03-4d04-b4c4-61d1ac71324a" target="_blank">Watch responsive video</a>
 
