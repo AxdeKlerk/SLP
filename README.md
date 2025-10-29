@@ -3,6 +3,124 @@
 ![searchlight promotions logo and text](DOCS/images/logo.jpg)
 
 ## Table of contents
+- [Searchlight Promotions (Upgrade)](#searchlight-promotions-upgrade)
+  - [Table of contents](#table-of-contents)
+  - [1. Introduction](#1-introduction)
+    - [1.1 The Aim, Purpose and Goal of the Site](#11-the-aim-purpose-and-goal-of-the-site)
+    - [1.2 Target Audience](#12-target-audience)
+  - [2. Planning and Development](#2-planning-and-development)
+    - [2.1 Project Statement and ERD](#21-project-statement-and-erd)
+    - [2.1.1 Identified Entities (Key Nouns):](#211-identified-entities-key-nouns)
+    - [2.1.2 Key Relationships:](#212-key-relationships)
+    - [2.1.3 ERD (Entity Relationship Diagram)](#213-erd-entity-relationship-diagram)
+    - [2.2 Wireframes](#22-wireframes)
+    - [2.3 User Journeys](#23-user-journeys)
+    - [2.4 Agile Methodology](#24-agile-methodology)
+      - [2.4.1 Epics \& their User Stories](#241-epics--their-user-stories)
+    - [2.4.1 Core Epic](#241-core-epic)
+      - [2.4.1.1 Site Identification](#2411-site-identification)
+      - [2.4.1.2 Navigation](#2412-navigation)
+      - [2.4.1.3 Search](#2413-search)
+      - [2.4.1.4 Contact Form](#2414-contact-form)
+      - [2.4.1.5 Footer](#2415-footer)
+      - [2.4.1.6 Base Template](#2416-base-template)
+    - [2.4.2 Products Epic](#242-products-epic)
+      - [2.4.2.1 Event Listings](#2421-event-listings)
+      - [2.4.2.2 Event Detail Page — Ticket Oversell Guardrail](#2422-event-detail-page--ticket-oversell-guardrail)
+      - [2.4.2.3 Ticket Availability Tracking — Validation Error Message](#2423-ticket-availability-tracking--validation-error-message)
+      - [2.4.2.4 Roxoff Page \& Event Tickets](#2424-roxoff-page--event-tickets)
+    - [2.4.3 Basket Epic](#243-basket-epic)
+      - [2.4.3.1 Add to Basket](#2431-add-to-basket)
+      - [2.4.3.2 View Basket](#2432-view-basket)
+      - [2.4.3.3 Update Basket — Basket Quantity Clamping](#2433-update-basket--basket-quantity-clamping)
+      - [2.4.3.4 Remove from Basket](#2434-remove-from-basket)
+      - [2.4.3.5 Basket Totals](#2435-basket-totals)
+    - [2.4.4 User Epic](#244-user-epic)
+      - [2.4.4.1 Add Required Email Field to Sign Up](#2441-add-required-email-field-to-sign-up)
+      - [2.4.4.2 Sign Up — Input Text Visibility Fix](#2442-sign-up--input-text-visibility-fix)
+      - [2.4.4.3 Log In](#2443-log-in)
+      - [2.4.4.4 Password Reset](#2444-password-reset)
+      - [2.4.4.5 Log Out](#2445-log-out)
+      - [2.4.4.6 Profile — Delete Selected Orders](#2446-profile--delete-selected-orders)
+      - [2.4.4.7 Email Confirmations (Backlog – Not MVP)](#2447-email-confirmations-backlog--not-mvp)
+      - [2.4.4.8 Order Confirmation Page](#2448-order-confirmation-page)
+      - [2.4.4.9 Order History in Profile](#2449-order-history-in-profile)
+    - [2.4.5 Checkout \& Payments Epic](#245-checkout--payments-epic)
+      - [2.4.5.1 Checkout Page — Proceed to Payment Button Routing](#2451-checkout-page--proceed-to-payment-button-routing)
+      - [2.4.5.2 Order Summary Event Display](#2452-order-summary-event-display)
+      - [2.4.5.3 Delivery and Booking Fees Carry Over to Order Summary](#2453-delivery-and-booking-fees-carry-over-to-order-summary)
+      - [2.4.5.4 Checkout Summary Fee and Total Calculations](#2454-checkout-summary-fee-and-total-calculations)
+      - [2.4.5.5 Checkout and Payment Summary Totals](#2455-checkout-and-payment-summary-totals)
+      - [2.4.5.6 Basket and Checkout Totals Calculation](#2456-basket-and-checkout-totals-calculation)
+      - [2.4.5.7 Delivery Charge Message](#2457-delivery-charge-message)
+      - [2.4.5.8 Payment Integration and Deployment Testing](#2458-payment-integration-and-deployment-testing)
+    - [2.4.6 Webhooks \& Integrations Epic](#246-webhooks--integrations-epic)
+      - [2.4.6.1 Invalid Application ID Error](#2461-invalid-application-id-error)
+      - [2.4.6.2 Payment Link API](#2462-payment-link-api)
+      - [2.4.6.3 Webhook Verification](#2463-webhook-verification)
+      - [2.4.6.4 Order Status Update via Square Webhook](#2464-order-status-update-via-square-webhook)
+      - [2.4.6.5 Square Webhook Integration](#2465-square-webhook-integration)
+      - [2.4.6.6 Square Payment Verification (Admin Action)](#2466-square-payment-verification-admin-action)
+      - [2.4.6.7 Square Sandbox Order Creation and Webhook Verification](#2467-square-sandbox-order-creation-and-webhook-verification)
+    - [2.4.7 DevOps Epic](#247-devops-epic)
+      - [2.4.7.1 Deployment](#2471-deployment)
+      - [2.4.7.2 400 Error Page](#2472-400-error-page)
+      - [2.4.7.3 500 Error Page — Custom 404 and 500 Pages with Back Navigation](#2473-500-error-page--custom-404-and-500-pages-with-back-navigation)
+    - [2.5 Typography and Colour Palette](#25-typography-and-colour-palette)
+      - [2.5.1 Typography](#251-typography)
+      - [2.5.2 Colour Palette](#252-colour-palette)
+  - [3. Features](#3-features)
+    - [3.1 Home Page](#31-home-page)
+      - [3.1.1 Site Navigation](#311-site-navigation)
+      - [3.1.1.1 Navbar](#3111-navbar)
+      - [3.1.1.2 Hamburger](#3112-hamburger)
+      - [3.1.1.3 User Greeting](#3113-user-greeting)
+    - [3.2 About Page](#32-about-page)
+    - [3.3 Events Page](#33-events-page)
+      - [3.3.1 Events Dropdown](#331-events-dropdown)
+    - [3.4 Merch](#34-merch)
+      - [3.4.1 Merch List Page](#341-merch-list-page)
+      - [3.4.2 Merch Detail Page](#342-merch-detail-page)
+      - [3.5 ROXOFF Page](#35-roxoff-page)
+    - [3.6 Search Function](#36-search-function)
+    - [3.7 Contact Page](#37-contact-page)
+    - [3.8 Account Section](#38-account-section)
+      - [3.8.1 User Authentication](#381-user-authentication)
+      - [3.8.2 Account Orders Page](#382-account-orders-page)
+    - [3.9 Basket](#39-basket)
+    - [3.10 Order Summary](#310-order-summary)
+    - [3.11 Payment Summary](#311-payment-summary)
+      - [3.12 Summary](#312-summary)
+  - [4. Debugging, Testing, Deployment and Future Developments](#4-debugging-testing-deployment-and-future-developments)
+    - [4.1 Debugging](#41-debugging)
+    - [4.2 Testing](#42-testing)
+    - [4.3 Deployment](#43-deployment)
+      - [4.3.1 Create a GitHub Repository](#431-create-a-github-repository)
+      - [4.3.2 Clone the Repository to VS Code](#432-clone-the-repository-to-vs-code)
+      - [4.3.3 Create and Activate a Virtual Environment](#433-create-and-activate-a-virtual-environment)
+      - [4.3.4 Install Project Dependencies](#434-install-project-dependencies)
+      - [4.3.5 Prepare the Project for Heroku](#435-prepare-the-project-for-heroku)
+      - [4.3.6 Set Up a Heroku Account and CLI](#436-set-up-a-heroku-account-and-cli)
+      - [4.3.7 Create a Heroku App](#437-create-a-heroku-app)
+      - [4.3.8 Push Your Project to Heroku](#438-push-your-project-to-heroku)
+      - [4.3.9 Configure Environment Variables on Heroku](#439-configure-environment-variables-on-heroku)
+      - [4.3.10 Final Project Setup on Heroku](#4310-final-project-setup-on-heroku)
+      - [4.3.11 Open Your Live Site](#4311-open-your-live-site)
+  - [Deployment was successful, and the live site runs stably with DEBUG=False, confirming that static files, media storage, and payment functionality operate correctly in production.](#deployment-was-successful-and-the-live-site-runs-stably-with-debugfalse-confirming-that-static-files-media-storage-and-payment-functionality-operate-correctly-in-production)
+    - [4.4 Future Developments](#44-future-developments)
+      - [4.4.1 Email Verification and Account Confirmation](#441-email-verification-and-account-confirmation)
+      - [4.4.2 Enhanced Order Confirmation Emails](#442-enhanced-order-confirmation-emails)
+      - [4.4.3 Merchandise and Ticket Download Functionality](#443-merchandise-and-ticket-download-functionality)
+      - [4.4.4 Admin Dashboard Enhancements](#444-admin-dashboard-enhancements)
+      - [4.4.5 Payment Gateway Expansion](#445-payment-gateway-expansion)
+      - [4.4.6 SEO and Performance Optimisation](#446-seo-and-performance-optimisation)
+      - [4.4.7 Accessibility and UX Refinement](#447-accessibility-and-ux-refinement)
+      - [4.4.8 Testing and Continuous Integration](#448-testing-and-continuous-integration)
+      - [4.4.9 Live Launch Phase](#449-live-launch-phase)
+      - [4.4.10 Summary](#4410-summary)
+  - [5. Credits and Acknowledegements](#5-credits-and-acknowledegements)
+    - [5.1 Credits](#51-credits)
+    - [5.2 Acknowledgements](#52-acknowledgements)
 
 ---
 
@@ -42,9 +160,9 @@ The target audience is niche and focuses only on the rock and metal musicians an
 
 ### 2.1 Project Statement and ERD
 
-This project involves developing a web application focused on promoting and managing rock and metal music **events** held at a **single fixed venue**. The website allows **users** browse as **guests** or **log in** for a personalised experience. Logged in users have the the ability to browse upcoming events, **search for merchandise and/or tickets**, add them to a **basket** and **purchase** event tickets and merch.
+This project involves developing a web application focused on promoting and managing rock and metal music **events** held at a **single fixed venue**. The website allows **users** to browse as **guests** or **log in** for a personalised experience. Logged in users have the the ability to browse upcoming events, **search for merchandise and/or tickets**, add them to a **basket** and **purchase** event tickets and merch.
 
-Each event offers **tickets for sale** thet users can add to their **basket**, alongside any **merchandise**. The store offers official **products** such as shirts, hoodies, and accessories, which can be **filtered by product description**. Users can then proceed to **checkout**, where they provide payment securely via **Square**.
+Each event offers **tickets for sale** that users can add to their **basket**, alongside any **merchandise**. The store offers official **products** such as shirts, hoodies, and accessories, which can be **filtered by product description**. Users can then proceed to **checkout**, where they provide payment securely via **Square**.
 
 Users will also be able to view and **track the status of their orders**,  
 receive **email confirmations** for purchases, and search for **artists and bands** to discover more music.
@@ -82,7 +200,7 @@ This structured statement sets a clear foundation for building an ERD and a rela
 ---
 
 ### 2.2 Wireframes
-After completing the first draft of the ERD I draw it out visually as a low fidelity-wireframe for desktops in *Balsamic*, as shown here:
+After completing the first draft of the ERD I drew it out visually as a low fidelity-wireframe for desktops in *Balsamic*, as shown here:
 
 ![low-fidelity desktop wireframe](DOCS/images/wireframe-desktop.jpg)
 
@@ -96,7 +214,7 @@ The high-fidelity wireframe show below helps to fully visualise the various scre
 
 The findings were mixed, however, most of the websites seemed to display their merch as an after thought that didn't follow the styling of the rest of their websites. The three stand-out websites, that did follow their overall styling, were *[Blacklakes](https://www.blacklakes.com/merch)*, *[South of Salem](https://www.southofsalem.com/)* and *[Slipknot](https://slipknotmerch.com/)*.
 
-Slipknot's merch page stood out amoungst the rest and the decidion was made that, this project's website would follow Slipknot's style of layout, but make it different to anything else that could be found, by including the tilt styling.
+Slipknot's merch page stood out amoungst the rest and the decision was made that, this project's website would follow Slipknot's style of layout, but make it different to anything else that could be found, by including the tilt styling.
 
 ![High-fidelity desktop wireframe](DOCS/images/hf-wireframe-desktop.jpg)
 
@@ -331,7 +449,7 @@ As a **user**, I want to **see a friendly 400 error page when I make a bad reque
   
 As a **user**, I want to **see branded and consistent error pages when something goes wrong, with a back button that takes me to my previous page**, so I **don’t lose my place on the site**. 
 
-#### 2.5 Typography and Colour Palette
+### 2.5 Typography and Colour Palette
 
 The following design choices were made to ensure visual consistency, accessibility, and brand recognition across all pages. The colour palette and typography together create a unified aesthetic that reflects the energy and identity of the Norwich rock and metal scene.  
 
@@ -345,7 +463,7 @@ The website uses a combination of *Protest Revolution* for the *Searchlight Prom
 
 #### 2.5.2 Colour Palette
 
-The colour palette follows a dark rock aesthetic consistent with *Searchlight Promotions’* brand identity. A dominant black (`#000000`) background sets the tone, contrasted with off-white (`F5F5F5`) text for readability and a neon green accent (`#11ED73`) used throughout for borders, buttons, and hover effects. In addition the colour (`#888`) was used for placeholder text and (`E63946`) was used for 'red' flash messages as well as the delete buttons rather than (`FF0000`) to avoid any colour bleeding due to it's brightness. This combination reinforces the energy of live rock and metal shows while maintaining professional clarity across all devices.
+The colour palette follows a dark rock aesthetic consistent with *Searchlight Promotions’* brand identity. A dominant black (`#000000`) background sets the tone, contrasted with off-white (`#F5F5F5`) text for readability and a neon green accent (`#11ED73`) used throughout for borders, buttons, and hover effects. In addition the colour (`#888`) was used for placeholder text and (`#E63946`) was used for 'red' flash messages as well as the delete buttons rather than (`#FF0000`) to avoid any colour bleeding due to it's brightness. This combination reinforces the energy of live rock and metal shows while maintaining professional clarity across all devices.
 
 ![Colour palette](DOCS/images/colour-palette.jpg)
 
@@ -468,7 +586,7 @@ Below shows the Contact page layout with the form fields, “Send” button, and
 
 The Account section manages all user authentication and profile interactions through a clean dropdown in the navbar. Depending on login status, users either see **Log In**, **Sign Up**, and **Forgot Password**, or —once logged in— **Orders** and **Logout**.  
 
-#### 3.8.1 User Authentification
+#### 3.8.1 User Authentication
 
 The authentication flow uses *Django*’s built-in `User` model and `auth` views, ensuring secure session management and form validation. Each page (login, signup, reset password, and forgot username) was fully restyled to match the site’s rock and metal aesthetic — black backgrounds, neon green typography, and consistent spacing.  
 
@@ -488,7 +606,7 @@ The below images show:
 ![Check Email](DOCS/images/forgot-redirect.jpg)  
 ![Forgot Username](DOCS/images/forgot-username.jpg)  
 ![Login Success](DOCS/images/login-success.jpg)
-![Singup](DOCS/images/signup.jpg)
+![Signup](DOCS/images/signup.jpg)
 
 #### 3.8.2 Account Orders Page
 
@@ -552,7 +670,7 @@ Once completed the user is given a confirmation that their order has been made.
 
 ![Order confirmation](DOCS/images/order-confirmation.jpg)
 
-#### 3.4.12 Summary  
+#### 3.12 Summary  
 
 All features across the site were designed with simplicity, speed, and responsive behaviour in mind. Every page follows a consistent visual theme, ensuring a cohesive experience for both fans and artists on any device. The combination of *Bootstrap*’s responsive utilities and *Django*’s backend logic keeps the site clean, efficient, and scalable for future upgrades.  
 
@@ -652,6 +770,9 @@ This section outlines the full process for deploying this project from *GitHub* 
 - Use the *Heroku* CLI or browser to open your app
 - Your project is now live and hosted at "your-app-name.herokuapp.com"
 
+Deployment was successful, and the live site runs stably with DEBUG=False, confirming that static files, media storage, and payment functionality operate correctly in production.
+--- 
+
 ### 4.4 Future Developments
 
 This section outlines planned enhancements and refinements to extend the functionality, scalability, and user experience of *Searchlight Promotions (SLP)* beyond the current MVP release. These features were deferred to maintain submission deadlines and ensure a stable, production-ready deployment.
@@ -719,9 +840,10 @@ Once all MVP features have been reviewed and finalised, *Searchlight Promotions*
 - Monitoring tools (e.g., *Sentry* or *New Relic*) will be configured for uptime and error tracking.  
 - The deployed URL will be changed to www.searchlightpromotions.co.uk and replace the existing live site
 
-#### 4.4.9.1 Summary  
+#### 4.4.10 Summary  
 These enhancements will transform *Searchlight Promotions* upgrade from a functional MVP into a fully scalable, user-centric live product. The priority roadmap focuses first on user trust (email verification), improved checkout transparency (enhanced confirmation emails), and admin efficiency (downloadable invoices and dashboards).
 
+---
 
 ## 5. Credits and Acknowledegements
 
@@ -742,7 +864,7 @@ Below are the list of resources that I used to complete this project along with 
 - [draw.io](https://app.diagrams.net/) for the ERD
 - [Ecotrust](https://ecotrust-canada.github.io/markdown-toc/) - used to generate table of contents
 - [GMAIL](https://mail.google.com)
-- [Google Fonts](https://fonts.google.com/) - for typology
+- [Google Fonts](https://fonts.google.com/) - for typography
 - [Google Images](https://images.google.co.uk/) - for the band and venue logos
 - [HTML](https://en.wikipedia.org/wiki/HTML) - used to build main site content
 - [JavaScript](https://simple.wikipedia.org/wiki/JavaScript) - used for all interactivity within the website
@@ -763,7 +885,7 @@ Below are the list of resources that I used to complete this project along with 
 
 ### 5.2 Acknowledgements
 
-This project could not have been possible without the support of the following people:
+This project could not have been possible without the support from the following people:
 
 *Julia Brown* - my loving partner who took over the reins at home and kept me fed and watered throughout,
 
