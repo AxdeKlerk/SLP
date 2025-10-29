@@ -2,110 +2,7 @@
 
 ![searchlight promotions logo and text](DOCS/images/logo.jpg)
 
-# Table of contents
-- [Searchlight Promotions (Upgrade)](#searchlight-promotions-upgrade)
-- [Table of contents](#table-of-contents)
-  - [1. Introduction](#1-introduction)
-    - [1.1 The Aim, Purpose and Goal of the Site](#11-the-aim-purpose-and-goal-of-the-site)
-    - [1.2 Target Audience](#12-target-audience)
-  - [2. Planning and Development](#2-planning-and-development)
-    - [2.1 Project Statement and ERD](#21-project-statement-and-erd)
-    - [2.1.1 Identified Entities (Key Nouns):](#211-identified-entities-key-nouns)
-    - [2.1.2 Key Relationships:](#212-key-relationships)
-    - [2.1.3 ERD (Entity Relationship Diagram)](#213-erd-entity-relationship-diagram)
-    - [2.2 Wireframes](#22-wireframes)
-    - [2.3 User Journeys](#23-user-journeys)
-    - [2.4 Agile Methodology](#24-agile-methodology)
-      - [2.4.1 Epics \& their User Stories](#241-epics--their-user-stories)
-    - [2.4.1 Core Epic](#241-core-epic)
-      - [2.4.1.1 Site Identification](#2411-site-identification)
-      - [2.4.1.2 Navigation](#2412-navigation)
-      - [2.4.1.3 Search](#2413-search)
-      - [2.4.1.4 Contact Form](#2414-contact-form)
-      - [2.4.1.5 Footer](#2415-footer)
-      - [2.4.1.6 Base Template](#2416-base-template)
-    - [2.4.2 Products Epic](#242-products-epic)
-      - [2.4.2.1 Event Listings](#2421-event-listings)
-      - [2.4.2.2 Event Detail Page — Ticket Oversell Guardrail](#2422-event-detail-page--ticket-oversell-guardrail)
-      - [2.4.2.3 Ticket Availability Tracking — Validation Error Message](#2423-ticket-availability-tracking--validation-error-message)
-      - [2.4.2.4 Roxoff Page \& Event Tickets](#2424-roxoff-page--event-tickets)
-    - [2.4.3 Basket Epic](#243-basket-epic)
-      - [2.4.3.1 Add to Basket](#2431-add-to-basket)
-      - [2.4.3.2 View Basket](#2432-view-basket)
-      - [2.4.3.3 Update Basket — Basket Quantity Clamping](#2433-update-basket--basket-quantity-clamping)
-      - [2.4.3.4 Remove from Basket](#2434-remove-from-basket)
-      - [2.4.3.5 Basket Totals](#2435-basket-totals)
-    - [2.4.4 User Epic](#244-user-epic)
-      - [2.4.4.1 Add Required Email Field to Sign Up](#2441-add-required-email-field-to-sign-up)
-      - [2.4.4.2 Sign Up — Input Text Visibility Fix](#2442-sign-up--input-text-visibility-fix)
-      - [2.4.4.3 Log In](#2443-log-in)
-      - [2.4.4.4 Password Reset](#2444-password-reset)
-      - [2.4.4.5 Log Out](#2445-log-out)
-      - [2.4.4.6 Profile — Delete Selected Orders](#2446-profile--delete-selected-orders)
-      - [2.4.4.7 Email Confirmations (Backlog – Not MVP)](#2447-email-confirmations-backlog--not-mvp)
-      - [2.4.4.8 Order Confirmation Page](#2448-order-confirmation-page)
-      - [2.4.4.9 Order History in Profile](#2449-order-history-in-profile)
-    - [2.4.5 Checkout \& Payments Epic](#245-checkout--payments-epic)
-      - [2.4.5.1 Checkout Page — Proceed to Payment Button Routing](#2451-checkout-page--proceed-to-payment-button-routing)
-      - [2.4.5.2 Order Summary Event Display](#2452-order-summary-event-display)
-      - [2.4.5.3 Delivery and Booking Fees Carry Over to Order Summary](#2453-delivery-and-booking-fees-carry-over-to-order-summary)
-      - [2.4.5.4 Checkout Summary Fee and Total Calculations](#2454-checkout-summary-fee-and-total-calculations)
-      - [2.4.5.5 Checkout and Payment Summary Totals](#2455-checkout-and-payment-summary-totals)
-      - [2.4.5.6 Basket and Checkout Totals Calculation](#2456-basket-and-checkout-totals-calculation)
-      - [2.4.5.7 Delivery Charge Message](#2457-delivery-charge-message)
-      - [2.4.5.8 Payment Integration and Deployment Testing](#2458-payment-integration-and-deployment-testing)
-    - [2.4.6 Webhooks \& Integrations Epic](#246-webhooks--integrations-epic)
-      - [2.4.6.1 Invalid Application ID Error](#2461-invalid-application-id-error)
-      - [2.4.6.2 Payment Link API](#2462-payment-link-api)
-      - [2.4.6.3 Webhook Verification](#2463-webhook-verification)
-      - [2.4.6.4 Order Status Update via Square Webhook](#2464-order-status-update-via-square-webhook)
-      - [2.4.6.5 Square Webhook Integration](#2465-square-webhook-integration)
-      - [2.4.6.6 Square Payment Verification (Admin Action)](#2466-square-payment-verification-admin-action)
-      - [2.4.6.7 Square Sandbox Order Creation and Webhook Verification](#2467-square-sandbox-order-creation-and-webhook-verification)
-    - [2.4.7 DevOps Epic](#247-devops-epic)
-      - [2.4.7.1 Deployment](#2471-deployment)
-      - [2.4.7.2 400 Error Page](#2472-400-error-page)
-      - [2.4.7.3 500 Error Page — Custom 404 and 500 Pages with Back Navigation](#2473-500-error-page--custom-404-and-500-pages-with-back-navigation)
-  - [3. Features](#3-features)
-    - [3.1 Home Page](#31-home-page)
-      - [3.1.1 Site Navigation](#311-site-navigation)
-      - [3.1.1.1 Navbar](#3111-navbar)
-      - [3.1.1.2 Hamburger](#3112-hamburger)
-      - [3.1.1.1 User Greeting](#3111-user-greeting)
-    - [3.2 About Page](#32-about-page)
-    - [3.3 Events Page](#33-events-page)
-      - [3.3.1 Events Dropdown](#331-events-dropdown)
-    - [3.4 Merch](#34-merch)
-      - [3.4.1 Merch List](#341-merch-list)
-      - [3.4.2 Merch Detail](#342-merch-detail)
-  - [4. Debugging, Testing, Deployment and Future Developments](#4-debugging-testing-deployment-and-future-developments)
-    - [4.1 Debugging](#41-debugging)
-    - [4.2 Testing](#42-testing)
-    - [4.3 Deployment](#43-deployment)
-      - [4.3.1 Create a GitHub Repository](#431-create-a-github-repository)
-      - [4.3.2 Clone the Repository to VS Code](#432-clone-the-repository-to-vs-code)
-      - [4.3.3 Create and Activate a Virtual Environment](#433-create-and-activate-a-virtual-environment)
-      - [4.3.4 Install Project Dependencies](#434-install-project-dependencies)
-      - [4.3.5 Prepare the Project for Heroku](#435-prepare-the-project-for-heroku)
-      - [4.3.6 Set Up a Heroku Account and CLI](#436-set-up-a-heroku-account-and-cli)
-      - [4.3.7 Create a Heroku App](#437-create-a-heroku-app)
-      - [4.3.8 Push Your Project to Heroku](#438-push-your-project-to-heroku)
-      - [4.3.9 Configure Environment Variables on Heroku](#439-configure-environment-variables-on-heroku)
-      - [4.3.10 Final Project Setup on Heroku](#4310-final-project-setup-on-heroku)
-      - [4.3.11 Open Your Live Site](#4311-open-your-live-site)
-    - [4.4 Future Developments](#44-future-developments)
-      - [4.4.1 Email Verification and Account Confirmation](#441-email-verification-and-account-confirmation)
-      - [4.4.2 Enhanced Order Confirmation Emails](#442-enhanced-order-confirmation-emails)
-      - [4.4.3 Merchandise and Ticket Download Functionality](#443-merchandise-and-ticket-download-functionality)
-      - [4.4.4 Admin Dashboard Enhancements](#444-admin-dashboard-enhancements)
-      - [4.4.5 Payment Gateway Expansion](#445-payment-gateway-expansion)
-      - [4.4.6 SEO and Performance Optimisation](#446-seo-and-performance-optimisation)
-      - [4.4.7 Accessibility and UX Refinement](#447-accessibility-and-ux-refinement)
-      - [4.4.8 Testing and Continuous Integration](#448-testing-and-continuous-integration)
-      - [4.4.12 Live Launch Phase](#4412-live-launch-phase)
-  - [5. Credits and Acknowledegements](#5-credits-and-acknowledegements)
-    - [5.1 Credits](#51-credits)
-    - [5.2 Acknowledgements](#52-acknowledgements)
+## Table of contents
 
 ---
 
@@ -113,13 +10,17 @@
 
 ## 1. Introduction
 
-This project is the natural progression of my first project *'Searchlight Promotions'*. For my first project I asked a fellow metal head, who runs a music promotion company in and for the Norwich rock and metal scene, if I could design him a website for my project, as he did not have one. After completing and submitting the project he asked me to maintain it going forward as he absolutely loved it. This ultimately meant that I had retained my first customer, and for the conclusion of this course, it is timely that the website is upgraded as the business has developed, my skills have progressed and as a true work-experience piece of practical evidence.
+This project is the natural progression of my first submission, *'Searchlight Promotions'*. For my first project I asked a fellow metal head, who runs a music promotion company in and for the Norwich rock and metal scene, if I could design him a website for my project, as he did not have one. After completing and submitting the project he asked me to maintain it going forward as he absolutely loved it. This ultimately meant that I had retained my first customer, and for the conclusion of this course, it is timely that the website is upgraded as the business has developed, my skills have progressed and as a true work-experience piece of practical evidence.
 
 Project 1 can be found here in my *Github* repository (as it was submitted for P1): https://github.com/AxdeKlerk/Searchlight-Promotions, and here as the current working website: https://www.searchlightpromotions.co.uk. 
 
-What is evident here is that the website has already had various upgrades, notable the inclusion of the link to the *ROXOFF* page using the logo in the navbar, shown here in the mobile view, along with the upkeep of the gig listings:
+What is evident here is that the website has already had various upgrades, notably the inclusion of the link to the *ROXOFF* page using the logo in the navbar, shown here in the mobile view, along with the upkeep of the gig listings:
 
 ![roxoff logo shown in mobile view navbar](DOCS/images/nav-mobile.jpg)
+
+**Live Site:** [https://slp-upgrade-910f8354c673.herokuapp.com](https://slp-upgrade-910f8354c673.herokuapp.com)  
+**Repository:** [https://github.com/AxdeKlerk/SLP](https://github.com/AxdeKlerk/SLP)
+
 
 ### 1.1 The Aim, Purpose and Goal of the Site
 
@@ -131,17 +32,19 @@ The goal of the upgrade is to bring the project to the same level of development
 
 ### 1.2 Target Audience
 
-The target audience is niche and focuses only on the rock and metal musicians and fans. It is specifically aimed at an aging demographic of rock and metal fans who don’t rely on social media for gig information in Norwich, the new rise in younger rock and metal fans who are looking to support up-and-coming artists locally, emerging (and unsigned) rock and metal artists looking for promotion in Norwich, other music promoters who may want to collaborate, as well as music journalists wanting to cover gigs.
+The target audience is niche and focuses only on the rock and metal musicians and fans in Norwich. It is specifically aimed at an aging demographic of rock and metal fans who don’t rely on social media for gig information in Norwich, the new rise in younger rock and metal fans who are looking to support up-and-coming artists locally, emerging (and unsigned) rock and metal artists looking for promotion in Norwich, other music promoters who may want to collaborate, as well as music journalists wanting to cover gigs.
 
 [add merch and ticket sales]
+
+---
 
 ## 2. Planning and Development
 
 ### 2.1 Project Statement and ERD
 
-This project involves developing a web application focused on promoting and managing rock and metal music **events** held at a **single fixed venue**. The website allows **users** to either **log in** or browse as **guests**. Logged in users have the the ability to browse upcoming events, **search for merchandise and/or tickets**, add them to a **basket** and **purchase** event tickets and merch.
+This project involves developing a web application focused on promoting and managing rock and metal music **events** held at a **single fixed venue**. The website allows **users** browse as **guests** or **log in** for a personalised experience. Logged in users have the the ability to browse upcoming events, **search for merchandise and/or tickets**, add them to a **basket** and **purchase** event tickets and merch.
 
-Each event offers **tickets for sale**, which users can select and add to their **basket** alongside any **merchandise**. The store offers official **products** such as shirts, hoodies, and accessories, which can be **filtered by product description**. Users can then proceed to **checkout**, where they provide payment securely via **Stripe**.
+Each event offers **tickets for sale** thet users can add to their **basket**, alongside any **merchandise**. The store offers official **products** such as shirts, hoodies, and accessories, which can be **filtered by product description**. Users can then proceed to **checkout**, where they provide payment securely via **Square**.
 
 Users will also be able to view and **track the status of their orders**,  
 receive **email confirmations** for purchases, and search for **artists and bands** to discover more music.
@@ -176,6 +79,8 @@ This structured statement sets a clear foundation for building an ERD and a rela
 
 ![erd](DOCS/images/erd_v2.jpg)
 
+---
+
 ### 2.2 Wireframes
 After completing the first draft of the ERD I draw it out visually as a low fidelity-wireframe for desktops in *Balsamic*, as shown here:
 
@@ -185,7 +90,7 @@ After completing the first draft of the ERD I draw it out visually as a low fide
 
 ![low-fidelity mobile website](DOCS/images/wireframe-mobile.jpg)
 
-Having completed the above I went on to create a high-fidelity wireframe in *Figma*, focusing only on the desk top as everything would be responsive and feature as the low-fidelity wireframe for mobiles depicts above. All 3 versions focus on the functionality of the navbar. Meaning that all 3 were drawn around the navbar and plotted out as progressions. 
+Having completed the above I went on to create a high-fidelity wireframe in *Figma*, focusing only on the desktop as everything would be responsive and feature as the low-fidelity wireframe for mobiles depicts above. All 3 versions focus on the functionality of the navbar. Meaning that all 3 were drawn around the navbar and plotted out as progressions. 
 
 The high-fidelity wireframe show below helps to fully visualise the various screens and how they would look as a finished project. I decided to use some of the styling from my P3 for the tilting merch to create a more visually appealing view of the merch. This came about after doing some research on other websites (mainly rock and metal bands that I know and two festival sites that I go to each year) as to how they displayed their merch on their dedicated pages. 
 
@@ -193,7 +98,9 @@ The findings were mixed, however, most of the websites seemed to display their m
 
 Slipknot's merch page stood out amoungst the rest and the decidion was made that, this project's website would follow Slipknot's style of layout, but make it different to anything else that could be found, by including the tilt styling.
 
-![high-fidelity desktop wireframe](DOCS/images/hf-wireframe-desktop.jpg)
+![High-fidelity desktop wireframe](DOCS/images/hf-wireframe-desktop.jpg)
+
+---
 
 ### 2.3 User Journeys
 
@@ -209,11 +116,13 @@ Below is the new user journey as first imagined. The items in red are still 3rd 
 
 ![imagined new user journey](DOCS/images/proposed-user-journey.jpg)
 
+---
+
 ### 2.4 Agile Methodology
 
 This project was developed using Agile methodologies to ensure a user-focused, iterative, and flexible development process. Key Agile principles were applied throughout.
 
-Having plotted the new user journey and user stories, 'Epics' were extracted form the user journey into the categories that follow. Each 'Epic' represents an App in the *Django* project design. Under each 'Epic', user stories were created using the "As a **user** I want to **action** so that I can **benefit**" statement to ensure a user story driven development and that all development decisions were tied directly to user needs. From each user story actionable tasks were created representing the acceptance criteria for each user story. 
+Having plotted the new user journey and user stories, 'Epics' were extracted from the user journey into the categories that follow. Each 'Epic' represents an App in the *Django* project design. Under each 'Epic', user stories were created using the "As a **user** I want to **action** so that I can **benefit**" statement to ensure a user story driven development and that all development decisions were tied directly to user needs. From each user story actionable tasks were created representing the acceptance criteria for each user story. 
 
 The project was created in *[Github](https://github.com/users/AxdeKlerk/projects/7)*.
 
@@ -223,17 +132,17 @@ Each epic was added to the Project Board using labels as can be seen here:
 
 ![project board](DOCS/images/project-board-v2.jpg)
 
-From the collapsable Core Epic, for example, the below details a descrption of the covered features, with the first 3 user stories below, and the tasks listed below the user stories:
+From the collapsable Core Epic, for example, the below details a description of the covered features, with the first 3 user stories below, and the tasks listed below the user stories:
 
 ![core epic](DOCS/images/core-epic.jpg)
 
-The below shows the Site Indentification User Story as well as its corresponding Tasks List, as an example:
+The below shows the Site Identification User Story as well as its corresponding Tasks List, as an example:
 
 ![site identification user story](DOCS/images/user-site-identification.jpg)
 
-The above is a representation of the Kaban board and all its components. As the project developed more user stories and tasks were created. Throughout the design of the website this project board was referenced to keep the scope of the project realistic and on track. For convenience the project board can be found here: ![project board](DOCS/images/project-board.jpg)
+The above is a representation of the Kanban board and all its components. As the project developed more user stories and tasks were created. Throughout the design of the website this project board was referenced to keep the scope of the project realistic and on track. For convenience the project board can be found here: ![project board](DOCS/images/project-board.jpg)
 
-Below details all the Epic headings with their coresponding user stories. All user stories were tested and can be found in the [TESTING.md](TESTING.md).
+Below details all the Epic headings with their corresponding user stories. All user stories were tested and can be found in the [TESTING.md](TESTING.md).
 
 ### 2.4.1 Core Epic  
 
@@ -261,8 +170,6 @@ As a **user** I want to **see a basic footer with copyright information** so tha
   
 As a **developer** I want a **reusable base.html template** so that **all pages share the same layout, styling, and design consistency**.  
 
----
-
 ### 2.4.2 Products Epic  
 
 #### 2.4.2.1 Event Listings  
@@ -281,7 +188,6 @@ As a **user**, I want to **be prevented from purchasing more tickets than are av
   
 As a **user**, I want to **access the Roxoff page** so that **I can easily view and purchase tickets for upcoming events promoted under the Roxoff brand**.  
 
----
 
 ### 2.4.3 Basket Epic  
 
@@ -305,7 +211,6 @@ As a **user**, I want **to delete items from my basket** so that I **don’t pur
   
 As a **user**, I want to **see my basket total** so that I **know the total cost before checkout**.  
 
----
 
 ### 2.4.4 User Epic  
 
@@ -345,7 +250,6 @@ As a **user**, I want to **see an order confirmation page after completing my pa
   
 As a **logged-in user**, I want to **view my past orders in my profile page** so that I can **keep track of my purchase history and review order details at any time**.  
 
----
 
 ### 2.4.5 Checkout & Payments Epic  
 
@@ -381,7 +285,6 @@ As a **user**, I want to **clearly see how delivery costs are calculated when bu
   
 As a **user**, I want to **complete a secure checkout using the *Square* payment form** so that I can **confidently pay for my order online**.  
 
----
 
 ### 2.4.6 Webhooks & Integrations Epic  
 
@@ -413,7 +316,6 @@ As a **site owner**, I want to **verify payment statuses directly from *Django* 
   
 As a **site owner**, I want **my checkout process to automatically create *Square* orders and payments in the sandbox environment** so that I can **verify real-time payment updates before going live**.  
 
----
 
 ### 2.4.7 DevOps Epic  
 
@@ -427,52 +329,244 @@ As a **user**, I want to **see a friendly 400 error page when I make a bad reque
 
 #### 2.4.7.3 500 Error Page — Custom 404 and 500 Pages with Back Navigation  
   
-As a **user**, I want to **see branded and consistent error pages when something goes wrong, with a back button that takes me to my previous page**, so I **don’t lose my place on the site**.  
+As a **user**, I want to **see branded and consistent error pages when something goes wrong, with a back button that takes me to my previous page**, so I **don’t lose my place on the site**. 
+
+#### 2.5 Typography and Colour Palette
+
+The following design choices were made to ensure visual consistency, accessibility, and brand recognition across all pages. The colour palette and typography together create a unified aesthetic that reflects the energy and identity of the Norwich rock and metal scene.  
+
+
+#### 2.5.1 Typography
+
+The website uses a combination of *Protest Revolution* for the *Searchlight Promotions* logo and *Geist Mono* for body text, both sourced from *Google Fonts*. These fonts were chosen for their modern, legible appearance and compatibility with the high-contrast colour palette. Together, they balance the bold attitude of the brand with clean readability across desktop and mobile views. Both fonts were carried over from the first iteration of *Searchlight Promotions*.
+
+![Logo](DOCS/images/logo.jpg)
+
+
+#### 2.5.2 Colour Palette
+
+The colour palette follows a dark rock aesthetic consistent with *Searchlight Promotions’* brand identity. A dominant black (`#000000`) background sets the tone, contrasted with off-white (`F5F5F5`) text for readability and a neon green accent (`#11ED73`) used throughout for borders, buttons, and hover effects. In addition the colour (`#888`) was used for placeholder text and (`E63946`) was used for 'red' flash messages as well as the delete buttons rather than (`FF0000`) to avoid any colour bleeding due to it's brightness. This combination reinforces the energy of live rock and metal shows while maintaining professional clarity across all devices.
+
+![Colour palette](DOCS/images/colour-palette.jpg)
+
+---
 
 ## 3. Features
 
+The features of *Searchlight Promotions (Upgrade)* were designed to showcase both functionality and usability while staying true to the brand’s heavy rock identity. Each section of the site serves a clear purpose — from event promotion and merch sales to ticket booking and secure payments. The layout, styling, and navigation all work together to create a professional, responsive, and accessible experience for users across devices.  
 
 ### 3.1 Home Page
 
+The home page immediately sets the tone and identity of *Searchlight Promotions*, combining the logo, hero image, and promotional tagline to confirm the site’s focus on rock and metal events. It features a clean navigation bar at the top and a footer that stays consistent across all pages. The layout draws users toward the latest events and merch, encouraging deeper browsing throughout the site.
 
-#### 3.1.1 Site Navigation
+![Home page](DOCS/images/home-page.jpg)
+
+#### 3.1.1 Site Navigation  
+
+Site navigation is handled through a persistent Bootstrap navbar that adapts across all screen sizes. It gives users instant access to every key section of the site — Home, About, Events, Merch, Roxoff, Search, Contact, Account and the Basket — ensuring simple and predictable movement throughout. 
+
+#### 3.1.1.1 Navbar  
+
+The navbar contains the site logo, core links, and the *Roxoff* logo link that takes users directly to ticketed events. It uses *Bootstrap*’s responsive collapse behaviour so that on smaller screens, links are tucked neatly into the hamburger menu.  
+
+![Navbar for desktop](DOCS/images/nav-bar-desktop.jpg)
+
+![Navbar for mobile](DOCS/images/nav-mobile.jpg)
+
+Additionally, the three distinct navbar elements — the logo header, the navigation links, and the user greeting — have been separated but remain fixed in position. This means that as the user scrolls up or down the page, each bar stays visible with intentional spacing between them to break up what would otherwise be a large black block across the top of the screen. While unconventional, this design choice was a deliberate decision to introduce more visual rhythm and make the header feel lighter and more dynamic rather than a solid, heavy band of black.  
+
+![Desktop navbar layout](DOCS/images/navbar-split.jpg)
+
+#### 3.1.1.2 Hamburger  
+
+On mobile, the navbar collapses into a hamburger icon that slides open as an off-canvas menu. The design maintains full site accessibility on small screens without cluttering the layout.
+
+![Navbar hamburger menu](DOCS/images/navbar-hamburger-menu.jpg)
+
+#### 3.1.1.3 User Greeting  
+
+When logged in, the navbar greets the user by name, helping to reinforce a sense of personalisation. This is handled through a *Django* context processor, which pulls the logged-in user’s information into the base template so that it displays across the entire site. 
+
+![User greeting](DOCS/images/user-greeting.jpg)
+
+### 3.2 About Page  
+
+The About page provides a brief overview of *Searchlight Promotions* and its work within the Norwich rock and metal community. It includes the main promotional image and concise text about the company’s purpose, keeping the design minimal but true to the site’s overall branding.
+
+![About page](DOCS/images/about-page.jpg)
+
+### 3.3 Events Page  
+
+The Events page dynamically displays all upcoming events pulled from the database through *Django*’s ORM. Each event card includes an image, title, artist links, venue, and ticket information. Cards are fully responsive and stack neatly on smaller screens, giving users a consistent experience across devices. Each artist, in green, is "click-able" and directs the user to their bio.
+
+![Events page](DOCS/images/events-page.jpg)
+
+#### 3.3.1 Events Dropdown  
+
+A dropdown filter at the top of the page allows users to view events by month. This is implemented through a simple query parameter passed to the *Django* view, filtering the event queryset into previous and upcoming gigs, before rendering.
+
+![Events dropdown menu](DOCS/images/events-dropdown.jpg)
+
+### 3.4 Merch  
+
+The Merch section showcases the available merchandise for sale, using *Bootstrap* card layouts for consistency with the Events page. Products are retrieved dynamically from the database and include product images, descriptions, prices, and links to the detail page.  
+
+#### 3.4.1 Merch List Page  
+
+This view lists all available products with a clean card design and quick “View” buttons. The layout automatically adapts to mobile screen widths using *Bootstrap* grid classes. Pagination is also applied to ensure users can browse comfortably without long scrolls. 
+
+![Merch list](DOCS/images/merch-list.jpg)
+
+#### 3.4.2 Merch Detail Page  
+
+Each product card links to a detailed product page where users can view an enlarged image, product description, and price. Backend logic dynamically retrieves the selected product using its primary key and displays it through a *Django* detail view.
+
+![Merch detail](DOCS/images/merch-detail.jpg)
+
+#### 3.5 ROXOFF Page
+
+The ROXOFF page was created as a dedicated promotional section within the site, showcasing *Searchlight Promotions*’ flagship annual event. It highlights the full festival lineup, venue details, and individual day tickets, using a bold visual identity that mirrors the festival’s branding.  
+
+Each event card on this page is styled to match the darker, heavier tone of the ROXOFF artwork, with red and green neon accents that connect back to the main site palette. All event data — including artist line-ups, venue information, gig dates, and ticket pricing — are dynamically pulled from the database through *Django* model relationships, ensuring that updates in the admin panel automatically appear on the front end.  
+
+Below shows the full ROXOFF page layout with the main event poster, detailed artist lineup, and dynamic ticket cards generated from the database. Again, all artists names are links to their bios
+
+![Roxoff page](DOCS/images/roxoff-page.jpg)
+
+### 3.6 Search Function  
+
+The search feature allows users to find artists, venues, or merchandise directly from the dropdown in the main navigation bar. Each category has its own dedicated search input field styled to match the site’s neon theme, with subtle green borders and black backgrounds for visual consistency.  
+
+Search queries are handled through *Django* view logic, which checks the selected input type (artist, venue, or merch) and filters results dynamically from the corresponding model. This ensures that all searches are fast, relevant, and accurate without needing separate pages for each search type.  
+
+Below shows the search dropdown menus for both desktop and mobile, with individual input fields for Artist, Venue, and Merch.  
+
+![Search dropdown for desktop](DOCS/images/search-dropdown.jpg)  
+
+![Search dropdown for mobile](DOCS/images/search-dropdown-mobile.jpg)
+
+Search results for “a” (artist), “e” (venue), and “hoodie” (merch) demonstrate the live database filtering and consistent card styling across all result types.  
+
+![Artist Search Results](DOCS/images/search-artisits.jpg) 
+![Venue Search Results](DOCS/images/search-venues.jpg)  
+![Merch Search Results](DOCS/images/search-hoodies.jpg)
+
+### 3.7 Contact Page  
+
+The Contact page provides users with a straightforward and visually consistent way to reach *Searchlight Promotions*. The page includes a short, informal introduction written in the same down-to-earth tone as the brand’s social presence, encouraging users to “tap, tap, tap (below)” to get in touch.  
+
+The form itself captures the user’s **first name**, **last name**, **email**, **phone number**, and **message**, maintaining a minimalist layout with the same green-on-black neon theme used throughout the site. A direct link to the company’s ***Facebook page*** is also included for users who prefer to connect via social media.  
+
+From a backend perspective, the form is wired through *Django*’s view logic and template rendering, validating all input fields before submission. Although messages are not currently stored in the database (to maintain simplicity for MVP), all data is correctly formatted and ready for future backend integration.  
+
+Below shows the Contact page layout with the form fields, “Send” button, and external *Facebook* link for additional engagement.
+
+![Contact page](DOCS/images/contact-page.jpg)
 
 
-#### 3.1.1.1 Navbar
+### 3.8 Account Section  
 
+The Account section manages all user authentication and profile interactions through a clean dropdown in the navbar. Depending on login status, users either see **Log In**, **Sign Up**, and **Forgot Password**, or —once logged in— **Orders** and **Logout**.  
 
-#### 3.1.1.2 Hamburger
+#### 3.8.1 User Authentification
 
+The authentication flow uses *Django*’s built-in `User` model and `auth` views, ensuring secure session management and form validation. Each page (login, signup, reset password, and forgot username) was fully restyled to match the site’s rock and metal aesthetic — black backgrounds, neon green typography, and consistent spacing.  
 
-#### 3.1.1.1 User Greeting
+When a user logs in, a personalised greeting (“Hello [username]”) appears in the navbar, confirming successful authentication. Upon logout, the dropdown resets to its default options.  
 
+The below images show:  
+- The dropdown menu options for logged-out and logged-in users  
+- The login and password reset screens  
+- The confirmation and success pages in sequence, demonstrating the complete authentication flow  
+- The final logged-in greeting and success confirmation page
+- Signup page 
 
-### 3.2 About Page
+![Account Dropdown Logged Out](DOCS/images/account-logged-in.jpg)  
+![Account Dropdown Logged In](DOCS/images/account-login.jpg)  
+![Login Page](DOCS/images/login.jpg)  
+![Reset Password](DOCS/images/forgot-password.jpg)  
+![Check Email](DOCS/images/forgot-redirect.jpg)  
+![Forgot Username](DOCS/images/forgot-username.jpg)  
+![Login Success](DOCS/images/login-success.jpg)
+![Singup](DOCS/images/signup.jpg)
 
+#### 3.8.2 Account Orders Page
 
-### 3.3 Events Page
+Once logged in, users can access their **Orders** via the Account dropdown. The Orders page is divided into two clear sections: **Orders in Progress** and **Order History**.  
 
+The **Orders in Progress** section lists any active, unpaid orders. Each order includes a breakdown of items, quantities, and total costs, along with a **Checkout** button for quick access to payment. Users can also select and delete specific pending orders if they no longer wish to proceed — a useful feature for managing incomplete transactions.  
 
-#### 3.3.1 Events Dropdown
+The **Order History** section displays all completed and paid orders. Each entry clearly shows the order number, completion date, and all associated items, with pricing details to maintain transparency.  
 
+From a backend perspective, this page pulls data directly from the custom **Order** model, filtered by the currently logged-in user. The two categories — “in progress” and “completed” — are dynamically generated based on the order status field.  
 
-### 3.4 Merch
+![Account orders page](DOCS/images/account-orders.jpg)
 
-#### 3.4.1 Merch List
+### 3.9 Basket  
 
+The Basket section brings together all user selections — both **event tickets** and **merchandise** — in a clear, minimal layout designed to keep checkout simple. Each item includes its image, name, quantity selector, price, and any associated **booking** or **delivery** fees.  
 
-#### 3.4.2 Merch Detail
+At the top, a **“Continue Shopping”** button allows users to easily return to browsing events or merch without losing their basket progress.  
 
+A key feature of this system is its **basket persistence**. Even if the user navigates away from the site or proceeds to the payment page and returns, their previous basket is automatically restored. This ensures users don’t lose their items due to navigation errors or incomplete transactions — a critical UX consideration for e-commerce reliability.  
+
+![Basket page](DOCS/images/basket-page.jpg)
+
+From a backend perspective, this is handled by storing basket data in the session and syncing it with the user’s active **Order** object. When a user revisits the basket or logs back in, Django checks for an active “pending” order and restores it to the template.  
+
+The **Delete** button beside each item allows for instant removal, and basket totals dynamically update to reflect any delivery or booking fee adjustments.  
+
+The dropdown under **Basket** in the navbar provides quick access to both the **View Basket** and **Order Summary** pages for a smooth flow from shopping to checkout.  
+
+![Basket dropdown](DOCS/images/basket-dropdown.jpg)
+
+### 3.10 Order Summary  
+
+The **Order Summary** page provides users with a clear overview of their pending order before they proceed to payment. Each order displays the list of items, quantities, prices, and any associated **delivery** or **booking** fees, ensuring complete transparency.  
+
+The layout is intentionally minimal, using the same neon-green borders and monospaced font to keep the styling consistent with the rest of the site. The total cost is calculated dynamically and displayed at the bottom of the order box.  
+
+A **“Back to Basket”** button at the top allows users to return and make adjustments before continuing to payment, while the **“Proceed to Payment”** button initiates the secure checkout process via *Square*.  
+
+Behind the scenes, the page pulls order data directly from the **Order** and **OrderItem** models, filtered by the current user and order ID. This guarantees that only the logged-in user can access and view their order details.
+
+![Order summary page](DOCS/images/order-summary.jpg)
+
+### 3.11 Payment Summary  
+
+The **Payment Summary** page finalises the checkout process by displaying the user’s order items, total cost, and all relevant billing and shipping details before confirming payment.  
+
+At the top, users see a breakdown of their order, including each item’s price and any applicable **delivery** or **booking** fees, carried forward directly from the Basket and Order Summary stages.  
+
+The **Billing Details** form pre-fills automatically from the user’s saved profile, reducing friction during checkout. Users can update their name, address, and contact information if required. Below this, two radio buttons allow users to either use their billing address for shipping or enter a separate shipping address if needed.  
+
+The secure **Square Payment Form** is embedded directly within the page, allowing for seamless payment processing. Users simply enter their card details (number, expiry, and CVV) to complete the transaction. 
+
+![Payment Summary Page](DOCS/images/payment-summary.jpg)
+
+Once submitted, the payment data is securely tokenised and sent to the backend for verification, ensuring sensitive information is never stored on the server. A small message below the payment button confirms that transaction fees are included in the final total.  
+
+The overall layout remains consistent with the site’s minimalist neon theme, maintaining focus and clarity throughout the checkout experience.
+
+Once completed the user is given a confirmation that their order has been made.
+
+![Order confirmation](DOCS/images/order-confirmation.jpg)
+
+#### 3.4.12 Summary  
+
+All features across the site were designed with simplicity, speed, and responsive behaviour in mind. Every page follows a consistent visual theme, ensuring a cohesive experience for both fans and artists on any device. The combination of *Bootstrap*’s responsive utilities and *Django*’s backend logic keeps the site clean, efficient, and scalable for future upgrades.  
+
+---
 
 ## 4. Debugging, Testing, Deployment and Future Developments
 
 ### 4.1 Debugging
 
-Please refer to the debugging documentation for detailed descritions of all bugs found, fixed and learned from. It can be found here: [DEBUGGING.md](DEBUGGING.md)
+Please refer to the debugging documentation for detailed descriptions of all bugs found, fixed and learned from. It can be found here: [DEBUGGING.md](DEBUGGING.md)
 
 ### 4.2 Testing
 
-Please refer to the testing documentation for detailed descritions of the tests completed found here: [TESTING.md](TESTING.md)
+Please refer to the testing documentation for detailed descriptions of the tests completed found here: [TESTING.md](TESTING.md)
 
 ### 4.3 Deployment
 
@@ -618,14 +712,14 @@ To ensure long-term maintainability, additional automated testing and CI/CD work
 - Add visual regression testing for core UI components.  
 
 
-#### 4.4.12 Live Launch Phase  
+#### 4.4.9 Live Launch Phase  
 Once all MVP features have been reviewed and finalised, *Searchlight Promotions* will transition from the sandbox testing environment to full live deployment.  
 - *Square* Sandbox will be replaced with a verified live account.  
 - Email delivery will use a dedicated transactional service such as *SendGrid*.  
 - Monitoring tools (e.g., *Sentry* or *New Relic*) will be configured for uptime and error tracking.  
 - The deployed URL will be changed to www.searchlightpromotions.co.uk and replace the existing live site
 
-**Summary:**  
+#### 4.4.9.1 Summary  
 These enhancements will transform *Searchlight Promotions* upgrade from a functional MVP into a fully scalable, user-centric live product. The priority roadmap focuses first on user trust (email verification), improved checkout transparency (enhanced confirmation emails), and admin efficiency (downloadable invoices and dashboards).
 
 
@@ -633,7 +727,7 @@ These enhancements will transform *Searchlight Promotions* upgrade from a functi
 
 ### 5.1 Credits
 
-Below are the list of resources that I used to complete this project along with aknowledgements for the people who have supportedme and helped me test my ideas.
+Below are the list of resources that I used to complete this project along with acknowledgements for the people who have supportedme and helped me test my ideas.
 
 - Short Pixel for image compressions
 - The following resources were used to help with the development of the website:
@@ -647,7 +741,7 @@ Below are the list of resources that I used to complete this project along with 
 - [Django](https://simple.wikipedia.org/wiki/Django_(web_framework)) - used for the backend of the website
 - [draw.io](https://app.diagrams.net/) for the ERD
 - [Ecotrust](https://ecotrust-canada.github.io/markdown-toc/) - used to generate table of contents
-- [GMAIL] (https://mail.google.com)
+- [GMAIL](https://mail.google.com)
 - [Google Fonts](https://fonts.google.com/) - for typology
 - [Google Images](https://images.google.co.uk/) - for the band and venue logos
 - [HTML](https://en.wikipedia.org/wiki/HTML) - used to build main site content
@@ -681,5 +775,5 @@ My study mates on my course - *Steve Powell*, *Robert Lewis* and *Jordan Acomba*
 
 *Code Institute* for all the course materials and allowing me the opportunity to do this course, and by no means least
 
-*Barry* (my dog) for reminding me that you can't be susuccessful at work without play times.
+*Barry* (my dog) for reminding me that work-life balance matters and that every developer needs playtime.
 
