@@ -14,6 +14,7 @@ This document has been restructured from my original DEBUGGING.md which listed e
     - [4.1.1.6 Template/Context Error](#4116-templatecontext-error)
     - [4.1.1.7 Search Input Responsive Sizing (Mobile) Issue](#4117-search-input-responsive-sizing-mobile-issue)
     - [4.1.1.8 Merch Search Functionality Issue](#4118-merch-search-functionality-issue)
+    - [4.1.1.9 Contact Form Email Confirmation and Redirect](#4119-contact-form-email-confirmation-and-redirect)
   - [4.1.2 BACKEND / LOGIC](#412-backend--logic)
     - [4.1.2.1 Logic Bug](#4121-logic-bug)
     - [4.1.2.2 Logic Error for Forgot Username View](#4122-logic-error-for-forgot-username-view)
@@ -170,6 +171,25 @@ I replaced the static `<input>` with a proper form pointing to `{% url 'products
 
 **Lesson Learned:**  
 Consistency between input names, form actions, and view logic is key. Even one mismatched `name` or `id` can break a working search feature.
+
+---
+
+#### 4.1.1.9 Contact Form Email Confirmation and Redirect
+
+**Bug:**  
+Originally, the contact form used *FormSubmit*, a third-party service that sent messages externally without backend control, from teh working version of *www.searchlightpromotions* website. This meant no confirmation email could be sent to users, and the redirect to the thank-you page was unreliable once switched to *Django* handling.  
+
+**Fix:**  
+Replaced the external `FormSubmit` action with a *Django*-based `ContactForm` and `contact_view`. The view now:
+- Validates all form inputs using *Django*’s form system.  
+- Sends two emails — one to the site owner with full message details, and one to the sender confirming receipt.  
+- Redirects to the dedicated **thank-you page** after successful submission.  
+Added inline field error handling with brand-styled validation messages using the `.invalid-feedback` class and the red colour `#E63946`.  
+
+**Lesson Learned:**  
+Always manage key user interactions like contact forms within *Django* itself to maintain full control over logic, validation, and user feedback. This not only improves reliability but also ensures consistent styling, secure data handling, and a smoother user experience.
+
+--- 
 
 ### 4.1.2 BACKEND / LOGIC
 

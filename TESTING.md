@@ -210,23 +210,28 @@ All results display cleanly with no redundant or missing entries.
 User Story:  
 As a **user** I want to **contact the promotions company** so that **my query reaches the right place**.  
 
-**What Was Tested:**
-- Confirmed form submission validation and email delivery.  
-- Tested form layout on multiple devices.  
-- Ensured error messages and success confirmations display clearly.  
+**What Was Tested:**  
+- Verified end-to-end form submission and email delivery (admin + user confirmation).  
+- Checked redirect to thank-you page after successful form submission.  
+- Validated inline error messages for required fields using *Django*’s `.invalid-feedback` class.  
+- Tested responsiveness and readability of form layout on multiple devices.  
 
 **Acceptance Criteria**  
-- [x] Email successfully delivered on submission.  
-- [x] Layout responsive and legible.  
-- [x] Clear success/error feedback shown to user.  
+- [x] Form validated all fields correctly.  
+- [x] Email successfully sent to the site owner.  
+- [x] Confirmation email sent to the user.  
+- [x] Redirect to thank-you page on success.  
+- [x] Clear inline error messages shown when validation fails.  
+- [x] Layout responsive and legible across devices.  
 
 **Tasks Completed**  
-- [x] Connected forms to backend handling logic.  
-- [x] Tested local and deployed email submissions.  
-- [x] Validated form accessibility and responsiveness.  
+- [x] Replaced FormSubmit with *Django* `ContactForm` and `contact_view`.  
+- [x] Configured dual email sending via SMTP settings.  
+- [x] Added field-level error display and consistent styling.  
+- [x] Tested validation, email flow, and redirects locally and in production.  
 
 **Notes**  
-Submission feedback and form transitions work smoothly with consistent styling.  
+The new *Django*-based contact system provides better user experience, reliable delivery, and visual consistency with the rest of the site. Email handling and validation now run entirely server-side, eliminating dependency on external services.
   
 
 #### 4.2.1.5 Footer
