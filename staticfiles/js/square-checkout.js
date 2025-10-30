@@ -1,12 +1,10 @@
-console.log("Square checkout JS loaded successfully!");
-
-// Wait until everything on the page is fully loaded
-window.addEventListener("load", async () => {
-  console.log("✅ Window fully loaded — starting Square init");
+// Wait for the DOM to be fully loaded
+document.addEventListener("DOMContentLoaded", async () => {
+  console.log("Window fully loaded — starting Square init");
 
   const configEl = document.getElementById("square-config");
   if (!configEl) {
-    console.error("Square config element not found.");
+    console.error("Square config element not found");
     return;
   }
 
@@ -48,7 +46,7 @@ window.addEventListener("load", async () => {
     // On button click
     payBtn.addEventListener("click", async () => {
       console.log("Pay button clicked");
-      statusEl.textContent = "Tokenizing card...";
+      statusEl.textContent = "Tokenizing card, this may take a few moments...";
       payBtn.disabled = true;
 
       const result = await card.tokenize();

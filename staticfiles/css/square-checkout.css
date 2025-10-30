@@ -1,23 +1,20 @@
-
 /* Inputs */
 .amount-input {
   max-width: 240px;
   margin: 0 auto;
   text-align: center;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #F5F5F5;
   padding: 0.5rem;
 }
-
 /* Card element box */
 .card-container {
   border: 2px solid #11ED73;
   border-radius: 8px;
   padding: 1rem;
   margin: 1rem 0;
-  background-color: #fff;
+  background-color: #F5F5F5;
 }
-
 /* Status messages */
 .status-msg {
   margin-top: 1rem;
@@ -27,5 +24,5 @@
   color: #11ED73;
 }
 .status-msg.error {
-  color: #e63946;
+color: #e63946;
 }

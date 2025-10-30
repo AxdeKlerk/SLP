@@ -1,7 +1,7 @@
+/* global bootstrap */
+
 document.addEventListener("DOMContentLoaded", function () {
-  // ========================================================
   // Highlight active nav link
-  // ========================================================
   const navLinks = document.querySelectorAll(".nav-link");
   const currentPath = window.location.pathname;
 
@@ -11,37 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-
-  // ========================================================
-  // Search helpers (artist, venue, merch)
-  // ========================================================
-  function handlePKSearch(inputId, apiUrl, redirectPrefix, notFoundMsg) {
-    const input = document.getElementById(inputId);
-    if (input) {
-      input.addEventListener("keydown", function (e) {
-        if (e.key === "Enter") {
-          e.preventDefault();
-          let query = this.value.trim();
-          if (query) {
-            fetch(`${apiUrl}?name=${encodeURIComponent(query)}`)
-              .then((response) => response.json())
-              .then((data) => {
-                if (data.id) {
-                  window.location.href = `${redirectPrefix}${data.id}/`;
-                } else {
-                  alert(notFoundMsg);
-                }
-              });
-          }
-        }
-      });
-    }
-  }
-
-
-  // ========================================================
   // Merch detail page (live price + size selection)
-  // ========================================================
   const totalPriceEl = document.getElementById("total-price");
 
   if (totalPriceEl) {
@@ -69,7 +39,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Size dropdown (merch detail)
     const sizeDropdown = document.getElementById("sizeDropdown");
-    const sizeItems = document.querySelectorAll('[aria-labelledby="sizeDropdown"] .dropdown-item');
+    const sizeItems = document.querySelectorAll(
+      '[aria-labelledby="sizeDropdown"] .dropdown-item'
+    );
     const hiddenSizeInput = document.getElementById("selected-size");
 
     sizeItems.forEach((item) => {
@@ -85,10 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-
-  // ========================================================
   // Basket page (quantity update auto-submit)
-  // ========================================================
   const basketQtyOptions = document.querySelectorAll(".basket-qty-option");
 
   basketQtyOptions.forEach((option) => {
@@ -116,11 +85,10 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
-  
-  // ========================================================
   // Mobile search input stretch
-  // ========================================================
-  const searchToggle = document.querySelector('[data-bs-toggle="collapse"][href="#offcanvasSearch"]');
+  const searchToggle = document.querySelector(
+    '[data-bs-toggle="collapse"][href="#offcanvasSearch"]'
+  );
   const offcanvas = document.querySelector(".offcanvas.offcanvas-end");
   const searchSection = document.getElementById("offcanvasSearch");
 
@@ -136,22 +104,19 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-
-  // ========================================================
   // Toggle "Update Shipping Address"
-  // ========================================================
   const useBilling = document.getElementById("useBillingForshipping");
   const updateShipping = document.getElementById("updateshipping");
   const shippingSection = document.getElementById("shippingAddressSection");
 
   if (useBilling && updateShipping && shippingSection) {
-    function toggleShippingSection() {
+    const toggleShippingSection = function () {
       if (updateShipping.checked) {
         shippingSection.style.display = "block";
       } else {
         shippingSection.style.display = "none";
       }
-    }
+    };
 
     // Listen for changes
     useBilling.addEventListener("change", toggleShippingSection);
