@@ -591,11 +591,21 @@ The Contact page provides users with a straightforward and visually consistent w
 
 The form itself captures the user’s **first name**, **last name**, **email**, **phone number**, and **message**, maintaining a minimalist layout with the same green-on-black neon theme used throughout the site. A direct link to the company’s ***Facebook page*** is also included for users who prefer to connect via social media.  
 
-From a backend perspective, the form is wired through *Django*’s view logic and template rendering, validating all input fields before submission. Although messages are not currently stored in the database (to maintain simplicity for MVP), all data is correctly formatted and ready for future backend integration.  
+From a backend perspective, the form is wired through *Django*’s view logic and template rendering, validating all input fields before submission. Although messages are not currently stored in the database (to maintain simplicity for MVP), all data is correctly formatted and ready for future backend integration. 
 
 Below shows the Contact page layout with the form fields, “Send” button, and external *Facebook* link for additional engagement.
 
 ![Contact page](DOCS/images/contact-page.jpg)
+
+Upon submission, the form triggers a dual email process:  
+- A notification email is sent to the site owner containing the user’s message details.  
+- A confirmation email is automatically sent to the user, reassuring them that their message has been received. 
+
+ ![Email confirmation](DOCS/images/contact-email.jpg)
+
+After sending, users are redirected to a dedicated **Thank You** page for a smooth, professional experience.  
+
+![Thank you page](DOCS/images/contact-email.jpg)
 
 ---
 

@@ -17,16 +17,17 @@
   </div>
 
   <!-- Contact form -->
-  <form action="https://formsubmit.co/axdeklerk@gmail.com" method="POST" target="_blank">
+  <form method="POST" action="{% url 'core:contact' %}">
+  {% csrf_token %}
     <div class="container text-start">
       <div class="row g-3">
         <div class="col-md-6">
           <label for="firstName" class="cp-item">First Name:</label>
-          <input type="text" class="form-control" id="firstName" name="firstName" required>
+          <input type="text" class="form-control" id="firstName" name="first_name" required>
         </div>
         <div class="col-md-6">
           <label for="lastName" class="cp-item">Last Name:</label>
-          <input type="text" class="form-control" id="lastName" name="lastName" required>
+          <input type="text" class="form-control" id="lastName" name="last_name" required>
         </div>
         <div class="col-md-8">
           <label for="email" class="cp-item">Email Address:</label>
@@ -43,7 +44,6 @@
       </div>
 
   <!-- Hidden input field to pass custom parameters -->
-    <input type="hidden" name="_next" value="{% url 'core:thankyou' %}">
       <div class="row align-items-center justify-content-evenly">
         <div class="col-6">
           <button type="submit" class="btn cta-btn fs-6">Send</button>
