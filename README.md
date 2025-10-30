@@ -90,7 +90,8 @@
     - [3.9 Basket](#39-basket)
     - [3.10 Order Summary](#310-order-summary)
     - [3.11 Payment Summary](#311-payment-summary)
-      - [3.12 Summary](#312-summary)
+    - [3.12 404 and 500 Error Pages](#312-404-and-500-error-pages)
+    - [3.13 Summary](#313-summary)
   - [4. Debugging, Testing, Deployment and Future Developments](#4-debugging-testing-deployment-and-future-developments)
     - [4.1 Debugging](#41-debugging)
     - [4.2 Testing](#42-testing)
@@ -705,7 +706,23 @@ Once completed the user is given a confirmation that their order has been made.
 
 ---
 
-#### 3.12 Summary  
+### 3.12 404 and 500 Error Pages
+
+Both custom error pages maintain the same dark neon aesthetic and navigation consistency as the rest of the site, ensuring that even error states feel on-brand and user-friendly.  
+
+- **404 Page:** Displays a friendly “Page Not Found” message when a user visits a non-existent URL. Includes a direct link back to the homepage to encourage continued navigation. 
+
+![404 page](DOCS/images/404-test.jpg)
+
+- **500 Page:** Provides a clear “Server Error” message in the same style, reassuring users that the issue is temporary while keeping them within the branded environment.
+
+ ![500 page](DOCS/images/500-crash-test.jpg)
+
+Both templates are stored in the `base/` directory and extend the main `base.html` layout so that the navbar and footer remain visible. This ensures a seamless transition between normal site content and error handling.
+
+---
+
+### 3.13 Summary  
 
 All features across the site were designed with simplicity, speed, and responsive behaviour in mind. Every page follows a consistent visual theme, ensuring a cohesive experience for both fans and artists on any device. The combination of *Bootstrap*’s responsive utilities and *Django*’s backend logic keeps the site clean, efficient, and scalable for future upgrades.  
 
