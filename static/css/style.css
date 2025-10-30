@@ -357,12 +357,13 @@ body {
 }
 .card-img-top {
     width: 90%;
-    height: 150px;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
     align-self: center;
     display: block;
     margin: 0;
     padding: 0;
+    border-bottom: 2px solid #11ED73;
 }
 .card-title a {
     font-size: 1.5rem;
