@@ -747,16 +747,29 @@ body {
 }
 /* Error Messages */
 .custom-error {
-    color: #E63946;
+    color: #E63946 !important;
     list-style: none;
     padding-left: 0;
     margin-top: 0.25rem;
 }
-.message-text {
-    color: #E63946;
+.message-text
+.errorlist,
+.errorlist li {
+    color: #E63946 !important;
     font-size: 0.9rem;     
     margin: 0;
     padding-right: 0.5rem;
+}
+input.is-invalid,
+select.is-invalid,
+textarea.is-invalid {
+    border-color: #E63946 !important;
+    box-shadow: 0 0 0 0.2rem rgba(230, 57, 70, 0.25);
+}
+.invalid-feedback {
+    color: #E63946 !important;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
 }
 
 /*footer*/

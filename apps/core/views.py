@@ -51,7 +51,7 @@ def contact_view(request):
     else:
         form = ContactForm()
 
-        return render(request, "core/contact.html", {"form": form, "page_title": "Contact"})
+    return render(request, "core/contact.html", {"form": form, "page_title": "Contact"})
 
 
 def thankyou_view(request):
