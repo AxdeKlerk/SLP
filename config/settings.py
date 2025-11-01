@@ -25,7 +25,7 @@ SQUARE_BASE_URL = os.getenv("SQUARE_BASE_URL", "https://connect.squareupsandbox.
 # Allowed hosts
 ALLOWED_HOSTS = os.getenv(
     "ALLOWED_HOSTS",
-    "127.0.0.1, localhost, conceptual-stridently-sadie.ngrok-free.dev"
+    "127.0.0.1, localhost, conceptual-stridently-sadie.ngrok-free.dev, slp-upgrade-910f8354c673.herokuapp.com"
 ).split(",")
 
 
