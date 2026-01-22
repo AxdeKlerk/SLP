@@ -64,7 +64,7 @@ This document has been restructured from my original DEBUGGING.md which listed e
     - [4.1.7.6 Deployment Errors](#4176-deployment-errors)
     - [4.1.7.7 Static Files Cache Error](#4177-static-files-cache-error)
     - [4.1.7.8 Deployment and Payment Integration](#4178-deployment-and-payment-integration)
-    - [4.1.8 Project Failure Supabase Database Dependency Being Unavailable During Assessment](#418-project-failure-supabase-database-dependency-being-unavailable-during-assessment)
+    - [4.1.8 Project Failure - External Database Dependency Unavailable During Assessment](#418-project-failure---external-database-dependency-unavailable-during-assessment)
 
 
 ---
@@ -777,9 +777,17 @@ I delayed script execution until `window.onload`, added correct credentials to *
 **Lesson Learned:**  
 Ensure scripts run only after DOM load and that *Heroku* Config Vars are set. Always verify HTTPS is valid; *Chrome* warnings may persist temporarily but don’t always indicate real danger.
 
-#### 4.1.8 Project Failure *Supabase* Project Failure Supabase Database Dependency Being Unavailable During Assessment
+---
 
-The failure was caused by a production database dependency being used across all environments without a local or fallback configuration. When the *Supabase* database was paused, the application could not establish a database connection, resulting in server errors across authentication, admin access, and primary routes. This has now been resolved by implementing environment-specific database configuration to ensure application stability during assessment.
+#### 4.1.8 Project Failure - External Database Dependency Unavailable During Assessment
+
+The project failed at assessment due to a production database dependency being used across all environments without resilience or environment separation. When the external Postgres service became unavailable, the application could not establish a database connection, resulting in server errors across authentication, admin access, and primary navigation routes. This prevented the assessor from accessing or evaluating core functionality.
 
 **Bug:**
-One single external Postgres instance (*Supabase*), used for all environments, with no resilience. *Supabase*'s free tier pauses after 7 days of inactivity.
+I configured the project to rely on a single external *Postgres* database hosted on *Supabase* for all environments (local development, production, and assessment). The free tier database was automatically paused after a period of inactivity. When the assessor accessed the deployed application, *Django* failed to resolve the database host, causing startup failure and resulting in `500 errors` across signup, login, admin, and database-backed routes.
+
+**Fix:**
+I removed the *Supabase* dependency entirely and migrated the project to a stable managed *Postgres* database hosted on *Neon*. I corrected the *Django* database configuration to explicitly require a valid `DATABASE_URL` and ensured it was set correctly in both local development and production via environment variables. I applied all migrations to the new database and verified that authentication, admin access, and primary routes functioned correctly in both local and deployed environments on Heroku.
+
+**Lesson Learned:**
+Relying on a single external database service across all environments without resilience or separation introduces a critical single point of failure. Free-tier managed databases may pause or become unavailable during assessment windows, causing complete application failure. Production deployments must use stable database providers and environment-aware configuration to ensure the application can reliably boot and remain accessible for assessment.

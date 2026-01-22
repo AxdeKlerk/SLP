@@ -917,6 +917,7 @@ Below are the list of resources that I used to complete this project along with 
 - [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview) - for the performance and accessibility testing
 - [Loom](https://www.loom.com) - for responsive video
 - [MSWord](https://www.microsoft.com/en-us/microsoft-365/word) - used for grammar and spelling checking
+- [Neon](https://neon.com/) - Free database host
 - [Perplexity](https://www.perplexity.ai/) - An AI tool used for general queries and learning
 - [Python](https://simple.wikipedia.org/wiki/Python_(programming_language)) - used for the backend of the website
 - [Responsive Viewer](https://responsiveviewer.org/)- used for responsive screen testing
