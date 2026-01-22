@@ -64,6 +64,7 @@ This document has been restructured from my original DEBUGGING.md which listed e
     - [4.1.7.6 Deployment Errors](#4176-deployment-errors)
     - [4.1.7.7 Static Files Cache Error](#4177-static-files-cache-error)
     - [4.1.7.8 Deployment and Payment Integration](#4178-deployment-and-payment-integration)
+    - [4.1.8 Project Failure Supabase Database Dependency Being Unavailable During Assessment](#418-project-failure-supabase-database-dependency-being-unavailable-during-assessment)
 
 
 ---
@@ -775,3 +776,10 @@ I delayed script execution until `window.onload`, added correct credentials to *
 
 **Lesson Learned:**  
 Ensure scripts run only after DOM load and that *Heroku* Config Vars are set. Always verify HTTPS is valid; *Chrome* warnings may persist temporarily but don’t always indicate real danger.
+
+#### 4.1.8 Project Failure *Supabase* Project Failure Supabase Database Dependency Being Unavailable During Assessment
+
+The failure was caused by a production database dependency being used across all environments without a local or fallback configuration. When the *Supabase* database was paused, the application could not establish a database connection, resulting in server errors across authentication, admin access, and primary routes. This has now been resolved by implementing environment-specific database configuration to ensure application stability during assessment.
+
+**Bug:**
+One single external Postgres instance (*Supabase*), used for all environments, with no resilience. *Supabase*'s free tier pauses after 7 days of inactivity.
