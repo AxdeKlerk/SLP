@@ -742,6 +742,8 @@ Please refer to the testing documentation for detailed descriptions of the tests
 
 This section outlines the full process for deploying this project from *GitHub* to your local machine using *VS Code*, and then hosting it live on *Heroku*.
 
+Database provider updated to ensure production stability during assessment. Application verified with live authentication and admin access.
+
 #### 4.3.1 Create a GitHub Repository
 
 - Go to *GitHub* and click the "+" icon to create a new repository
