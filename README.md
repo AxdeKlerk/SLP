@@ -461,7 +461,7 @@ The following design choices were made to ensure visual consistency, accessibili
 
 The website uses a combination of *Protest Revolution* for the *Searchlight Promotions* logo and *Geist Mono* for body text, both sourced from *Google Fonts*. These fonts were chosen for their modern, legible appearance and compatibility with the high-contrast colour palette. Together, they balance the bold attitude of the brand with clean readability across desktop and mobile views. Both fonts were carried over from the first iteration of *Searchlight Promotions*.
 
-![Logo](DOCS/images/logo.jpg)
+![Logo](static/images/logo.png)
 
 
 #### 2.5.2 Colour Palette
@@ -729,6 +729,8 @@ All features across the site were designed with simplicity, speed, and responsiv
 ---
 
 ## 4. Debugging, Testing, Deployment and Future Developments
+
+A critical production database dependency issue encountered during initial assessment and its resolution are documented in DEBUGGING.md (Entry 4.1.8).
 
 ### 4.1 Debugging
 
