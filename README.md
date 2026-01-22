@@ -1,6 +1,6 @@
 # Searchlight Promotions (Upgrade)
 
-![searchlight promotions logo and text](DOCS/images/logo.jpg)
+![searchlight promotions logo and text](static/images/logo-v4.png)
 
 ## Table of contents
 - [Searchlight Promotions (Upgrade)](#searchlight-promotions-upgrade)
