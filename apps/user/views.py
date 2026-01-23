@@ -1,7 +1,7 @@
-import uuid, requests
+import uuid
+import requests
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -10,6 +10,7 @@ from apps.user.forms import ForgotUsernameForm
 from apps.checkout.models import Order
 from django.conf import settings
 from django.core.paginator import Paginator
+from .forms import CustomUserCreationForm
 
 
 @login_required
@@ -31,7 +32,8 @@ def profile(request):
 @login_required
 def profile_view(request):
     current_orders = Order.objects.filter(user=request.user, status="pending")
-    past_orders = Order.objects.filter(user=request.user, status="paid").order_by('-created_at')
+    past_orders = Order.objects.filter(
+        user=request.user, status="paid").order_by('-created_at')
 
     # Paginate: 4 per page
     paginator = Paginator(past_orders, 4)
@@ -43,12 +45,10 @@ def profile_view(request):
         "current_orders": current_orders,
         "past_orders": past_orders,
         "page_title": "Profile",
-        "previous_page": request.META.get("HTTP_REFERER", "/"),       
+        "previous_page": request.META.get("HTTP_REFERER", "/"),
     }
     return render(request, "user/profile.html", context)
 
-
-from .forms import CustomUserCreationForm
 
 def signup(request):
     if request.method == "POST":
@@ -71,11 +71,12 @@ def forgot_username(request):
             if user:
                 send_mail(
                     subject="Your Username",
-                    message=f"Hi,\n\nYour username is: {user.username}\n\nThanks,\nThe Searchlight Promotions Team",
+                    message=f"Hi,\n\nYour username is: {user.username}\n\n"
+                    "Thanks,\nThe Searchlight Promotions Team",
                     from_email="no-reply@searchlightpromotions.com",
                     recipient_list=[email],
                 )
-            return redirect ("password_reset_done")
+            return redirect("password_reset_done")
     else:
         form = ForgotUsernameForm()
     return render(
@@ -98,26 +99,30 @@ def bulk_order_action(request):
         qs = Order.objects.filter(id__in=order_ids, user=request.user, status="pending")
         order_count = qs.count()
         qs.delete()
-        messages.success(request, f"{order_count} order(s) deleted", extra_tags="orders")
+        messages.success(
+            request, f"{order_count} order(s) deleted", extra_tags="orders"
+        )
         return redirect("user:profile_view")
 
     elif action == "pay_single":
         order_id = order_ids[0]
-        order = get_object_or_404(Order, id=order_id, user=request.user, status="pending")
+        order = get_object_or_404(
+            Order, id=order_id, user=request.user, status="pending"
+        )
 
         # Build payment link payload
         idempotency_key = str(uuid.uuid4())
         payload = {
-        "idempotency_key": idempotency_key,
-        "quick_pay": {
-            "name": f"Order #{order.id}",
-            "price_money": {
-                "amount": int(order.total * 100),
-                "currency": "GBP"
-            },
-            "location_id": settings.SQUARE_LOCATION_ID
+            "idempotency_key": idempotency_key,
+            "quick_pay": {
+                "name": f"Order #{order.id}",
+                "price_money": {
+                    "amount": int(order.total * 100),
+                    "currency": "GBP"
+                },
+                "location_id": settings.SQUARE_LOCATION_ID
+            }
         }
-    }
 
     headers = {
         "Square-Version": "2025-09-30",
@@ -146,6 +151,7 @@ def bulk_order_action(request):
         messages.success(request, "Redirecting to payment...", extra_tags="orders")
         return redirect(link_url)
     else:
-        messages.error(request, f"Square API error: {response.text}", extra_tags="orders")
+        messages.error(
+            request, f"Square API error: {response.text}", extra_tags="orders"
+        )
         return redirect("user:profile_view")
-
