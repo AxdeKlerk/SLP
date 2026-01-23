@@ -65,7 +65,17 @@ This document has been restructured from my original DEBUGGING.md which listed e
     - [4.1.7.7 Static Files Cache Error](#4177-static-files-cache-error)
     - [4.1.7.8 Deployment and Payment Integration](#4178-deployment-and-payment-integration)
     - [4.1.8 Project Failure - External Database Dependency Unavailable During Assessment](#418-project-failure---external-database-dependency-unavailable-during-assessment)
-
+  - [4.1.9 Database Configuration and Migration from *Supabase* to *Neon*](#419-database-configuration-and-migration-from-supabase-to-neon)
+    - [4.1.9.1 *Supabase* *Postgres* Pause Caused Production Failure](#4191-supabase-postgres-pause-caused-production-failure)
+    - [4.1.9.2 *Neon* Schema-Only Migration Resulted in Missing Data](#4192-neon-schema-only-migration-resulted-in-missing-data)
+    - [4.1.9.3 *Supabase* Network Inaccessibility Blocked Initial Export](#4193-supabase-network-inaccessibility-blocked-initial-export)
+    - [4.1.9.4 *PowerShell* Line Continuation Caused Dump Output to STDOUT](#4194-powershell-line-continuation-caused-dump-output-to-stdout)
+    - [4.1.9.5 *Supabase* Internal Schemas Triggered Restore Warnings](#4195-supabase-internal-schemas-triggered-restore-warnings)
+    - [4.1.9.6 *Django* Migration State Out of Sync After Restore](#4196-django-migration-state-out-of-sync-after-restore)
+    - [4.1.9.7 Explicit Schema Selection Required for *Neon*](#4197-explicit-schema-selection-required-for-neon)
+    - [4.1.9.8 Data and *Cloudinary* Verification After Migration](#4198-data-and-cloudinary-verification-after-migration)
+  - [4.1.10 Security \& Deployment](#4110-security--deployment)
+    - [4.1.10.1 Assessment Failure Initially Misattributed to Code](#41101-assessment-failure-initially-misattributed-to-code)
 
 ---
 
@@ -791,3 +801,116 @@ I removed the *Supabase* dependency entirely and migrated the project to a stabl
 
 **Lesson Learned:**
 Relying on a single external database service across all environments without resilience or separation introduces a critical single point of failure. Free-tier managed databases may pause or become unavailable during assessment windows, causing complete application failure. Production deployments must use stable database providers and environment-aware configuration to ensure the application can reliably boot and remain accessible for assessment.
+
+---
+
+### 4.1.9 Database Configuration and Migration from *Supabase* to *Neon*
+
+#### 4.1.9.1 *Supabase* *Postgres* Pause Caused Production Failure
+
+**Bug:**  
+The deployed application returned `Internal Server Errors` and failed assessment checks because the *Supabase* *Postgres* free-tier database entered a paused state. This caused DNS resolution failures and prevented *Django* from establishing a database connection in production.
+
+**Fix:**  
+*Supabase* was identified as an unstable external dependency for assessment-critical deployment. I temporarily resumed the *Supabase* project solely to allow a full database export, then permanently removed *Supabase* from the project after migration to *Neon* *Postgres*.
+
+**Lesson Learned:**  
+Free-tier managed databases can pause without warning. External infrastructure must be auditable, resumable, and suitable for assessment and production contexts.
+
+
+#### 4.1.9.2 *Neon* Schema-Only Migration Resulted in Missing Data
+
+**Bug:**  
+After repointing *Django* to *Neon* *Postgres* and applying migrations, the application loaded successfully but displayed no Events, Products, or admin-generated content.
+
+**Fix:**  
+Confirmed that *Django* migrations recreated schema only. I planned and executed a full *Postgres*-to-*Postgres* data migration using native tooling rather than *Django* ORM serialisation or manual admin recreation.
+
+**Lesson Learned:**  
+*Django* migrations do not migrate data. Schema and data are separate concerns and must be handled explicitly.
+
+
+#### 4.1.9.3 *Supabase* Network Inaccessibility Blocked Initial Export
+
+**Bug:**  
+Attempts to run `pg_dump` failed with hostname resolution errors because the *Supabase* project was paused and unreachable at the network level.
+
+**Fix:**  
+The *Supabase* project was manually resumed. Network reachability was verified using `Test-NetConnection` on port `5432` instead of ICMP-based `ping`.
+
+**Lesson Learned:**  
+ICMP is often blocked by managed services. TCP port checks are the correct diagnostic method for database connectivity.
+
+
+#### 4.1.9.4 *PowerShell* Line Continuation Caused Dump Output to STDOUT
+
+**Bug:**  
+Using *PowerShell* line continuations caused `pg_dump` to execute without creating a dump file, resulting in output being written to STDOUT instead of disk.
+
+**Fix:**  
+I re-ran the export using a single-line command with an explicit `--file=supabase.dump` argument and verified the file existed with a non-zero size.
+
+**Lesson Learned:**  
+Shell-specific behaviour can affect critical commands. Single-line execution reduces ambiguity during data migration.
+
+
+#### 4.1.9.5 *Supabase* Internal Schemas Triggered Restore Warnings
+
+**Bug:**  
+During `pg_restore`, errors were reported for missing relations such as `vault.secrets`.
+
+**Fix:**  
+Confirmed that the `vault` schema is *Supabase*-internal and unused by the application. Warnings were safely ignored, and public application tables restored correctly.
+
+**Lesson Learned:**  
+Provider-specific internal schemas may appear in exports. Not all restore warnings indicate application-level data loss.
+
+
+#### 4.1.9.6 *Django* Migration State Out of Sync After Restore
+
+**Bug:**  
+*Django* raised errors indicating missing tables (e.g. `products_event`) when querying restored data.
+
+**Fix:**  
+I ran `python manage.py migrate` to align *Django*’s migration state with the restored database schema.
+
+**Lesson Learned:**  
+After raw database restores, *Django* migrations may still need to be applied to reconcile schema expectations.
+
+
+#### 4.1.9.7 Explicit Schema Selection Required for *Neon*
+
+**Bug:**  
+*Django* failed to create the `django_migrations` table with the error `no schema has been selected to create in`.
+
+**Fix:**  
+Updated `DATABASE_URL` to include `&options=-csearch_path=public`, ensuring *Django* consistently targeted the correct schema.
+
+**Lesson Learned:**  
+*Neon* does not always default to the `public` schema. Schema selection must be explicit for *Django* compatibility.
+
+
+#### 4.1.9.8 Data and *Cloudinary* Verification After Migration
+
+**Bug:**  
+There was uncertainty whether restored data and *Cloudinary* image references would function correctly after migration.
+
+**Fix:**  
+Verified data presence via the *Django* shell (`Event.objects.count()` returned `16`). Confirmed `e.image.url` returned valid *Cloudinary* URLs without re-uploading assets.
+
+**Lesson Learned:**  
+*Cloudinary* assets are external to the database. Once rows are restored, media works automatically.
+
+
+### 4.1.10 Security & Deployment
+
+#### 4.1.10.1 Assessment Failure Initially Misattributed to Code
+
+**Bug:**  
+The project assessment failed due to production errors that appeared to be application-level issues.
+
+**Fix:**  
+I traced failures to third-party infrastructure instability and database unavailability. Migrated to *Neon*, restored data, stabilised *Heroku* configuration, and verified production parity.
+
+**Lesson Learned:**  
+Infrastructure failures can masquerade as application bugs. Database availability and deployment configuration must be verified before refactoring application code.
