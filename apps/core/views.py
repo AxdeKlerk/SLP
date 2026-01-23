@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.views import View
 from django.core.mail import send_mail
 from django.conf import settings
 from .forms import ContactForm
@@ -32,7 +31,9 @@ def contact_view(request):
                 f"Phone: {phone}\n\n"
                 f"Message:\n{message}"
             )
-            send_mail(subject_admin, body_admin, settings.DEFAULT_FROM_EMAIL, [settings.EMAIL_HOST_USER])
+            send_mail(
+                subject_admin, body_admin, settings.DEFAULT_FROM_EMAIL,
+                [settings.EMAIL_HOST_USER])
 
             # Confirmation email to sender
             subject_user = "Thanks for contacting Searchlight Promotions!"
@@ -43,11 +44,13 @@ def contact_view(request):
                 "Best,\n"
                 "The Searchlight Promotions Team"
             )
-            send_mail(subject_user, body_user, settings.DEFAULT_FROM_EMAIL, [sender_email])
+            send_mail(
+                subject_user, body_user, settings.DEFAULT_FROM_EMAIL,
+                [sender_email])
 
             # Redirect to thank-you page
             return redirect("core:thankyou")
-            
+
     else:
         form = ContactForm()
 
@@ -56,5 +59,3 @@ def contact_view(request):
 
 def thankyou_view(request):
     return render(request, 'core/thankyou.html')
-
-
