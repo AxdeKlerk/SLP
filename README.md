@@ -107,7 +107,6 @@
       - [4.3.9 Configure Environment Variables on Heroku](#439-configure-environment-variables-on-heroku)
       - [4.3.10 Final Project Setup on Heroku](#4310-final-project-setup-on-heroku)
       - [4.3.11 Open Your Live Site](#4311-open-your-live-site)
-  - [Deployment was successful, and the live site runs stably with DEBUG=False, confirming that static files, media storage, and payment functionality operate correctly in production.](#deployment-was-successful-and-the-live-site-runs-stably-with-debugfalse-confirming-that-static-files-media-storage-and-payment-functionality-operate-correctly-in-production)
     - [4.4 Future Developments](#44-future-developments)
       - [4.4.1 Email Verification and Account Confirmation](#441-email-verification-and-account-confirmation)
       - [4.4.2 Enhanced Order Confirmation Emails](#442-enhanced-order-confirmation-emails)
@@ -746,6 +745,8 @@ This section outlines the full process for deploying this project from *GitHub* 
 
 Database provider updated to ensure production stability during assessment. Application verified with live authentication and admin access.
 
+This project uses *Django* with a *PostgreSQL* database (*Neon*), *Cloudinary* for media storage, and *Square* for payment processing. Deployment is handled via *Heroku*.
+
 #### 4.3.1 Create a GitHub Repository
 
 - Go to *GitHub* and click the "+" icon to create a new repository
@@ -760,12 +761,17 @@ Database provider updated to ensure production stability during assessment. Appl
 - Navigate to the folder where you want your project
 - Copy the repository's URL from *GitHub* and use the "Clone Git Repository" option in *VS Code*
 - Open the project folder in *VS Code*
-- 
+- git clone <repository-url>
+- cd <project-folder>
+  
 #### 4.3.3 Create and Activate a Virtual Environment
 
 - In your terminal, create a virtual environment inside your project folder
 - Activate the environment depending on your system (*Windows*, *Mac*, or *Linux*)
 - Your terminal prompt will change to show the environment is active
+- python -m venv .venv
+- source .venv/bin/activate  # Mac/Linux
+- .venv\Scripts\activate     # Windows
 
 #### 4.3.4 Install Project Dependencies
 
@@ -773,60 +779,89 @@ Database provider updated to ensure production stability during assessment. Appl
 
     -  *Django* – Core web framework for building the project
     -  *Gunicorn* – WSGI HTTP server for running *Django* on *Heroku*
-    - *dj-database-url* – Parses the *Heroku* database URL into *Django* database settings
-    -  *psycopg2-binary* – *PostgreSQL* database adapter for *Python*
+    - *dj-database-url* – Database configuration
+    -  *psycopg2-binary* – *PostgreSQL* adapter
     -  *whitenoise* – Serves static files efficiently in production
-    -  *cloudinary* – Handles image uploads and storage
+    -  *cloudinary* – Handles image storage
     -  *django-cloudinary-storage* – Integrates *Cloudinary* with *Django*'s media and static file handling
     - *django-allauth* – (Optional) For user authentication, if used
-
+  
 - If this file doesn’t exist yet, install your packages manually and then generate the file
+    - pip install -r requirements.txt
 
 #### 4.3.5 Prepare the Project for Heroku
 
+- .env / env.py is used locally and not committed to *Git*
 - Create a "Procfile" at the root of your project with the necessary *Heroku* command to run the app
 - Ensure "gunicorn", "dj-database-url", and "psycopg2-binary" are installed
 - Update your "requirements.txt" file with any new packages
 - Commit all changes to *Git*
+
+- Procfile contents:
+    - web: gunicorn config.wsgi
 
 #### 4.3.6 Set Up a Heroku Account and CLI
 
 - Create an account at *Heroku.com*
 - Download and install the *Heroku* CLI for your operating system
 - Use the CLI to log into your *Heroku* account
+- Command:
+    - heroku login
 
 #### 4.3.7 Create a Heroku App
 
 - Use the *Heroku* CLI to create a new app with a unique name
 - *Heroku* will generate a remote *Git* URL for your project
+- Command:
+    - heroku create <heroku-app-name>
+  
+This creates a *Heroku* application for the *Django* project (SLP), not individual *Django* apps within the project.
 
 #### 4.3.8 Push Your Project to Heroku
 
-- Add *Heroku* as a *Git* remote if it wasn’t automatically added
+- Add *Heroku* as a *Git* remote if needed
 - Push your local codebase to *Heroku*’s remote repository
+- Command:
+    - git push heroku main (or master, depending on branch)
 
 #### 4.3.9 Configure Environment Variables on Heroku
 
 - Go to your *Heroku* Dashboard and open your app
 - Under "Settings", click "Reveal Config Vars"
 - Add the following variables:
-    - "DEBUG" = "False"
-    - "SECRET_KEY" = your *Django* secret key
-    - "ALLOWED_HOSTS" = your *Heroku* app's URL
-    - Add any additional variables like database URLs, *Cloudinary* settings, or email credentials as needed
-
+    - DEBUG
+    - SECRET_KEY
+    - ALLOWED_HOSTS
+    - DATABASE_URL
+    - CLOUDINARY_URL
+    - SQUARE_ACCESS_TOKEN
+    - SQUARE_LOCATION_ID
+    - SQUARE_SIGNATURE_KEY
+    - EMAIL_HOST_USER (if used)
+    - EMAIL_HOST_PASSWORD (if used)
+- Sensitive values are never committed to version control
+  
 #### 4.3.10 Final Project Setup on Heroku
 
 - Run your database migrations from the *Heroku* CLI
 - Create a "superuser" account to access the *Django* admin panel
 - "Collectstatic" files if not done automatically
+- Commands:
+    - heroku run python manage.py migrate
+    - heroku run python manage.py createsuperuser
+    - heroku run python manage.py collectstatic
 
 #### 4.3.11 Open Your Live Site
 
 - Use the *Heroku* CLI or browser to open your app
-- Your project is now live and hosted at "your-app-name.herokuapp.com"
+- Your project is now live
+- Command:
+    - heroku open
 
 Deployment was successful, and the live site runs stably with DEBUG=False, confirming that static files, media storage, and payment functionality operate correctly in production.
+
+This project can be cloned, run locally, and deployed using the steps above.
+
 --- 
 
 ### 4.4 Future Developments
