@@ -730,7 +730,7 @@ All features across the site were designed with simplicity, speed, and responsiv
 
 ## 4. Debugging, Testing, Deployment and Future Developments
 
-A critical production database dependency issue encountered during initial assessment and its resolution are documented in DEBUGGING.md (Entry 4.1.8).
+A critical production database dependency issue encountered during initial assessment and its resolution are documented in [DEBUGGING.md](DEBUGGING.md) (Entry 4.1.8 & 4.1.9).
 
 ### 4.1 Debugging
 
