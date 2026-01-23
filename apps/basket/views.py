@@ -19,8 +19,11 @@ def calculate_fees(order_items, discount=0):
     delivery_charge = Decimal("0.00")
 
     # Track total merch units to apply global delivery logic
-    total_merch_units = sum((item.quantity or 0) for item in order_items if getattr(item, "merch", None))
-    processed_units = 0 
+    total_merch_units = sum(
+        (item.quantity or 0)
+        for item in order_items
+        if getattr(item, "merch", None))
+    processed_units = 0
 
     print(f"DEBUG: total_merch_units = {total_merch_units}")
 
@@ -47,17 +50,13 @@ def calculate_fees(order_items, discount=0):
             delivery_charge += item.delivery_fee
         else:
             item.delivery_fee = Decimal("0.00")
-            
+
         # For right-hand total display in template
         item.total_with_fees = item_total + item.booking_fee + item.delivery_fee
 
         subtotal += item_total
 
     basket_total = max(subtotal + booking_fee_total + delivery_charge - discount, 0)
-
-    #For debugging
-    for i in order_items:
-        print(f"DEBUG: {i} | line_total={i.get_line_total()} | total_with_fees={getattr(i, 'total_with_fees', None)}")
 
     return order_items, subtotal, delivery_charge, basket_total
 
@@ -73,10 +72,17 @@ def basket_view(request):
 
     if request.user.is_authenticated:
         basket, created = Basket.objects.get_or_create(user=request.user)
-        items_with_fees, subtotal, delivery_charge, basket_total = calculate_fees(basket.items.all())
+        items_with_fees, subtotal, delivery_charge, basket_total = calculate_fees(
+            basket.items.all())
 
         # Generate delivery explanation message
-        merch_units = sum((item.quantity or 0) for item in basket.items.all() if item.merch)
+        merch_units = sum(
+            (item.quantity or 0)
+            for item in
+            basket.items.all()
+            if item.merch
+        )
+
         if merch_units > 1:
             delivery_message = "Delivery = £5 + £2.50 for ea. extra item"
 
@@ -124,16 +130,19 @@ def add_merch_to_basket(request, merch_id):
     merch = get_object_or_404(Merch, id=merch_id)
 
     quantity = int(request.POST.get("quantity", 1))
-    if quantity < 1: quantity = 1
-    elif quantity > 6: quantity = 6
+    if quantity < 1:
+        quantity = 1
+    elif quantity > 6:
+        quantity = 6
 
     size = request.POST.get("size", "")
 
-    item, created = BasketItem.objects.get_or_create(basket=basket, merch=merch, size=size)
+    item, created = BasketItem.objects.get_or_create(
+        basket=basket, merch=merch, size=size)
     if created:
-        item.quantity = quantity 
+        item.quantity = quantity
     else:
-        item.quantity += quantity  
+        item.quantity += quantity
     item.save()
 
     return redirect('basket:basket_view')
