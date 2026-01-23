@@ -2,8 +2,6 @@ from django.utils import timezone
 import calendar
 from django.shortcuts import render
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.contrib import messages
-from django.views import View
 from django.views.generic import DetailView, ListView
 from django.http import JsonResponse
 from .models import Event, Artist, Venue, Merch
@@ -54,11 +52,14 @@ def previous_events_view(request):
     past_events = Event.objects.filter(gig_date__lt=today).order_by('-gig_date')
     for e in past_events:
         e.is_upcoming = False
-    return render(request, 'previous_events.html', {'events': past_events, 'page_title': 'Previous Events'})
+    return render(
+        request, 'previous_events.html',
+        {'events': past_events, 'page_title': 'Previous Events'}
+    )
 
 
 def roxoff_view(request):
-    roxoff_event = Event.objects.filter(special_event=True).order_by('gig_date')  
+    roxoff_event = Event.objects.filter(special_event=True).order_by('gig_date')
     return render(request, 'roxoff.html', {'events': roxoff_event})
 
 
@@ -79,7 +80,7 @@ class EventDetailView(DetailView):
 
 class ArtistDetailView(DetailView):
     model = Artist
-    template_name = 'artist.html' 
+    template_name = 'artist.html'
     context_object_name = 'artist'
 
     def get_context_data(self, **kwargs):
@@ -90,7 +91,7 @@ class ArtistDetailView(DetailView):
 
 class VenueDetailView(DetailView):
     model = Venue
-    template_name = 'venue.html' 
+    template_name = 'venue.html'
     context_object_name = 'venue'
 
     def get_context_data(self, **kwargs):
@@ -147,12 +148,12 @@ class MerchListView(ListView):
             qs = qs.filter(product_category=cat)
         print("DEBUG merch count after filter:", qs.count())
         return qs
-    
+
     def get(self, request, *args, **kwargs):
         # Remember that user was last in merch
         request.session['last_shop_type'] = 'merch'
         return super().get(request, *args, **kwargs)
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['page_title'] = "Merch"
@@ -198,7 +199,7 @@ def search_view(request):
         merch_results = Merch.objects.filter(
             Q(product_name__icontains=q) |               # name contains
             Q(product_category__icontains=q) |           # key contains (e.g. "hoodie")
-            Q(product_category__in=label_keys)|           # label match (e.g. "Hoodie")
+            Q(product_category__in=label_keys) |           # label match (e.g. "Hoodie")
             Q(product_description__icontains=q)
         ).order_by("product_name", "product_category", "size")
 
@@ -207,9 +208,9 @@ def search_view(request):
         if exact_match:
             size_choices = Merch._meta.get_field("size").choices
             return render(
-            request,
-            "products/merch_detail.html",
-            {"merch": exact_match, "size_choices": size_choices},
+                request,
+                "products/merch_detail.html",
+                {"merch": exact_match, "size_choices": size_choices},
             )
 
         # Multiple matching results
