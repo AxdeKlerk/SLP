@@ -1,11 +1,15 @@
 import json
-import hmac, hashlib, base64, os, requests
+import hmac
+import hashlib
+import base64
+import os
+import requests
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from apps.basket.models import Basket
 from apps.checkout.models import Order, OrderItem
-from django.http import HttpResponse, HttpResponseBadRequest, JsonResponse
+from django.http import HttpResponseBadRequest, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.conf import settings
@@ -14,6 +18,7 @@ from apps.basket.views import calculate_fees
 
 
 SQUARE_SIGNATURE_KEY = os.getenv("SQUARE_SIGNATURE_KEY")
+
 
 @login_required
 def basket_checkout(request):
@@ -30,13 +35,17 @@ def basket_checkout(request):
             sold = item.event.tickets_sold
             capacity = item.event.effective_capacity
             remaining = capacity - sold
-            requested_quantity = sum(i.quantity for i in basket_items if i.event == item.event)
+            requested_quantity = sum(
+                i.quantity for i
+                in basket_items
+                if i.event == item.event)
 
             if requested_quantity > remaining:
                 ticket_word = "ticket" if remaining == 1 else "tickets"
                 messages.error(
                     request,
-                    f"Not enough tickets available! Only {remaining} {ticket_word} left for {item.event}!"
+                    f"Not enough tickets available! Only {remaining} "
+                    f"{ticket_word} left for {item.event}!"
                 )
                 return redirect("basket:basket_view")
 
@@ -150,15 +159,11 @@ def basket_checkout(request):
             if square_payment_id:
                 order.square_payment_id = square_payment_id
                 order.save()
-                print(f"Created Square Order {square_order_id} and Payment {square_payment_id}")
             else:
-                print("Payment ID not returned by Square Sandbox")
+                pass
 
-        else:
-            print("Failed to create Square Order")
-
-    except Exception as e:
-        print(f"Error creating Square order/payment: {e}")
+    except Exception:
+        pass
 
     # Clear basket and redirect to checkout
     basket.items.all().delete()
@@ -174,7 +179,9 @@ def restore_basket(request, order_id):
 
     # Only rebuild if the order is still pending
     if order.status != "pending":
-        messages.error(request, "This order has already been completed and cannot be modified")
+        messages.error(
+            request, "This order has already been completed and cannot be modified"
+        )
         return redirect("basket:basket_view")
 
     # Get or create the basket
@@ -233,90 +240,102 @@ def square_webhook(request):
     """
     Handle incoming Square payment webhooks securely.
     """
-    # 1. Verify Square signature 
-    signature = request.META.get("HTTP_X_SQUARE_HMACSHA256_SIGNATURE", "")
+    signature = request.META.get(
+        "HTTP_X_SQUARE_HMACSHA256_SIGNATURE", ""
+    )
     body = request.body.decode("utf-8")
     key = settings.SQUARE_SIGNATURE_KEY.encode("utf-8")
 
-    webhook_url = request.build_absolute_uri().replace("http://", "https://")
+    webhook_url = request.build_absolute_uri().replace(
+        "http://", "https://"
+    )
     string_to_sign = webhook_url + body
 
     computed_signature = base64.b64encode(
-        hmac.new(key, string_to_sign.encode("utf-8"), hashlib.sha256).digest()
+        hmac.new(
+            key,
+            string_to_sign.encode("utf-8"),
+            hashlib.sha256,
+        ).digest()
     ).decode("utf-8")
 
-    #if not hmac.compare_digest(computed_signature, signature):
-    #    print("Signature mismatch")
-    #    return HttpResponseBadRequest("Invalid signature")
+    if not hmac.compare_digest(computed_signature, signature):
+        return HttpResponseBadRequest("Invalid signature")
 
-    # 2. Parse incoming JSON 
     try:
         event = json.loads(body)
     except json.JSONDecodeError:
-        print("Invalid JSON in webhook payload")
         return HttpResponseBadRequest("Invalid JSON")
 
     event_type = event.get("type", "")
-    print(f"Received Square webhook: {event_type}")
 
-    # 3. Handle only payment events 
-    if event_type not in ["payment.created", "payment.updated"]:
-        print(f"Unhandled Square webhook event type: {event_type}")
-        return JsonResponse({"status": "ignored", "message": f"Unhandled event: {event_type}"}, status=200)
+    if event_type not in ("payment.created", "payment.updated"):
+        return JsonResponse(
+            {"status": "ignored", "message": "Unhandled event"},
+            status=200,
+        )
 
     try:
-        # 4. Extract payment info 
         payment = event["data"]["object"]["payment"]
         payment_id = payment.get("id")
         square_order_id = payment.get("order_id")
         payment_status = payment.get("status")
 
-        print(f"Square order ID: {square_order_id}, payment ID: {payment_id}, status: {payment_status}")
-
-        # 5. Find the matching local order
         try:
-            order = Order.objects.get(square_order_id=square_order_id)
+            order = Order.objects.get(
+                square_order_id=square_order_id
+            )
         except Order.DoesNotExist:
-            print(f"No order found for Square order ID {square_order_id}")
-            return JsonResponse({"status": "ignored", "message": "No matching order"}, status=200)
+            return JsonResponse(
+                {"status": "ignored", "message": "No matching order"},
+                status=200,
+            )
 
-        # 6. Update only if payment completed 
-        if payment_status == "COMPLETED":
-            if order.status != "paid":
-                order.status = "paid"
-                order.square_payment_id = payment_id
-                order.save()
+        if payment_status != "COMPLETED":
+            return JsonResponse(
+                {"status": "ignored", "message": "Payment not completed"},
+                status=200,
+            )
 
-                # Update event ticket and merch stock counts
-                for item in order.items.all():
-                    if item.event:
-                        event_obj = item.event
-                        event_obj.tickets_sold += item.quantity
-                        event_obj.save()
-                    elif item.merch:
-                        merch = item.merch
-                        if hasattr(merch, "items_sold"):
-                            merch.items_sold += item.quantity
-                        if hasattr(merch, "stock"):
-                            merch.stock = max(merch.stock - item.quantity, 0)
-                        merch.save()
+        if order.status == "paid":
+            return JsonResponse(
+                {"status": "ignored", "message": "Duplicate event"},
+                status=200,
+            )
 
-                return JsonResponse({"status": "success", "message": "Order updated"}, status=200)
-            else:
-                print(f"Order {order.id} already marked as PAID — duplicate webhook ignored")
-                return JsonResponse({"status": "ignored", "message": "Duplicate event"}, status=200)
-        else:
-            print(f"Payment not completed yet (status: {payment_status})")
-            return JsonResponse({"status": "ignored", "message": "Payment not completed"}, status=200)
+        order.status = "paid"
+        order.square_payment_id = payment_id
+        order.save()
 
-    # 7. Handle missing fields safely 
-    except KeyError as e:
-        print(f"Missing key in Square payload: {e}")
-        return JsonResponse({"status": "error", "message": f"Missing key: {e}"}, status=400)
+        for item in order.items.all():
+            if item.event:
+                event_obj = item.event
+                event_obj.tickets_sold += item.quantity
+                event_obj.save()
+            elif item.merch:
+                merch = item.merch
+                if hasattr(merch, "items_sold"):
+                    merch.items_sold += item.quantity
+                if hasattr(merch, "stock"):
+                    merch.stock = max(
+                        merch.stock - item.quantity,
+                        0,
+                    )
+                merch.save()
 
-    # 8. Catch any other unexpected errors
-    except Exception as e:
-        print(f"Unexpected error while processing webhook: {e}")
-        return JsonResponse({"status": "error", "message": str(e)}, status=500)
+        return JsonResponse(
+            {"status": "success", "message": "Order updated"},
+            status=200,
+        )
 
+    except KeyError as exc:
+        return JsonResponse(
+            {"status": "error", "message": f"Missing key: {exc}"},
+            status=400,
+        )
 
+    except Exception:
+        return JsonResponse(
+            {"status": "error", "message": "Webhook processing failed"},
+            status=500,
+        )
