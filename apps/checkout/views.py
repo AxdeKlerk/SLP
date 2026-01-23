@@ -113,7 +113,7 @@ def basket_checkout(request):
                     "name": "Checkout Order",
                     "quantity": "1",
                     "base_price_money": {
-                        "amount": int(order.total * 100),  # Convert to pennies
+                        "amount": int(order.total * 100),
                         "currency": "GBP",
                     },
                 }
@@ -219,13 +219,14 @@ def checkout_view(request, order_id):
 
 def prepare_order_context(order):
     """Recalculate fees and return a consistent context for checkout/payment views."""
+    
     # Force the queryset into a list so attached attributes are preserved
     items = list(order.items.all())
     order_items, subtotal, delivery_charge, basket_total = calculate_fees(items)
 
     context = {
         "order": order,
-        "order_items": order_items,  # this list has .total_with_fees attached
+        "order_items": order_items,
         "subtotal": subtotal,
         "delivery_charge": delivery_charge,
         "basket_total": basket_total,

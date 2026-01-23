@@ -40,4 +40,4 @@ class BasketItem(models.Model):
         return "Basket Item"
     
     class Meta:
-        ordering = ["id"]  # keeps insertion order
+        ordering = ["id"]

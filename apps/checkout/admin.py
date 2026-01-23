@@ -65,10 +65,10 @@ class OrderAdmin(admin.ModelAdmin):
         "id",
         "email",
         "status",
-        "payment_status",      # New: Square's payment state
-        "square_payment_id",   # New: reference to the Square payment
+        "payment_status",
+        "square_payment_id",
         "total",
-        "verified_on",         # New: timestamp for verification
+        "verified_on",
         "created_at",
     )
 
@@ -79,7 +79,6 @@ class OrderAdmin(admin.ModelAdmin):
     search_fields = ("email", "id", "square_payment_id", "square_order_id")
 
     # Prevent accidental edits of Square IDs and verification time
-    # readonly_fields = ("square_payment_id", "verified_on") uncomment for safety when in production
     readonly_fields = ("created_at",)
     
     ordering = ("-created_at",)
@@ -96,5 +95,3 @@ class OrderAdmin(admin.ModelAdmin):
     )
 
     actions = [verify_with_square]
-
-
