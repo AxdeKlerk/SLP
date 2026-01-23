@@ -1,13 +1,12 @@
 import json
 import logging
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404, redirect
-from django.http import JsonResponse, HttpResponseNotAllowed, HttpResponseBadRequest
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse
 from .utils import client
 from apps.checkout.models import Order
 from apps.user.models import UserProfile
 from .models import Invoice
-from apps.basket.views import calculate_fees
 from apps.checkout.views import prepare_order_context
 
 
@@ -17,7 +16,7 @@ logger = logging.getLogger(__name__)
 @login_required
 def payment_checkout(request, order_id):
     order = get_object_or_404(Order, id=order_id, user=request.user, status="pending")
-    
+
     from django.conf import settings
 
     # Get basket totals and update order
@@ -82,19 +81,23 @@ def process_payment(request, order_id):
     an invoice record for the associated order.
     """
     if request.method != "POST":
-        return JsonResponse({"ok": False, "error": "Invalid request method"}, status=400)
+        return JsonResponse(
+            {"ok": False, "error": "Invalid request method"},
+            status=400
+        )
 
     data = json.loads(request.body)
-    token = data.get("token")
-    amount = data.get("amount")
-    address = data.get("addressData", {})
     invoice = data.get("invoiceData", {})
     use_same_address = invoice.get("useSameAddress", True)
 
     # Get the user's pending order
-    order = Order.objects.filter(user=request.user, status="pending").last()
+    order = Order.objects.filter(
+        user=request.user, status="pending").last()
     if not order:
-        return JsonResponse({"ok": False, "error": "No pending order found."}, status=404)
+        return JsonResponse(
+            {"ok": False, "error": "No pending order found."},
+            status=404
+        )
 
     order.status = "paid"
     order.save()
@@ -139,7 +142,8 @@ def process_payment(request, order_id):
             f"- Order ID: {order.id}\n"
             f"- Total Paid: £{order.total}\n\n"
             "Your order has been successfully processed. "
-            "We'll send another email when your tickets or merchandise are on their way.\n\n"
+            "We'll send another email when your tickets or merchandise are "
+            "on their way.\n\n"
             "Stay Loud!\n"
             "The Searchlight Promotions Team"
         )
