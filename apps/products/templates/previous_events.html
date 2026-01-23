@@ -11,14 +11,14 @@
       <div class="col-12 col-md-6 col-lg-4 col-xl-3 g-4 mx-auto">
         <div class="card standard-card h-100 d-flex flex-column">
 
-          {# --- Event Image with Placeholder Check --#}
+          <!-- Event Image with Placeholder Check -->
           {% if event.image and event.image.url and "placeholder" not in event.image.url %}
           <img src="{{ event.image.url }}" class="card-img-top img-fluid" alt="Event image">
           {% else %}
           <img src="https://res.cloudinary.com/dqde3a83z/image/upload/v1756024898/logo_mbpdhs.png" class="card-img-top logo img-fluid" alt="Default horns image">
           {% endif %}
 
-          {# --- Card body --- #}
+          <!-- Card body -->
           <div class="card-body d-flex flex-column text-center">
             <p class="card-title mb-0">
               {% if event.artist %}
@@ -39,7 +39,7 @@
             {% endif %}
           </div>
 
-          {# --- Event Details --- #}
+          <!-- Event Details -->
           <div class="event-details d-flex flex-column text-left">
               <p class="venue">Venue:                         
                 {% if event.venue %}
@@ -60,7 +60,7 @@
             </p>
           </div>
 
-          {# --- Footer with button always at bottom --- #}
+          <!-- Footer with button always at bottom -->
           {% if event.is_upcoming %}
           <div class="card-footer text-center"> 
             <a href="#" class="btn cta-btn mb-0" target="_blank" aria-label="get event tickets">Get Tickets</a>

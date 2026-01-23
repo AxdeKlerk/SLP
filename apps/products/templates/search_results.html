@@ -30,7 +30,8 @@
         {% if merch_results %}
             {% if merch_results|length == 1 %}
                 {% with m=merch_results.0 %}
-                {# ---------- SINGLE MATCH (detailed view) ---------- #}
+
+                <!-- SINGLE MATCH (detailed view) -->
                     <div class="row justify-content-center">
                         <div class="col-12 col-md-6 col-lg-3 mb-2">
                             <div class="card standard-card h-100 d-flex flex-column">
@@ -57,7 +58,8 @@
                 {% endwith %}
 
                 {% else %}
-                {# ---------- MULTIPLE MATCHES (grid list-style view) ---------- #}
+                
+                <!-- MULTIPLE MATCHES (grid list-style view) -->
                     <div class="row justify-content-center">
                         {% for m in merch_results %}
                             <div class="col-12 col-md-6 col-lg-3 mb-2">

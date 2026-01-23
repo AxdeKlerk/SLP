@@ -13,6 +13,7 @@ Params expected:
                   {% endif %}">
         {% csrf_token %}
         {% if item_type == "merch" %}
+        
             <!-- Hidden inputs for merch only -->
             <input type="hidden" name="quantity" id="selected-qty" value="1">
             <input type="hidden" name="size" id="selected-size" value="L">

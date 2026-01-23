@@ -14,7 +14,11 @@ class EmailOnlyPasswordResetForm(PasswordResetForm):
 
 
 class ForgotUsernameForm(forms.Form): 
-    email = forms.EmailField(label="Email address", widget=forms.EmailInput(attrs={"class": "form-control"}))
+    email = forms.EmailField(
+        label="Email address", widget=forms.EmailInput(
+            attrs={"class": "form-control"}
+        )
+    )
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField(

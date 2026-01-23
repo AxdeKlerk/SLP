@@ -43,7 +43,7 @@ def payment_checkout(request, order_id):
 
     # Build final context for template
     context = {
-        **base_context,  # merge whatever prepare_order_context returned
+        **base_context,
         "order": order,
         "initial": initial_data,
         "previous_page": request.META.get("HTTP_REFERER", "/"),
@@ -151,6 +151,7 @@ def process_payment(request, order_id):
     except Exception as e:
         import traceback
         traceback.print_exc()
+        
         # Payment succeeded but email failed — log but don't block success
         return JsonResponse({
             "ok": True,

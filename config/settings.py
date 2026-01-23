@@ -155,5 +155,3 @@ MEDIA_URL = '/media/'
 CSRF_TRUSTED_ORIGINS = [
     "https://conceptual-stridently-sadie.ngrok-free.dev", "https://slp-upgrade-910f8354c673.herokuapp.com",
 ]
-
-

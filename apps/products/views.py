@@ -12,23 +12,23 @@ def events_view(request):
     request.session['last_shop_type'] = 'events'
     today = timezone.now().date()
 
-    # --- Get all upcoming events ---
+    # Get all upcoming events
     events = Event.objects.filter(
         gig_date__gte=today
     ).order_by('gig_date')
 
-    # --- Extract selected month from query parameters ---
+    # Extract selected month from query parameters
     month = request.GET.get('month')
     selected_month = None
     if month and month.isdigit():
         month_num = int(month)
         selected_month = calendar.month_name[month_num]
 
-    # --- Filter by month if provided ---
+    # Filter by month if provided
     if month and month.isdigit():
         events = events.filter(gig_date__month=int(month))
 
-    # --- Build list of available months (only months that actually have events) ---
+    # Build list of available months (only months that actually have events)
     available_months = (
         Event.objects.filter(gig_date__gte=today)
         .dates('gig_date', 'month', order='ASC')
@@ -199,7 +199,7 @@ def search_view(request):
         merch_results = Merch.objects.filter(
             Q(product_name__icontains=q) |               # name contains
             Q(product_category__icontains=q) |           # key contains (e.g. "hoodie")
-            Q(product_category__in=label_keys) |           # label match (e.g. "Hoodie")
+            Q(product_category__in=label_keys) |         # label match (e.g. "Hoodie")
             Q(product_description__icontains=q)
         ).order_by("product_name", "product_category", "size")
 
